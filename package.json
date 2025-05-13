@@ -21,9 +21,13 @@
   "scripts": {
     "build": "nx run-many --target=build --all --parallel",
     "fix:lint": "nx run-many --target=fix:lint --all --parallel",
-    "lint": "nx run-many --target=lint --all --parallel"
+    "lint": "nx run-many --target=lint --all --parallel",
+    "publish:packages": "changeset publish",
+    "version:packages": "changeset version && pnpm install --lockfile-only"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.4",
     "@wso2/eslint-plugin": "https://gitpkg.now.sh/brionmario/wso2-ui-configs/packages/eslint-plugin?4ee6f6be232d7631999d709a86b91612f1d34ce7",
     "@wso2/prettier-config": "https://gitpkg.now.sh/brionmario/wso2-ui-configs/packages/prettier-config?4ee6f6be232d7631999d709a86b91612f1d34ce7",
     "eslint": "8.57.0",
@@ -37,6 +41,5 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
   "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }
