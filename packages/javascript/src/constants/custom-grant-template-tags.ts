@@ -16,15 +16,8 @@
  * under the License.
  */
 
-export * from "./client";
-export * from "./models";
-export * from "./constants/client-config";
-export * from "./constants/custom-grant-template-tags";
-export * from "./constants/parameters";
-export * from "./constants/data";
-export * from "./constants/parameters";
-export * from "./constants/scopes";
-export * from "./helpers/crypto-helper";
-export * from "./utils";
-export * from "./exception";
-export * from "./data";
+export const TOKEN_TAG: string = "{{token}}";
+export const USERNAME_TAG: string = "{{username}}";
+export const SCOPE_TAG: string = "{{scope}}";
+export const CLIENT_ID_TAG: string = "{{clientID}}";
+export const CLIENT_SECRET_TAG: string = "{{clientSecret}}";

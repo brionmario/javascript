@@ -16,15 +16,17 @@
  * under the License.
  */
 
-export * from "./client";
-export * from "./models";
-export * from "./constants/client-config";
-export * from "./constants/custom-grant-template-tags";
-export * from "./constants/parameters";
-export * from "./constants/data";
-export * from "./constants/parameters";
-export * from "./constants/scopes";
-export * from "./helpers/crypto-helper";
-export * from "./utils";
-export * from "./exception";
-export * from "./data";
+export enum Stores {
+    ConfigData = "config_data",
+    OIDCProviderMetaData = "oidc_provider_meta_data",
+    SessionData = "session_data",
+    TemporaryData = "temporary_data"
+}
+
+export const REFRESH_TOKEN_TIMER: string = "refresh_token_timer";
+export const PKCE_CODE_VERIFIER: string = "pkce_code_verifier";
+export const PKCE_SEPARATOR: string = "#";
+
+export const SUPPORTED_SIGNATURE_ALGORITHMS: string[] = [
+    "RS256", "RS512", "RS384", "PS256"
+];

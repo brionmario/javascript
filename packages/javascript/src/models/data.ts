@@ -16,15 +16,24 @@
  * under the License.
  */
 
-export * from "./client";
-export * from "./models";
-export * from "./constants/client-config";
-export * from "./constants/custom-grant-template-tags";
-export * from "./constants/parameters";
-export * from "./constants/data";
-export * from "./constants/parameters";
-export * from "./constants/scopes";
-export * from "./helpers/crypto-helper";
-export * from "./utils";
-export * from "./exception";
-export * from "./data";
+import { OIDCEndpoints } from ".";
+
+export type StoreValue = string | string[] | boolean | number | OIDCEndpoints;
+export type TemporaryData = { [ key: string ]: StoreValue; };
+
+export interface SessionData {
+    access_token: string;
+    id_token: string;
+    expires_in: string;
+    scope: string;
+    refresh_token?: string;
+    token_type: string;
+    session_state: string;
+    created_at: number;
+}
+
+export interface Store {
+    setData(key: string, value: string): Promise<void>;
+    getData(key: string): Promise<string>;
+    removeData(key: string): Promise<void>;
+}

@@ -16,15 +16,8 @@
  * under the License.
  */
 
-export * from "./client";
-export * from "./models";
-export * from "./constants/client-config";
-export * from "./constants/custom-grant-template-tags";
-export * from "./constants/parameters";
-export * from "./constants/data";
-export * from "./constants/parameters";
-export * from "./constants/scopes";
-export * from "./helpers/crypto-helper";
-export * from "./utils";
-export * from "./exception";
-export * from "./data";
+export enum FetchCredentialTypes {
+    Include = "include",
+    SameOrigin = "same-origin",
+    Omit = "omit"
+}

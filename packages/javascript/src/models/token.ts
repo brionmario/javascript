@@ -16,15 +16,25 @@
  * under the License.
  */
 
-export * from "./client";
-export * from "./models";
-export * from "./constants/client-config";
-export * from "./constants/custom-grant-template-tags";
-export * from "./constants/parameters";
-export * from "./constants/data";
-export * from "./constants/parameters";
-export * from "./constants/scopes";
-export * from "./helpers/crypto-helper";
-export * from "./utils";
-export * from "./exception";
-export * from "./data";
+/**
+ * Interface of the OAuth2/OIDC tokens.
+ */
+export interface TokenResponse {
+    accessToken: string;
+    idToken: string;
+    expiresIn: string;
+    scope: string;
+    refreshToken: string;
+    tokenType: string;
+    createdAt: number;
+}
+
+export interface RawTokenResponse {
+    access_token: string;
+    id_token: string;
+    expires_in: string;
+    scope: string;
+    refresh_token: string;
+    token_type: string;
+    created_at: number;
+}
