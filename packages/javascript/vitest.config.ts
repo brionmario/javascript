@@ -16,4 +16,8 @@
  * under the License.
  */
 
-export {default as greet} from './greet';
+import {defineConfig} from 'vitest/config';
+
+export default defineConfig({
+  test: {},
+});

@@ -16,4 +16,11 @@
  * under the License.
  */
 
-export {default as greet} from './greet';
+import {describe, expect, it} from 'vitest';
+import greet from '../greet';
+
+describe('greet', () => {
+  it('should return the proper greeting', () => {
+    expect(greet('World')).toBe('Hello, World!');
+  });
+});

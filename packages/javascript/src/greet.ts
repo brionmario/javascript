@@ -16,4 +16,6 @@
  * under the License.
  */
 
-export {default as greet} from './greet';
+export default function greet(greeting: string): string {
+  return `Hello, ${greeting}!`;
+}
