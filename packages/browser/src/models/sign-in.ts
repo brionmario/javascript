@@ -16,6 +16,6 @@
  * under the License.
  */
 
-import { GetAuthURLConfig } from "@asgardeo/auth-js";
+import {GetAuthURLConfig} from '@asgardeo/javascript';
 
-export type SignInConfig = GetAuthURLConfig & { callOnlyOnRedirect?: boolean; };
+export type SignInConfig = GetAuthURLConfig & {callOnlyOnRedirect?: boolean};

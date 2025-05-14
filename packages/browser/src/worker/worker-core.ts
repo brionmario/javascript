@@ -17,238 +17,226 @@
  */
 
 import {
-    AsgardeoAuthClient,
-    AuthClientConfig,
-    AuthorizationURLParams,
-    BasicUserInfo,
-    CryptoHelper,
-    CustomGrantConfig,
-    DecodedIDTokenPayload,
-    FetchResponse,
-    OIDCEndpoints,
-    SESSION_STATE,
-    STATE,
-    SessionData,
-    Store
-} from "@asgardeo/auth-js";
-import { AuthenticationHelper, SPAHelper } from "../helpers";
-import { HttpClient, HttpClientInstance } from "../http-client";
+  AsgardeoAuthClient,
+  AuthClientConfig,
+  AuthorizationURLParams,
+  BasicUserInfo,
+  CryptoHelper,
+  CustomGrantConfig,
+  DecodedIDTokenPayload,
+  FetchResponse,
+  OIDCEndpoints,
+  SESSION_STATE,
+  STATE,
+  SessionData,
+  Store,
+} from '@asgardeo/javascript';
+import {AuthenticationHelper, SPAHelper} from '../helpers';
+import {HttpClient, HttpClientInstance} from '../http-client';
 import {
-    AuthorizationResponse,
-    HttpRequestConfig,
-    HttpResponse,
-    WebWorkerClientConfig,
-    WebWorkerCoreInterface
-} from "../models";
-import { MemoryStore } from "../stores";
-import { SPACryptoUtils } from "../utils/crypto-utils";
+  AuthorizationResponse,
+  HttpRequestConfig,
+  HttpResponse,
+  WebWorkerClientConfig,
+  WebWorkerCoreInterface,
+} from '../models';
+import {MemoryStore} from '../stores';
+import {SPACryptoUtils} from '../utils/crypto-utils';
 
 export const WebWorkerCore = async (
-    config: AuthClientConfig<WebWorkerClientConfig>,
-    getAuthHelper: (
-        authClient: AsgardeoAuthClient<WebWorkerClientConfig>,
-        spaHelper: SPAHelper<WebWorkerClientConfig>
-    ) => AuthenticationHelper<WebWorkerClientConfig>
+  config: AuthClientConfig<WebWorkerClientConfig>,
+  getAuthHelper: (
+    authClient: AsgardeoAuthClient<WebWorkerClientConfig>,
+    spaHelper: SPAHelper<WebWorkerClientConfig>,
+  ) => AuthenticationHelper<WebWorkerClientConfig>,
 ): Promise<WebWorkerCoreInterface> => {
-    const _store: Store = new MemoryStore();
-    const _cryptoUtils: SPACryptoUtils = new SPACryptoUtils();
-    const _authenticationClient = new AsgardeoAuthClient<WebWorkerClientConfig>();
-    await _authenticationClient.initialize(config, _store, _cryptoUtils);
+  const _store: Store = new MemoryStore();
+  const _cryptoUtils: SPACryptoUtils = new SPACryptoUtils();
+  const _authenticationClient = new AsgardeoAuthClient<WebWorkerClientConfig>();
+  await _authenticationClient.initialize(config, _store, _cryptoUtils);
 
-    const _spaHelper = new SPAHelper<WebWorkerClientConfig>(_authenticationClient);
+  const _spaHelper = new SPAHelper<WebWorkerClientConfig>(_authenticationClient);
 
-    const _authenticationHelper: AuthenticationHelper<WebWorkerClientConfig> =
-        getAuthHelper(_authenticationClient, _spaHelper);
+  const _authenticationHelper: AuthenticationHelper<WebWorkerClientConfig> = getAuthHelper(
+    _authenticationClient,
+    _spaHelper,
+  );
 
-    const _dataLayer = _authenticationClient.getDataLayer();
+  const _dataLayer = _authenticationClient.getDataLayer();
 
-    const _httpClient: HttpClientInstance = HttpClient.getInstance();
+  const _httpClient: HttpClientInstance = HttpClient.getInstance();
 
-    const attachToken = async (request: HttpRequestConfig): Promise<void> => {
-        await _authenticationHelper.attachTokenToRequestConfig(request);
-    };
+  const attachToken = async (request: HttpRequestConfig): Promise<void> => {
+    await _authenticationHelper.attachTokenToRequestConfig(request);
+  };
 
-    _httpClient?.init && (await _httpClient.init(true, attachToken));
+  _httpClient?.init && (await _httpClient.init(true, attachToken));
 
-    const setHttpRequestStartCallback = (callback: () => void): void => {
-        _httpClient?.setHttpRequestStartCallback && _httpClient.setHttpRequestStartCallback(callback);
-    };
+  const setHttpRequestStartCallback = (callback: () => void): void => {
+    _httpClient?.setHttpRequestStartCallback && _httpClient.setHttpRequestStartCallback(callback);
+  };
 
-    const setHttpRequestSuccessCallback = (callback: (response: HttpResponse) => void): void => {
-        _httpClient?.setHttpRequestSuccessCallback && _httpClient.setHttpRequestSuccessCallback(callback);
-    };
+  const setHttpRequestSuccessCallback = (callback: (response: HttpResponse) => void): void => {
+    _httpClient?.setHttpRequestSuccessCallback && _httpClient.setHttpRequestSuccessCallback(callback);
+  };
 
-    const setHttpRequestFinishCallback = (callback: () => void): void => {
-        _httpClient?.setHttpRequestFinishCallback && _httpClient.setHttpRequestFinishCallback(callback);
-    };
+  const setHttpRequestFinishCallback = (callback: () => void): void => {
+    _httpClient?.setHttpRequestFinishCallback && _httpClient.setHttpRequestFinishCallback(callback);
+  };
 
-    const httpRequest = async (
-        requestConfig: HttpRequestConfig
-    ): Promise<HttpResponse> => {
-        return await _authenticationHelper.httpRequest(
-          _httpClient,
-          requestConfig
-        );
-    };
+  const httpRequest = async (requestConfig: HttpRequestConfig): Promise<HttpResponse> => {
+    return await _authenticationHelper.httpRequest(_httpClient, requestConfig);
+  };
 
-    const httpRequestAll = async (requestConfigs: HttpRequestConfig[]): Promise<HttpResponse[] | undefined> => {
-        return await _authenticationHelper.httpRequestAll(
-            requestConfigs,
-            _httpClient
-        );
-    };
+  const httpRequestAll = async (requestConfigs: HttpRequestConfig[]): Promise<HttpResponse[] | undefined> => {
+    return await _authenticationHelper.httpRequestAll(requestConfigs, _httpClient);
+  };
 
-    const enableHttpHandler = (): void => {
-        _authenticationHelper.enableHttpHandler(_httpClient);
-    };
+  const enableHttpHandler = (): void => {
+    _authenticationHelper.enableHttpHandler(_httpClient);
+  };
 
-    const disableHttpHandler = (): void => {
-        _authenticationHelper.disableHttpHandler(_httpClient);
-    };
+  const disableHttpHandler = (): void => {
+    _authenticationHelper.disableHttpHandler(_httpClient);
+  };
 
-    const getAuthorizationURL = async (params?: AuthorizationURLParams): Promise<AuthorizationResponse> => {
-        return _authenticationClient
-            .getAuthorizationURL(params)
-            .then(async (url: string) => {
-                const urlObject: URL = new URL(url);
-                const state: string = urlObject.searchParams.get(STATE) ?? "";
-                const pkce: string = await _authenticationClient.getPKCECode(state);
+  const getAuthorizationURL = async (params?: AuthorizationURLParams): Promise<AuthorizationResponse> => {
+    return _authenticationClient
+      .getAuthorizationURL(params)
+      .then(async (url: string) => {
+        const urlObject: URL = new URL(url);
+        const state: string = urlObject.searchParams.get(STATE) ?? '';
+        const pkce: string = await _authenticationClient.getPKCECode(state);
 
-                return { authorizationURL: url, pkce: pkce };
-            })
-            .catch((error) => Promise.reject(error));
-    };
+        return {authorizationURL: url, pkce: pkce};
+      })
+      .catch(error => Promise.reject(error));
+  };
 
-    const startAutoRefreshToken = async (): Promise<void> => {
-        _spaHelper.clearRefreshTokenTimeout();
-        _spaHelper.refreshAccessTokenAutomatically(_authenticationHelper);
+  const startAutoRefreshToken = async (): Promise<void> => {
+    _spaHelper.clearRefreshTokenTimeout();
+    _spaHelper.refreshAccessTokenAutomatically(_authenticationHelper);
 
-        return;
-    };
+    return;
+  };
 
-    const requestAccessToken = async (
-        authorizationCode?: string,
-        sessionState?: string,
-        pkce?: string,
-        state?: string
-    ): Promise<BasicUserInfo> => {
-        return await _authenticationHelper.requestAccessToken(
-            authorizationCode,
-            sessionState,
-            undefined,
-            pkce,
-            state
-        );
-    };
+  const requestAccessToken = async (
+    authorizationCode?: string,
+    sessionState?: string,
+    pkce?: string,
+    state?: string,
+  ): Promise<BasicUserInfo> => {
+    return await _authenticationHelper.requestAccessToken(authorizationCode, sessionState, undefined, pkce, state);
+  };
 
-    const signOut = async (): Promise<string> => {
-        _spaHelper.clearRefreshTokenTimeout();
+  const signOut = async (): Promise<string> => {
+    _spaHelper.clearRefreshTokenTimeout();
 
-        return await _authenticationClient.getSignOutURL();
-    };
+    return await _authenticationClient.getSignOutURL();
+  };
 
-    const getSignOutURL = async (): Promise<string> => {
-        return await _authenticationClient.getSignOutURL();
-    };
+  const getSignOutURL = async (): Promise<string> => {
+    return await _authenticationClient.getSignOutURL();
+  };
 
-    const requestCustomGrant = async (config: CustomGrantConfig): Promise<BasicUserInfo | FetchResponse> => {
-        return await _authenticationHelper.requestCustomGrant(config);
-    };
+  const requestCustomGrant = async (config: CustomGrantConfig): Promise<BasicUserInfo | FetchResponse> => {
+    return await _authenticationHelper.requestCustomGrant(config);
+  };
 
-    const refreshAccessToken = async (): Promise<BasicUserInfo> => {
-        try {
-            return await _authenticationHelper.refreshAccessToken();
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    };
+  const refreshAccessToken = async (): Promise<BasicUserInfo> => {
+    try {
+      return await _authenticationHelper.refreshAccessToken();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
 
-    const revokeAccessToken = async (): Promise<boolean> => {
-        const timer: number = await _spaHelper.getRefreshTimeoutTimer();
+  const revokeAccessToken = async (): Promise<boolean> => {
+    const timer: number = await _spaHelper.getRefreshTimeoutTimer();
 
-        return _authenticationClient
-            .revokeAccessToken()
-            .then(() => {
-                _spaHelper.clearRefreshTokenTimeout(timer);
+    return _authenticationClient
+      .revokeAccessToken()
+      .then(() => {
+        _spaHelper.clearRefreshTokenTimeout(timer);
 
-                return Promise.resolve(true);
-            })
-            .catch((error) => Promise.reject(error));
-    };
+        return Promise.resolve(true);
+      })
+      .catch(error => Promise.reject(error));
+  };
 
-    const getBasicUserInfo = async (): Promise<BasicUserInfo> => {
-        return _authenticationHelper.getBasicUserInfo();
-    };
+  const getBasicUserInfo = async (): Promise<BasicUserInfo> => {
+    return _authenticationHelper.getBasicUserInfo();
+  };
 
-    const getDecodedIDToken = async (): Promise<DecodedIDTokenPayload> => {
-        return _authenticationHelper.getDecodedIDToken();
-    };
+  const getDecodedIDToken = async (): Promise<DecodedIDTokenPayload> => {
+    return _authenticationHelper.getDecodedIDToken();
+  };
 
-    const getCryptoHelper = async (): Promise<CryptoHelper> => {
-        return _authenticationHelper.getCryptoHelper();
-    };
+  const getCryptoHelper = async (): Promise<CryptoHelper> => {
+    return _authenticationHelper.getCryptoHelper();
+  };
 
-    const getDecodedIDPIDToken = async (): Promise<DecodedIDTokenPayload> => {
-        return _authenticationHelper.getDecodedIDPIDToken();
-    };
+  const getDecodedIDPIDToken = async (): Promise<DecodedIDTokenPayload> => {
+    return _authenticationHelper.getDecodedIDPIDToken();
+  };
 
-    const getIDToken = async (): Promise<string> => {
-        return _authenticationHelper.getIDToken();
-    };
-    const getOIDCServiceEndpoints = async (): Promise<OIDCEndpoints> => {
-        return _authenticationHelper.getOIDCServiceEndpoints();
-    };
+  const getIDToken = async (): Promise<string> => {
+    return _authenticationHelper.getIDToken();
+  };
+  const getOIDCServiceEndpoints = async (): Promise<OIDCEndpoints> => {
+    return _authenticationHelper.getOIDCServiceEndpoints();
+  };
 
-    const getAccessToken = (): Promise<string> => {
-        return _authenticationHelper.getAccessToken();
-    };
+  const getAccessToken = (): Promise<string> => {
+    return _authenticationHelper.getAccessToken();
+  };
 
-    const isAuthenticated = (): Promise<boolean> => {
-        return _authenticationHelper.isAuthenticated();
-    };
+  const isAuthenticated = (): Promise<boolean> => {
+    return _authenticationHelper.isAuthenticated();
+  };
 
-    const setSessionState = async (sessionState: string): Promise<void> => {
-        await _dataLayer.setSessionDataParameter(SESSION_STATE as keyof SessionData, sessionState);
+  const setSessionState = async (sessionState: string): Promise<void> => {
+    await _dataLayer.setSessionDataParameter(SESSION_STATE as keyof SessionData, sessionState);
 
-        return;
-    };
+    return;
+  };
 
-    const updateConfig = async (config: Partial<AuthClientConfig<WebWorkerClientConfig>>): Promise<void> => {
-        await _authenticationClient.updateConfig(config);
+  const updateConfig = async (config: Partial<AuthClientConfig<WebWorkerClientConfig>>): Promise<void> => {
+    await _authenticationClient.updateConfig(config);
 
-        return;
-    };
+    return;
+  };
 
-    const getConfigData = async (): Promise<AuthClientConfig<WebWorkerClientConfig>> => {
-        return _dataLayer.getConfigData();
-    };
+  const getConfigData = async (): Promise<AuthClientConfig<WebWorkerClientConfig>> => {
+    return _dataLayer.getConfigData();
+  };
 
-    return {
-        disableHttpHandler,
-        enableHttpHandler,
-        getAccessToken,
-        getAuthorizationURL,
-        getBasicUserInfo,
-        getConfigData,
-        getCryptoHelper,
-        getDecodedIDPIDToken,
-        getDecodedIDToken,
-        getIDToken,
-        getOIDCServiceEndpoints,
-        getSignOutURL,
-        httpRequest,
-        httpRequestAll,
-        isAuthenticated,
-        refreshAccessToken,
-        requestAccessToken,
-        requestCustomGrant,
-        revokeAccessToken,
-        setHttpRequestFinishCallback,
-        setHttpRequestStartCallback,
-        setHttpRequestSuccessCallback,
-        setSessionState,
-        signOut,
-        startAutoRefreshToken,
-        updateConfig
-    };
+  return {
+    disableHttpHandler,
+    enableHttpHandler,
+    getAccessToken,
+    getAuthorizationURL,
+    getBasicUserInfo,
+    getConfigData,
+    getCryptoHelper,
+    getDecodedIDPIDToken,
+    getDecodedIDToken,
+    getIDToken,
+    getOIDCServiceEndpoints,
+    getSignOutURL,
+    httpRequest,
+    httpRequestAll,
+    isAuthenticated,
+    refreshAccessToken,
+    requestAccessToken,
+    requestCustomGrant,
+    revokeAccessToken,
+    setHttpRequestFinishCallback,
+    setHttpRequestStartCallback,
+    setHttpRequestSuccessCallback,
+    setSessionState,
+    signOut,
+    startAutoRefreshToken,
+    updateConfig,
+  };
 };

@@ -16,15 +16,13 @@
  * under the License.
  */
 
-import { AsgardeoAuthClient } from "@asgardeo/auth-js";
-import { AuthenticationHelper, SPAHelper } from "./helpers";
-import { WebWorkerClientConfig } from "./models";
-import { workerReceiver } from "./worker/worker-receiver";
+import {AsgardeoAuthClient} from '@asgardeo/javascript';
+import {AuthenticationHelper, SPAHelper} from './helpers';
+import {WebWorkerClientConfig} from './models';
+import {workerReceiver} from './worker/worker-receiver';
 
-workerReceiver(
-    (authClient: AsgardeoAuthClient<WebWorkerClientConfig>, spaHelper: SPAHelper<WebWorkerClientConfig>) => {
-        return new AuthenticationHelper(authClient, spaHelper);
-    }
-);
+workerReceiver((authClient: AsgardeoAuthClient<WebWorkerClientConfig>, spaHelper: SPAHelper<WebWorkerClientConfig>) => {
+  return new AuthenticationHelper(authClient, spaHelper);
+});
 
-export default {} as typeof Worker & { new (): Worker };
+export default {} as typeof Worker & {new (): Worker};

@@ -16,71 +16,74 @@
  * under the License.
  */
 
-import { Buffer } from "buffer";
-import { AsgardeoAuthException, CryptoUtils, JWKInterface } from "@asgardeo/auth-js";
-import base64url from "base64url";
-import sha256 from "fast-sha256";
-import { createLocalJWKSet, jwtVerify } from "jose";
-import randombytes from "randombytes";
+import {Buffer} from 'buffer';
+import {AsgardeoAuthException, CryptoUtils, JWKInterface} from '@asgardeo/javascript';
+import base64url from 'base64url';
+import sha256 from 'fast-sha256';
+import {createLocalJWKSet, jwtVerify} from 'jose';
+import randombytes from 'randombytes';
 
-export class SPACryptoUtils implements CryptoUtils<Buffer | string>
-{
-    /**
-     * Get URL encoded string.
-     *
-     * @returns {string} base 64 url encoded value.
-     */
-    public base64URLEncode(value: Buffer | string): string {
-        return base64url.encode(value).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+export class SPACryptoUtils implements CryptoUtils<Buffer | string> {
+  /**
+   * Get URL encoded string.
+   *
+   * @returns {string} base 64 url encoded value.
+   */
+  public base64URLEncode(value: Buffer | string): string {
+    return base64url.encode(value).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  }
+
+  public base64URLDecode(value: string): string {
+    return base64url.decode(value).toString();
+  }
+
+  public hashSha256(data: string): string | Buffer {
+    return Buffer.from(sha256(new TextEncoder().encode(data)));
+  }
+
+  public generateRandomBytes(length: number): string | Buffer {
+    return randombytes(length);
+  }
+
+  public verifyJwt(
+    idToken: string,
+    jwk: Partial<JWKInterface>,
+    algorithms: string[],
+    clientID: string,
+    issuer: string,
+    subject: string,
+    clockTolerance?: number,
+    validateJwtIssuer?: boolean,
+  ): Promise<boolean> {
+    const jwtVerifyOptions = {
+      algorithms: algorithms,
+      audience: clientID,
+      clockTolerance: clockTolerance,
+      subject: subject,
+    };
+
+    if (validateJwtIssuer ?? true) {
+      jwtVerifyOptions['issuer'] = issuer;
     }
 
-    public base64URLDecode(value: string): string {
-        return base64url.decode(value).toString();
-    }
-
-    public hashSha256(data: string): string | Buffer {
-        return Buffer.from(sha256(new TextEncoder().encode(data)));
-    }
-
-    public generateRandomBytes(length: number): string | Buffer {
-        return randombytes(length);
-    }
-
-    public verifyJwt(
-        idToken: string,
-        jwk: Partial<JWKInterface>,
-        algorithms: string[],
-        clientID: string,
-        issuer: string,
-        subject: string,
-        clockTolerance?: number,
-        validateJwtIssuer?: boolean
-    ): Promise<boolean> {
-        const jwtVerifyOptions = {
-            algorithms: algorithms,
-            audience: clientID,
-            clockTolerance: clockTolerance,
-            subject: subject
-        }
-
-        if (validateJwtIssuer ?? true) {
-            jwtVerifyOptions["issuer"] = issuer
-        }
-
-        return jwtVerify(
-            idToken,
-            createLocalJWKSet({
-                keys: [jwk]
-            }),
-            jwtVerifyOptions
-        ).then(() => {
-            return Promise.resolve(true);
-        }).catch((error) => {
-            return Promise.reject(new AsgardeoAuthException(
-                "SPA-CRYPTO-UTILS-VJ-IV01",
-                error?.reason ?? JSON.stringify(error),
-                `${error?.code} ${error?.claim}`
-            ));
-        });
-    }
+    return jwtVerify(
+      idToken,
+      createLocalJWKSet({
+        keys: [jwk],
+      }),
+      jwtVerifyOptions,
+    )
+      .then(() => {
+        return Promise.resolve(true);
+      })
+      .catch(error => {
+        return Promise.reject(
+          new AsgardeoAuthException(
+            'SPA-CRYPTO-UTILS-VJ-IV01',
+            error?.reason ?? JSON.stringify(error),
+            `${error?.code} ${error?.claim}`,
+          ),
+        );
+      });
+  }
 }

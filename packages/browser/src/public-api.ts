@@ -19,28 +19,28 @@
 /**
  * Entry point for all public APIs of this SDK.
  */
-export * from "./client";
-export * from "./models";
+export * from './client';
+export * from './models';
 
 // Utils
-export * from "./utils/spa-utils"
+export * from './utils/spa-utils';
 
 // Constants
-export * from "./constants/storage";
-export * from "./constants/hooks";
+export * from './constants/storage';
+export * from './constants/hooks';
 
-export * from "@asgardeo/auth-js";
+export * from '@asgardeo/javascript';
 
 // clients
-export * from "./clients/main-thread-client";
-export * from "./clients/web-worker-client";
+export * from './clients/main-thread-client';
+export * from './clients/web-worker-client';
 
 // models
-export * from "./models/request-custom-grant";
+export * from './models/request-custom-grant';
 
 // helpers
-export * from "./helpers/authentication-helper";
-export * from "./helpers/spa-helper";
+export * from './helpers/authentication-helper';
+export * from './helpers/spa-helper';
 
 // worker receiver
-export * from "./worker/worker-receiver";
+export * from './worker/worker-receiver';

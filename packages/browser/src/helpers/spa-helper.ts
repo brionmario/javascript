@@ -16,65 +16,60 @@
  * under the License.
  */
 
-import { AsgardeoAuthClient, DataLayer, REFRESH_TOKEN_TIMER } from "@asgardeo/auth-js";
+import {AsgardeoAuthClient, DataLayer, REFRESH_TOKEN_TIMER} from '@asgardeo/javascript';
 
-import { AuthenticationHelper, MainThreadClientConfig, WebWorkerClientConfig } from "../";
+import {AuthenticationHelper, MainThreadClientConfig, WebWorkerClientConfig} from '../';
 
 export class SPAHelper<T extends MainThreadClientConfig | WebWorkerClientConfig> {
-    private _authenticationClient: AsgardeoAuthClient<T>;
-    private _dataLayer: DataLayer<T>;
-    public constructor(authClient: AsgardeoAuthClient<T>) {
-        this._authenticationClient = authClient;
-        this._dataLayer = this._authenticationClient.getDataLayer();
+  private _authenticationClient: AsgardeoAuthClient<T>;
+  private _dataLayer: DataLayer<T>;
+  public constructor(authClient: AsgardeoAuthClient<T>) {
+    this._authenticationClient = authClient;
+    this._dataLayer = this._authenticationClient.getDataLayer();
+  }
+
+  public async refreshAccessTokenAutomatically(
+    authenticationHelper: AuthenticationHelper<MainThreadClientConfig | WebWorkerClientConfig>,
+  ): Promise<void> {
+    const shouldRefreshAutomatically: boolean = (await this._dataLayer.getConfigData())?.periodicTokenRefresh ?? false;
+
+    if (!shouldRefreshAutomatically) {
+      return;
     }
 
-    public async refreshAccessTokenAutomatically(
-        authenticationHelper: AuthenticationHelper<
-          MainThreadClientConfig | WebWorkerClientConfig
-        >
-      ): Promise<void> {
-        const shouldRefreshAutomatically: boolean = (await this._dataLayer.getConfigData())?.periodicTokenRefresh ?? 
-            false;
-        
-        if (!shouldRefreshAutomatically) {
-            return;
-        }
+    const sessionData = await this._dataLayer.getSessionData();
+    if (sessionData.refresh_token) {
+      // Refresh 10 seconds before the expiry time
+      const expiryTime = parseInt(sessionData.expires_in);
+      const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
 
-        const sessionData = await this._dataLayer.getSessionData();
-        if (sessionData.refresh_token) {
-            // Refresh 10 seconds before the expiry time
-            const expiryTime = parseInt(sessionData.expires_in);
-            const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
+      const timer = setTimeout(async () => {
+        await authenticationHelper.refreshAccessToken();
+      }, time * 1000);
 
-            const timer = setTimeout(async () => {
-                await authenticationHelper.refreshAccessToken();
-            }, time * 1000);
+      await this._dataLayer.setTemporaryDataParameter(REFRESH_TOKEN_TIMER, JSON.stringify(timer));
+    }
+  }
 
-            await this._dataLayer.setTemporaryDataParameter(REFRESH_TOKEN_TIMER, JSON.stringify(timer));
-        }
+  public async getRefreshTimeoutTimer(): Promise<number> {
+    if (await this._dataLayer.getTemporaryDataParameter(REFRESH_TOKEN_TIMER)) {
+      return JSON.parse((await this._dataLayer.getTemporaryDataParameter(REFRESH_TOKEN_TIMER)) as string);
     }
 
-    public async getRefreshTimeoutTimer(): Promise<number> {
-        if (await this._dataLayer.getTemporaryDataParameter(REFRESH_TOKEN_TIMER)) {
-            return JSON.parse(
-                (await this._dataLayer.getTemporaryDataParameter(REFRESH_TOKEN_TIMER)) as string
-            );
-        }
+    return -1;
+  }
 
-        return -1;
+  public async clearRefreshTokenTimeout(timer?: number): Promise<void> {
+    if (timer) {
+      clearTimeout(timer);
+
+      return;
     }
 
-    public async clearRefreshTokenTimeout(timer?: number): Promise<void> {
-        if (timer) {
-            clearTimeout(timer);
+    const refreshTimer: number = await this.getRefreshTimeoutTimer();
 
-            return;
-        }
-
-        const refreshTimer: number = await this.getRefreshTimeoutTimer();
-
-        if (refreshTimer !== -1) {
-            clearTimeout(refreshTimer);
-        }
+    if (refreshTimer !== -1) {
+      clearTimeout(refreshTimer);
     }
+  }
 }

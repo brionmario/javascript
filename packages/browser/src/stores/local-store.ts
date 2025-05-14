@@ -15,18 +15,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Store } from "@asgardeo/auth-js";
+import {Store} from '@asgardeo/javascript';
 
 export class LocalStore implements Store {
-    public async setData(key: string, value: string): Promise<void> {
-        localStorage.setItem(key, value);
-    }
+  public async setData(key: string, value: string): Promise<void> {
+    localStorage.setItem(key, value);
+  }
 
-    public async getData(key: string): Promise<string> {
-        return localStorage.getItem(key) ?? "{}";
-    }
+  public async getData(key: string): Promise<string> {
+    return localStorage.getItem(key) ?? '{}';
+  }
 
-    public async removeData(key: string): Promise<void> {
-        localStorage.removeItem(key);
-    }
+  public async removeData(key: string): Promise<void> {
+    localStorage.removeItem(key);
+  }
 }

@@ -17,96 +17,99 @@
  */
 
 import {
-    AuthClientConfig,
-    BasicUserInfo,
-    CryptoHelper,
-    CustomGrantConfig,
-    DataLayer,
-    DecodedIDTokenPayload,
-    FetchResponse,
-    OIDCEndpoints
-} from "@asgardeo/auth-js";
+  AuthClientConfig,
+  BasicUserInfo,
+  CryptoHelper,
+  CustomGrantConfig,
+  DataLayer,
+  DecodedIDTokenPayload,
+  FetchResponse,
+  OIDCEndpoints,
+} from '@asgardeo/javascript';
 import {
-    HttpError,
-    HttpRequestConfig,
-    HttpResponse,
-    MainThreadClientConfig,
-    SignInConfig,
-    WebWorkerClientConfig
-} from ".";
-import { HttpClientInstance } from "../http-client";
+  HttpError,
+  HttpRequestConfig,
+  HttpResponse,
+  MainThreadClientConfig,
+  SignInConfig,
+  WebWorkerClientConfig,
+} from '.';
+import {HttpClientInstance} from '../http-client';
 
 export interface MainThreadClientInterface {
-    setHttpRequestStartCallback(callback: () => void): void;
-    setHttpRequestSuccessCallback(callback: (response: HttpResponse) => void): void;
-    setHttpRequestFinishCallback(callback: () => void): void;
-    setHttpRequestErrorCallback(callback: (error: HttpError) => void | Promise<void>): void;
-    httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
-    httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse[] | undefined>;
-    getHttpClient(): HttpClientInstance;
-    enableHttpHandler(): boolean;
-    disableHttpHandler(): boolean;
-    signIn(
-        config?: SignInConfig,
-        authorizationCode?: string,
-        sessionState?: string,
-        signInRedirectURL?: string,
-        tokenRequestConfig?: {
-            params: Record<string, unknown>
-        }
-    ): Promise<BasicUserInfo>;
-    signOut(signOutRedirectURL?: string): Promise<boolean>;
-    requestCustomGrant(config: CustomGrantConfig): Promise<BasicUserInfo | FetchResponse>;
-    refreshAccessToken(): Promise<BasicUserInfo>;
-    revokeAccessToken(): Promise<boolean>;
-    getBasicUserInfo(): Promise<BasicUserInfo>;
-    getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
-    getCryptoHelper(): Promise<CryptoHelper>;
-    getConfigData(): Promise<AuthClientConfig<MainThreadClientConfig>>;
-    getIDToken(): Promise<string>;
-    getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
-    getAccessToken(): Promise<string>;
-    getDataLayer(): Promise<DataLayer<MainThreadClientConfig>>;
-    isAuthenticated(): Promise<boolean>;
-    updateConfig(config: Partial<AuthClientConfig<MainThreadClientConfig>>): Promise<void>;
-    trySignInSilently(additionalParams?: Record<string, string | boolean>,
-        tokenRequestConfig?: { params: Record<string, unknown> }
-    ): Promise<BasicUserInfo | boolean>;
-    isSessionActive(): Promise<boolean>;
+  setHttpRequestStartCallback(callback: () => void): void;
+  setHttpRequestSuccessCallback(callback: (response: HttpResponse) => void): void;
+  setHttpRequestFinishCallback(callback: () => void): void;
+  setHttpRequestErrorCallback(callback: (error: HttpError) => void | Promise<void>): void;
+  httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
+  httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse[] | undefined>;
+  getHttpClient(): HttpClientInstance;
+  enableHttpHandler(): boolean;
+  disableHttpHandler(): boolean;
+  signIn(
+    config?: SignInConfig,
+    authorizationCode?: string,
+    sessionState?: string,
+    signInRedirectURL?: string,
+    tokenRequestConfig?: {
+      params: Record<string, unknown>;
+    },
+  ): Promise<BasicUserInfo>;
+  signOut(signOutRedirectURL?: string): Promise<boolean>;
+  requestCustomGrant(config: CustomGrantConfig): Promise<BasicUserInfo | FetchResponse>;
+  refreshAccessToken(): Promise<BasicUserInfo>;
+  revokeAccessToken(): Promise<boolean>;
+  getBasicUserInfo(): Promise<BasicUserInfo>;
+  getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
+  getCryptoHelper(): Promise<CryptoHelper>;
+  getConfigData(): Promise<AuthClientConfig<MainThreadClientConfig>>;
+  getIDToken(): Promise<string>;
+  getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
+  getAccessToken(): Promise<string>;
+  getDataLayer(): Promise<DataLayer<MainThreadClientConfig>>;
+  isAuthenticated(): Promise<boolean>;
+  updateConfig(config: Partial<AuthClientConfig<MainThreadClientConfig>>): Promise<void>;
+  trySignInSilently(
+    additionalParams?: Record<string, string | boolean>,
+    tokenRequestConfig?: {params: Record<string, unknown>},
+  ): Promise<BasicUserInfo | boolean>;
+  isSessionActive(): Promise<boolean>;
 }
 
 export interface WebWorkerClientInterface {
-    requestCustomGrant(requestParams: CustomGrantConfig): Promise<FetchResponse | BasicUserInfo>;
-    httpRequest<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
-    httpRequestAll<T = any>(configs: HttpRequestConfig[]): Promise<HttpResponse<T>[]>;
-    enableHttpHandler(): Promise<boolean>;
-    disableHttpHandler(): Promise<boolean>;
-    initialize(): Promise<boolean>;
-    signIn(
-        params?: SignInConfig,
-        authorizationCode?: string,
-        sessionState?: string,
-        signInRedirectURL?: string,
-        tokenRequestConfig?: {
-            params: Record<string, unknown>
-        }
-    ): Promise<BasicUserInfo>;
-    signOut(signOutRedirectURL?: string): Promise<boolean>;
-    revokeAccessToken(): Promise<boolean>;
-    getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
-    getBasicUserInfo(): Promise<BasicUserInfo>;
-    getConfigData(): Promise<AuthClientConfig<WebWorkerClientConfig>>;
-    getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
-    getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>;
-    getCryptoHelper(): Promise<CryptoHelper>;
-    getIDToken(): Promise<string>;
-    isAuthenticated(): Promise<boolean>;
-    setHttpRequestSuccessCallback(callback: (response: HttpResponse) => void): void;
-    setHttpRequestErrorCallback(callback: (response: HttpError) => void | Promise<void>): void;
-    setHttpRequestStartCallback(callback: () => void): void;
-    setHttpRequestFinishCallback(callback: () => void): void;
-    refreshAccessToken(): Promise<BasicUserInfo>;
-    updateConfig(config: Partial<AuthClientConfig<WebWorkerClientConfig>>): Promise<void>;
-    trySignInSilently(additionalParams?: Record<string, string | boolean>,
-        tokenRequestConfig?: { params: Record<string, unknown> }): Promise<BasicUserInfo | boolean>;
+  requestCustomGrant(requestParams: CustomGrantConfig): Promise<FetchResponse | BasicUserInfo>;
+  httpRequest<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
+  httpRequestAll<T = any>(configs: HttpRequestConfig[]): Promise<HttpResponse<T>[]>;
+  enableHttpHandler(): Promise<boolean>;
+  disableHttpHandler(): Promise<boolean>;
+  initialize(): Promise<boolean>;
+  signIn(
+    params?: SignInConfig,
+    authorizationCode?: string,
+    sessionState?: string,
+    signInRedirectURL?: string,
+    tokenRequestConfig?: {
+      params: Record<string, unknown>;
+    },
+  ): Promise<BasicUserInfo>;
+  signOut(signOutRedirectURL?: string): Promise<boolean>;
+  revokeAccessToken(): Promise<boolean>;
+  getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
+  getBasicUserInfo(): Promise<BasicUserInfo>;
+  getConfigData(): Promise<AuthClientConfig<WebWorkerClientConfig>>;
+  getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
+  getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>;
+  getCryptoHelper(): Promise<CryptoHelper>;
+  getIDToken(): Promise<string>;
+  isAuthenticated(): Promise<boolean>;
+  setHttpRequestSuccessCallback(callback: (response: HttpResponse) => void): void;
+  setHttpRequestErrorCallback(callback: (response: HttpError) => void | Promise<void>): void;
+  setHttpRequestStartCallback(callback: () => void): void;
+  setHttpRequestFinishCallback(callback: () => void): void;
+  refreshAccessToken(): Promise<BasicUserInfo>;
+  updateConfig(config: Partial<AuthClientConfig<WebWorkerClientConfig>>): Promise<void>;
+  trySignInSilently(
+    additionalParams?: Record<string, string | boolean>,
+    tokenRequestConfig?: {params: Record<string, unknown>},
+  ): Promise<BasicUserInfo | boolean>;
 }

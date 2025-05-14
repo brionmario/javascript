@@ -15,24 +15,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Store } from "@asgardeo/auth-js";
+import {Store} from '@asgardeo/javascript';
 
 export class MemoryStore implements Store {
-    private _data: Map<string, string>;
+  private _data: Map<string, string>;
 
-    public constructor() {
-        this._data = new Map();
-    }
+  public constructor() {
+    this._data = new Map();
+  }
 
-    public async setData(key: string, value: string): Promise<void> {
-        this._data.set(key, value);
-    }
+  public async setData(key: string, value: string): Promise<void> {
+    this._data.set(key, value);
+  }
 
-    public async getData(key: string): Promise<string> {
-        return this._data?.get(key) ?? "{}";
-    }
+  public async getData(key: string): Promise<string> {
+    return this._data?.get(key) ?? '{}';
+  }
 
-    public async removeData(key: string): Promise<void> {
-        this._data.delete(key);
-    }
+  public async removeData(key: string): Promise<void> {
+    this._data.delete(key);
+  }
 }

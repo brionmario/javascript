@@ -15,18 +15,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Store } from "@asgardeo/auth-js";
+import {Store} from '@asgardeo/javascript';
 
 export class SessionStore implements Store {
-    public async setData(key: string, value: string): Promise<void> {
-        sessionStorage.setItem(key, value);
-    }
+  public async setData(key: string, value: string): Promise<void> {
+    sessionStorage.setItem(key, value);
+  }
 
-    public async getData(key: string): Promise<string> {
-        return sessionStorage.getItem(key) ?? "{}";
-    }
+  public async getData(key: string): Promise<string> {
+    return sessionStorage.getItem(key) ?? '{}';
+  }
 
-    public async removeData(key: string): Promise<void> {
-        sessionStorage.removeItem(key);
-    }
+  public async removeData(key: string): Promise<void> {
+    sessionStorage.removeItem(key);
+  }
 }
