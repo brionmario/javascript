@@ -17,5 +17,5 @@
  *
  */
 
-// Export the public API.
-export * from "./public-api";
+export * from "./clients";
+export * from "./models";

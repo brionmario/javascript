@@ -16,16 +16,24 @@
  * under the License.
  */
 
-import {Locator, page} from '@vitest/browser/context';
-import {describe, expect, test} from 'vitest';
-import greet from '../greet';
-
-describe('greet', () => {
-  test('should return the proper greeting', async () => {
-    const parent: HTMLDivElement = greet('World');
-    document.body.appendChild(parent);
-
-    const element: Locator = page.getByText('Hello World!');
-    expect(element).toBeInTheDocument();
-  });
-});
+/**
+ * Enum for the different storage types.
+ */
+export enum Storage {
+  /**
+   * Stores the session information in the local storage
+   */
+  LocalStorage = "localStorage",
+  /**
+   * Store the session information in the session storage.
+   */
+  SessionStorage = "sessionStorage",
+  /**
+   * Store the session information in the web worker.
+   */
+  WebWorker = "webWorker",
+  /**
+   * Store the session information in the browser memory.
+   */
+  BrowserMemory = "browserMemory"
+}

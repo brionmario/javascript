@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -14,8 +14,13 @@
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
- *
  */
 
-// Export the public API.
-export * from "./public-api";
+export * from "./client";
+export * from "./message";
+export * from "./http-client";
+export * from "./web-worker";
+export * from "./session-management-helper";
+export * from "./client-config";
+export * from "./sign-in";
+export * from "./sign-out-error";

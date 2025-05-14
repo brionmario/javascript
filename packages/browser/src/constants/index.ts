@@ -14,8 +14,11 @@
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
- *
  */
 
-// Export the public API.
-export * from "./public-api";
+export * from "./messages-types";
+export * from "./storage";
+export * from "./hooks";
+export * from "./session-management";
+export * from "./parameters";
+export * from "./errors";

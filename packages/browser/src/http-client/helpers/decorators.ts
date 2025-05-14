@@ -17,5 +17,14 @@
  *
  */
 
-// Export the public API.
-export * from "./public-api";
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/**
+ * A decorator to supplement static interface support.
+ *
+ * @return {<U extends T>(constructor: U) => void}
+ */
+export function staticDecorator<T>() {
+    return <U extends T>(_constructor: U): any => {};
+}

@@ -17,5 +17,4 @@
  *
  */
 
-// Export the public API.
-export * from "./public-api";
+export * from "./axios-http-client";
