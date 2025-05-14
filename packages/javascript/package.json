@@ -6,9 +6,10 @@
     "asgardeo",
     "javascript",
     "core",
-    "agnostic"
+    "agnostic",
+    "js"
   ],
-  "homepage": "https://github.com/asgardeo/javascript/tree/main/packages/js#readme",
+  "homepage": "https://github.com/asgardeo/javascript/tree/main/packages/javascript#readme",
   "bugs": {
     "url": "https://github.com/asgardeo/javascript/issues"
   },
@@ -25,12 +26,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/asgardeo/javascript",
-    "directory": "packages/js"
+    "directory": "packages/javascript"
   },
   "scripts": {
     "build": "tsc -p tsconfig.lib.json",
-    "fix:lint": "eslint --fix --ext .ts,.js src",
-    "lint": "eslint --ext .ts,.js src"
+    "fix:lint": "eslint . --ext .js,.jsx,.ts,.tsx,.cjs,.mjs",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.cjs,.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",
