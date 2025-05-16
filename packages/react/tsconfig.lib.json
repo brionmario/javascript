@@ -16,5 +16,5 @@
     "**/*.spec.jsx",
     "**/*.test.jsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.ts", "types/**/*.d.ts", "src/Greet.tsx", "src/__tests__/greet.test.tsx"]
+  "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.jsx", "src/**/*.tsx", "types/**/*.d.ts"]
 }
