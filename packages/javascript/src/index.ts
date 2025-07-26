@@ -143,6 +143,7 @@ export {default as flattenUserSchema} from './utils/flattenUserSchema';
 export {default as generateUserProfile} from './utils/generateUserProfile';
 export {default as getLatestStateParam} from './utils/getLatestStateParam';
 export {default as generateFlattenedUserProfile} from './utils/generateFlattenedUserProfile';
+export {default as getRedirectBasedSignUpUrl} from './utils/getRedirectBasedSignUpUrl';
 export {default as getI18nBundles} from './utils/getI18nBundles';
 export {default as identifyPlatform} from './utils/identifyPlatform';
 export {default as isEmpty} from './utils/isEmpty';
