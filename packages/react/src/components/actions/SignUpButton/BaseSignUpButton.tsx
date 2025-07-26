@@ -98,6 +98,8 @@ const BaseSignUpButton: ForwardRefExoticComponent<BaseSignUpButtonProps & RefAtt
           disabled={isLoading}
           loading={isLoading}
           type="button"
+          color="primary"
+          variant="solid"
           {...rest}
         >
           {children}
