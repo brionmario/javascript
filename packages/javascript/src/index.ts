@@ -135,6 +135,7 @@ export {default as processUsername} from './utils/processUsername';
 export {default as deepMerge} from './utils/deepMerge';
 export {default as deriveOrganizationHandleFromBaseUrl} from './utils/deriveOrganizationHandleFromBaseUrl';
 export {default as extractUserClaimsFromIdToken} from './utils/extractUserClaimsFromIdToken';
+export {default as isRecognizedBaseUrlPattern} from './utils/isRecognizedBaseUrlPattern';
 export {default as extractPkceStorageKeyFromState} from './utils/extractPkceStorageKeyFromState';
 export {default as flattenUserSchema} from './utils/flattenUserSchema';
 export {default as generateUserProfile} from './utils/generateUserProfile';
