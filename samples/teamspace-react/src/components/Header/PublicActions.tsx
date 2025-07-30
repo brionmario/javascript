@@ -26,21 +26,7 @@ export default function PublicActions({className = '', showMobileActions = false
       {/* Desktop CTA */}
       <div className="hidden md:flex items-center space-x-4">
         <SignInButton />
-        <SignUpButton>
-          {({isLoading}) => (
-            <Button
-              onClick={() => {
-                navigate('/signup');
-              }}
-              disabled={isLoading}
-              size="lg"
-              color="primary"
-              variant="default"
-            >
-              {isLoading ? 'Signing up...' : 'Sign Up'}
-            </Button>
-          )}
-        </SignUpButton>
+        <SignUpButton />
       </div>
 
       {/* Mobile CTA - shown in mobile menu */}
