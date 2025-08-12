@@ -58,15 +58,7 @@ export type SignUpOptions = Record<string, unknown>;
  * The default strategy is 'baseUrl', which derives the organization handle from the baseUrl.
  */
 export type OrganizationDiscoveryStrategy =
-  | {
-      /**
-       * Discover organization info from the baseUrl.
-       * This is the default strategy if no other is specified.
-       */
-      type: 'baseUrl';
-      mode?: 'handle'; // Only handle is supported for baseUrl
-    }
-  | {
+  {
       /**
        * Discover organization info from a URL path parameter.
        * Example: { type: 'urlPath', mode: 'id', param: 't' } for /app/:t/dashboard
@@ -118,6 +110,13 @@ export type OrganizationDiscoveryStrategy =
  * }
  */
 export interface OrganizationDiscovery {
+  /**
+   * Flag to enable organization discovery.
+   */
+  enabled: boolean;
+  /**
+   * Strategy for discovering the organization handle or ID.
+   */
   strategy?: OrganizationDiscoveryStrategy;
 }
 

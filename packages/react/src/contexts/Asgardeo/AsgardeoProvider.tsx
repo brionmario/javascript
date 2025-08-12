@@ -289,8 +289,16 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     setBrandingError(null);
 
     try {
+      // Transform base URL if organization discovery is enabled
+      let transformedBaseUrl = baseUrl;
+
+      if (config?.organizationDiscovery && config.organizationDiscovery.enabled && config?.organizationHandle) {
+        // Transform from https://localhost:9443/t/{tenant} to https://localhost:9443/o/{orgHandle}
+        transformedBaseUrl = baseUrl.replace(/\/t\/[^\/]+/, `/o/${config.organizationHandle}`);
+      }
+
       const getBrandingConfig: GetBrandingPreferenceConfig = {
-        baseUrl,
+        baseUrl: transformedBaseUrl,
         locale: preferences?.i18n?.language,
         name: config?.organizationHandle,
       };
@@ -319,13 +327,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     // Enable branding by default or when explicitly enabled
     const shouldFetchBranding = preferences?.theme?.inheritFromBranding !== false;
 
-    if (
-      shouldFetchBranding &&
-      isInitializedSync &&
-      baseUrl &&
-      !hasFetchedBranding &&
-      !isBrandingLoading
-    ) {
+    if (shouldFetchBranding && isInitializedSync && baseUrl && !hasFetchedBranding && !isBrandingLoading) {
       fetchBranding();
     }
   }, [

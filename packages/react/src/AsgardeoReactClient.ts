@@ -42,6 +42,7 @@ import {
   HttpResponse,
   Storage,
   organizationDiscovery,
+  deriveOrganizationHandleFromBaseUrl,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -94,13 +95,15 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     let resolvedOrganizationHandle: string | undefined = config?.organizationHandle;
 
     if (!resolvedOrganizationHandle) {
-      try {
-        resolvedOrganizationHandle = await organizationDiscovery(
-          config?.organizationDiscovery?.strategy,
-          config?.baseUrl,
-        );
-      } catch (e) {
-        // TODO: Add a debug log here.
+      if (config?.organizationDiscovery?.enabled && config?.organizationDiscovery?.strategy) {
+        try {
+          resolvedOrganizationHandle = await organizationDiscovery(config?.organizationDiscovery?.strategy);
+        } catch (e) {
+          // TODO: Add a debug log here.
+          resolvedOrganizationHandle = deriveOrganizationHandleFromBaseUrl(config?.baseUrl);
+        }
+      } else {
+        resolvedOrganizationHandle = deriveOrganizationHandleFromBaseUrl(config?.baseUrl);
       }
     }
 

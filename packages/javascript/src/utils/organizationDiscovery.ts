@@ -17,7 +17,6 @@
  */
 
 import {OrganizationDiscoveryStrategy} from '../models/config';
-import deriveOrganizationHandleFromBaseUrl from './deriveOrganizationHandleFromBaseUrl';
 
 /**
  * Derives organization info from URL path parameter
@@ -72,29 +71,19 @@ const deriveFromSubdomain = (): string | undefined => {
  */
 const organizationDiscovery = async (
   strategy: OrganizationDiscoveryStrategy,
-  baseUrl?: string,
 ): Promise<string | undefined> => {
-  const resolvedStrategy = strategy || {
-    type: 'baseUrl',
-    param: undefined,
-    resolver: () => null,
-  };
-
-  switch (resolvedStrategy?.type) {
-    case 'baseUrl':
-      return deriveOrganizationHandleFromBaseUrl(baseUrl);
-
+  switch (strategy?.type) {
     case 'urlPath':
-      return deriveFromUrlPath(resolvedStrategy?.param);
+      return deriveFromUrlPath(strategy?.param);
 
     case 'urlQuery':
-      return deriveFromUrlQuery(resolvedStrategy?.param);
+      return deriveFromUrlQuery(strategy?.param);
 
     case 'subdomain':
       return deriveFromSubdomain();
 
     case 'custom':
-      return await resolvedStrategy?.resolver();
+      return await strategy?.resolver();
 
     default:
       return undefined;
