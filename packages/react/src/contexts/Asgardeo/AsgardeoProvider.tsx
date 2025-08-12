@@ -208,7 +208,6 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     const checkInitializedState = async (): Promise<void> => {
       try {
         const status: boolean = await asgardeo.isInitialized();
-        console.log('[AsgardeoProvider] isInitialized status:', status);
 
         setIsInitializedSync(status);
 
@@ -293,7 +292,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       const getBrandingConfig: GetBrandingPreferenceConfig = {
         baseUrl,
         locale: preferences?.i18n?.language,
-        // Add other branding config options as needed
+        name: config?.organizationHandle,
       };
 
       const brandingData = await getBrandingPreference(getBrandingConfig);
@@ -307,7 +306,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     } finally {
       setIsBrandingLoading(false);
     }
-  }, [baseUrl, preferences?.i18n?.language]);
+  }, [baseUrl, preferences?.i18n?.language, config?.organizationHandle]);
 
   // Refetch branding function
   const refetchBranding = useCallback(async (): Promise<void> => {
@@ -320,7 +319,13 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     // Enable branding by default or when explicitly enabled
     const shouldFetchBranding = preferences?.theme?.inheritFromBranding !== false;
 
-    if (shouldFetchBranding && isInitializedSync && baseUrl && !hasFetchedBranding && !isBrandingLoading) {
+    if (
+      shouldFetchBranding &&
+      isInitializedSync &&
+      baseUrl &&
+      !hasFetchedBranding &&
+      !isBrandingLoading
+    ) {
       fetchBranding();
     }
   }, [
@@ -330,6 +335,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     hasFetchedBranding,
     isBrandingLoading,
     fetchBranding,
+    config?.organizationHandle,
   ]);
 
   const signIn = async (...args: any): Promise<User> => {
@@ -435,7 +441,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     }),
     [
       applicationId,
-      config?.organizationHandle,
+      organizationHandle,
       signInUrl,
       signUpUrl,
       afterSignInUrl,
