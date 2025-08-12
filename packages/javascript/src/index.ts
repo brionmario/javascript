@@ -86,6 +86,8 @@ export {
   SignInOptions,
   SignOutOptions,
   SignUpOptions,
+  OrganizationDiscovery,
+  OrganizationDiscoveryStrategy,
 } from './models/config';
 export {TokenResponse, IdToken, TokenExchangeRequestConfig} from './models/token';
 export {Crypto, JWKInterface} from './models/crypto';
@@ -143,7 +145,7 @@ export {default as resolveFieldName} from './utils/resolveFieldName';
 export {default as processOpenIDScopes} from './utils/processOpenIDScopes';
 export {default as withVendorCSSClassPrefix} from './utils/withVendorCSSClassPrefix';
 export {default as transformBrandingPreferenceToTheme} from './utils/transformBrandingPreferenceToTheme';
-
+export {default as organizationDiscovery} from './utils/organizationDiscovery';
 export {
   default as logger,
   createLogger,

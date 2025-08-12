@@ -53,6 +53,74 @@ export type SignOutOptions = Record<string, unknown>;
  */
 export type SignUpOptions = Record<string, unknown>;
 
+/**
+ * Strategy for discovering the organization handle or ID.
+ * The default strategy is 'baseUrl', which derives the organization handle from the baseUrl.
+ */
+export type OrganizationDiscoveryStrategy =
+  | {
+      /**
+       * Discover organization info from the baseUrl.
+       * This is the default strategy if no other is specified.
+       */
+      type: 'baseUrl';
+      mode?: 'handle'; // Only handle is supported for baseUrl
+    }
+  | {
+      /**
+       * Discover organization info from a URL path parameter.
+       * Example: { type: 'urlPath', mode: 'id', param: 't' } for /app/:t/dashboard
+       */
+      type: 'urlPath';
+      mode: 'id' | 'handle';
+      param: string;
+    }
+  | {
+      /**
+       * Discover organization info from a URL query parameter.
+       * Example: { type: 'urlQuery', mode: 'handle', param: 'org' } for /app?org=acme
+       */
+      type: 'urlQuery';
+      mode: 'id' | 'handle';
+      param: string;
+    }
+  | {
+      /**
+       * Discover organization info from the subdomain.
+       * Example: { type: 'subdomain', mode: 'handle' } for acme.yourapp.com
+       */
+      type: 'subdomain';
+      mode: 'id' | 'handle';
+    }
+  | {
+      /**
+       * Use a custom resolver function to determine the organization.
+       * Example: { type: 'custom', mode: 'handle', resolver: () => ... }
+       */
+      type: 'custom';
+      mode: 'id' | 'handle';
+      resolver: () => string | Promise<string>;
+    };
+
+/**
+ * Optional configuration to enable and control automatic organization discovery.
+ * This feature is disabled by default and must be explicitly enabled by setting this property.
+ * If no strategy is specified, 'baseUrl' will be used as the default.
+ *
+ * When enabled, the SDK will use the specified strategy to discover the organization handle or ID
+ * and will automatically inject `signInOptions={{ fidp: 'OrganizationSSO', orgId: '<resolved>' }}`
+ * into authentication requests.
+ *
+ * @example
+ * organizationDiscovery: {
+ *   enabled: true,
+ *   strategy: { type: 'urlPath', mode: 'handle', param: 'org' }
+ * }
+ */
+export interface OrganizationDiscovery {
+  strategy?: OrganizationDiscoveryStrategy;
+}
+
 export interface BaseConfig<T = unknown> extends WithPreferences {
   /**
    * Optional URL where the authorization server should redirect after authentication.
@@ -197,6 +265,15 @@ export interface BaseConfig<T = unknown> extends WithPreferences {
    * @see {@link https://openid.net/specs/openid-connect-session-management-1_0.html#IframeBasedSessionManagement}
    */
   syncSession?: boolean;
+
+  /**
+   * Optional configuration to enable automatic organization discovery.
+   * This must be explicitly enabled by setting `enabled: true`.
+   * When enabled, the SDK will inject `signInOptions={{ fidp: 'OrganizationSSO', orgId: '<resolved>' }}`
+   * into authentication requests.
+   * If no strategy is specified, the SDK will use the baseUrl to derive the organization handle.
+   */
+  organizationDiscovery?: OrganizationDiscovery;
 }
 
 export interface WithPreferences {
