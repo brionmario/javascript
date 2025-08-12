@@ -128,7 +128,7 @@ export {default as bem} from './utils/bem';
 export {default as formatDate} from './utils/formatDate';
 export {default as processUsername} from './utils/processUsername';
 export {default as deepMerge} from './utils/deepMerge';
-export {default as deriveOrganizationHandleFromBaseUrl} from './utils/deriveOrganizationHandleFromBaseUrl';
+export {default as deriveRootOrganizationHandleFromBaseUrl} from './utils/deriveRootOrganizationHandleFromBaseUrl';
 export {default as extractUserClaimsFromIdToken} from './utils/extractUserClaimsFromIdToken';
 export {default as extractPkceStorageKeyFromState} from './utils/extractPkceStorageKeyFromState';
 export {default as flattenUserSchema} from './utils/flattenUserSchema';

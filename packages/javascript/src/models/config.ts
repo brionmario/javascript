@@ -145,10 +145,19 @@ export interface BaseConfig<T = unknown> extends WithPreferences {
   afterSignOutUrl?: string | undefined;
 
   /**
-   * Optional organization handle for the Organization in Asgardeo.
-   * This is used to identify the organization in the Asgardeo identity server in cases like Branding, etc.
-   * If not provided, the framework layer will try to use the `baseUrl` to determine the organization handle.
+   * Optional root organization handle for the main Organization in Asgardeo.
+   * This represents the top-level organization and is used for root-level operations.
+   * If not provided, the framework layer will try to use the `baseUrl` to determine the root organization handle.
    * @remarks This is mandatory if a custom domain is configured for the Asgardeo organization.
+   */
+  rootOrganizationHandle?: string | undefined;
+
+  /**
+   * Optional organization handle for B2B scenarios in Asgardeo.
+   * This is used to identify the specific sub-organization in B2B use cases.
+   * In B2B scenarios, this typically represents the customer's organization while 
+   * rootOrganizationHandle represents your main organization.
+   * @remarks This is used in conjunction with rootOrganizationHandle for B2B flows.
    */
   organizationHandle?: string | undefined;
 

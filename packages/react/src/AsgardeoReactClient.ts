@@ -42,7 +42,7 @@ import {
   HttpResponse,
   Storage,
   organizationDiscovery,
-  deriveOrganizationHandleFromBaseUrl,
+  deriveRootOrganizationHandleFromBaseUrl,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -93,6 +93,7 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
 
   override async initialize(config: AsgardeoReactConfig, storage?: Storage): Promise<boolean> {
     let resolvedOrganizationHandle: string | undefined = config?.organizationHandle;
+    let resolvedRootOrganizationHandle: string | undefined = config?.rootOrganizationHandle;
 
     if (!resolvedOrganizationHandle) {
       if (config?.organizationDiscovery?.enabled && config?.organizationDiscovery?.strategy) {
@@ -100,15 +101,20 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
           resolvedOrganizationHandle = await organizationDiscovery(config?.organizationDiscovery?.strategy);
         } catch (e) {
           // TODO: Add a debug log here.
-          resolvedOrganizationHandle = deriveOrganizationHandleFromBaseUrl(config?.baseUrl);
         }
-      } else {
-        resolvedOrganizationHandle = deriveOrganizationHandleFromBaseUrl(config?.baseUrl);
       }
     }
 
+    if (!resolvedRootOrganizationHandle) {
+      resolvedRootOrganizationHandle = deriveRootOrganizationHandleFromBaseUrl(config?.baseUrl);
+    }
+
     return this.withLoading(async () => {
-      return this.asgardeo.init({...config, organizationHandle: resolvedOrganizationHandle} as any);
+      return this.asgardeo.init({
+        ...config,
+        organizationHandle: resolvedOrganizationHandle,
+        rootOrganizationHandle: resolvedRootOrganizationHandle,
+      } as any);
     });
   }
 
