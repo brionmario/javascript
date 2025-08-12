@@ -105,6 +105,18 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
   }, [_baseUrl, baseUrl]);
 
   useEffect(() => {
+    // React 18.x Strict.Mode has a new check for `Ensuring reusable state` to facilitate an upcoming react feature.
+    // https://reactjs.org/docs/strict-mode.html#ensuring-reusable-state
+    // This will remount all the useEffects to ensure that there are no unexpected side effects.
+    // When react remounts the signIn hook of the AuthProvider, it will cause a race condition. Hence, we have to
+    // prevent the re-render of this hook as suggested in the following discussion.
+    // https://github.com/reactwg/react-18/discussions/18#discussioncomment-795623
+    if (reRenderCheckRef.current) {
+      return;
+    }
+
+    reRenderCheckRef.current = true;
+
     (async (): Promise<void> => {
       await asgardeo.initialize(config);
       setConfig(await asgardeo.getConfiguration());
@@ -191,15 +203,35 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
   }, [asgardeo]);
 
   useEffect(() => {
-    (async (): Promise<void> => {
+    let interval: NodeJS.Timeout;
+
+    const checkInitializedState = async (): Promise<void> => {
       try {
         const status: boolean = await asgardeo.isInitialized();
+        console.log('[AsgardeoProvider] isInitialized status:', status);
 
         setIsInitializedSync(status);
+
+        // If initialized, clear the interval
+        if (status && interval) {
+          clearInterval(interval);
+        }
       } catch (error) {
         setIsInitializedSync(false);
       }
-    })();
+    };
+
+    // Initial check
+    checkInitializedState();
+
+    // Set up an interval to check for initialization status changes
+    interval = setInterval(checkInitializedState, 100);
+
+    return (): void => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [asgardeo]);
 
   /**

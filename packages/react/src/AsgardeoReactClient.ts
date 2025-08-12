@@ -35,13 +35,13 @@ import {
   Organization,
   IdToken,
   EmbeddedFlowExecuteRequestConfig,
-  deriveOrganizationHandleFromBaseUrl,
   AllOrganizationsApiResponse,
   extractUserClaimsFromIdToken,
   TokenResponse,
   HttpRequestConfig,
   HttpResponse,
   Storage,
+  organizationDiscovery,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -90,11 +90,18 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     }
   }
 
-  override initialize(config: AsgardeoReactConfig, storage?: Storage): Promise<boolean> {
+  override async initialize(config: AsgardeoReactConfig, storage?: Storage): Promise<boolean> {
     let resolvedOrganizationHandle: string | undefined = config?.organizationHandle;
 
     if (!resolvedOrganizationHandle) {
-      resolvedOrganizationHandle = deriveOrganizationHandleFromBaseUrl(config?.baseUrl);
+      try {
+        resolvedOrganizationHandle = await organizationDiscovery(
+          config?.organizationDiscovery?.strategy,
+          config?.baseUrl,
+        );
+      } catch (e) {
+        // TODO: Add a debug log here.
+      }
     }
 
     return this.withLoading(async () => {
@@ -251,15 +258,21 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   override isLoading(): boolean {
-    return this._isLoading || this.asgardeo.isLoading();
+    const clientLoading: boolean = this._isLoading;
+    const asgardeoLoading: boolean = this.asgardeo.isLoading() ?? false;
+    const totalLoading: boolean = clientLoading || asgardeoLoading;
+
+    return totalLoading;
   }
 
   async isInitialized(): Promise<boolean> {
-    return this.asgardeo.isInitialized();
+    const result: boolean = await this.asgardeo.isInitialized();
+    return result ?? false;
   }
 
-  override isSignedIn(): Promise<boolean> {
-    return this.asgardeo.isSignedIn();
+  override async isSignedIn(): Promise<boolean> {
+    const result: boolean = await this.asgardeo.isSignedIn();
+    return result ?? false;
   }
 
   override getConfiguration(): T {
