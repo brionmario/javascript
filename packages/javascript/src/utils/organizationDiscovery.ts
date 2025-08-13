@@ -69,9 +69,9 @@ const deriveFromSubdomain = (): string | undefined => {
 /**
  * Resolves organization info based on the discovery strategy
  */
-const organizationDiscovery = async (
+const organizationDiscovery = (
   strategy: OrganizationDiscoveryStrategy,
-): Promise<string | undefined> => {
+): string => {
   switch (strategy?.type) {
     case 'urlPath':
       return deriveFromUrlPath(strategy?.param);
@@ -83,7 +83,7 @@ const organizationDiscovery = async (
       return deriveFromSubdomain();
 
     case 'custom':
-      return await strategy?.resolver();
+      return strategy?.resolver();
 
     default:
       return undefined;

@@ -95,21 +95,21 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     let resolvedOrganizationHandle: string | undefined = config?.organizationHandle;
     let resolvedRootOrganizationHandle: string | undefined = config?.rootOrganizationHandle;
 
-    if (!resolvedOrganizationHandle) {
-      if (config?.organizationDiscovery?.enabled && config?.organizationDiscovery?.strategy) {
-        try {
-          resolvedOrganizationHandle = await organizationDiscovery(config?.organizationDiscovery?.strategy);
-        } catch (e) {
-          // TODO: Add a debug log here.
+    return this.withLoading(async () => {
+      if (!resolvedOrganizationHandle) {
+        if (config?.organizationDiscovery?.enabled && config?.organizationDiscovery?.strategy) {
+          try {
+            resolvedOrganizationHandle = organizationDiscovery(config?.organizationDiscovery?.strategy);
+          } catch (e) {
+            // TODO: Add a debug log here.
+          }
         }
       }
-    }
 
-    if (!resolvedRootOrganizationHandle) {
-      resolvedRootOrganizationHandle = deriveRootOrganizationHandleFromBaseUrl(config?.baseUrl);
-    }
+      if (!resolvedRootOrganizationHandle) {
+        resolvedRootOrganizationHandle = deriveRootOrganizationHandleFromBaseUrl(config?.baseUrl);
+      }
 
-    return this.withLoading(async () => {
       return this.asgardeo.init({
         ...config,
         organizationHandle: resolvedOrganizationHandle,
@@ -267,21 +267,15 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   override isLoading(): boolean {
-    const clientLoading: boolean = this._isLoading;
-    const asgardeoLoading: boolean = this.asgardeo.isLoading() ?? false;
-    const totalLoading: boolean = clientLoading || asgardeoLoading;
-
-    return totalLoading;
+    return this._isLoading || this.asgardeo.isLoading();
   }
 
   async isInitialized(): Promise<boolean> {
-    const result: boolean = await this.asgardeo.isInitialized();
-    return result ?? false;
+    return this.asgardeo.isInitialized();
   }
 
-  override async isSignedIn(): Promise<boolean> {
-    const result: boolean = await this.asgardeo.isSignedIn();
-    return result ?? false;
+  override isSignedIn(): Promise<boolean> {
+    return this.asgardeo.isSignedIn();
   }
 
   override getConfiguration(): T {

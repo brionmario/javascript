@@ -91,7 +91,7 @@ export type OrganizationDiscoveryStrategy =
        */
       type: 'custom';
       mode: 'id' | 'handle';
-      resolver: () => string | Promise<string>;
+      resolver: () => string;
     };
 
 /**
@@ -155,7 +155,7 @@ export interface BaseConfig<T = unknown> extends WithPreferences {
   /**
    * Optional organization handle for B2B scenarios in Asgardeo.
    * This is used to identify the specific sub-organization in B2B use cases.
-   * In B2B scenarios, this typically represents the customer's organization while 
+   * In B2B scenarios, this typically represents the customer's organization while
    * rootOrganizationHandle represents your main organization.
    * @remarks This is used in conjunction with rootOrganizationHandle for B2B flows.
    */
