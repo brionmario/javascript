@@ -1,5 +1,17 @@
 # @asgardeo/react
 
+## 0.5.18
+
+### Patch Changes
+
+- [#129](https://github.com/asgardeo/javascript/pull/129)
+  [`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add HTTP utility and export in browser and react packages
+
+- Updated dependencies
+  [[`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c)]:
+  - @asgardeo/browser@0.1.13
+
 ## 0.5.17
 
 ### Patch Changes
