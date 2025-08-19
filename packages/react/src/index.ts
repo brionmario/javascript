@@ -273,4 +273,4 @@ export {default as updateMeProfile, UpdateMeProfileConfig} from './api/updateMeP
 export {default as getMeProfile} from './api/getScim2Me';
 export * from './api/getScim2Me';
 
-export {AsgardeoRuntimeError} from '@asgardeo/browser';
+export {AsgardeoRuntimeError, http} from '@asgardeo/browser';
