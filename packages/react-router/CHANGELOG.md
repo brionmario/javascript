@@ -1,5 +1,17 @@
 # @asgardeo/react-router
 
+## 0.0.10
+
+### Patch Changes
+
+- [#126](https://github.com/asgardeo/javascript/pull/126)
+  [`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix: avoid the race condition when ProtectedRoute is used
+
+- Updated dependencies
+  [[`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434)]:
+  - @asgardeo/react@0.5.17
+
 ## 0.0.9
 
 ### Patch Changes
