@@ -1,5 +1,14 @@
 # @asgardeo/react
 
+## 0.5.20
+
+### Patch Changes
+
+- [#133](https://github.com/asgardeo/javascript/pull/133)
+  [`e87f363`](https://github.com/asgardeo/javascript/commit/e87f3635f5947bb9fa8b450ec60b8a160f7eeb05) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix: remove color and variant props from BaseSignOutButton and
+  BaseSignUpButton
+
 ## 0.5.19
 
 ### Patch Changes
