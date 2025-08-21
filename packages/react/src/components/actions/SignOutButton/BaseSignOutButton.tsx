@@ -98,7 +98,7 @@ const BaseSignOutButton: ForwardRefExoticComponent<BaseSignOutButtonProps & RefA
           disabled={isLoading}
           loading={isLoading}
           type="button"
-          color="secondary"
+          color="primary"
           variant="outline"
           {...rest}
         >
