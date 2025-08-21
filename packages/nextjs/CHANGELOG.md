@@ -1,5 +1,13 @@
 # @asgardeo/nextjs
 
+## 0.1.20
+
+### Patch Changes
+
+- Updated dependencies
+  [[`8acc3af`](https://github.com/asgardeo/javascript/commit/8acc3afa5d629b5692520b9460e3e6b81d287be2)]:
+  - @asgardeo/react@0.5.19
+
 ## 0.1.19
 
 ### Patch Changes

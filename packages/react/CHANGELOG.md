@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.5.19
+
+### Patch Changes
+
+- [#131](https://github.com/asgardeo/javascript/pull/131)
+  [`8acc3af`](https://github.com/asgardeo/javascript/commit/8acc3afa5d629b5692520b9460e3e6b81d287be2) Thanks
+  [@brionmario](https://github.com/brionmario)! - Change button color from secondary to primary in BaseSignOutButton
+
 ## 0.5.18
 
 ### Patch Changes
