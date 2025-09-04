@@ -52,6 +52,7 @@ import {
   extractUserClaimsFromIdToken,
   TokenResponse,
   Storage,
+  TokenExchangeRequestConfig,
 } from '@asgardeo/node';
 import {AsgardeoNextConfig} from './models/config';
 import getSessionId from './server/actions/getSessionId';
@@ -381,6 +382,10 @@ class AsgardeoNextClient<T extends AsgardeoNextConfig = AsgardeoNextConfig> exte
     return this.asgardeo.isSignedIn(sessionId as string);
   }
 
+  override exchangeToken(config: TokenExchangeRequestConfig, sessionId?: string): Promise<TokenResponse | Response> {
+    return this.asgardeo.exchangeToken(config, sessionId);
+  }
+
   /**
    * Gets the access token from the session cookie if no sessionId is provided,
    * otherwise falls back to legacy client method.
@@ -390,7 +395,6 @@ class AsgardeoNextClient<T extends AsgardeoNextConfig = AsgardeoNextConfig> exte
     const token = await getAccessToken();
 
     if (typeof token !== 'string' || !token) {
-      throw new Error('Access token not found');
       throw new AsgardeoRuntimeError(
         'Failed to get access token.',
         'AsgardeoNextClient-getAccessToken-RuntimeError-003',

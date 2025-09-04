@@ -25,7 +25,7 @@ import {
 import {EmbeddedSignInFlowHandleRequestPayload} from './embedded-signin-flow';
 import {Organization} from './organization';
 import {User, UserProfile} from './user';
-import {TokenResponse} from './token';
+import {TokenExchangeRequestConfig, TokenResponse} from './token';
 import {Storage} from './store';
 import {SignInOptions, SignOutOptions, SignUpOptions} from './config';
 
@@ -64,6 +64,13 @@ export interface AsgardeoClient<T> {
   switchOrganization(organization: Organization, sessionId?: string): Promise<TokenResponse | Response>;
 
   getConfiguration(): T;
+
+  /**
+   * Swaps the current access token with a new one based on the provided configuration (with a grant type).
+   * @param config - Configuration for the token exchange request.
+   * @param sessionId - Optional session ID to be used for the token exchange.
+   */
+  exchangeToken(config: TokenExchangeRequestConfig, sessionId?: string): Promise<TokenResponse | Response>;
 
   updateUserProfile(payload: any, userId?: string): Promise<User>;
 
