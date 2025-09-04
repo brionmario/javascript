@@ -390,7 +390,6 @@ class AsgardeoNextClient<T extends AsgardeoNextConfig = AsgardeoNextConfig> exte
     const token = await getAccessToken();
 
     if (typeof token !== 'string' || !token) {
-      throw new Error('Access token not found');
       throw new AsgardeoRuntimeError(
         'Failed to get access token.',
         'AsgardeoNextClient-getAccessToken-RuntimeError-003',
