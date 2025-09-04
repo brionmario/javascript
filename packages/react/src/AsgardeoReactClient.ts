@@ -42,6 +42,7 @@ import {
   HttpRequestConfig,
   HttpResponse,
   Storage,
+  TokenExchangeRequestConfig,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -269,6 +270,15 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
 
   override getConfiguration(): T {
     return this.asgardeo.getConfigData() as unknown as T;
+  }
+
+  override async exchangeToken(
+    config: TokenExchangeRequestConfig,
+    sessionId?: string,
+  ): Promise<TokenResponse | Response> {
+    return this.withLoading(async () => {
+      return this.asgardeo.exchangeToken(config, (user: User) => {}) as unknown as TokenResponse | Response;
+    });
   }
 
   override signIn(

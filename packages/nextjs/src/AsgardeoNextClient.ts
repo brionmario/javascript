@@ -52,6 +52,7 @@ import {
   extractUserClaimsFromIdToken,
   TokenResponse,
   Storage,
+  TokenExchangeRequestConfig,
 } from '@asgardeo/node';
 import {AsgardeoNextConfig} from './models/config';
 import getSessionId from './server/actions/getSessionId';
@@ -379,6 +380,10 @@ class AsgardeoNextClient<T extends AsgardeoNextConfig = AsgardeoNextConfig> exte
 
   override isSignedIn(sessionId?: string): Promise<boolean> {
     return this.asgardeo.isSignedIn(sessionId as string);
+  }
+
+  override exchangeToken(config: TokenExchangeRequestConfig, sessionId?: string): Promise<TokenResponse | Response> {
+    return this.asgardeo.exchangeToken(config, sessionId);
   }
 
   /**
