@@ -97,6 +97,14 @@ export type AsgardeoContextProps = {
    * @returns A promise that resolves to the decoded ID token payload.
    */
   getDecodedIdToken?: () => Promise<IdToken>;
+
+  /**
+   * Function to retrieve the access token.
+   * This function retrieves the access token and returns it.
+   * @remarks This does not work in the `webWorker` or any other worker environment.
+   * @returns A promise that resolves to the access token.
+   */
+  getAccessToken?: () => Promise<string>;
 };
 
 /**
@@ -124,6 +132,7 @@ const AsgardeoContext: Context<AsgardeoContextProps | null> = createContext<null
   },
   signInOptions: {},
   getDecodedIdToken: null,
+  getAccessToken: null,
 });
 
 AsgardeoContext.displayName = 'AsgardeoContext';
