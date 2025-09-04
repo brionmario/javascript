@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.5.21
+
+### Patch Changes
+
+- [#135](https://github.com/asgardeo/javascript/pull/135)
+  [`a9f7279`](https://github.com/asgardeo/javascript/commit/a9f72798c59a077eb58c56d40718ec529e76fec3) Thanks
+  [@brionmario](https://github.com/brionmario)! - Expose `getAccessToken` & `exchangeToken` from `useAsgardeo`
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.14
+
 ## 0.5.20
 
 ### Patch Changes
