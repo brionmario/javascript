@@ -1,5 +1,50 @@
 # @asgardeo/nextjs
 
+## 0.1.22
+
+### Patch Changes
+
+- [#135](https://github.com/asgardeo/javascript/pull/135)
+  [`a9f7279`](https://github.com/asgardeo/javascript/commit/a9f72798c59a077eb58c56d40718ec529e76fec3) Thanks
+  [@brionmario](https://github.com/brionmario)! - Expose `getAccessToken` & `exchangeToken` from `useAsgardeo`
+
+- Updated dependencies
+  [[`a9f7279`](https://github.com/asgardeo/javascript/commit/a9f72798c59a077eb58c56d40718ec529e76fec3)]:
+  - @asgardeo/react@0.5.21
+  - @asgardeo/node@0.0.15
+
+## 0.1.21
+
+### Patch Changes
+
+- Updated dependencies
+  [[`e87f363`](https://github.com/asgardeo/javascript/commit/e87f3635f5947bb9fa8b450ec60b8a160f7eeb05)]:
+  - @asgardeo/react@0.5.20
+
+## 0.1.20
+
+### Patch Changes
+
+- Updated dependencies
+  [[`8acc3af`](https://github.com/asgardeo/javascript/commit/8acc3afa5d629b5692520b9460e3e6b81d287be2)]:
+  - @asgardeo/react@0.5.19
+
+## 0.1.19
+
+### Patch Changes
+
+- Updated dependencies
+  [[`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c)]:
+  - @asgardeo/react@0.5.18
+
+## 0.1.18
+
+### Patch Changes
+
+- Updated dependencies
+  [[`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434)]:
+  - @asgardeo/react@0.5.17
+
 ## 0.1.17
 
 ### Patch Changes

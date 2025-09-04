@@ -1,5 +1,53 @@
 # @asgardeo/react
 
+## 0.5.21
+
+### Patch Changes
+
+- [#135](https://github.com/asgardeo/javascript/pull/135)
+  [`a9f7279`](https://github.com/asgardeo/javascript/commit/a9f72798c59a077eb58c56d40718ec529e76fec3) Thanks
+  [@brionmario](https://github.com/brionmario)! - Expose `getAccessToken` & `exchangeToken` from `useAsgardeo`
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.14
+
+## 0.5.20
+
+### Patch Changes
+
+- [#133](https://github.com/asgardeo/javascript/pull/133)
+  [`e87f363`](https://github.com/asgardeo/javascript/commit/e87f3635f5947bb9fa8b450ec60b8a160f7eeb05) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix: remove color and variant props from BaseSignOutButton and
+  BaseSignUpButton
+
+## 0.5.19
+
+### Patch Changes
+
+- [#131](https://github.com/asgardeo/javascript/pull/131)
+  [`8acc3af`](https://github.com/asgardeo/javascript/commit/8acc3afa5d629b5692520b9460e3e6b81d287be2) Thanks
+  [@brionmario](https://github.com/brionmario)! - Change button color from secondary to primary in BaseSignOutButton
+
+## 0.5.18
+
+### Patch Changes
+
+- [#129](https://github.com/asgardeo/javascript/pull/129)
+  [`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add HTTP utility and export in browser and react packages
+
+- Updated dependencies
+  [[`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c)]:
+  - @asgardeo/browser@0.1.13
+
+## 0.5.17
+
+### Patch Changes
+
+- [#126](https://github.com/asgardeo/javascript/pull/126)
+  [`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix: avoid the race condition when ProtectedRoute is used
+
 ## 0.5.16
 
 ### Patch Changes

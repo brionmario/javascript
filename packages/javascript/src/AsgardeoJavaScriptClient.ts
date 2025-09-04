@@ -22,7 +22,7 @@ import {Config, SignInOptions, SignOutOptions, SignUpOptions} from './models/con
 import {Storage} from './models/store';
 import {EmbeddedFlowExecuteRequestPayload, EmbeddedFlowExecuteResponse} from './models/embedded-flow';
 import {EmbeddedSignInFlowHandleRequestPayload} from './models/embedded-signin-flow';
-import {TokenResponse} from './models/token';
+import {TokenExchangeRequestConfig, TokenResponse} from './models/token';
 import {Organization} from './models/organization';
 import {User, UserProfile} from './models/user';
 
@@ -54,6 +54,8 @@ abstract class AsgardeoJavaScriptClient<T = Config> implements AsgardeoClient<T>
   abstract updateUserProfile(payload: any, userId?: string): Promise<User>;
 
   abstract getConfiguration(): T;
+
+  abstract exchangeToken(config: TokenExchangeRequestConfig, sessionId?: string): Promise<TokenResponse | Response>;
 
   abstract signIn(
     options?: SignInOptions,

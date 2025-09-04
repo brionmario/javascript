@@ -43,6 +43,7 @@ import {
   Storage,
   organizationDiscovery,
   deriveRootOrganizationHandleFromBaseUrl,
+  TokenExchangeRequestConfig,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -141,37 +142,41 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   async getDecodedIdToken(sessionId?: string): Promise<IdToken> {
-    return this.asgardeo.getDecodedIdToken(sessionId);
+    return this.withLoading(async () => {
+      return this.asgardeo.getDecodedIdToken(sessionId);
+    });
   }
 
   async getUserProfile(options?: any): Promise<UserProfile> {
-    try {
-      let baseUrl = options?.baseUrl;
+    return this.withLoading(async () => {
+      try {
+        let baseUrl = options?.baseUrl;
 
-      if (!baseUrl) {
-        const configData = await this.asgardeo.getConfigData();
-        baseUrl = configData?.baseUrl;
+        if (!baseUrl) {
+          const configData = await this.asgardeo.getConfigData();
+          baseUrl = configData?.baseUrl;
+        }
+
+        const profile = await getScim2Me({baseUrl});
+        const schemas = await getSchemas({baseUrl});
+
+        const processedSchemas = flattenUserSchema(schemas);
+
+        const output = {
+          schemas: processedSchemas,
+          flattenedProfile: generateFlattenedUserProfile(profile, processedSchemas),
+          profile,
+        };
+
+        return output;
+      } catch (error) {
+        return {
+          schemas: [],
+          flattenedProfile: extractUserClaimsFromIdToken(await this.getDecodedIdToken()),
+          profile: extractUserClaimsFromIdToken(await this.getDecodedIdToken()),
+        };
       }
-
-      const profile = await getScim2Me({baseUrl});
-      const schemas = await getSchemas({baseUrl});
-
-      const processedSchemas = flattenUserSchema(schemas);
-
-      const output = {
-        schemas: processedSchemas,
-        flattenedProfile: generateFlattenedUserProfile(profile, processedSchemas),
-        profile,
-      };
-
-      return output;
-    } catch (error) {
-      return {
-        schemas: [],
-        flattenedProfile: extractUserClaimsFromIdToken(await this.getDecodedIdToken()),
-        profile: extractUserClaimsFromIdToken(await this.getDecodedIdToken()),
-      };
-    }
+    });
   }
 
   override async getMyOrganizations(options?: any, sessionId?: string): Promise<Organization[]> {
@@ -217,13 +222,14 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   override async getCurrentOrganization(): Promise<Organization | null> {
-    const idToken: IdToken = await this.getDecodedIdToken();
-
-    return {
-      orgHandle: idToken?.org_handle,
-      name: idToken?.org_name,
-      id: idToken?.org_id,
-    };
+    return this.withLoading(async () => {
+      const idToken: IdToken = await this.getDecodedIdToken();
+      return {
+        orgHandle: idToken?.org_handle,
+        name: idToken?.org_name,
+        id: idToken?.org_id,
+      };
+    });
   }
 
   override async switchOrganization(organization: Organization, sessionId?: string): Promise<TokenResponse | Response> {
@@ -274,12 +280,21 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     return this.asgardeo.isInitialized();
   }
 
-  override isSignedIn(): Promise<boolean> {
-    return this.asgardeo.isSignedIn();
+  override async isSignedIn(): Promise<boolean> {
+    return await this.asgardeo.isSignedIn();
   }
 
   override getConfiguration(): T {
     return this.asgardeo.getConfigData() as unknown as T;
+  }
+
+  override async exchangeToken(
+    config: TokenExchangeRequestConfig,
+    sessionId?: string,
+  ): Promise<TokenResponse | Response> {
+    return this.withLoading(async () => {
+      return this.asgardeo.exchangeToken(config, (user: User) => {}) as unknown as TokenResponse | Response;
+    });
   }
 
   override signIn(
@@ -371,7 +386,9 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   override async getAccessToken(sessionId?: string): Promise<string> {
-    return this.asgardeo.getAccessToken(sessionId);
+    return this.withLoading(async () => {
+      return this.asgardeo.getAccessToken(sessionId);
+    });
   }
 }
 

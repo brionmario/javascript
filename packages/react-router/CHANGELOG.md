@@ -1,5 +1,49 @@
 # @asgardeo/react-router
 
+## 0.0.14
+
+### Patch Changes
+
+- Updated dependencies
+  [[`a9f7279`](https://github.com/asgardeo/javascript/commit/a9f72798c59a077eb58c56d40718ec529e76fec3)]:
+  - @asgardeo/react@0.5.21
+
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  [[`e87f363`](https://github.com/asgardeo/javascript/commit/e87f3635f5947bb9fa8b450ec60b8a160f7eeb05)]:
+  - @asgardeo/react@0.5.20
+
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies
+  [[`8acc3af`](https://github.com/asgardeo/javascript/commit/8acc3afa5d629b5692520b9460e3e6b81d287be2)]:
+  - @asgardeo/react@0.5.19
+
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  [[`53ab5ad`](https://github.com/asgardeo/javascript/commit/53ab5ad79dcab547f52458ce65ff98e2440ca09c)]:
+  - @asgardeo/react@0.5.18
+
+## 0.0.10
+
+### Patch Changes
+
+- [#126](https://github.com/asgardeo/javascript/pull/126)
+  [`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix: avoid the race condition when ProtectedRoute is used
+
+- Updated dependencies
+  [[`762dd75`](https://github.com/asgardeo/javascript/commit/762dd751fdd870409e166287927faee5b195e434)]:
+  - @asgardeo/react@0.5.17
+
 ## 0.0.9
 
 ### Patch Changes

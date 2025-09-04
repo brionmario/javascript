@@ -16,22 +16,29 @@
  * under the License.
  */
 
+import {TokenExchangeRequestConfig} from '@asgardeo/node';
 import AsgardeoNextClient from '../AsgardeoNextClient';
 import getSessionIdAction from './actions/getSessionId';
 
 const asgardeo = async () => {
-  const getAccessToken = async (id: string) => {
+  const getAccessToken = async (sessionId: string) => {
     const client: AsgardeoNextClient = AsgardeoNextClient.getInstance();
-    return await client.getAccessToken(id);
+    return await client.getAccessToken(sessionId);
   };
 
   const getSessionId = async () => {
     return await getSessionIdAction();
   };
 
+  const exchangeToken = async (config: TokenExchangeRequestConfig, sessionId: string) => {
+    const client: AsgardeoNextClient = AsgardeoNextClient.getInstance();
+    return await client.exchangeToken(config, sessionId);
+  };
+
   return {
     getAccessToken,
     getSessionId,
+    exchangeToken,
   };
 };
 
