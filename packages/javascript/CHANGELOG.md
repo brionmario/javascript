@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.1.14
+
+### Patch Changes
+
+- [#138](https://github.com/asgardeo/javascript/pull/138)
+  [`fb8c164`](https://github.com/asgardeo/javascript/commit/fb8c16407445969c3fab60d468f85f7dbf6b0890) Thanks
+  [@brionmario](https://github.com/brionmario)! - Update `axios` & `esbuild` versions
+
 ## 0.1.13
 
 ### Patch Changes
