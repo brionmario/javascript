@@ -53,7 +53,7 @@ import {
   Storage,
   organizationDiscovery,
   OrganizationDiscoveryStrategy,
-  deriveRootOrganizationHandleFromBaseUrl
+  deriveRootOrganizationHandleFromBaseUrl,
   TokenExchangeRequestConfig,
 } from '@asgardeo/node';
 import {AsgardeoNextConfig} from './models/config';
