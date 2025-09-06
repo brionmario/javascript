@@ -197,6 +197,12 @@ export interface BaseConfig<T = unknown> extends WithPreferences {
    * @see {@link https://openid.net/specs/openid-connect-session-management-1_0.html#IframeBasedSessionManagement}
    */
   syncSession?: boolean;
+
+  /**
+   * Storage mechanism to use for storing tokens and session data.
+   * The values should be defined at the framework layer.
+   */
+  storage?: T;
 }
 
 export interface WithPreferences {

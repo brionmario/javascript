@@ -18,4 +18,4 @@
 
 import {Config} from '@asgardeo/javascript';
 
-export type AsgardeoBrowserConfig = Config;
+export type AsgardeoBrowserConfig = Config<'sessionStorage' | 'localStorage' | 'browserMemory' | 'webWorker'>;

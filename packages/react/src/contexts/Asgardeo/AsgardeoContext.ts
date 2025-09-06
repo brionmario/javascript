@@ -27,6 +27,7 @@ import {
   TokenResponse,
 } from '@asgardeo/browser';
 import AsgardeoReactClient from '../../AsgardeoReactClient';
+import {AsgardeoReactConfig} from '../../models/config';
 
 /**
  * Props interface of {@link AsgardeoContext}
@@ -120,7 +121,7 @@ export type AsgardeoContextProps = {
    * @returns A promise that resolves to the token response or the raw response.
    */
   exchangeToken?: (config: TokenExchangeRequestConfig) => Promise<TokenResponse | Response>;
-};
+} & Pick<AsgardeoReactConfig, 'storage'>;
 
 /**
  * Context object for managing the Authentication flow builder core context.
@@ -149,6 +150,7 @@ const AsgardeoContext: Context<AsgardeoContextProps | null> = createContext<null
   getDecodedIdToken: null,
   getAccessToken: null,
   exchangeToken: null,
+  storage: 'sessionStorage',
 });
 
 AsgardeoContext.displayName = 'AsgardeoContext';
