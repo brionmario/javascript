@@ -1,5 +1,17 @@
 # @asgardeo/browser
 
+## 0.1.16
+
+### Patch Changes
+
+- [#140](https://github.com/asgardeo/javascript/pull/140)
+  [`44ccb00`](https://github.com/asgardeo/javascript/commit/44ccb009798ca6f2c8102aa8ffc7bb7f32728688) Thanks
+  [@brionmario](https://github.com/brionmario)! - fix web-worker related issues
+
+- Updated dependencies
+  [[`44ccb00`](https://github.com/asgardeo/javascript/commit/44ccb009798ca6f2c8102aa8ffc7bb7f32728688)]:
+  - @asgardeo/javascript@0.1.15
+
 ## 0.1.15
 
 ### Patch Changes

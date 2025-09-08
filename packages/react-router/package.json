@@ -1,6 +1,6 @@
 {
   "name": "@asgardeo/react-router",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "React Router integration for Asgardeo React SDK with protected routes.",
   "keywords": [
     "asgardeo",
