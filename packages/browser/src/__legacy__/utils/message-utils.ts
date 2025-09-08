@@ -52,8 +52,42 @@ export class MessageUtils {
             delete error.toJSON;
         }
 
+        let serializedError: string;
+        
+        try {
+            // Handle Error objects specially
+            if (error instanceof Error) {
+                serializedError = JSON.stringify({
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack,
+                    // Copy any additional enumerable properties
+                    ...error
+                });
+            } else if (typeof error === 'object' && error !== null) {
+                // For other objects, try to stringify and fallback to a safe representation
+                try {
+                    serializedError = JSON.stringify(error);
+                } catch {
+                    serializedError = JSON.stringify({
+                        message: error.toString ? error.toString() : 'Unknown error',
+                        originalError: String(error)
+                    });
+                }
+            } else {
+                // For primitives, stringify directly
+                serializedError = JSON.stringify(error ?? "Unknown error");
+            }
+        } catch {
+            // Final fallback if all else fails
+            serializedError = JSON.stringify({
+                message: 'Error serialization failed',
+                originalError: String(error)
+            });
+        }
+
         return {
-            error: JSON.stringify(error ?? ""),
+            error: serializedError,
             success: false
         };
     }

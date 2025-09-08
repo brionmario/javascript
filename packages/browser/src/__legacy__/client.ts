@@ -27,7 +27,7 @@ import {
   OIDCEndpoints,
   User,
 } from '@asgardeo/javascript';
-// import WorkerFile from '../worker';
+import WorkerFile from '../web.worker';
 import {MainThreadClient, WebWorkerClient} from './clients';
 import {Hooks, REFRESH_ACCESS_TOKEN_ERR0R} from './constants';
 import {AuthenticationHelper, SPAHelper} from './helpers';
@@ -70,8 +70,7 @@ export class AsgardeoSPAClient {
   protected _client: WebWorkerClientInterface | MainThreadClientInterface | undefined;
   protected _storage: BrowserStorage | undefined;
   protected _authHelper: typeof AuthenticationHelper = AuthenticationHelper;
-  // protected _worker: new () => Worker = WorkerFile;
-  protected _worker = null;
+  protected _worker: new () => Worker = WorkerFile;
   protected _initialized: boolean = false;
   protected _startedInitialize: boolean = false;
   protected _onSignInCallback: (response: User) => void = () => null;
@@ -94,13 +93,13 @@ export class AsgardeoSPAClient {
     }
   }
 
-  // public instantiateWorker(worker: new () => Worker) {
-  //   if (worker) {
-  //     this._worker = worker;
-  //   } else {
-  //     this._worker = WorkerFile;
-  //   }
-  // }
+  public instantiateWorker(worker: new () => Worker) {
+    if (worker) {
+      this._worker = worker;
+    } else {
+      this._worker = WorkerFile;
+    }
+  }
 
   /**
    * This method specifies if the `AsgardeoSPAClient` has been initialized or not.
@@ -239,7 +238,7 @@ export class AsgardeoSPAClient {
     this._startedInitialize = true;
 
     authHelper && this.instantiateAuthHelper(authHelper);
-    // workerFile && this.instantiateWorker(workerFile);
+    workerFile && this.instantiateWorker(workerFile);
 
     const _config = await this._client?.getConfigData();
 

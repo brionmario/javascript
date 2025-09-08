@@ -173,7 +173,26 @@ export const WebWorkerClient = async (
 
           resolve(responseData);
         } else {
-          reject(data.error ? JSON.parse(data.error) : null);
+          let error = null;
+          if (data.error) {
+            try {
+              error = JSON.parse(data.error);
+            } catch (parseError) {
+              // If JSON parsing fails, create a proper error object
+              error = new AsgardeoAuthException(
+                'SPA-WEB_WORKER_CLIENT-COM-PE01',
+                'Worker communication error.',
+                `Failed to parse worker error response: ${data.error}`
+              );
+            }
+          } else {
+            error = new AsgardeoAuthException(
+              'SPA-WEB_WORKER_CLIENT-COM-UE01',
+              'Unknown worker error.',
+              'An unknown error occurred in the web worker.'
+            );
+          }
+          reject(error);
         }
       });
     });
@@ -456,8 +475,8 @@ export const WebWorkerClient = async (
       type: GET_AUTH_URL,
     };
 
-    return communicate<ExtendedAuthorizeRequestUrlParams, AuthorizationResponse>(message).then(
-      async (response: AuthorizationResponse) => {
+    return communicate<ExtendedAuthorizeRequestUrlParams, AuthorizationResponse>(message)
+      .then(async (response: AuthorizationResponse) => {
         if (response.pkce && config.enablePKCE) {
           const pkceKey: string = extractPkceStorageKeyFromState(
             new URL(response.authorizationURL).searchParams.get(OIDCRequestConstants.Params.STATE) ?? '',
@@ -467,8 +486,10 @@ export const WebWorkerClient = async (
         }
 
         return Promise.resolve(response);
-      },
-    );
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   };
 
   const requestAccessToken = async (

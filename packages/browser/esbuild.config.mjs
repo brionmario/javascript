@@ -19,7 +19,7 @@
 import { readFileSync } from 'fs';
 import * as esbuild from 'esbuild';
 import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
+import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
 const require = createRequire(import.meta.url);
 const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
@@ -36,7 +36,7 @@ const polyfillPlugin = {
     build.onResolve({ filter: /^crypto$/ }, () => ({
       path: require.resolve('crypto-browserify')
     }));
-    
+
     // Buffer polyfill
     build.onResolve({ filter: /^buffer$/ }, () => ({
       path: require.resolve('buffer/')
@@ -71,7 +71,21 @@ const commonOptions = {
       }
     `
   },
-  plugins: [polyfillPlugin]
+  plugins: [
+    polyfillPlugin,
+    inlineWorkerPlugin({
+      format: 'iife',
+      target: 'es2020',
+      platform: 'browser',
+      define: {
+        'global': 'self',
+        'globalThis': 'self',
+        'process.env.NODE_DEBUG': 'false',
+        'process.version': '"16.0.0"',
+        'process.browser': 'true'
+      }
+    })
+  ]
 };
 
 await esbuild.build({
