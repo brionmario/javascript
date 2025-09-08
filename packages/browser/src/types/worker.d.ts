@@ -16,6 +16,39 @@
  * under the License.
  */
 
-import {Config} from '@asgardeo/javascript';
+// Type declarations for worker files handled by esbuild-plugin-inline-worker
 
-export type AsgardeoBrowserConfig = Config<'sessionStorage' | 'localStorage' | 'browserMemory' | 'webWorker'>;
+declare module "*.worker" {
+  const WorkerFactory: {
+    new (): Worker;
+  };
+  export default WorkerFactory;
+}
+
+declare module "*.worker.js" {
+  const WorkerFactory: {
+    new (): Worker;
+  };
+  export default WorkerFactory;
+}
+
+declare module "*.worker.ts" {
+  const WorkerFactory: {
+    new (): Worker;
+  };
+  export default WorkerFactory;
+}
+
+declare module "*.worker.jsx" {
+  const WorkerFactory: {
+    new (): Worker;
+  };
+  export default WorkerFactory;
+}
+
+declare module "*.worker.tsx" {
+  const WorkerFactory: {
+    new (): Worker;
+  };
+  export default WorkerFactory;
+}

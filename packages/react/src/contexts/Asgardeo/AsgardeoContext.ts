@@ -27,6 +27,7 @@ import {
   TokenResponse,
 } from '@asgardeo/browser';
 import AsgardeoReactClient from '../../AsgardeoReactClient';
+import {AsgardeoReactConfig} from '../../models/config';
 
 /**
  * Props interface of {@link AsgardeoContext}
@@ -96,7 +97,7 @@ export type AsgardeoContextProps = {
    * @example
    * signInOptions: { prompt: "login", fidp: "OrganizationSSO" }
    */
-  signInOptions?: SignInOptions;
+  signInOptions: SignInOptions;
   /**
    * Function to retrieve the decoded ID token.
    * This function decodes the ID token and returns its payload.
@@ -104,7 +105,7 @@ export type AsgardeoContextProps = {
    *
    * @returns A promise that resolves to the decoded ID token payload.
    */
-  getDecodedIdToken?: () => Promise<IdToken>;
+  getDecodedIdToken: () => Promise<IdToken>;
 
   /**
    * Retrieves the access token stored in the storage.
@@ -112,15 +113,15 @@ export type AsgardeoContextProps = {
    * @remarks This does not work in the `webWorker` or any other worker environment.
    * @returns A promise that resolves to the access token.
    */
-  getAccessToken?: () => Promise<string>;
+  getAccessToken: () => Promise<string>;
 
   /**
    * Swaps the current access token with a new one based on the provided configuration (with a grant type).
    * @param config - Configuration for the token exchange request.
    * @returns A promise that resolves to the token response or the raw response.
    */
-  exchangeToken?: (config: TokenExchangeRequestConfig) => Promise<TokenResponse | Response>;
-};
+  exchangeToken: (config: TokenExchangeRequestConfig) => Promise<TokenResponse | Response>;
+} & Pick<AsgardeoReactConfig, 'storage'>;
 
 /**
  * Context object for managing the Authentication flow builder core context.
@@ -149,6 +150,7 @@ const AsgardeoContext: Context<AsgardeoContextProps | null> = createContext<null
   getDecodedIdToken: null,
   getAccessToken: null,
   exchangeToken: null,
+  storage: 'sessionStorage',
 });
 
 AsgardeoContext.displayName = 'AsgardeoContext';
