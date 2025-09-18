@@ -104,7 +104,6 @@ const AsgardeoClientProvider: FC<PropsWithChildren<AsgardeoClientProviderProps>>
   const reRenderCheckRef: RefObject<boolean> = useRef(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(_user);
   const [userProfile, setUserProfile] = useState<UserProfile>(_userProfile);
@@ -175,12 +174,11 @@ const AsgardeoClientProvider: FC<PropsWithChildren<AsgardeoClientProviderProps>>
     })();
   }, []);
 
-  useEffect(() => {
+  const isDarkMode: boolean = useMemo(() => {
     if (!preferences?.theme?.mode || preferences.theme.mode === 'system') {
-      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
-    } else {
-      setIsDarkMode(preferences.theme.mode === 'dark');
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
+    return preferences.theme.mode === 'dark';
   }, [preferences?.theme?.mode]);
 
   useEffect(() => {
