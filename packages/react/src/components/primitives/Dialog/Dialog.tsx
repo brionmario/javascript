@@ -160,7 +160,7 @@ export const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLProps<HT
   return (
     <FloatingPortal>
       <FloatingOverlay className={cx(withVendorCSSClassPrefix(bem('dialog', 'overlay')), styles.overlay)} lockScroll>
-        <FloatingFocusManager context={floatingContext}>
+        <FloatingFocusManager context={floatingContext} initialFocus={-1}>
           <div
             ref={ref}
             className={cx(withVendorCSSClassPrefix(bem('dialog', 'content')), styles.content, props.className)}

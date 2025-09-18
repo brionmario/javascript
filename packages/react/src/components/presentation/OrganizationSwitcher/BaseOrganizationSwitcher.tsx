@@ -313,7 +313,7 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
 
       {isOpen && (
         <FloatingPortal id={portalId}>
-          <FloatingFocusManager context={context} modal={false}>
+          <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
             <div ref={refs.setFloating} className={cx(styles.content)} style={floatingStyles} {...getFloatingProps()}>
               {/* Header - Current Organization */}
               {currentOrganization && (
