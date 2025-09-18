@@ -16,40 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
 
 /**
  * Facebook Sign-In Button Component.
  * Handles authentication with Facebook identity provider.
  */
-const FacebookButton: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const FacebookButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
-  submitButtonText,
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
 
   return (
     <Button
-      type="button"
-      variant="solid"
-      color="primary"
+      {...rest}
       fullWidth
+      type="button"
+      color="primary"
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -63,7 +54,7 @@ const FacebookButton: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {t('elements.buttons.facebook')}
+      {children ?? t('elements.buttons.facebook')}
     </Button>
   );
 };

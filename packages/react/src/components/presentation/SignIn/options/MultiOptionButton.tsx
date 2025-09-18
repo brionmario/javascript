@@ -134,10 +134,10 @@ const MultiOptionButton: FC<BaseSignInOptionProps> = ({
 
   return (
     <Button
-      type="button"
-      variant="outline"
-      color="primary"
       fullWidth
+      type="button"
+      color="secondary"
+      variant="solid"
       disabled={isLoading}
       onClick={handleClick}
       className={buttonClassName}

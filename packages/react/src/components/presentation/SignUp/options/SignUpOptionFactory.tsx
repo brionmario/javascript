@@ -23,7 +23,6 @@ import DateInput from './DateInput';
 import DividerComponent from './DividerComponent';
 import EmailInput from './EmailInput';
 import FormContainer from './FormContainer';
-import GoogleButton from './GoogleButton';
 import ImageComponent from './ImageComponent';
 import NumberInput from './NumberInput';
 import PasswordInput from './PasswordInput';
@@ -31,6 +30,12 @@ import ButtonComponent from './SubmitButton';
 import TelephoneInput from './TelephoneInput';
 import TextInput from './TextInput';
 import Typography from './Typography';
+import GoogleButton from '../../options/GoogleButton';
+import GitHubButton from '../../options/GitHubButton';
+import MicrosoftButton from '../../options/MicrosoftButton';
+import LinkedInButton from '../../options/LinkedInButton';
+import FacebookButton from '../../options/FacebookButton';
+import SignInWithEthereumButton from '../../options/SignInWithEthereumButton';
 
 /**
  * Base props that all sign-up option components share.
@@ -102,12 +107,10 @@ export interface BaseSignUpOptionProps extends WithPreferences {
 /**
  * Creates the appropriate sign-up component based on the component type.
  */
-export const createSignUpComponent = (props: BaseSignUpOptionProps): ReactElement => {
-  const {component} = props;
-
+export const createSignUpComponent = ({component, onSubmit, ...rest}: BaseSignUpOptionProps): ReactElement => {
   switch (component.type) {
     case EmbeddedFlowComponentType.Typography:
-      return <Typography {...props} />;
+      return <Typography component={component} onSubmit={onSubmit} {...rest} />;
 
     case EmbeddedFlowComponentType.Input:
       // Determine input type based on variant or config
@@ -115,47 +118,99 @@ export const createSignUpComponent = (props: BaseSignUpOptionProps): ReactElemen
       const inputType = component.config['type']?.toLowerCase();
 
       if (inputVariant === 'EMAIL' || inputType === 'email') {
-        return <EmailInput {...props} />;
+        return <EmailInput component={component} onSubmit={onSubmit} {...rest} />;
       }
+
       if (inputVariant === 'PASSWORD' || inputType === 'password') {
-        return <PasswordInput {...props} />;
+        return <PasswordInput component={component} onSubmit={onSubmit} {...rest} />;
       }
+
       if (inputVariant === 'TELEPHONE' || inputType === 'tel') {
-        return <TelephoneInput {...props} />;
+        return <TelephoneInput component={component} onSubmit={onSubmit} {...rest} />;
       }
+
       if (inputVariant === 'NUMBER' || inputType === 'number') {
-        return <NumberInput {...props} />;
+        return <NumberInput component={component} onSubmit={onSubmit} {...rest} />;
       }
+
       if (inputVariant === 'DATE' || inputType === 'date') {
-        return <DateInput {...props} />;
+        return <DateInput component={component} onSubmit={onSubmit} {...rest} />;
       }
+
       if (inputVariant === 'CHECKBOX' || inputType === 'checkbox') {
-        return <CheckboxInput {...props} />;
+        return <CheckboxInput component={component} onSubmit={onSubmit} {...rest} />;
       }
-      return <TextInput {...props} />;
+
+      return <TextInput component={component} onSubmit={onSubmit} {...rest} />;
 
     case EmbeddedFlowComponentType.Button: {
       const buttonVariant: string | undefined = component.variant?.toUpperCase();
       const buttonText: string = component.config['text'] || component.config['label'] || '';
 
       // TODO: The connection type should come as metadata.
-      if (buttonVariant === 'SOCIAL' && buttonText.toLowerCase().includes('google')) {
-        return <GoogleButton {...props} />;
+      if (buttonVariant === 'SOCIAL') {
+        if (buttonText.toLowerCase().includes('google')) {
+          return (
+            <GoogleButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </GoogleButton>
+          );
+        }
+
+        if (buttonText.toLowerCase().includes('github')) {
+          return (
+            <GitHubButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </GitHubButton>
+          );
+        }
+
+        if (buttonText.toLowerCase().includes('microsoft')) {
+          return (
+            <MicrosoftButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </MicrosoftButton>
+          );
+        }
+
+        if (buttonText.toLowerCase().includes('facebook')) {
+          return (
+            <FacebookButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </FacebookButton>
+          );
+        }
+
+        if (buttonText.toLowerCase().includes('linkedin')) {
+          return (
+            <LinkedInButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </LinkedInButton>
+          );
+        }
+
+        if (buttonText.toLowerCase().includes('ethereum')) {
+          return (
+            <SignInWithEthereumButton onClick={() => onSubmit(component, {})} {...rest}>
+              {buttonText}
+            </SignInWithEthereumButton>
+          );
+        }
       }
 
       // Use the generic ButtonComponent for all other button variants
       // It will handle PRIMARY, SECONDARY, TEXT, SOCIAL mappings internally
-      return <ButtonComponent {...props} />;
+      return <ButtonComponent component={component} onSubmit={onSubmit} {...rest} />;
     }
 
     case EmbeddedFlowComponentType.Form:
-      return <FormContainer {...props} />;
+      return <FormContainer component={component} onSubmit={onSubmit} {...rest} />;
 
     case EmbeddedFlowComponentType.Divider:
-      return <DividerComponent {...props} />;
+      return <DividerComponent component={component} onSubmit={onSubmit} {...rest} />;
 
     case EmbeddedFlowComponentType.Image:
-      return <ImageComponent {...props} />;
+      return <ImageComponent component={component} onSubmit={onSubmit} {...rest} />;
 
     default:
       return <div />;

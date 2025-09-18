@@ -16,39 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
 
 /**
  * LinkedIn Sign-In Button Component.
  * Handles authentication with LinkedIn identity provider.
  */
-const LinkedInButton: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const LinkedInButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
 
   return (
     <Button
-      type="button"
-      variant="outline"
-      color="primary"
+      {...rest}
       fullWidth
+      type="button"
+      color="secondary"
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -58,7 +50,7 @@ const LinkedInButton: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {t('elements.buttons.linkedin')}
+      {children ?? t('elements.buttons.linkedin')}
     </Button>
   );
 };
