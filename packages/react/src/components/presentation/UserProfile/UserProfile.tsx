@@ -51,6 +51,16 @@ export type UserProfileProps = Omit<BaseUserProfileProps, 'user' | 'profile' | '
  *   cardLayout={true}
  *   fallback={<div>Please sign in to view your profile</div>}
  * />
+ *
+ * // With field filtering - only show specific fields
+ * <UserProfile
+ *   showFields={['name.givenName', 'name.familyName', 'emails']}
+ * />
+ *
+ * // With field hiding - hide specific fields
+ * <UserProfile
+ *   hideFields={['phoneNumbers', 'addresses']}
+ * />
  * ```
  */
 const UserProfile: FC<UserProfileProps> = ({...rest}: UserProfileProps): ReactElement => {
