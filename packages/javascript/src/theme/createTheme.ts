@@ -57,7 +57,7 @@ const lightTheme: ThemeConfig = {
       dark: '#174ea6',
     },
     secondary: {
-      main: '#8b8b8b',
+      main: '#424242',
       contrastText: '#ffffff',
       dark: '#212121',
     },
