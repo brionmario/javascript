@@ -32,7 +32,7 @@
  * under the License.
  */
 
-import {Theme, ThemeConfig, ThemeVars} from './types';
+import {Theme, ThemeConfig, ThemeMode, ThemeVars} from './types';
 import {RecursivePartial} from '../models/utility-types';
 import VendorConstants from '../constants/VendorConstants';
 
@@ -57,7 +57,7 @@ const lightTheme: ThemeConfig = {
       dark: '#174ea6',
     },
     secondary: {
-      main: '#424242',
+      main: '#8b8b8b',
       contrastText: '#ffffff',
       dark: '#212121',
     },
@@ -160,7 +160,7 @@ const darkTheme: ThemeConfig = {
       dark: '#174ea6',
     },
     secondary: {
-      main: '#424242',
+      main: '#8b8b8b',
       contrastText: '#ffffff',
       dark: '#212121',
     },
@@ -654,5 +654,7 @@ const createTheme = (config: RecursivePartial<ThemeConfig> = {}, isDark = false)
     vars: toThemeVars(mergedConfig),
   };
 };
+
+export const DEFAULT_THEME: ThemeMode = 'light';
 
 export default createTheme;
