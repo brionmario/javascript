@@ -16,44 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import Button from '../../../primitives/Button/Button';
+import {FC, HTMLAttributes} from 'react';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
+import Button from '../../primitives/Button/Button';
 
 /**
- * Google Sign-Up Button Component.
- * Handles registration with Google identity provider.
+ * Google Sign-In Button Component.
+ * Handles authentication with Google identity provider.
  */
-const GoogleButton: FC<BaseSignUpOptionProps> = ({
-  component,
+const GoogleButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  buttonClassName = '',
-  size = 'medium',
-  onSubmit,
+  preferences,
+  children,
+  ...rest
 }) => {
-  const config = component.config || {};
-  const buttonText: string = config['text'] || config['label'] || 'Continue with Google';
-
-  /**
-   * Handle button click.
-   */
-  const handleClick = (): void => {
-    if (onSubmit) {
-      onSubmit(component, {});
-    }
-  };
+  const {t} = useTranslation(preferences?.i18n);
 
   return (
     <Button
+      {...rest}
+      fullWidth
       type="button"
-      variant="solid"
       color="secondary"
-      size={size}
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
-      style={{width: '100%'}}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 67.91 67.901" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(-0.001 -0.001)">
@@ -81,7 +68,7 @@ const GoogleButton: FC<BaseSignUpOptionProps> = ({
         </svg>
       }
     >
-      {buttonText}
+      {children ?? t('elements.buttons.google')}
     </Button>
   );
 };

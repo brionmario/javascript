@@ -79,13 +79,13 @@ const UsernamePassword: FC<BaseSignInOptionProps> = ({
       ))}
 
       <Button
+        fullWidth
         type="submit"
+        color="primary"
+        variant="solid"
         disabled={isLoading}
         loading={isLoading}
         className={buttonClassName}
-        color="primary"
-        variant="solid"
-        fullWidth
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
         {t('username.password.submit.button')}

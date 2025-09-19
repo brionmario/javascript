@@ -58,5 +58,6 @@ export {
   createMediaQueryListener,
   BrowserThemeDetection,
 } from './theme/themeDetection';
+export {default as getActiveTheme} from './theme/getActiveTheme';
 
 export {default as http} from './utils/http';

@@ -56,6 +56,10 @@ export interface AvatarProps {
    * @default 'circular'
    */
   variant?: 'circular' | 'square';
+  /**
+   * Loading state of the avatar
+   */
+  isLoading?: boolean;
 }
 
 export const Avatar: FC<AvatarProps> = ({
@@ -66,6 +70,7 @@ export const Avatar: FC<AvatarProps> = ({
   name,
   size = 64,
   variant = 'circular',
+  isLoading = false,
 }): JSX.Element => {
   const {theme, colorScheme} = useTheme();
 
@@ -112,6 +117,9 @@ export const Avatar: FC<AvatarProps> = ({
 
   const styles = useStyles(theme, colorScheme, size, variant, backgroundColor);
 
+  // Determine if we're in the default state (no image, no name, not loading)
+  const isDefaultState = !imageUrl && !name && !isLoading;
+
   const getInitials = (fullName: string): string =>
     fullName
       .split(' ')
@@ -126,11 +134,25 @@ export const Avatar: FC<AvatarProps> = ({
         <img src={imageUrl} alt={alt} className={cx(withVendorCSSClassPrefix(bem('avatar', 'image')), styles.image)} />
       );
     }
+
     if (name) {
       return getInitials(name);
     }
 
-    return <div className={cx(withVendorCSSClassPrefix(bem('avatar', 'skeleton')), styles.skeleton)} />;
+    if (isLoading) {
+      return <div className={cx(withVendorCSSClassPrefix(bem('avatar', 'skeleton')), styles.skeleton)} />;
+    }
+
+    // Default user icon
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 640 640"
+        className={cx(withVendorCSSClassPrefix(bem('avatar', 'icon')), styles.icon)}
+      >
+        <path d="M240 192C240 147.8 275.8 112 320 112C364.2 112 400 147.8 400 192C400 236.2 364.2 272 320 272C275.8 272 240 236.2 240 192zM448 192C448 121.3 390.7 64 320 64C249.3 64 192 121.3 192 192C192 262.7 249.3 320 320 320C390.7 320 448 262.7 448 192zM144 544C144 473.3 201.3 416 272 416L368 416C438.7 416 496 473.3 496 544L496 552C496 565.3 506.7 576 520 576C533.3 576 544 565.3 544 552L544 544C544 446.8 465.2 368 368 368L272 368C174.8 368 96 446.8 96 544L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 544z" />
+      </svg>
+    );
   };
 
   return (
@@ -140,6 +162,7 @@ export const Avatar: FC<AvatarProps> = ({
         styles.avatar,
         styles.variant,
         withVendorCSSClassPrefix(bem('avatar', null, variant)),
+        isDefaultState && withVendorCSSClassPrefix(bem('avatar', 'default')),
         className,
       )}
     >

@@ -67,14 +67,17 @@ export interface BaseUserProfileProps {
   editable?: boolean;
   fallback?: ReactElement;
   flattenedProfile?: User;
+  hideFields?: string[];
   mode?: 'inline' | 'popup';
   onOpenChange?: (open: boolean) => void;
   onUpdate?: (payload: any) => Promise<void>;
   open?: boolean;
   profile?: User;
   schemas?: Schema[];
+  showFields?: string[];
   title?: string;
   error?: string | null;
+  isLoading?: boolean;
 }
 
 // Fields to skip based on schema.name
@@ -117,11 +120,44 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
   onUpdate,
   open = false,
   error = null,
+  isLoading = false,
+  showFields = [],
+  hideFields = [],
 }): ReactElement => {
   const {theme, colorScheme} = useTheme();
   const [editedUser, setEditedUser] = useState(flattenedProfile || profile);
   const [editingFields, setEditingFields] = useState<Record<string, boolean>>({});
   const {t} = useTranslation();
+
+  /**
+   * Determines if a field should be visible based on showFields, hideFields, and fieldsToSkip arrays.
+   * Priority order:
+   * 1. fieldsToSkip (always hidden) - highest priority
+   * 2. hideFields (explicitly hidden)
+   * 3. showFields (explicitly shown, if array is not empty)
+   * 4. Default behavior (show all fields not in fieldsToSkip)
+   */
+  const shouldShowField = useCallback(
+    (fieldName: string): boolean => {
+      // Always skip fields in the hardcoded fieldsToSkip array
+      if (fieldsToSkip.includes(fieldName)) {
+        return false;
+      }
+
+      // If hideFields is provided and contains this field, hide it
+      if (hideFields.length > 0 && hideFields.includes(fieldName)) {
+        return false;
+      }
+
+      // If showFields is provided and not empty, only show fields in that array
+      if (showFields.length > 0) {
+        return showFields.includes(fieldName);
+      }
+
+      return true;
+    },
+    [showFields, hideFields],
+  );
 
   const PencilIcon = () => (
     <svg
@@ -524,7 +560,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
               <Button
                 size="small"
                 color="tertiary"
-                variant="text"
+                variant="icon"
                 onClick={() => toggleFieldEdit(schema.name!)}
                 title="Edit"
                 className={styles.editButton}
@@ -569,7 +605,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
 
     const profileEntries = Object.entries(currentUser)
       .filter(([key, value]) => {
-        if (fieldsToSkip.includes(key)) return false;
+        if (!shouldShowField(key)) return false;
 
         return value !== undefined && value !== '' && value !== null;
       })
@@ -603,13 +639,14 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
           name={getDisplayName()}
           size={80}
           alt={`${getDisplayName()}'s avatar`}
+          isLoading={isLoading}
         />
       </div>
       <div className={styles.infoContainer}>
         {schemas && schemas.length > 0
           ? schemas
               .filter(schema => {
-                if (fieldsToSkip.includes(schema.name)) return false;
+                if (!schema.name || !shouldShowField(schema.name)) return false;
 
                 if (!editable) {
                   const value = flattenedProfile && schema.name ? flattenedProfile[schema.name] : undefined;

@@ -16,48 +16,30 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
 
 /**
  * Social Login Sign-In Option Component.
  * Handles authentication with external identity providers (Google, GitHub, etc.).
  */
-const SocialLogin: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
-
-  /**
-   * Get display name for the social provider.
-   */
-  const getDisplayName = (): string => {
-    const providerName = authenticator.idp;
-    return t('elements.buttons.social', {connection: providerName});
-  };
-
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
-
   return (
     <Button
-      type="button"
-      variant="outline"
-      color="secondary"
+      {...rest}
       fullWidth
+      type="button"
+      color="secondary"
+      variant="outline"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -67,7 +49,7 @@ const SocialLogin: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {getDisplayName()}
+      {t('elements.buttons.social', {connection: children as string})}
     </Button>
   );
 };

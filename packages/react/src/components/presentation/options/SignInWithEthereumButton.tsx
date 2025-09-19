@@ -16,40 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import useTranslation from '../../../../hooks/useTranslation';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import useTranslation from '../../../hooks/useTranslation';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
 
 /**
  * Sign In With Ethereum Button Component.
  * Handles authentication with Sign In With Ethereum identity provider.
  */
-const SignInWithEthereumButton: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const SignInWithEthereumButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
 
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
-
   return (
     <Button
-      type="button"
-      variant="outline"
-      color="secondary"
+      {...rest}
       fullWidth
+      type="button"
+      color="secondary"
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -59,7 +50,7 @@ const SignInWithEthereumButton: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {t('elements.buttons.ethereum')}
+      {children ?? t('elements.buttons.ethereum')}
     </Button>
   );
 };

@@ -128,6 +128,10 @@ const useStyles = (
           background-color: ${theme.vars.colors.primary.main};
           opacity: 0.8;
         }
+        &:focus:not(:disabled) {
+          background-color: ${theme.vars.colors.primary.main};
+          opacity: 0.8;
+        }
       `,
       'primary-outline': css`
         background-color: transparent;
@@ -142,16 +146,28 @@ const useStyles = (
           color: ${theme.vars.colors.primary.contrastText};
           opacity: 0.9;
         }
+        &:focus:not(:disabled) {
+          background-color: ${theme.vars.colors.primary.main};
+          color: ${theme.vars.colors.primary.contrastText};
+          opacity: 0.9;
+        }
       `,
       'primary-text': css`
         background-color: transparent;
         color: ${theme.vars.colors.primary.main};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          outline: none;
         }
       `,
       'primary-icon': css`
@@ -159,12 +175,20 @@ const useStyles = (
         color: ${theme.vars.colors.primary.main};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
           color: ${theme.vars.colors.primary.dark};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
           color: ${theme.vars.colors.primary.dark};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          color: ${theme.vars.colors.primary.dark};
+          outline: none;
         }
       `,
       'secondary-solid': css`
@@ -176,6 +200,10 @@ const useStyles = (
           opacity: 0.9;
         }
         &:active:not(:disabled) {
+          background-color: ${theme.vars.colors.secondary.main};
+          opacity: 0.8;
+        }
+        &:focus:not(:disabled) {
           background-color: ${theme.vars.colors.secondary.main};
           opacity: 0.8;
         }
@@ -193,16 +221,28 @@ const useStyles = (
           color: ${theme.vars.colors.secondary.contrastText};
           opacity: 0.9;
         }
+        &:focus:not(:disabled) {
+          background-color: ${theme.vars.colors.secondary.main};
+          color: ${theme.vars.colors.secondary.contrastText};
+          opacity: 0.9;
+        }
       `,
       'secondary-text': css`
         background-color: transparent;
         color: ${theme.vars.colors.secondary.main};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          outline: none;
         }
       `,
       'secondary-icon': css`
@@ -210,12 +250,20 @@ const useStyles = (
         color: ${theme.vars.colors.secondary.main};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
           color: ${theme.vars.colors.secondary.dark};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
           color: ${theme.vars.colors.secondary.dark};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          color: ${theme.vars.colors.secondary.dark};
+          outline: none;
         }
       `,
       'tertiary-solid': css`
@@ -227,6 +275,11 @@ const useStyles = (
           color: ${theme.vars.colors.background.surface};
         }
         &:active:not(:disabled) {
+          background-color: ${theme.vars.colors.text.primary};
+          color: ${theme.vars.colors.background.surface};
+          opacity: 0.9;
+        }
+        &:focus:not(:disabled) {
           background-color: ${theme.vars.colors.text.primary};
           color: ${theme.vars.colors.background.surface};
           opacity: 0.9;
@@ -244,18 +297,30 @@ const useStyles = (
           background-color: ${theme.vars.colors.action.selected};
           border-color: ${theme.vars.colors.text.primary};
         }
+        &:focus:not(:disabled) {
+          background-color: ${theme.vars.colors.action.focus};
+          border-color: ${theme.vars.colors.text.primary};
+        }
       `,
       'tertiary-text': css`
         background-color: transparent;
         color: ${theme.vars.colors.text.secondary};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
           color: ${theme.vars.colors.text.primary};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
           color: ${theme.vars.colors.text.primary};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          color: ${theme.vars.colors.text.primary};
+          outline: none;
         }
       `,
       'tertiary-icon': css`
@@ -263,12 +328,20 @@ const useStyles = (
         color: ${theme.vars.colors.text.secondary};
         border-color: transparent;
         &:hover:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.hover};
           color: ${theme.vars.colors.text.primary};
         }
         &:active:not(:disabled) {
+          border-color: transparent;
           background-color: ${theme.vars.colors.action.selected};
           color: ${theme.vars.colors.text.primary};
+        }
+        &:focus:not(:disabled) {
+          border-color: transparent;
+          background-color: ${theme.vars.colors.action.focus};
+          color: ${theme.vars.colors.text.primary};
+          outline: none;
         }
       `,
     };

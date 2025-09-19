@@ -231,7 +231,7 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
 
       {isOpen && (
         <FloatingPortal id={portalId}>
-          <FloatingFocusManager context={context} modal={false}>
+          <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
             <div
               ref={refs.setFloating}
               className={cx(withVendorCSSClassPrefix('user-dropdown__content'), styles.dropdownContent)}

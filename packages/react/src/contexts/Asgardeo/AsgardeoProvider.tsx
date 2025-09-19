@@ -27,6 +27,7 @@ import {
   GetBrandingPreferenceConfig,
   BrandingPreference,
   IdToken,
+  getActiveTheme,
 } from '@asgardeo/browser';
 import {FC, RefObject, PropsWithChildren, ReactElement, useEffect, useMemo, useRef, useState, useCallback} from 'react';
 import AsgardeoContext from './AsgardeoContext';
@@ -398,13 +399,6 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     }
   };
 
-  const isDarkMode: boolean = useMemo(() => {
-    if (!preferences?.theme?.mode || preferences.theme.mode === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return preferences.theme.mode === 'dark';
-  }, [preferences?.theme?.mode]);
-
   const handleProfileUpdate = (payload: User): void => {
     setUser(payload);
     setUserProfile(prev => ({
@@ -474,7 +468,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
           <ThemeProvider
             inheritFromBranding={preferences?.theme?.inheritFromBranding}
             theme={preferences?.theme?.overrides}
-            mode={isDarkMode ? 'dark' : 'light'}
+            mode={getActiveTheme(preferences.theme.mode)}
           >
             <FlowProvider>
               <UserProvider profile={userProfile} onUpdateProfile={handleProfileUpdate}>

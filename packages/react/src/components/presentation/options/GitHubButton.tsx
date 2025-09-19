@@ -16,39 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
 
 /**
  * GitHub Sign-In Button Component.
  * Handles authentication with GitHub identity provider.
  */
-const GitHubButton: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const GitHubButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
 
   return (
     <Button
-      type="button"
-      variant="solid"
-      color="secondary"
+      {...rest}
       fullWidth
+      type="button"
+      color="secondary"
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 67.91 66.233" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(-386.96 658.072)">
@@ -60,7 +52,7 @@ const GitHubButton: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {t('elements.buttons.github')}
+      {children ?? t('elements.buttons.github')}
     </Button>
   );
 };

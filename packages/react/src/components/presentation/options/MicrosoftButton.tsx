@@ -16,39 +16,31 @@
  * under the License.
  */
 
-import {FC} from 'react';
-import Button from '../../../primitives/Button/Button';
-import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
+import {FC, HTMLAttributes} from 'react';
+import Button from '../../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
+import useTranslation from '../../../hooks/useTranslation';
 
 /**
  * Microsoft Sign-In Button Component.
  * Handles authentication with Microsoft identity provider.
  */
-const MicrosoftButton: FC<BaseSignInOptionProps> = ({
-  authenticator,
+const MicrosoftButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  onSubmit,
-  buttonClassName = '',
   preferences,
+  children,
+  ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
-  /**
-   * Handle button click.
-   */
-  const handleClick = () => {
-    onSubmit(authenticator);
-  };
 
   return (
     <Button
-      type="button"
-      variant="outline"
-      color="primary"
+      {...rest}
       fullWidth
+      type="button"
+      color="secondary"
+      variant="solid"
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
       startIcon={
         <svg width="14" height="14" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
           <path fill="#f3f3f3" d="M0 0h23v23H0z" />
@@ -59,7 +51,7 @@ const MicrosoftButton: FC<BaseSignInOptionProps> = ({
         </svg>
       }
     >
-      {t('elements.buttons.microsoft')}
+      {children ?? t('elements.buttons.microsoft')}
     </Button>
   );
 };

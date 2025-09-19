@@ -40,6 +40,7 @@ import {
   AsgardeoProviderProps,
   OrganizationProvider,
   BrandingProvider,
+  getActiveTheme,
 } from '@asgardeo/react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {FC, PropsWithChildren, RefObject, useEffect, useMemo, useRef, useState} from 'react';
@@ -104,7 +105,6 @@ const AsgardeoClientProvider: FC<PropsWithChildren<AsgardeoClientProviderProps>>
   const reRenderCheckRef: RefObject<boolean> = useRef(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(_user);
   const [userProfile, setUserProfile] = useState<UserProfile>(_userProfile);
@@ -175,12 +175,11 @@ const AsgardeoClientProvider: FC<PropsWithChildren<AsgardeoClientProviderProps>>
     })();
   }, []);
 
-  useEffect(() => {
+  const isDarkMode: boolean = useMemo(() => {
     if (!preferences?.theme?.mode || preferences.theme.mode === 'system') {
-      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
-    } else {
-      setIsDarkMode(preferences.theme.mode === 'dark');
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
+    return preferences.theme.mode === 'dark';
   }, [preferences?.theme?.mode]);
 
   useEffect(() => {
@@ -310,7 +309,11 @@ const AsgardeoClientProvider: FC<PropsWithChildren<AsgardeoClientProviderProps>>
     <AsgardeoContext.Provider value={contextValue}>
       <I18nProvider preferences={preferences?.i18n}>
         <BrandingProvider brandingPreference={brandingPreference}>
-          <ThemeProvider theme={preferences?.theme?.overrides} mode={isDarkMode ? 'dark' : 'light'}>
+          <ThemeProvider
+            theme={preferences?.theme?.overrides}
+            mode={getActiveTheme(preferences?.theme?.mode as any)}
+            inheritFromBranding
+          >
             <FlowProvider>
               <UserProvider profile={userProfile} onUpdateProfile={handleProfileUpdate} updateProfile={updateProfile}>
                 <OrganizationProvider

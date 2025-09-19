@@ -133,16 +133,16 @@ export * from './components/presentation/SignUp/SignUp';
 // Sign-In Options
 export {default as IdentifierFirst} from './components/presentation/SignIn/options/IdentifierFirst';
 export {default as UsernamePassword} from './components/presentation/SignIn/options/UsernamePassword';
-export {default as GoogleButton} from './components/presentation/SignIn/options/GoogleButton';
-export {default as GitHubButton} from './components/presentation/SignIn/options/GitHubButton';
-export {default as MicrosoftButton} from './components/presentation/SignIn/options/MicrosoftButton';
-export {default as FacebookButton} from './components/presentation/SignIn/options/FacebookButton';
-export {default as LinkedInButton} from './components/presentation/SignIn/options/LinkedInButton';
-export {default as SignInWithEthereumButton} from './components/presentation/SignIn/options/SignInWithEthereumButton';
+export {default as GoogleButton} from './components/presentation/options/GoogleButton';
+export {default as GitHubButton} from './components/presentation/options/GitHubButton';
+export {default as MicrosoftButton} from './components/presentation/options/MicrosoftButton';
+export {default as FacebookButton} from './components/presentation/options/FacebookButton';
+export {default as LinkedInButton} from './components/presentation/options/LinkedInButton';
+export {default as SignInWithEthereumButton} from './components/presentation/options/SignInWithEthereumButton';
 export {default as EmailOtp} from './components/presentation/SignIn/options/EmailOtp';
 export {default as Totp} from './components/presentation/SignIn/options/Totp';
 export {default as SmsOtp} from './components/presentation/SignIn/options/SmsOtp';
-export {default as SocialButton} from './components/presentation/SignIn/options/SocialButton';
+export {default as SocialButton} from './components/presentation/options/SocialButton';
 export {default as MultiOptionButton} from './components/presentation/SignIn/options/MultiOptionButton';
 export * from './components/presentation/SignIn/options/SignInOptionFactory';
 
@@ -273,4 +273,4 @@ export {default as updateMeProfile, UpdateMeProfileConfig} from './api/updateMeP
 export {default as getMeProfile} from './api/getScim2Me';
 export * from './api/getScim2Me';
 
-export {AsgardeoRuntimeError, http} from '@asgardeo/browser';
+export {AsgardeoRuntimeError, http, getActiveTheme} from '@asgardeo/browser';

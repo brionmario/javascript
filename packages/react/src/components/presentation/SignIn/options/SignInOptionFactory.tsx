@@ -25,16 +25,16 @@ import {
 import {ReactElement} from 'react';
 import UsernamePassword from './UsernamePassword';
 import IdentifierFirst from './IdentifierFirst';
-import GoogleButton from './GoogleButton';
-import GitHubButton from './GitHubButton';
-import MicrosoftButton from './MicrosoftButton';
-import FacebookButton from './FacebookButton';
-import LinkedInButton from './LinkedInButton';
-import SignInWithEthereumButton from './SignInWithEthereumButton';
+import GoogleButton from '../../options/GoogleButton';
+import GitHubButton from '../../options/GitHubButton';
+import MicrosoftButton from '../../options/MicrosoftButton';
+import FacebookButton from '../../options/FacebookButton';
+import LinkedInButton from '../../options/LinkedInButton';
+import SignInWithEthereumButton from '../../options/SignInWithEthereumButton';
 import EmailOtp from './EmailOtp';
 import Totp from './Totp';
 import SmsOtp from './SmsOtp';
-import SocialButton from './SocialButton';
+import SocialButton from '../../options/SocialButton';
 import MultiOptionButton from './MultiOptionButton';
 
 /**
@@ -44,7 +44,7 @@ export interface BaseSignInOptionProps extends WithPreferences {
   /**
    * The authenticator configuration.
    */
-  authenticator: EmbeddedSignInFlowAuthenticator;
+  authenticator?: EmbeddedSignInFlowAuthenticator;
 
   /**
    * Current form values.
@@ -74,7 +74,7 @@ export interface BaseSignInOptionProps extends WithPreferences {
   /**
    * Callback function called when the option is submitted.
    */
-  onSubmit: (authenticator: EmbeddedSignInFlowAuthenticator, formData?: Record<string, string>) => void;
+  onSubmit?: (authenticator: EmbeddedSignInFlowAuthenticator, formData?: Record<string, string>) => void;
 
   /**
    * Custom CSS class name for form inputs.
@@ -95,64 +95,142 @@ export interface BaseSignInOptionProps extends WithPreferences {
 /**
  * Creates the appropriate sign-in option component based on the authenticator's ID.
  */
-export const createSignInOption = (props: BaseSignInOptionProps): ReactElement => {
-  const {authenticator, ...optionProps} = props;
-
+export const createSignInOption = ({
+  authenticator,
+  onSubmit,
+  buttonClassName,
+  preferences,
+  ...rest
+}: BaseSignInOptionProps): ReactElement => {
   // Check if this authenticator has params (indicating it needs user input)
   const hasParams = authenticator.metadata?.params && authenticator.metadata.params.length > 0;
 
   // Use authenticatorId to determine the component type
   switch (authenticator.authenticatorId) {
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.UsernamePassword:
-      return <UsernamePassword {...props} />;
+      return <UsernamePassword authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />;
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.IdentifierFirst:
-      return <IdentifierFirst {...props} />;
+      return <IdentifierFirst authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />;
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Google:
-      return <GoogleButton {...props} />;
+      return (
+        <GoogleButton
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          authenticator={authenticator}
+          preferences={preferences}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.GitHub:
-      return <GitHubButton {...props} />;
+      return (
+        <GitHubButton
+          authenticator={authenticator}
+          preferences={preferences}
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Microsoft:
-      return <MicrosoftButton {...props} />;
+      return (
+        <MicrosoftButton
+          authenticator={authenticator}
+          preferences={preferences}
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Facebook:
-      return <FacebookButton {...props} />;
+      return (
+        <FacebookButton
+          authenticator={authenticator}
+          preferences={preferences}
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.LinkedIn:
-      return <LinkedInButton {...props} />;
+      return (
+        <LinkedInButton
+          authenticator={authenticator}
+          preferences={preferences}
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.SignInWithEthereum:
-      return <SignInWithEthereumButton {...props} />;
+      return (
+        <SignInWithEthereumButton
+          authenticator={authenticator}
+          preferences={preferences}
+          className={buttonClassName}
+          onClick={() => onSubmit(authenticator)}
+          {...rest}
+        />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.EmailOtp:
       // If it has params, render as input form, otherwise as selection button
-      return hasParams ? <EmailOtp {...props} /> : <MultiOptionButton {...props} />;
+      return hasParams ? (
+        <EmailOtp authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      ) : (
+        <MultiOptionButton authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Totp:
       // If it has params, render as input form, otherwise as selection button
-      return hasParams ? <Totp {...props} /> : <MultiOptionButton {...props} />;
+      return hasParams ? (
+        <Totp authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      ) : (
+        <MultiOptionButton authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      );
 
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.SmsOtp:
       // If it has params, render as input form, otherwise as selection button
-      return hasParams ? <SmsOtp {...props} /> : <MultiOptionButton {...props} />;
+      return hasParams ? (
+        <SmsOtp authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      ) : (
+        <MultiOptionButton authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+      );
 
     default:
       // Check if it's a federated authenticator (non-LOCAL idp)
       if (authenticator.idp !== EmbeddedSignInFlowAuthenticatorKnownIdPType.Local) {
         // For unknown federated authenticators, use generic social login
-        return <SocialButton {...props} />;
+        return (
+          <SocialButton
+            authenticator={authenticator}
+            preferences={preferences}
+            className={buttonClassName}
+            onClick={() => onSubmit(authenticator)}
+            {...rest}
+          >
+            {authenticator.idp}
+          </SocialButton>
+        );
       }
 
       // For LOCAL authenticators, decide based on whether they have params
       if (hasParams) {
         // Fallback to username/password for unknown local authenticators with params
-        return <UsernamePassword {...props} />;
+        return (
+          <UsernamePassword authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+        );
       } else {
         // Use multi-option button for LOCAL authenticators without params
-        return <MultiOptionButton {...props} />;
+        return (
+          <MultiOptionButton authenticator={authenticator} preferences={preferences} onSubmit={onSubmit} {...rest} />
+        );
       }
   }
 };

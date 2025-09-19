@@ -28,6 +28,7 @@ import {
   createMediaQueryListener,
   BrowserThemeDetection,
   ThemePreferences,
+  DEFAULT_THEME,
 } from '@asgardeo/browser';
 import ThemeContext from './ThemeContext';
 import useBrandingContext from '../Branding/useBrandingContext';
@@ -109,7 +110,7 @@ const applyThemeToDOM = (theme: Theme) => {
 const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   children,
   theme: themeConfig,
-  mode = 'system',
+  mode = DEFAULT_THEME,
   detection = {},
   inheritFromBranding = true,
 }: PropsWithChildren<ThemeProviderProps>): ReactElement => {

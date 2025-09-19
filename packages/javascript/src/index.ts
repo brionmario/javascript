@@ -16,10 +16,17 @@
  * under the License.
  */
 
-export * from './__legacy__/client';
-export * from './__legacy__/models';
+export {AsgardeoAuthClient} from './__legacy__/client';
+export {
+  DefaultAuthClientConfig,
+  WellKnownAuthClientConfig,
+  BaseURLAuthClientConfig,
+  ExplicitAuthClientConfig,
+  StrictAuthClientConfig,
+  AuthClientConfig,
+} from './__legacy__/models';
 
-export * from './IsomorphicCrypto';
+export {IsomorphicCrypto} from './IsomorphicCrypto';
 
 export {default as initializeEmbeddedSignInFlow} from './api/initializeEmbeddedSignInFlow';
 export {default as executeEmbeddedSignInFlow} from './api/executeEmbeddedSignInFlow';
@@ -119,7 +126,7 @@ export {I18nBundle, I18nTranslations, I18nMetadata} from './models/i18n';
 
 export {default as AsgardeoJavaScriptClient} from './AsgardeoJavaScriptClient';
 
-export {default as createTheme} from './theme/createTheme';
+export {default as createTheme, DEFAULT_THEME} from './theme/createTheme';
 export {ThemeColors, ThemeConfig, Theme, ThemeMode, ThemeDetection} from './theme/types';
 
 export {default as bem} from './utils/bem';
