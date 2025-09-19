@@ -34,6 +34,7 @@ const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>>
   const {t} = useTranslation(preferences?.i18n);
   return (
     <Button
+      {...rest}
       fullWidth
       type="button"
       color="secondary"
@@ -47,7 +48,6 @@ const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>>
           />
         </svg>
       }
-      {...rest}
     >
       {t('elements.buttons.social', {connection: children as string})}
     </Button>

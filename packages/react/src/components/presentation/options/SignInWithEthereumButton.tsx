@@ -35,6 +35,7 @@ const SignInWithEthereumButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLBu
 
   return (
     <Button
+      {...rest}
       fullWidth
       type="button"
       color="secondary"
@@ -48,7 +49,6 @@ const SignInWithEthereumButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLBu
           />
         </svg>
       }
-      {...rest}
     >
       {children ?? t('elements.buttons.ethereum')}
     </Button>

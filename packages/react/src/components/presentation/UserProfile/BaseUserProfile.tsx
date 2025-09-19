@@ -75,6 +75,7 @@ export interface BaseUserProfileProps {
   schemas?: Schema[];
   title?: string;
   error?: string | null;
+  isLoading?: boolean;
 }
 
 // Fields to skip based on schema.name
@@ -117,6 +118,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
   onUpdate,
   open = false,
   error = null,
+  isLoading = false,
 }): ReactElement => {
   const {theme, colorScheme} = useTheme();
   const [editedUser, setEditedUser] = useState(flattenedProfile || profile);
@@ -524,7 +526,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
               <Button
                 size="small"
                 color="tertiary"
-                variant="text"
+                variant="icon"
                 onClick={() => toggleFieldEdit(schema.name!)}
                 title="Edit"
                 className={styles.editButton}
@@ -603,6 +605,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
           name={getDisplayName()}
           size={80}
           alt={`${getDisplayName()}'s avatar`}
+          isLoading={isLoading}
         />
       </div>
       <div className={styles.infoContainer}>

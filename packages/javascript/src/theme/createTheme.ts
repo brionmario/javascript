@@ -142,15 +142,15 @@ const lightTheme: ThemeConfig = {
 const darkTheme: ThemeConfig = {
   colors: {
     action: {
-      active: 'rgba(255, 255, 255, 0.70)',
-      hover: 'rgba(255, 255, 255, 0.04)',
+      active: '#1c1c1c',
+      hover: '#1c1c1c',
       hoverOpacity: 0.04,
-      selected: 'rgba(255, 255, 255, 0.08)',
+      selected: '#1c1c1c',
       selectedOpacity: 0.08,
       disabled: 'rgba(255, 255, 255, 0.26)',
       disabledBackground: 'rgba(255, 255, 255, 0.12)',
       disabledOpacity: 0.38,
-      focus: 'rgba(255, 255, 255, 0.12)',
+      focus: '#1c1c1c',
       focusOpacity: 0.12,
       activatedOpacity: 0.12,
     },

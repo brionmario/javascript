@@ -54,7 +54,7 @@ export type UserProfileProps = Omit<BaseUserProfileProps, 'user' | 'profile' | '
  * ```
  */
 const UserProfile: FC<UserProfileProps> = ({...rest}: UserProfileProps): ReactElement => {
-  const {baseUrl} = useAsgardeo();
+  const {baseUrl, isLoading} = useAsgardeo();
   const {profile, flattenedProfile, schemas, onUpdateProfile} = useUser();
   const {t} = useTranslation();
 

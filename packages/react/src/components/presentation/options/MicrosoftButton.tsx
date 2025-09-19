@@ -35,6 +35,7 @@ const MicrosoftButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonEleme
 
   return (
     <Button
+      {...rest}
       fullWidth
       type="button"
       color="secondary"
@@ -49,7 +50,6 @@ const MicrosoftButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonEleme
           <path fill="#ffba08" d="M12 12h10v10H12z" />
         </svg>
       }
-      {...rest}
     >
       {children ?? t('elements.buttons.microsoft')}
     </Button>
