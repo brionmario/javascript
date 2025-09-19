@@ -88,11 +88,19 @@ const useStyles = (
       }
     `;
 
+    const iconStyles = css`
+      width: 60%;
+      height: 60%;
+      fill: ${backgroundColor ? '#ffffff' : theme.vars.colors.text.secondary};
+      opacity: 0.8;
+    `;
+
     return {
       avatar: baseAvatar,
       variant: variantStyles[variant],
       image: imageStyles,
       skeleton: skeletonStyles,
+      icon: iconStyles,
     };
   }, [theme, colorScheme, size, variant, backgroundColor]);
 };
