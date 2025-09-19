@@ -411,6 +411,9 @@ export class AsgardeoSPAClient {
         }
 
         return response;
+      })
+      .catch(error => {
+        return Promise.reject(error)
       });
   }
 

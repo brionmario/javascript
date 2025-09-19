@@ -16,10 +16,17 @@
  * under the License.
  */
 
-export * from './__legacy__/client';
-export * from './__legacy__/models';
+export {AsgardeoAuthClient} from './__legacy__/client';
+export {
+  DefaultAuthClientConfig,
+  WellKnownAuthClientConfig,
+  BaseURLAuthClientConfig,
+  ExplicitAuthClientConfig,
+  StrictAuthClientConfig,
+  AuthClientConfig,
+} from './__legacy__/models';
 
-export * from './IsomorphicCrypto';
+export {IsomorphicCrypto} from './IsomorphicCrypto';
 
 export {default as initializeEmbeddedSignInFlow} from './api/initializeEmbeddedSignInFlow';
 export {default as executeEmbeddedSignInFlow} from './api/executeEmbeddedSignInFlow';
