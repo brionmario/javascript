@@ -42,6 +42,9 @@ import {
   HttpRequestConfig,
   HttpResponse,
   Storage,
+  navigate,
+  getRedirectBasedSignUpUrl,
+  Config,
   TokenExchangeRequestConfig,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
@@ -333,19 +336,10 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   override async signUp(options?: SignUpOptions): Promise<void>;
   override async signUp(payload: EmbeddedFlowExecuteRequestPayload): Promise<EmbeddedFlowExecuteResponse>;
   override async signUp(...args: any[]): Promise<void | EmbeddedFlowExecuteResponse> {
-    if (args.length === 0) {
-      throw new AsgardeoRuntimeError(
-        'No arguments provided for signUp method.',
-        'react-AsgardeoReactClient-ValidationError-001',
-        'react',
-        'The signUp method requires at least one argument, either a SignUpOptions object or an EmbeddedFlowExecuteRequestPayload.',
-      );
-    }
-
+    const configData = await this.asgardeo.getConfigData();
     const firstArg = args[0];
 
     if (typeof firstArg === 'object' && 'flowType' in firstArg) {
-      const configData = await this.asgardeo.getConfigData();
       const baseUrl: string = configData?.baseUrl;
 
       return executeEmbeddedSignUpFlow({
@@ -353,12 +347,8 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
         payload: firstArg as EmbeddedFlowExecuteRequestPayload,
       });
     }
-    throw new AsgardeoRuntimeError(
-      'Not implemented',
-      'react-AsgardeoReactClient-ValidationError-002',
-      'react',
-      'The signUp method with SignUpOptions is not implemented in the React client.',
-    );
+
+    navigate(getRedirectBasedSignUpUrl(configData as Config));
   }
 
   async request(requestConfig?: HttpRequestConfig): Promise<HttpResponse<any>> {

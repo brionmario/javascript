@@ -1,3 +1,4 @@
+import { Platform } from './models/platforms';
 /**
  * Copyright (c) 2020, WSO2 LLC. (https://www.wso2.com). All Rights Reserved.
  *
@@ -57,6 +58,7 @@ export {default as AsgardeoRuntimeError} from './errors/AsgardeoRuntimeError';
 export {AsgardeoAuthException} from './errors/exception';
 
 export {AllOrganizationsApiResponse} from './models/organization';
+export {Platform} from './models/platforms';
 export {
   EmbeddedSignInFlowInitiateResponse,
   EmbeddedSignInFlowStatus,
@@ -135,12 +137,15 @@ export {default as processUsername} from './utils/processUsername';
 export {default as deepMerge} from './utils/deepMerge';
 export {default as deriveOrganizationHandleFromBaseUrl} from './utils/deriveOrganizationHandleFromBaseUrl';
 export {default as extractUserClaimsFromIdToken} from './utils/extractUserClaimsFromIdToken';
+export {default as isRecognizedBaseUrlPattern} from './utils/isRecognizedBaseUrlPattern';
 export {default as extractPkceStorageKeyFromState} from './utils/extractPkceStorageKeyFromState';
 export {default as flattenUserSchema} from './utils/flattenUserSchema';
 export {default as generateUserProfile} from './utils/generateUserProfile';
 export {default as getLatestStateParam} from './utils/getLatestStateParam';
 export {default as generateFlattenedUserProfile} from './utils/generateFlattenedUserProfile';
+export {default as getRedirectBasedSignUpUrl} from './utils/getRedirectBasedSignUpUrl';
 export {default as getI18nBundles} from './utils/getI18nBundles';
+export {default as identifyPlatform} from './utils/identifyPlatform';
 export {default as isEmpty} from './utils/isEmpty';
 export {default as set} from './utils/set';
 export {default as get} from './utils/get';

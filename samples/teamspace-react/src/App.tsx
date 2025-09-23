@@ -8,6 +8,7 @@ import OrganizationsPage from './pages/Organizations';
 import CreateOrganizationPage from './pages/CreateOrganizationPage';
 import SignInPage from './pages/SignInPage';
 import LandingPage from './pages/LandingPage';
+import DebugPage from './pages/DebugPage';
 import LandingLayout from './layouts/LandingLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
@@ -163,6 +164,16 @@ function App() {
               <ProtectedRoute redirectTo="/signin">
                 <DashboardLayout>
                   <CreateOrganizationPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/debug"
+            element={
+              <ProtectedRoute redirectTo="/signin">
+                <DashboardLayout>
+                  <DebugPage />
                 </DashboardLayout>
               </ProtectedRoute>
             }

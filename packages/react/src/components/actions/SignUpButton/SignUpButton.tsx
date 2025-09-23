@@ -17,6 +17,7 @@
  */
 
 import {AsgardeoRuntimeError} from '@asgardeo/browser';
+import {navigate} from '@asgardeo/browser';
 import {forwardRef, ForwardRefExoticComponent, MouseEvent, ReactElement, Ref, RefAttributes, useState} from 'react';
 import BaseSignUpButton, {BaseSignUpButtonProps} from './BaseSignUpButton';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
@@ -83,9 +84,7 @@ const SignUpButton: ForwardRefExoticComponent<SignUpButtonProps & RefAttributes<
 
       // If a custom `signUpUrl` is provided, use it for navigation.
       if (signUpUrl) {
-        window.history.pushState(null, '', signUpUrl);
-
-        window.dispatchEvent(new PopStateEvent('popstate', {state: null}));
+        navigate(signUpUrl);
       } else {
         await signUp();
       }

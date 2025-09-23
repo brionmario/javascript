@@ -42,7 +42,7 @@
     "typecheck": "tsc -p tsconfig.lib.json"
   },
   "devDependencies": {
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.30",
     "@wso2/eslint-plugin": "catalog:",
     "@wso2/prettier-config": "catalog:",
     "esbuild": "^0.25.9",
