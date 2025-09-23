@@ -1,7 +1,7 @@
 'use client';
 
-import {ChevronDown, LogOut, Settings, UserIcon, Workflow, LayoutDashboard} from 'lucide-react';
-import {UserDropdown as _UserDropdown, SignOutButton, UserProfile} from '@asgardeo/react';;
+import {ChevronDown, LogOut, Settings, UserIcon, Workflow, LayoutDashboard, Bug} from 'lucide-react';
+import {UserDropdown as _UserDropdown, SignOutButton, UserProfile} from '@asgardeo/react';
 import {useState, useRef} from 'react';
 import {Link} from 'react-router';
 
@@ -17,7 +17,7 @@ export default function UserDropdown({mode = 'default'}: UserDropdownProps) {
   if (mode === 'custom') {
     return (
       <_UserDropdown>
-        {({user, isLoading}) => (
+        {({user, isLoading}: {user: any; isLoading: boolean}) => (
           <>
             <div className="relative" ref={userDropdownRef}>
               <button
@@ -65,9 +65,18 @@ export default function UserDropdown({mode = 'default'}: UserDropdownProps) {
                     Settings
                   </Link>
 
+                  <Link
+                    to="/debug"
+                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    onClick={() => setShowUserDropdown(false)}
+                  >
+                    <Bug className="h-4 w-4 mr-3" />
+                    Debug (Token Info)
+                  </Link>
+
                   <div className="border-t border-gray-100 mt-1">
                     <SignOutButton>
-                      {({signOut}) => (
+                      {({signOut}: {signOut: () => void}) => (
                         <button
                           onClick={() => {
                             signOut();
@@ -92,36 +101,47 @@ export default function UserDropdown({mode = 'default'}: UserDropdownProps) {
   }
 
   return (
-    <_UserDropdown
-      menuItems={[
-        {
-          label: (
-            <span className="flex items-center">
-              <Workflow className="h-4 w-4 mr-3" />
-              Workflows
-            </span>
-          ),
-          onClick: () => null,
-        },
-        {
-          label: (
-            <span className="flex items-center">
-              <LayoutDashboard className="h-4 w-4 mr-3" />
-              Dashboard
-            </span>
-          ),
-          href: '/dashboard',
-        },
-        {
-          label: (
-            <span className="flex items-center">
-              <Settings className="h-4 w-4 mr-3" />
-              Settings
-            </span>
-          ),
-          href: '/settings',
-        },
-      ]}
-    />
+    <>
+      <_UserDropdown
+        menuItems={[
+          {
+            label: (
+              <span className="flex items-center">
+                <Workflow className="h-4 w-4 mr-3" />
+                Workflows
+              </span>
+            ),
+            onClick: () => null,
+          },
+          {
+            label: (
+              <span className="flex items-center">
+                <LayoutDashboard className="h-4 w-4 mr-3" />
+                Dashboard
+              </span>
+            ),
+            href: '/dashboard',
+          },
+          {
+            label: (
+              <span className="flex items-center">
+                <Settings className="h-4 w-4 mr-3" />
+                Settings
+              </span>
+            ),
+            href: '/settings',
+          },
+          {
+            label: (
+              <span className="flex items-center">
+                <Bug className="h-4 w-4 mr-3" />
+                Debug
+              </span>
+            ),
+            href: '/debug',
+          },
+        ]}
+      />
+    </>
   );
 }
