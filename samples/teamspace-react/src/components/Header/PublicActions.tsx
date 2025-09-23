@@ -1,7 +1,6 @@
 'use client';
 
 import {SignInButton, SignUpButton} from '@asgardeo/react';
-import {Button} from '../ui/button';
 
 interface PublicActionsProps {
   className?: string;
