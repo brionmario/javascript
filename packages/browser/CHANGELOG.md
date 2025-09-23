@@ -1,5 +1,17 @@
 # @asgardeo/browser
 
+## 0.1.17
+
+### Patch Changes
+
+- [#149](https://github.com/asgardeo/javascript/pull/149)
+  [`e1c0d48`](https://github.com/asgardeo/javascript/commit/e1c0d48dc0139b51f1945b39b6be35e1ffbc6df7) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add support for redirection based `SignUpButton` usage
+
+- Updated dependencies
+  [[`e1c0d48`](https://github.com/asgardeo/javascript/commit/e1c0d48dc0139b51f1945b39b6be35e1ffbc6df7)]:
+  - @asgardeo/javascript@0.1.16
+
 ## 0.1.16
 
 ### Patch Changes
