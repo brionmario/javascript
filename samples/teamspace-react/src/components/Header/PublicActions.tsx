@@ -1,6 +1,5 @@
 'use client';
 
-import {useNavigate} from 'react-router';
 import {SignInButton, SignUpButton} from '@asgardeo/react';
 import {Button} from '../ui/button';
 
@@ -10,8 +9,6 @@ interface PublicActionsProps {
 }
 
 export default function PublicActions({className = '', showMobileActions = false}: PublicActionsProps) {
-  const navigate = useNavigate();
-
   if (showMobileActions) {
     // Mobile menu actions
     return (
