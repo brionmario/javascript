@@ -50,6 +50,8 @@ const identifyPlatform = (config: Config): Platform => {
 
       return Platform.IdentityServer;
     }
+
+    return Platform.Unknown;
   } catch (error) {
     logger.debug(`[identifyPlatform] Error identifying platform from base URL: ${baseUrl}. Error: ${error.message}`);
 
