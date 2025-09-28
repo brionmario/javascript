@@ -17,8 +17,8 @@
  */
 
 import {FC, PropsWithChildren, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
-import {I18nBundle, I18nPreferences, deepMerge} from '@asgardeo/browser';
-import {getI18nBundles} from '@asgardeo/browser';
+import {I18nBundle, getI18nBundles} from '@asgardeo/i18n';
+import {deepMerge, I18nPreferences} from '@asgardeo/browser';
 import I18nContext, {I18nContextValue} from './I18nContext';
 
 const I18N_LANGUAGE_STORAGE_KEY = 'asgardeo-i18n-language';
