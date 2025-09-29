@@ -587,6 +587,9 @@ importers:
 
   samples/teamspace-react:
     dependencies:
+      '@asgardeo/i18n':
+        specifier: workspace:^
+        version: link:../../packages/i18n
       '@asgardeo/react':
         specifier: workspace:^
         version: link:../../packages/react

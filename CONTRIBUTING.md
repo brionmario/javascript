@@ -220,13 +220,92 @@ Add your new language to the translations export file at `packages/i18n/src/tran
 export {default as fr_FR} from './fr-FR';
 ```
 
-##### Test your translation
+#### Test your translation
 
 Build the package and test the new language in a sample application to ensure all translations are working correctly:
 
 ```bash
 pnpm build --filter @asgardeo/i18n
 ```
+
+To test your new language translation, you have two options:
+
+##### Option 1: Using `npm` symlinks
+
+Create a symlink to test your local changes without publishing:
+
+```bash
+# Navigate to the i18n package
+cd packages/i18n
+
+# Create a global symlink
+npm link
+
+# Navigate to your test application
+cd /path/to/your/test-app
+
+# Link the local i18n package
+npm link @asgardeo/i18n
+```
+
+For more information about npm symlinks, see the [npm link documentation](https://docs.npmjs.com/cli/v10/commands/npm-link).
+
+##### Option 2: Integrate into an existing sample
+
+Use one of the existing sample applications in the [`samples/`](../samples/) directory:
+
+```bash
+# Navigate to a sample app (e.g., teamspace-react)
+cd samples/teamspace-react
+
+# Install dependencies
+pnpm install
+
+# The sample will automatically use your local i18n package changes
+```
+
+##### Testing with AsgardeoProvider
+
+Once you have your testing environment set up (using either option above), configure the AsgardeoProvider to use your new language:
+
+- **Import your new language bundle**
+
+```tsx
+import {fr_FR} from '@asgardeo/i18n';
+```
+
+- **Configure the AsgardeoProvider with the new language**
+
+```tsx
+<AsgardeoProvider
+  baseUrl={import.meta.env.VITE_ASGARDEO_BASE_URL}
+  clientId={import.meta.env.VITE_ASGARDEO_CLIENT_ID}
+  // ... other configuration
+  preferences={{
+    i18n: {
+      language: 'fr-FR',
+      bundles: {
+        'fr-FR': fr_FR,
+      },
+    },
+  }}
+>
+  <App />
+</AsgardeoProvider>
+```
+
+For more details on the i18n preferences interface, see the [`I18nPreferences`](packages/javascript/src/models/config.ts#L232).
+
+- **Verify the translations**
+
+- Navigate through your application's authentication flows
+- Check that all UI text appears in your new language
+- Verify that buttons, labels, error messages, and other UI elements display the correct translations
+- Test different authentication scenarios (sign-in, sign-up, errors) to ensure comprehensive coverage
+
+- **Test text direction (if applicable)**
+
+For right-to-left languages, ensure that the UI layout adjusts correctly based on the `direction` property in your metadata.
 
 ##### Update documentation
 
