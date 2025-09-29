@@ -13,7 +13,6 @@ This guide walks you through setting up the development environment and other im
   - [JSON Sort Order](#json-sort-order)
 - [Setting up the Source Code](#setting-up-the-source-code)
 - [Setting up the Development Environment](#setting-up-the-development-environment)
-- [Contributing to the Documentation](#contributing-to-the-documentation)
 - [Commit Message Guidelines](#commit-message-guidelines)
   - [Commit Message Header](#commit-header)
     - [Type](#type)
@@ -22,6 +21,7 @@ This guide walks you through setting up the development environment and other im
   - [Commit Message Body](#commit-body)
   - [Commit Message Footer](#commit-footer)
   - [Revert commits](#revert-commits)
+- [Contributing to the Documentation](#contributing-to-the-documentation)
 
 ## Prerequisite Software
 
@@ -70,15 +70,6 @@ pnpm install
 ```bash
 pnpm build
 ```
-
-## Contributing to the Documentation
-
-The documentation for Asgardeo JavaScript SDKs is maintained in the Asgardeo / WSO2 Identity Server Official Docs site.
-
-- [Asgardeo Docs](https://wso2.com/asgardeo/docs)
-- [WSO2 Identity Server Docs](https://is.docs.wso2.com/en/latest/)
-
-To contribute to the documentation, please send a pull request to the [Asgardeo Docs repository](https://github.com/wso2/docs-is).
 
 ## Commit Message Guidelines
 
@@ -158,3 +149,94 @@ The content of the commit message body should contain:
 
 - Information about the SHA of the commit being reverted in the following format: `This reverts commit <SHA>`.
 - A clear description of the reason for reverting the commit message.
+
+## Contributing
+
+### Contributing to the Internalization (i18n) Package
+
+The `@asgardeo/i18n` package provides internationalization support for Asgardeo JavaScript SDKs. To add support for a new language, follow these steps:
+
+#### Adding a New Language
+
+##### Create a new language file
+
+Navigate to [`packages/i18n/src/translations/`](../packages/i18n/src/translations/) and create a new TypeScript file for your language.  
+Use the correct [IETF BCP 47 language tag](https://datatracker.ietf.org/doc/html/bcp47) (which combines [ISO 639-1 language codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) and [ISO 3166-1 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).  
+For example:
+
+- `fr-FR.ts` → French (France)  
+- `es-ES.ts` → Spanish (Spain)  
+- `en-US.ts` → English (United States)  
+
+##### Copy the structure from the existing language file
+
+Use the English (`en-US.ts`) file as a template to ensure you have all the required translation keys:
+
+```bash
+cp packages/i18n/src/translations/en-US.ts packages/i18n/src/translations/<locale-code>.ts
+```
+
+##### Update the translations and metadata
+
+Open your new language file and:
+
+- Translate all the text values in the `translations` object while keeping the keys unchanged
+- Update the `metadata` object with the correct locale information
+
+```typescript
+const translations: I18nTranslations = {
+  'elements.buttons.signIn': 'Se connecter',
+  'elements.buttons.signOut': 'Se déconnecter',
+  // ... translate all other keys
+};
+
+const metadata: I18nMetadata = {
+  localeCode: 'fr-FR',
+  countryCode: 'FR',
+  languageCode: 'fr',
+  displayName: 'Français (France)',
+  direction: 'ltr', // or 'rtl' for right-to-left languages
+};
+```
+
+##### Export the new language bundle
+
+At the end of your new language file, export the bundle:
+
+```typescript
+const fr_FR: I18nBundle = {
+  metadata,
+  translations,
+};
+
+export default fr_FR;
+```
+
+##### Add the export to the translations index
+
+Add your new language to the translations export file at `packages/i18n/src/translations/index.ts`:
+
+```typescript
+export {default as fr_FR} from './fr-FR';
+```
+
+##### Test your translation
+
+Build the package and test the new language in a sample application to ensure all translations are working correctly:
+
+```bash
+pnpm build --filter @asgardeo/i18n
+```
+
+##### Update documentation
+
+Update any relevant documentation to mention the newly supported language.
+
+### Contributing to the Documentation
+
+The documentation for Asgardeo JavaScript SDKs is maintained in the Asgardeo / WSO2 Identity Server Official Docs site.
+
+- [Asgardeo Docs](https://wso2.com/asgardeo/docs)
+- [WSO2 Identity Server Docs](https://is.docs.wso2.com/en/latest/)
+
+To contribute to the documentation, please send a pull request to the [Asgardeo Docs repository](https://github.com/wso2/docs-is).
