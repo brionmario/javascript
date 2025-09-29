@@ -183,6 +183,9 @@ cp packages/i18n/src/translations/en-US.ts packages/i18n/src/translations/<local
 
 ##### Update the translations and metadata
 
+> [!IMPORTANT]
+> ⚠️ Do not change any **formatting** or **keys** in the `translations` object. Only update the text values.
+
 Open your new language file and:
 
 - Translate all the text values in the `translations` object while keeping the keys unchanged
