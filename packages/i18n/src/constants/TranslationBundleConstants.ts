@@ -30,12 +30,10 @@ import {en_US} from '../translations';
  * const locales = TranslationBundleConstants.DEFAULT_LOCALES;
  * ```
  */
-const TranslationBundleConstants = {
-  /**
-   * Default locale code used as fallback when no specific locale is provided.
-   */
-  FALLBACK_LOCALE: en_US.metadata.localeCode,
-
+const TranslationBundleConstants: {
+  DEFAULT_LOCALES: string[];
+  FALLBACK_LOCALE: string;
+} = {
   /**
    * List of default locales bundles with the SDKs.
    *
@@ -43,6 +41,11 @@ const TranslationBundleConstants = {
    * - `en-US` - English (United States)
    */
   DEFAULT_LOCALES: [en_US.metadata.localeCode],
+
+  /**
+   * Default locale code used as fallback when no specific locale is provided.
+   */
+  FALLBACK_LOCALE: en_US.metadata.localeCode,
 } as const;
 
 export default TranslationBundleConstants;
