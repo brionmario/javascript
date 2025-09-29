@@ -107,7 +107,6 @@ const translations: I18nTranslations = {
   'organization.switcher.loading.more': 'लोड हो रहा है...',
   'organization.switcher.no.organizations': 'कोई संगठन नहीं मिला',
   'organization.switcher.error.prefix': 'त्रुटि:',
-
   'organization.profile.title': 'संगठन प्रोफ़ाइल',
   'organization.profile.loading': 'संगठन लोड हो रहा है...',
   'organization.profile.error': 'संगठन लोड करने में विफल',
