@@ -26,7 +26,7 @@ const translations: I18nTranslations = {
   /* |                        Elements                               | */
   /* |---------------------------------------------------------------| */
 
-  //* Buttons */
+  /* Buttons */
   'elements.buttons.signIn': 'Sign In',
   'elements.buttons.signOut': 'Sign Out',
   'elements.buttons.signUp': 'Sign Up',
