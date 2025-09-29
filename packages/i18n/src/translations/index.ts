@@ -16,8 +16,4 @@
  * under the License.
  */
 
-// IMPORTANT: Only include default bundled languages here.
-// Current List:
-//   1. en-US
-
 export {default as en_US} from './en-US';

@@ -16,16 +16,34 @@
  * under the License.
  */
 
-import * as i18n from '../translations';
+import TranslationBundleConstants from '../constants/TranslationBundleConstants';
+import {I18nBundle} from '../models/i18n';
+import * as translations from '../translations';
 
 /**
  * Get the default i18n bundles.
+ * Dynamically builds the bundles collection by iterating through supported locales
+ * and importing their corresponding translation modules.
  *
- * @param locale - The locale to get the bundle for (defaults to 'en-US')
- * @returns The i18n bundle for the specified locale
+ * @returns The collection of all default i18n bundles
  */
-const getDefaultI18nBundles = () => {
-  return i18n;
+const getDefaultI18nBundles = (): Record<string, I18nBundle> => {
+  const bundles: Record<string, I18nBundle> = {};
+
+  // Iterate through supported locales and build bundles dynamically
+  TranslationBundleConstants.DEFAULT_LOCALES.forEach(localeCode => {
+    // Convert locale code to translation module key (e.g., 'en-US' -> 'en_US')
+    const moduleKey = localeCode.replace('-', '_') as keyof typeof translations;
+
+    // Get the translation bundle from the translations module
+    const bundle = translations[moduleKey] as I18nBundle;
+
+    if (bundle && bundle.metadata?.localeCode) {
+      bundles[bundle.metadata.localeCode] = bundle;
+    }
+  });
+
+  return bundles;
 };
 
 export default getDefaultI18nBundles;
