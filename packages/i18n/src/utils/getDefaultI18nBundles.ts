@@ -16,17 +16,16 @@
  * under the License.
  */
 
-import {I18nBundle, I18nTranslations} from '../models/i18n';
 import * as i18n from '../translations';
 
 /**
- * Get internationalization bundles for the specified locale.
+ * Get the default i18n bundles.
  *
  * @param locale - The locale to get the bundle for (defaults to 'en-US')
  * @returns The i18n bundle for the specified locale
  */
-const getI18nBundles = () => {
+const getDefaultI18nBundles = () => {
   return i18n;
 };
 
-export default getI18nBundles;
+export default getDefaultI18nBundles;

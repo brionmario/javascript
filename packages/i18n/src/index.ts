@@ -23,4 +23,4 @@ export type {I18nBundle, I18nTranslations, I18nMetadata, I18nTextDirection} from
 export * from './translations';
 
 // Utils
-export {default as getI18nBundles} from './utils/getI18nBundles';
+export {default as getDefaultI18nBundles} from './utils/getDefaultI18nBundles';

@@ -17,7 +17,7 @@
  */
 
 import {FC, PropsWithChildren, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
-import {I18nBundle, getI18nBundles} from '@asgardeo/i18n';
+import {I18nBundle, getDefaultI18nBundles} from '@asgardeo/i18n';
 import {deepMerge, I18nPreferences} from '@asgardeo/browser';
 import I18nContext, {I18nContextValue} from './I18nContext';
 
@@ -78,7 +78,7 @@ const I18nProvider: FC<PropsWithChildren<I18nProviderProps>> = ({
   preferences,
 }: PropsWithChildren<I18nProviderProps>): ReactElement => {
   // Get default bundles from the browser package
-  const defaultBundles = getI18nBundles();
+  const defaultBundles = getDefaultI18nBundles();
 
   // Determine the initial language based on preference order:
   // 1. User preference from config
