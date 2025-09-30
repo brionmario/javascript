@@ -18,3 +18,4 @@
 
 export {default as en_US} from './en-US';
 export {default as hi_IN} from './hi-IN';
+export {default as si_LK} from './si-LK';
