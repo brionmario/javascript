@@ -29,7 +29,7 @@ const translations: I18nTranslations = {
   /* Buttons */
   'elements.buttons.signIn': 'Se connecter',
   'elements.buttons.signOut': 'Se déconnecter',
-  'elements.buttons.signUp': 'S\'inscrire',
+  'elements.buttons.signUp': "S'inscrire",
   'elements.buttons.facebook': 'Continuer avec Facebook',
   'elements.buttons.google': 'Continuer avec Google',
   'elements.buttons.github': 'Continuer avec GitHub',
@@ -51,7 +51,7 @@ const translations: I18nTranslations = {
   'signin.subtitle': 'Entrez vos identifiants pour continuer.',
 
   /* Base Sign Up */
-  'signup.title': 'S\'inscrire',
+  'signup.title': "S'inscrire",
   'signup.subtitle': 'Créez un nouveau compte pour commencer.',
 
   /* Email OTP */
@@ -61,7 +61,7 @@ const translations: I18nTranslations = {
 
   /* Identifier First */
   'identifier.first.title': 'Se connecter',
-  'identifier.first.subtitle': 'Entrez votre nom d\'utilisateur ou votre adresse e-mail.',
+  'identifier.first.subtitle': "Entrez votre nom d'utilisateur ou votre adresse e-mail.",
   'identifier.first.submit.button': 'Continuer',
 
   /* SMS OTP */
@@ -71,27 +71,28 @@ const translations: I18nTranslations = {
 
   /* TOTP */
   'totp.title': 'Vérifiez votre identité',
-  'totp.subtitle': 'Entrez le code de votre application d\'authentification.',
+  'totp.subtitle': "Entrez le code de votre application d'authentification.",
   'totp.submit.button': 'Continuer',
 
   /* Username Password */
   'username.password.submit.button': 'Continuer',
   'username.password.title': 'Se connecter',
-  'username.password.subtitle': 'Entrez votre nom d\'utilisateur et votre mot de passe pour continuer.',
+  'username.password.subtitle': "Entrez votre nom d'utilisateur et votre mot de passe pour continuer.",
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
   'user.profile.title': 'Profil',
-  'user.profile.update.generic.error': 'Une erreur est survenue lors de la mise à jour de votre profil. Veuillez réessayer.',
+  'user.profile.update.generic.error':
+    'Une erreur est survenue lors de la mise à jour de votre profil. Veuillez réessayer.',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'Sélectionner l\'organisation',
-  'organization.switcher.switch.organization': 'Changer d\'organisation',
+  'organization.switcher.select.organization': "Sélectionner l'organisation",
+  'organization.switcher.switch.organization': "Changer d'organisation",
   'organization.switcher.loading.organizations': 'Chargement des organisations...',
   'organization.switcher.members': 'membres',
   'organization.switcher.member': 'membre',
@@ -104,21 +105,21 @@ const translations: I18nTranslations = {
   'organization.switcher.status.label': 'Statut:',
   'organization.switcher.showing.count': 'Affichage de {showing} sur {total} organisations',
   'organization.switcher.refresh.button': 'Rafraîchir',
-  'organization.switcher.load.more': 'Charger plus d\'organisations',
+  'organization.switcher.load.more': "Charger plus d'organisations",
   'organization.switcher.loading.more': 'Chargement...',
   'organization.switcher.no.organizations': 'Aucune organisation trouvée',
   'organization.switcher.error.prefix': 'Erreur:',
-  'organization.profile.title': 'Profil de l\'organisation',
-  'organization.profile.loading': 'Chargement de l\'organisation...',
-  'organization.profile.error': 'Échec du chargement de l\'organisation',
+  'organization.profile.title': "Profil de l'organisation",
+  'organization.profile.loading': "Chargement de l'organisation...",
+  'organization.profile.error': "Échec du chargement de l'organisation",
 
   'organization.create.title': 'Créer une organisation',
-  'organization.create.name.label': 'Nom de l\'organisation',
-  'organization.create.name.placeholder': 'Entrez le nom de l\'organisation',
-  'organization.create.handle.label': 'Identifiant de l\'organisation',
+  'organization.create.name.label': "Nom de l'organisation",
+  'organization.create.name.placeholder': "Entrez le nom de l'organisation",
+  'organization.create.handle.label': "Identifiant de l'organisation",
   'organization.create.handle.placeholder': 'mon-organisation',
   'organization.create.description.label': 'Description',
-  'organization.create.description.placeholder': 'Entrez la description de l\'organisation',
+  'organization.create.description.placeholder': "Entrez la description de l'organisation",
   'organization.create.button': 'Créer une organisation',
   'organization.create.creating': 'Création en cours...',
   'organization.create.cancel': 'Annuler',
@@ -134,11 +135,14 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   'errors.title': 'Erreur',
-  'errors.sign.in.initialization': 'Une erreur est survenue lors de l\'initialisation. Veuillez réessayer plus tard.',
+  'errors.sign.in.initialization': "Une erreur est survenue lors de l'initialisation. Veuillez réessayer plus tard.",
   'errors.sign.in.flow.failure': 'Une erreur est survenue lors du flux de connexion. Veuillez réessayer plus tard.',
-  'errors.sign.in.flow.completion.failure': 'Une erreur est survenue lors de la finalisation du flux de connexion. Veuillez réessayer plus tard.',
-  'errors.sign.in.flow.passkeys.failure': 'Une erreur est survenue lors de la connexion avec les clefs d\'accès. Veuillez réessayer plus tard.',
-  'errors.sign.in.flow.passkeys.completion.failure': 'Une erreur est survenue lors de la finalisation du flux de connexion avec les clefs d\'accès. Veuillez réessayer plus tard.',
+  'errors.sign.in.flow.completion.failure':
+    'Une erreur est survenue lors de la finalisation du flux de connexion. Veuillez réessayer plus tard.',
+  'errors.sign.in.flow.passkeys.failure':
+    "Une erreur est survenue lors de la connexion avec les clefs d'accès. Veuillez réessayer plus tard.",
+  'errors.sign.in.flow.passkeys.completion.failure':
+    "Une erreur est survenue lors de la finalisation du flux de connexion avec les clefs d'accès. Veuillez réessayer plus tard.",
 };
 
 const metadata: I18nMetadata = {
