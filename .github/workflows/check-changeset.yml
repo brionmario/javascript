@@ -29,7 +29,7 @@ on:
             - completed
 
 env:
-    GH_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN }}
+    GH_TOKEN: ${{ secrets.ASGARDEO_GITHUB_BOT_TOKEN }}
     IS_RELEASE_MODE: false
 
 jobs:
