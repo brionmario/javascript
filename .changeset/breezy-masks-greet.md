@@ -1,5 +1,5 @@
 ---
-'@asgardeo/i18n': minor
+'@asgardeo/i18n': patch
 ---
 
 chore: add `Français - fr-FR` language support
