@@ -26,6 +26,12 @@ This guide walks you through setting up the development environment and other im
       - [Option 2: Integrate into an existing sample](#option-2-integrate-into-an-existing-sample)
       - [Testing with AsgardeoProvider](#testing-with-asgardeoprovider)
       - [Update documentation](#update-documentation)
+  - [Releases](#releases)
+    - [Creating a Changeset](#creating-a-changeset)
+      - [Step-by-step process](#step-by-step-process)
+    - [For Maintainers](#for-maintainers)
+      - [Release Process](#release-process)
+      - [Release Automation](#release-automation)
   - [Contributing to the Documentation](#contributing-to-the-documentation)
 
 ## Prerequisite Software
@@ -318,6 +324,170 @@ For right-to-left languages, ensure that the UI layout adjusts correctly based o
 ##### Update documentation
 
 Update any relevant documentation to mention the newly supported language.
+
+### Releases
+
+This project uses [🦋 Changesets](https://github.com/changesets/changesets) for version management and release automation. As an external contributor, you'll primarily interact with the changeset system when your changes need to be included in a release.
+
+#### Creating a Changeset
+
+Whenever you make changes that should be included in a release (new features, bug fixes, breaking changes), you must create a changeset. This helps maintainers understand what changed and how to version your contribution appropriately.
+
+**When do you need a changeset?**
+
+- ✅ Adding new features
+- ✅ Fixing bugs
+- ✅ Making breaking changes
+- ✅ Performance improvements
+
+**When you don't need a changeset?**
+
+- ❌ Documentation-only changes
+- ❌ Internal refactoring that doesn't affect the public API
+- ❌ Test-only changes
+
+##### Step-by-step process
+
+1. **Run the changeset command** in your terminal from the root of the project:
+
+```bash
+pnpm changeset
+```
+
+2. **Select the packages** that your changes affect:
+
+   - Use the arrow keys to navigate through the list
+   - Press space to select/deselect packages
+   - Press Enter to confirm your selection
+
+> [!IMPORTANT]
+> ⚠️ Pick only the packages that you have changed files in. If the package is used by different packages, those packages will automatically get a version bump if needed.
+
+3. **Choose the type of change** for each selected package:
+
+> [!IMPORTANT]
+> ⚠️ Since we are still in the early stages of development, we are only doing **patch** releases for now. Please select "patch" for now until further notice.
+
+- **Patch** (0.0.X) - Bug fixes and non-breaking changes
+- **Minor** (0.X.0) - New features that don't break existing functionality  
+- **Major** (X.0.0) - Breaking changes that require users to update their code
+
+4. **Write a clear summary** of your changes:
+
+   - Use present tense (e.g., "Add new authentication method")
+   - Be descriptive and user-focused
+   - Mention any breaking changes clearly
+   - Focus on what users will experience, not implementation details
+
+5. **Commit the changeset file** along with your changes:
+
+```bash
+git add .changeset/
+git commit -m "chore: add changeset 🦋"
+```
+
+**Example changeset summary:**
+
+> [!NOTE]
+> This is an example changeset summary.
+> Changes are made for:
+>   - `@asgardeo/javascript`
+>   - `@asgardeo/react`
+>   - `@asgardeo/i18n`
+> Even though there are other packages depending on these, only include the packages you directly modified.
+
+````md
+---
+'@asgardeo/javascript': patch
+'@asgardeo/react': patch
+'@asgardeo/i18n': patch
+---
+
+Update the react package to add a new `SignInWithPopup` method for popup-based authentication flows.
+
+- This method allows users to sign in without redirecting, improving user experience.
+- Ensure to handle popup blockers and errors gracefully.
+ 
+**Usage:**
+
+```javascript
+import { SignInWithPopup } from '@asgardeo/react';
+
+function App() {
+    const handleSignIn = () => {
+        SignInWithPopup()
+            .then((user) => {
+                console.log('User signed in:', user);
+            })
+            .catch((error) => {
+                console.error('Error signing in:', error);
+            });
+    };
+
+    return (
+        <div>
+            <h1>Welcome to My App</h1>
+            <button onClick={handleSignIn}>Sign In with Popup</button>
+        </div>
+    );
+}
+```
+
+**Upgrade Notes:**
+
+- Ensure your application can handle popup blockers.
+````
+
+> [!TIP]
+> The changeset file will be automatically named and placed in the `.changeset/` directory. Don't edit these files manually after creation.
+
+> [!IMPORTANT]
+> **Include your changeset in the same PR** as your code changes. PRs without changesets (when required) may be rejected during review.
+
+#### For Maintainers
+
+This section contains information relevant to project maintainers who handle the actual release process.
+
+##### Release Process
+
+The release process is fully automated and triggered by maintainers:
+
+1. **Prerequisites for releases:**
+
+- Maintainer permissions on the repository
+- NPM publish permissions for the `@asgardeo` organization
+- All PRs with changesets have been merged
+- Code review and testing completed
+
+2. **Automatic release workflow:**
+
+- When changesets are merged to `main`, a GitHub Action creates/updates a "Release" PR (ex: `[Release] [GitHub Action] Update package versions`).
+- The Release PR includes version bumps and generated changelogs
+- Maintainers review and merge the Release PR
+- Merging triggers automatic NPM publishing and GitHub releases
+
+##### Release Automation
+
+The project includes automated release infrastructure:
+
+**GitHub Actions workflow** (`.github/workflows/release.yml`):
+
+- Triggers on pushes to `main` branch
+- Creates release PRs using Changesets
+- Publishes packages to NPM when release PR is merged
+- Authenticates using `NPM_TOKEN` and `ASGARDEO_GITHUB_BOT_TOKEN` secrets
+
+**Available scripts for maintainers:**
+
+- `pnpm version:packages` - Updates versions and installs dependencies
+- `pnpm publish:packages` - Publishes all packages to NPM  
+- `pnpm aggregate-changelogs` - Aggregates individual package changelogs
+
+> [!IMPORTANT]
+> **Manual releases are strongly discouraged**. Always use the automated workflow to ensure consistency and prevent human errors.
+
+> [!NOTE]
+> For pre-releases or special cases, use the `workflow_dispatch` trigger in the GitHub Actions workflow and coordinate with other maintainers.
 
 ### Contributing to the Documentation
 
