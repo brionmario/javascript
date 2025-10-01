@@ -388,6 +388,14 @@ git commit -m "chore: add changeset 🦋"
 
 **Example changeset summary:**
 
+> [!NOTE]
+> This is an example changeset summary.
+> Changes are made for:
+>   - `@asgardeo/javascript`
+>   - `@asgardeo/react`
+>   - `@asgardeo/i18n`
+> Even though there are other packages depending on these, only include the packages you directly modified.
+
 ````md
 ---
 '@asgardeo/javascript': patch
