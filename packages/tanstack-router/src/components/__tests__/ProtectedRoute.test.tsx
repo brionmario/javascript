@@ -16,12 +16,11 @@
  * under the License.
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {describe, it, expect, vi, beforeEach} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import ProtectedRoute from '../ProtectedRoute';
-import { useAsgardeo } from '@asgardeo/react';
+import {useAsgardeo} from '@asgardeo/react';
 
-// Mock the dependencies
 vi.mock('@asgardeo/react', () => ({
   useAsgardeo: vi.fn(),
   AsgardeoRuntimeError: class AsgardeoRuntimeError extends Error {
@@ -40,7 +39,7 @@ vi.mock('@asgardeo/react', () => ({
 }));
 
 vi.mock('@tanstack/react-router', () => ({
-  Navigate: ({ to }: { to: string }) => <div data-testid="navigate">Navigate to: {to}</div>,
+  Navigate: ({to}: {to: string}) => <div data-testid="navigate">Navigate to: {to}</div>,
 }));
 
 describe('ProtectedRoute', () => {

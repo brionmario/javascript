@@ -254,10 +254,7 @@ const dashboardRoute = createRoute({
 
 Check out our sample applications in the repository:
 
-- [React Sample](../../samples/asgardeo-react) - Complete React application with Asgardeo authentication
-- [Next.js Sample](../../samples/asgardeo-nextjs) - Next.js application example
-- [Teamspace React](../../samples/teamspace-react) - Team collaboration app with React
-- [Teamspace Next.js](../../samples/teamspace-nextjs) - Team collaboration app with Next.js
+- [React TanStack Router Sample](../../samples/react-tanstack-router) - Simple React application demonstrating TanStack Router integration with protected routes
 
 ## TypeScript Support
 
