@@ -111,7 +111,7 @@ describe('getUserInfo', (): void => {
     const error: AsgardeoAPIError = await getUserInfo({url: invalidUrl}).catch(e => e);
 
     expect(error.message).toBe(
-      '🛡️ Asgardeo - @asgardeo/javascript: Invalid endpoint URL provided\n\n(code="getUserInfo-ValidationError-001")\n',
+      'Invalid endpoint URL provided',
     );
     expect(error.code).toBe('getUserInfo-ValidationError-001');
     expect(error.name).toBe('AsgardeoAPIError');
@@ -123,7 +123,7 @@ describe('getUserInfo', (): void => {
     const error: AsgardeoAPIError = await getUserInfo({}).catch(e => e);
 
     expect(error.message).toBe(
-      '🛡️ Asgardeo - @asgardeo/javascript: Invalid endpoint URL provided\n\n(code="getUserInfo-ValidationError-001")\n',
+      'Invalid endpoint URL provided',
     );
     expect(error.code).toBe('getUserInfo-ValidationError-001');
     expect(error.name).toBe('AsgardeoAPIError');
@@ -135,7 +135,7 @@ describe('getUserInfo', (): void => {
     const error: AsgardeoAPIError = await getUserInfo({url: ''}).catch(e => e);
 
     expect(error.message).toBe(
-      '🛡️ Asgardeo - @asgardeo/javascript: Invalid endpoint URL provided\n\n(code="getUserInfo-ValidationError-001")\n',
+      'Invalid endpoint URL provided',
     );
     expect(error.code).toBe('getUserInfo-ValidationError-001');
     expect(error.name).toBe('AsgardeoAPIError');

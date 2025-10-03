@@ -18,7 +18,7 @@
 
 import {describe, it, expect, vi} from 'vitest';
 import getScim2Me from '../getScim2Me';
-import AsgardeoAPIError from '../../../errors/AsgardeoAPIError';
+import AsgardeoAPIError from '../../errors/AsgardeoAPIError';
 
 // Mock user data
 const mockUser = {

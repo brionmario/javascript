@@ -104,7 +104,7 @@ describe('getBrandingPreference', (): void => {
     const baseUrl: string = 'https://api.asgardeo.io/t/dxlab';
     const result: BrandingPreference = await getBrandingPreference({baseUrl});
 
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference`, {
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference/resolve`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ describe('getBrandingPreference', (): void => {
     });
 
     expect(fetch).toHaveBeenCalledWith(
-      `${baseUrl}/api/server/v1/branding-preference?locale=en-US&name=custom&type=org`,
+      `${baseUrl}/api/server/v1/branding-preference/resolve?locale=en-US&name=custom&type=org`,
       {
         method: 'GET',
         headers: {
@@ -160,7 +160,7 @@ describe('getBrandingPreference', (): void => {
     const baseUrl: string = 'https://api.asgardeo.io/t/dxlab';
     await getBrandingPreference({baseUrl, fetcher: customFetcher});
 
-    expect(customFetcher).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference`, {
+    expect(customFetcher).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference/resolve`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -223,9 +223,11 @@ describe('getBrandingPreference', (): void => {
       headers: customHeaders,
     });
 
-    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference`, {
+    expect(fetch).toHaveBeenCalledWith(`${baseUrl}/api/server/v1/branding-preference/resolve`, {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
         Authorization: 'Bearer token',
         'X-Custom-Header': 'custom-value',
       },
