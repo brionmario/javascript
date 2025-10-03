@@ -365,9 +365,6 @@ pnpm changeset
 
 3. **Choose the type of change** for each selected package:
 
-> [!IMPORTANT]
-> ⚠️ Since we are still in the early stages of development, we are only doing **patch** releases for now. Please select "patch" for now until further notice.
-
 - **Patch** (0.0.X) - Bug fixes and non-breaking changes
 - **Minor** (0.X.0) - New features that don't break existing functionality  
 - **Major** (X.0.0) - Breaking changes that require users to update their code
