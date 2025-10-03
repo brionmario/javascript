@@ -27,10 +27,11 @@ describe('AsgardeoAPIError', (): void => {
     const statusText: string = 'Not Found';
     const error = new AsgardeoAPIError(message, code, origin, statusCode, statusText);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/react: Not Found Error\n\n(code="API_NOT_FOUND")\n');
+    expect(error.message).toBe(message);
     expect(error.code).toBe(code);
     expect(error.statusCode).toBe(statusCode);
     expect(error.statusText).toBe(statusText);
+    expect(error.toString()).toBe('[AsgardeoAPIError] (code="API_NOT_FOUND") (HTTP 404 - Not Found)\nMessage: Not Found Error');
   });
 
   it('should create an API error without status code and text', (): void => {
@@ -39,9 +40,10 @@ describe('AsgardeoAPIError', (): void => {
     const origin: string = 'javascript';
     const error = new AsgardeoAPIError(message, code, origin);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/javascript: Unknown API Error\n\n(code="API_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.statusCode).toBeUndefined();
     expect(error.statusText).toBeUndefined();
+    expect(error.toString()).toBe('[AsgardeoAPIError] (code="API_ERROR")\nMessage: Unknown API Error');
   });
 
   it('should have correct name and be instance of Error and AsgardeoAPIError', (): void => {
@@ -63,9 +65,7 @@ describe('AsgardeoAPIError', (): void => {
     const statusText: string = 'Bad Request';
     const error = new AsgardeoAPIError(message, code, origin, statusCode, statusText);
 
-    const expected: string =
-      '[AsgardeoAPIError] (code="API_BAD_REQUEST") (HTTP 400 - Bad Request)\n' +
-      'Message: 🛡️ Asgardeo - @asgardeo/react: Bad Request\n\n(code="API_BAD_REQUEST")\n';
+    const expected: string = '[AsgardeoAPIError] (code="API_BAD_REQUEST") (HTTP 400 - Bad Request)\nMessage: Bad Request';
 
     expect(error.toString()).toBe(expected);
   });
@@ -76,9 +76,7 @@ describe('AsgardeoAPIError', (): void => {
     const origin: string = 'react';
     const error = new AsgardeoAPIError(message, code, origin);
 
-    const expected: string =
-      '[AsgardeoAPIError] (code="TEST_ERROR")\n' +
-      'Message: 🛡️ Asgardeo - @asgardeo/react: Test Error\n\n(code="TEST_ERROR")\n';
+    const expected: string = '[AsgardeoAPIError] (code="TEST_ERROR")\nMessage: Test Error';
 
     expect(error.toString()).toBe(expected);
   });

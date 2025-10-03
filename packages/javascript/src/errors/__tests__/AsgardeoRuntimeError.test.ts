@@ -26,9 +26,10 @@ describe('AsgardeoRuntimeError', (): void => {
     const details = {invalidField: 'redirectUri', value: null};
     const error = new AsgardeoRuntimeError(message, code, origin, details);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/react: Configuration Error\n\n(code="CONFIG_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.code).toBe(code);
     expect(error.details).toEqual(details);
+    expect(error.toString()).toContain('[AsgardeoRuntimeError] (code="CONFIG_ERROR")\nDetails: {\n  "invalidField": "redirectUri",\n  "value": null\n}\nMessage: Configuration Error');
   });
 
   it('should create a runtime error without details', (): void => {
@@ -37,8 +38,9 @@ describe('AsgardeoRuntimeError', (): void => {
     const origin: string = 'javascript';
     const error = new AsgardeoRuntimeError(message, code, origin);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/javascript: Unknown Runtime Error\n\n(code="RUNTIME_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.details).toBeUndefined();
+    expect(error.toString()).toContain('[AsgardeoRuntimeError] (code="RUNTIME_ERROR")\nMessage: Unknown Runtime Error');
   });
 
   it('should have correct name and be instance of Error and AsgardeoRuntimeError', (): void => {
@@ -62,7 +64,7 @@ describe('AsgardeoRuntimeError', (): void => {
     const expected: string =
       '[AsgardeoRuntimeError] (code="VALIDATION_ERROR")\n' +
       'Details: {\n  "reason": "invalid_input",\n  "field": "email"\n}\n' +
-      'Message: 🛡️ Asgardeo - @asgardeo/react: Validation Error\n\n(code="VALIDATION_ERROR")\n';
+      'Message: Validation Error';
 
     expect(error.toString()).toBe(expected);
   });
@@ -75,7 +77,7 @@ describe('AsgardeoRuntimeError', (): void => {
 
     const expected: string =
       '[AsgardeoRuntimeError] (code="TEST_ERROR")\n' +
-      'Message: 🛡️ Asgardeo - @asgardeo/react: Test Error\n\n(code="TEST_ERROR")\n';
+      'Message: Test Error';
 
     expect(error.toString()).toBe(expected);
   });

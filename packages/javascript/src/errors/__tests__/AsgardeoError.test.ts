@@ -25,8 +25,9 @@ describe('AsgardeoError', (): void => {
     const origin: string = 'javascript';
     const error = new AsgardeoError(message, code, origin);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/javascript: Test error message\n\n(code="TEST_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.code).toBe(code);
+    expect(error.toString()).toBe('[AsgardeoError]\n🛡️ Asgardeo - @asgardeo/javascript: Test error message\n(code="TEST_ERROR")');
   });
 
   it('should create an error with react SDK origin', (): void => {
@@ -35,8 +36,9 @@ describe('AsgardeoError', (): void => {
     const origin: string = 'react';
     const error = new AsgardeoError(message, code, origin);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/react: Test error message\n\n(code="TEST_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.code).toBe(code);
+    expect(error.toString()).toBe('[AsgardeoError]\n🛡️ Asgardeo - @asgardeo/react: Test error message\n(code="TEST_ERROR")');
   });
 
   it('should format different SDK origins correctly', (): void => {
@@ -52,7 +54,7 @@ describe('AsgardeoError', (): void => {
     origins.forEach((origin, index) => {
       const error = new AsgardeoError(message, code, origin);
 
-      expect(error.message).toContain(`🛡️ ${expectedNames[index]}:`);
+      expect(error.toString()).toContain(`🛡️ ${expectedNames[index]}:`);
     });
   });
 
@@ -62,7 +64,7 @@ describe('AsgardeoError', (): void => {
     const origin: string = 'react';
     const error = new AsgardeoError(message, code, origin);
 
-    expect(error.message).toBe('🛡️ Asgardeo - @asgardeo/react: Already prefixed message\n\n(code="TEST_ERROR")\n');
+    expect(error.message).toBe(message);
     expect(error.code).toBe(code);
   });
 
@@ -93,7 +95,7 @@ describe('AsgardeoError', (): void => {
     const error: AsgardeoError = new AsgardeoError(message, code, origin);
 
     const expectedString: string =
-      '[AsgardeoError]\nMessage: 🛡️ Asgardeo - @asgardeo/react: Test message\n\n(code="TEST_ERROR")\n';
+      '[AsgardeoError]\n🛡️ Asgardeo - @asgardeo/react: Test message\n(code="TEST_ERROR")';
 
     expect(error.toString()).toBe(expectedString);
   });
