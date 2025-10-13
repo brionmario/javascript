@@ -169,11 +169,34 @@ describe('getBrandingPreference', (): void => {
     });
   });
 
+  it('should handle errors thrown directly by custom fetcher', async (): Promise<void> => {
+    const customFetcher = vi.fn().mockImplementation(() => {
+      throw new Error('Custom fetcher failure');
+    });
+
+    const baseUrl: string = 'https://api.asgardeo.io/t/dxlab';
+
+    await expect(getBrandingPreference({baseUrl, fetcher: customFetcher})).rejects.toThrow(AsgardeoAPIError);
+    await expect(getBrandingPreference({baseUrl, fetcher: customFetcher})).rejects.toThrow(
+      'Network or parsing error: Custom fetcher failure',
+    );
+  });
+
   it('should handle invalid base URL', async (): Promise<void> => {
     const invalidUrl: string = 'invalid-url';
 
     await expect(getBrandingPreference({baseUrl: invalidUrl})).rejects.toThrow(AsgardeoAPIError);
     await expect(getBrandingPreference({baseUrl: invalidUrl})).rejects.toThrow('Invalid base URL provided.');
+  });
+
+  it('should throw AsgardeoAPIError for undefined baseUrl', async (): Promise<void> => {
+    await expect(getBrandingPreference({} as any)).rejects.toThrow(AsgardeoAPIError);
+    await expect(getBrandingPreference({} as any)).rejects.toThrow('Invalid base URL provided.');
+  });
+
+  it('should throw AsgardeoAPIError for empty string baseUrl', async (): Promise<void> => {
+    await expect(getBrandingPreference({baseUrl: ''})).rejects.toThrow(AsgardeoAPIError);
+    await expect(getBrandingPreference({baseUrl: ''})).rejects.toThrow('Invalid base URL provided.');
   });
 
   it('should handle HTTP error responses', async (): Promise<void> => {
@@ -199,6 +222,15 @@ describe('getBrandingPreference', (): void => {
 
     await expect(getBrandingPreference({baseUrl})).rejects.toThrow(AsgardeoAPIError);
     await expect(getBrandingPreference({baseUrl})).rejects.toThrow('Network or parsing error: Network error');
+  });
+
+  it('should handle non-Error rejections', async (): Promise<void> => {
+    global.fetch = vi.fn().mockRejectedValue('unexpected failure');
+
+    const baseUrl: string = 'https://api.asgardeo.io/t/dxlab';
+
+    await expect(getBrandingPreference({baseUrl})).rejects.toThrow(AsgardeoAPIError);
+    await expect(getBrandingPreference({baseUrl})).rejects.toThrow('Network or parsing error: Unknown error');
   });
 
   it('should pass through custom headers', async (): Promise<void> => {
