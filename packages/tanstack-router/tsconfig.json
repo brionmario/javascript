@@ -14,7 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@asgardeo/react": ["../react/dist/index.d.ts"]
+    }
   },
   "include": [
     "src"

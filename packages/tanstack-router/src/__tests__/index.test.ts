@@ -16,24 +16,25 @@
  * under the License.
  */
 
-import { describe, it, expect } from 'vitest';
+import {describe, it, expect} from 'vitest';
 
 describe('@asgardeo/tanstack-router', () => {
   it('should export ProtectedRoute', async () => {
-    const { ProtectedRoute } = await import('../index');
+    const {ProtectedRoute} = await import('../index');
     expect(ProtectedRoute).toBeDefined();
   });
 
   it('should export ProtectedRouteProps interface', async () => {
-    const exports = await import('../index');
+    const exports: typeof import('../index') = await import('../index');
     // Interface check - should not throw
-    const _: typeof exports.ProtectedRouteProps = undefined as any;
-    expect(true).toBe(true);
+    const UNUSED_TEST_VAR: typeof exports.ProtectedRouteProps = undefined as any;
+    // Explicitly mark as used for type checking purposes
+    expect(UNUSED_TEST_VAR).toBeUndefined();
   });
 
   it('should have the correct named exports', async () => {
-    const exports = await import('../index');
-    const exportNames = Object.keys(exports);
+    const exports: typeof import('../index') = await import('../index');
+    const exportNames: string[] = Object.keys(exports);
     expect(exportNames).toContain('ProtectedRoute');
   });
 });

@@ -16,16 +16,17 @@
  * under the License.
  */
 
-import {describe, it, expect, vi, beforeEach} from 'vitest';
-import {render, screen} from '@testing-library/react';
-import ProtectedRoute from '../ProtectedRoute';
 import {useAsgardeo} from '@asgardeo/react';
+import {render, screen} from '@testing-library/react';
+import {describe, it, expect, vi, beforeEach} from 'vitest';
+import ProtectedRoute from '../ProtectedRoute';
 
 vi.mock('@asgardeo/react', () => ({
-  useAsgardeo: vi.fn(),
   AsgardeoRuntimeError: class AsgardeoRuntimeError extends Error {
     code: string;
+
     component: string;
+
     traceId: string | undefined;
 
     constructor(message: string, code: string, component: string, traceId?: string) {
@@ -36,10 +37,11 @@ vi.mock('@asgardeo/react', () => ({
       this.traceId = traceId;
     }
   },
+  useAsgardeo: vi.fn(),
 }));
 
 vi.mock('@tanstack/react-router', () => ({
-  Navigate: ({to}: {to: string}) => <div data-testid="navigate">Navigate to: {to}</div>,
+  Navigate: ({to}: {to: string}): JSX.Element => <div data-testid="navigate">Navigate to: {to}</div>,
 }));
 
 describe('ProtectedRoute', () => {
@@ -49,14 +51,14 @@ describe('ProtectedRoute', () => {
 
   it('should render loader when isLoading is true', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: true,
+      isSignedIn: false,
     } as any);
 
     render(
       <ProtectedRoute redirectTo="/signin" loader={<div data-testid="loader">Loading...</div>}>
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     expect(screen.getByTestId('loader')).toBeDefined();
@@ -65,14 +67,14 @@ describe('ProtectedRoute', () => {
 
   it('should render children when user is authenticated', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: true,
       isLoading: false,
+      isSignedIn: true,
     } as any);
 
     render(
       <ProtectedRoute redirectTo="/signin">
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     expect(screen.getByTestId('protected-content')).toBeDefined();
@@ -80,17 +82,14 @@ describe('ProtectedRoute', () => {
 
   it('should render fallback when user is not authenticated and fallback is provided', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: false,
+      isSignedIn: false,
     } as any);
 
     render(
-      <ProtectedRoute
-        redirectTo="/signin"
-        fallback={<div data-testid="fallback">Access Denied</div>}
-      >
+      <ProtectedRoute redirectTo="/signin" fallback={<div data-testid="fallback">Access Denied</div>}>
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     expect(screen.getByTestId('fallback')).toBeDefined();
@@ -99,17 +98,17 @@ describe('ProtectedRoute', () => {
 
   it('should navigate to redirectTo when user is not authenticated and no fallback is provided', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: false,
+      isSignedIn: false,
     } as any);
 
     render(
       <ProtectedRoute redirectTo="/signin">
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
-    const navigate = screen.getByTestId('navigate');
+    const navigate: HTMLElement = screen.getByTestId('navigate');
     expect(navigate).toBeDefined();
     expect(navigate.textContent).toBe('Navigate to: /signin');
     expect(screen.queryByTestId('protected-content')).toBeNull();
@@ -117,29 +116,29 @@ describe('ProtectedRoute', () => {
 
   it('should throw error when neither fallback nor redirectTo is provided', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: false,
+      isSignedIn: false,
     } as any);
 
     expect(() => {
       render(
         <ProtectedRoute>
           <div data-testid="protected-content">Protected Content</div>
-        </ProtectedRoute>
+        </ProtectedRoute>,
       );
     }).toThrow('"fallback" or "redirectTo" prop is required.');
   });
 
   it('should render null loader by default when isLoading is true and no loader is provided', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: true,
+      isSignedIn: false,
     } as any);
 
-    const { container } = render(
+    const {container} = render(
       <ProtectedRoute redirectTo="/signin">
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     expect(container.textContent).toBe('');
@@ -148,17 +147,14 @@ describe('ProtectedRoute', () => {
 
   it('should prioritize fallback over redirectTo when both are provided', () => {
     vi.mocked(useAsgardeo).mockReturnValue({
-      isSignedIn: false,
       isLoading: false,
+      isSignedIn: false,
     } as any);
 
     render(
-      <ProtectedRoute
-        redirectTo="/signin"
-        fallback={<div data-testid="fallback">Custom Fallback</div>}
-      >
+      <ProtectedRoute redirectTo="/signin" fallback={<div data-testid="fallback">Custom Fallback</div>}>
         <div data-testid="protected-content">Protected Content</div>
-      </ProtectedRoute>
+      </ProtectedRoute>,
     );
 
     expect(screen.getByTestId('fallback')).toBeDefined();

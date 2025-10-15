@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import { FC, ReactElement, ReactNode } from 'react';
-import { Navigate } from '@tanstack/react-router';
-import { useAsgardeo, AsgardeoRuntimeError } from '@asgardeo/react';
+import {useAsgardeo, AsgardeoRuntimeError} from '@asgardeo/react';
+import {Navigate} from '@tanstack/react-router';
+import {FC, ReactElement, ReactNode} from 'react';
 
 /**
  * Props for the ProtectedRoute component.
@@ -34,14 +34,14 @@ export interface ProtectedRouteProps {
    */
   fallback?: ReactElement;
   /**
+   * Custom loading element to render while authentication status is being determined.
+   */
+  loader?: ReactNode;
+  /**
    * URL to redirect to when the user is not authenticated.
    * Required unless a fallback element is provided.
    */
   redirectTo?: string;
-  /**
-   * Custom loading element to render while authentication status is being determined.
-   */
-  loader?: ReactNode;
 }
 
 /**
@@ -78,8 +78,13 @@ export interface ProtectedRouteProps {
  * })
  * ```
  */
-const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, fallback, redirectTo, loader = null }) => {
-  const { isSignedIn, isLoading } = useAsgardeo();
+const ProtectedRoute: FC<ProtectedRouteProps> = ({
+  children,
+  fallback,
+  redirectTo,
+  loader = null,
+}: ProtectedRouteProps) => {
+  const {isSignedIn, isLoading} = useAsgardeo();
 
   if (isLoading) {
     return loader;

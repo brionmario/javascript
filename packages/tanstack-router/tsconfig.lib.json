@@ -6,6 +6,7 @@
     "declarationDir": "dist",
     "types": ["node"],
     "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "declarationMap": true
   },
   "exclude": [

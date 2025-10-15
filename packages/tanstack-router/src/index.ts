@@ -16,5 +16,5 @@
  * under the License.
  */
 
-export { default as ProtectedRoute } from './components/ProtectedRoute';
+export {default as ProtectedRoute} from './components/ProtectedRoute';
 export * from './components/ProtectedRoute';
