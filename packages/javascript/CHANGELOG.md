@@ -1,5 +1,17 @@
 # @asgardeo/javascript
 
+## 0.1.20
+
+### Patch Changes
+
+- Updated dependencies
+  [[`4a2d97a`](https://github.com/asgardeo/javascript/commit/4a2d97a371030f433a5418c719d3d3a9e06d4197),
+  [`3dab8c0`](https://github.com/asgardeo/javascript/commit/3dab8c0ba0d0e4fd928014b4d8627a85a797f392),
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27),
+  [`7ee9462`](https://github.com/asgardeo/javascript/commit/7ee9462d287aa5a50a5dc9f04a6cf826bbf5611b),
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27)]:
+  - @asgardeo/i18n@0.3.0
+
 ## 0.1.19
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @asgardeo/nextjs
 
+## 0.1.29
+
+### Patch Changes
+
+- [#209](https://github.com/asgardeo/javascript/pull/209)
+  [`3b87244`](https://github.com/asgardeo/javascript/commit/3b8724489132a850a74a82159bb144385bce10a3) Thanks
+  [@brionmario](https://github.com/brionmario)! - - Avoid race condition in oauth callback and route protection
+  - Handle empty payload in sign-in action
+- Updated dependencies
+  [[`3b87244`](https://github.com/asgardeo/javascript/commit/3b8724489132a850a74a82159bb144385bce10a3)]:
+  - @asgardeo/react@0.5.28
+  - @asgardeo/node@0.0.22
+
 ## 0.1.28
 
 ### Patch Changes

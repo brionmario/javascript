@@ -1,5 +1,29 @@
 # @asgardeo/i18n
 
+## 0.3.0
+
+### Minor Changes
+
+- [#165](https://github.com/asgardeo/javascript/pull/165)
+  [`4a2d97a`](https://github.com/asgardeo/javascript/commit/4a2d97a371030f433a5418c719d3d3a9e06d4197) Thanks
+  [@LylaB](https://github.com/LylaB)! - chore: add 'Japanese - ja-JP' language support
+
+- [#202](https://github.com/asgardeo/javascript/pull/202)
+  [`3dab8c0`](https://github.com/asgardeo/javascript/commit/3dab8c0ba0d0e4fd928014b4d8627a85a797f392) Thanks
+  [@mohith2883](https://github.com/mohith2883)! - chore: add `తెలుగు - te-IN` language support
+
+- [#199](https://github.com/asgardeo/javascript/pull/199)
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27) Thanks
+  [@fosbsb](https://github.com/fosbsb)! - Add Portuguese (pt-BR) language support to @asgardeo/i18n package.
+
+- [#194](https://github.com/asgardeo/javascript/pull/194)
+  [`7ee9462`](https://github.com/asgardeo/javascript/commit/7ee9462d287aa5a50a5dc9f04a6cf826bbf5611b) Thanks
+  [@navidik](https://github.com/navidik)! - chore: add `Tamil ta-IN` language support
+
+- [#199](https://github.com/asgardeo/javascript/pull/199)
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27) Thanks
+  [@fosbsb](https://github.com/fosbsb)! - Add Portuguese (pt-PT) language support to @asgardeo/i18n package.
+
 ## 0.2.0
 
 ### Minor Changes

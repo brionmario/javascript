@@ -1,5 +1,22 @@
 # @asgardeo/react
 
+## 0.5.28
+
+### Patch Changes
+
+- [#209](https://github.com/asgardeo/javascript/pull/209)
+  [`3b87244`](https://github.com/asgardeo/javascript/commit/3b8724489132a850a74a82159bb144385bce10a3) Thanks
+  [@brionmario](https://github.com/brionmario)! - - Avoid race condition in oauth callback and route protection
+  - Handle empty payload in sign-in action
+- Updated dependencies
+  [[`4a2d97a`](https://github.com/asgardeo/javascript/commit/4a2d97a371030f433a5418c719d3d3a9e06d4197),
+  [`3dab8c0`](https://github.com/asgardeo/javascript/commit/3dab8c0ba0d0e4fd928014b4d8627a85a797f392),
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27),
+  [`7ee9462`](https://github.com/asgardeo/javascript/commit/7ee9462d287aa5a50a5dc9f04a6cf826bbf5611b),
+  [`24bc22c`](https://github.com/asgardeo/javascript/commit/24bc22c89f0bdf3c26350c1d48875a3a6bf10e27)]:
+  - @asgardeo/i18n@0.3.0
+  - @asgardeo/browser@0.1.21
+
 ## 0.5.27
 
 ### Patch Changes
