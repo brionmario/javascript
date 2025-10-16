@@ -17,9 +17,9 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import Typography from '../../../primitives/Typography/Typography';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import Typography from '../primitives/Typography/Typography';
+import useTheme from '../../contexts/Theme/useTheme';
 
 /**
  * Typography component for sign-up forms (titles, descriptions, etc.).

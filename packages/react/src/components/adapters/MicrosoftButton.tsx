@@ -17,41 +17,43 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
-import Button from '../../primitives/Button/Button';
-import {BaseSignInOptionProps} from '../SignIn/options/SignInOptionFactory';
-import useTranslation from '../../../hooks/useTranslation';
+import Button from '../primitives/Button/Button';
+import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
+import useTranslation from '../../hooks/useTranslation';
 
 /**
- * Social Login Sign-In Option Component.
- * Handles authentication with external identity providers (Google, GitHub, etc.).
+ * Microsoft Sign-In Button Component.
+ * Handles authentication with Microsoft identity provider.
  */
-const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const MicrosoftButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,
   ...rest
 }) => {
   const {t} = useTranslation(preferences?.i18n);
+
   return (
     <Button
       {...rest}
       fullWidth
       type="button"
       color="secondary"
-      variant="outline"
+      variant="solid"
       disabled={isLoading}
       startIcon={
-        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path
-            fill="currentColor"
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-          />
+        <svg width="14" height="14" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#f3f3f3" d="M0 0h23v23H0z" />
+          <path fill="#f35325" d="M1 1h10v10H1z" />
+          <path fill="#81bc06" d="M12 1h10v10H12z" />
+          <path fill="#05a6f0" d="M1 12h10v10H1z" />
+          <path fill="#ffba08" d="M12 12h10v10H12z" />
         </svg>
       }
     >
-      {t('elements.buttons.social', {connection: children as string})}
+      {children ?? t('elements.buttons.microsoft')}
     </Button>
   );
 };
 
-export default SocialLogin;
+export default MicrosoftButton;

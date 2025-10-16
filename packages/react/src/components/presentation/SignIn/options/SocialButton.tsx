@@ -16,40 +16,30 @@
  * under the License.
  */
 
-import {FC} from 'react';
-
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
+import {FC, HTMLAttributes} from 'react';
 import Button from '../../../primitives/Button/Button';
+import {BaseSignInOptionProps} from './SignInOptionFactory';
+import useTranslation from '../../../../hooks/useTranslation';
 
 /**
- * Social button component for sign-up forms.
+ * Social Login Sign-In Option Component.
+ * Handles authentication with external identity providers (Google, GitHub, etc.).
  */
-const SocialButton: FC<BaseSignUpOptionProps> = ({
-  component,
+const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
-  buttonClassName,
-  size = 'medium',
-  onSubmit,
+  preferences,
+  children,
+  ...rest
 }) => {
-  const config = component.config || {};
-  const buttonText: string = config['text'] || config['label'] || 'Continue with Social';
-
-  const handleClick = (): void => {
-    if (onSubmit) {
-      onSubmit(component, {});
-    }
-  };
-
+  const {t} = useTranslation(preferences?.i18n);
   return (
     <Button
-      key={component.id}
+      {...rest}
+      fullWidth
       type="button"
+      color="secondary"
       variant="outline"
-      size={size}
       disabled={isLoading}
-      onClick={handleClick}
-      className={buttonClassName}
-      style={{width: '100%'}}
       startIcon={
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -59,9 +49,9 @@ const SocialButton: FC<BaseSignUpOptionProps> = ({
         </svg>
       }
     >
-      {buttonText}
+      {t('elements.buttons.social', {connection: children as string})}
     </Button>
   );
 };
 
-export default SocialButton;
+export default SocialLogin;

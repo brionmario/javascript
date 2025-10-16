@@ -25,16 +25,16 @@ import {
 import {ReactElement} from 'react';
 import UsernamePassword from './UsernamePassword';
 import IdentifierFirst from './IdentifierFirst';
-import GoogleButton from '../../options/GoogleButton';
-import GitHubButton from '../../options/GitHubButton';
-import MicrosoftButton from '../../options/MicrosoftButton';
-import FacebookButton from '../../options/FacebookButton';
-import LinkedInButton from '../../options/LinkedInButton';
-import SignInWithEthereumButton from '../../options/SignInWithEthereumButton';
+import GoogleButton from '../../../adapters/GoogleButton';
+import GitHubButton from '../../../adapters/GitHubButton';
+import MicrosoftButton from '../../../adapters/MicrosoftButton';
+import FacebookButton from '../../../adapters/FacebookButton';
+import LinkedInButton from '../../../adapters/LinkedInButton';
+import SignInWithEthereumButton from '../../../adapters/SignInWithEthereumButton';
 import EmailOtp from './EmailOtp';
 import Totp from './Totp';
 import SmsOtp from './SmsOtp';
-import SocialButton from '../../options/SocialButton';
+import SocialButton from './SocialButton';
 import MultiOptionButton from './MultiOptionButton';
 
 /**

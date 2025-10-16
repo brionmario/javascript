@@ -18,13 +18,13 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import {createField} from '../../../factories/FieldFactory';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import {createField} from '../factories/FieldFactory';
 
 /**
- * Number input component for sign-up forms.
+ * Checkbox input component for sign-up forms.
  */
-const NumberInput: FC<BaseSignUpOptionProps> = ({
+const CheckboxInput: FC<BaseSignUpOptionProps> = ({
   component,
   formValues,
   touchedFields,
@@ -38,7 +38,7 @@ const NumberInput: FC<BaseSignUpOptionProps> = ({
   const error = touchedFields[fieldName] ? formErrors[fieldName] : undefined;
 
   return createField({
-    type: FieldType.Number,
+    type: FieldType.Checkbox,
     name: fieldName,
     label: config['label'] || '',
     placeholder: config['placeholder'] || '',
@@ -50,4 +50,4 @@ const NumberInput: FC<BaseSignUpOptionProps> = ({
   });
 };
 
-export default NumberInput;
+export default CheckboxInput;

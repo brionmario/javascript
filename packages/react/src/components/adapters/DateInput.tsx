@@ -18,13 +18,13 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import {createField} from '../../../factories/FieldFactory';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import {createField} from '../factories/FieldFactory';
 
 /**
- * Text input component for sign-up forms.
+ * Date input component for sign-up forms.
  */
-const TextInput: FC<BaseSignUpOptionProps> = ({
+const DateInput: FC<BaseSignUpOptionProps> = ({
   component,
   formValues,
   touchedFields,
@@ -38,7 +38,7 @@ const TextInput: FC<BaseSignUpOptionProps> = ({
   const error = touchedFields[fieldName] ? formErrors[fieldName] : undefined;
 
   return createField({
-    type: FieldType.Text,
+    type: FieldType.Date,
     name: fieldName,
     label: config['label'] || '',
     placeholder: config['placeholder'] || '',
@@ -50,4 +50,4 @@ const TextInput: FC<BaseSignUpOptionProps> = ({
   });
 };
 
-export default TextInput;
+export default DateInput;

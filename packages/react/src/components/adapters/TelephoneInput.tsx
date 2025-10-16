@@ -16,15 +16,14 @@
  * under the License.
  */
 
-import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import {createField} from '../../../factories/FieldFactory';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import TextField from '../primitives/TextField/TextField';
 
 /**
- * Checkbox input component for sign-up forms.
+ * Telephone input component for sign-up forms.
  */
-const CheckboxInput: FC<BaseSignUpOptionProps> = ({
+const TelephoneInput: FC<BaseSignUpOptionProps> = ({
   component,
   formValues,
   touchedFields,
@@ -37,17 +36,21 @@ const CheckboxInput: FC<BaseSignUpOptionProps> = ({
   const value = formValues[fieldName] || '';
   const error = touchedFields[fieldName] ? formErrors[fieldName] : undefined;
 
-  return createField({
-    type: FieldType.Checkbox,
-    name: fieldName,
-    label: config['label'] || '',
-    placeholder: config['placeholder'] || '',
-    required: config['required'] || false,
-    value,
-    error,
-    onChange: (newValue: string) => onInputChange(fieldName, newValue),
-    className: inputClassName,
-  });
+  return (
+    <TextField
+      key={component.id}
+      name={fieldName}
+      type="tel"
+      label={config['label'] || ''}
+      placeholder={config['placeholder'] || ''}
+      required={config['required'] || false}
+      value={value}
+      error={error}
+      onChange={e => onInputChange(fieldName, e.target.value)}
+      className={inputClassName}
+      helperText={config['hint'] || ''}
+    />
+  );
 };
 
-export default CheckboxInput;
+export default TelephoneInput;

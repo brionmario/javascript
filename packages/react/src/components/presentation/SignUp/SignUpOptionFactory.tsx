@@ -18,24 +18,24 @@
 
 import {EmbeddedFlowComponent, EmbeddedFlowComponentType, WithPreferences} from '@asgardeo/browser';
 import {ReactElement} from 'react';
-import CheckboxInput from './CheckboxInput';
-import DateInput from './DateInput';
-import DividerComponent from './DividerComponent';
-import EmailInput from './EmailInput';
-import FormContainer from './FormContainer';
-import ImageComponent from './ImageComponent';
-import NumberInput from './NumberInput';
-import PasswordInput from './PasswordInput';
-import ButtonComponent from './SubmitButton';
-import TelephoneInput from './TelephoneInput';
-import TextInput from './TextInput';
-import Typography from './Typography';
-import GoogleButton from '../../options/GoogleButton';
-import GitHubButton from '../../options/GitHubButton';
-import MicrosoftButton from '../../options/MicrosoftButton';
-import LinkedInButton from '../../options/LinkedInButton';
-import FacebookButton from '../../options/FacebookButton';
-import SignInWithEthereumButton from '../../options/SignInWithEthereumButton';
+import CheckboxInput from '../../adapters/CheckboxInput';
+import DateInput from '../../adapters/DateInput';
+import DividerComponent from '../../adapters/DividerComponent';
+import EmailInput from '../../adapters/EmailInput';
+import FormContainer from '../../adapters/FormContainer';
+import ImageComponent from '../../adapters/ImageComponent';
+import NumberInput from '../../adapters/NumberInput';
+import PasswordInput from '../../adapters/PasswordInput';
+import ButtonComponent from '../../adapters/SubmitButton';
+import TelephoneInput from '../../adapters/TelephoneInput';
+import TextInput from '../../adapters/TextInput';
+import Typography from '../../adapters/Typography';
+import GoogleButton from '../../adapters/GoogleButton';
+import GitHubButton from '../../adapters/GitHubButton';
+import MicrosoftButton from '../../adapters/MicrosoftButton';
+import LinkedInButton from '../../adapters/LinkedInButton';
+import FacebookButton from '../../adapters/FacebookButton';
+import SignInWithEthereumButton from '../../adapters/SignInWithEthereumButton';
 
 /**
  * Base props that all sign-up option components share.

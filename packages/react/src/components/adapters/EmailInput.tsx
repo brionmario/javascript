@@ -18,8 +18,8 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import {createField} from '../../../factories/FieldFactory';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import {createField} from '../factories/FieldFactory';
 
 /**
  * Email input component for sign-up forms.

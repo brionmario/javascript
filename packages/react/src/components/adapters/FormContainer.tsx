@@ -17,7 +17,7 @@
  */
 
 import {FC} from 'react';
-import {createSignUpComponent, BaseSignUpOptionProps} from './SignUpOptionFactory';
+import {createSignUpComponent, BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 
 /**
  * Form container component that renders child components.

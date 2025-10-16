@@ -17,8 +17,8 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import useTheme from '../../contexts/Theme/useTheme';
 
 /**
  * Image component for sign-up forms.

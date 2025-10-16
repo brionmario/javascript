@@ -18,9 +18,9 @@
 
 import {FC} from 'react';
 
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import Button from '../../../primitives/Button/Button';
-import Spinner from '../../../primitives/Spinner/Spinner';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import Button from '../primitives/Button/Button';
+import Spinner from '../primitives/Spinner/Spinner';
 
 /**
  * Button component for sign-up forms that handles all button variants.

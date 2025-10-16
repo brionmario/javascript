@@ -16,14 +16,15 @@
  * under the License.
  */
 
+import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import TextField from '../../../primitives/TextField/TextField';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import {createField} from '../factories/FieldFactory';
 
 /**
- * Telephone input component for sign-up forms.
+ * Text input component for sign-up forms.
  */
-const TelephoneInput: FC<BaseSignUpOptionProps> = ({
+const TextInput: FC<BaseSignUpOptionProps> = ({
   component,
   formValues,
   touchedFields,
@@ -36,21 +37,17 @@ const TelephoneInput: FC<BaseSignUpOptionProps> = ({
   const value = formValues[fieldName] || '';
   const error = touchedFields[fieldName] ? formErrors[fieldName] : undefined;
 
-  return (
-    <TextField
-      key={component.id}
-      name={fieldName}
-      type="tel"
-      label={config['label'] || ''}
-      placeholder={config['placeholder'] || ''}
-      required={config['required'] || false}
-      value={value}
-      error={error}
-      onChange={e => onInputChange(fieldName, e.target.value)}
-      className={inputClassName}
-      helperText={config['hint'] || ''}
-    />
-  );
+  return createField({
+    type: FieldType.Text,
+    name: fieldName,
+    label: config['label'] || '',
+    placeholder: config['placeholder'] || '',
+    required: config['required'] || false,
+    value,
+    error,
+    onChange: (newValue: string) => onInputChange(fieldName, newValue),
+    className: inputClassName,
+  });
 };
 
-export default TelephoneInput;
+export default TextInput;

@@ -17,9 +17,9 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from './SignUpOptionFactory';
-import Divider from '../../../primitives/Divider/Divider';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import Divider from '../primitives/Divider/Divider';
+import useTheme from '../../contexts/Theme/useTheme';
 
 /**
  * Divider component for sign-up forms.
