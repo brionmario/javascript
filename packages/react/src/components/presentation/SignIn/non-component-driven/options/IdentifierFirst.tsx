@@ -18,12 +18,12 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../factories/FieldFactory';
-import Button from '../../../primitives/Button/Button';
+import {createField} from '../../../../factories/FieldFactory';
+import Button from '../../../../primitives/Button/Button';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 
 /**
  * Identifier First Sign-In Option Component.

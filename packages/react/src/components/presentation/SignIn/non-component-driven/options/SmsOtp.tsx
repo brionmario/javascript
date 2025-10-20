@@ -18,19 +18,19 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../factories/FieldFactory';
-import Button from '../../../primitives/Button/Button';
-import OtpField from '../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../factories/FieldFactory';
+import Button from '../../../../primitives/Button/Button';
+import OtpField from '../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 
 /**
- * Email OTP Sign-In Option Component.
- * Handles email-based OTP authentication.
+ * SMS OTP Sign-In Option Component.
+ * Handles SMS-based OTP authentication.
  */
-const EmailOtp: FC<BaseSignInOptionProps> = ({
+const SmsOtp: FC<BaseSignInOptionProps> = ({
   authenticator,
   formValues,
   touchedFields,
@@ -48,11 +48,10 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('email.otp.title'));
-    setSubtitle(t('email.otp.subtitle'));
+    setTitle(t('sms.otp.title'));
+    setSubtitle(t('sms.otp.subtitle'));
   }, [setTitle, setSubtitle, t]);
 
-  // Check if this is an OTP field (typically has 'otpCode' or similar parameter)
   const hasOtpField = formFields.some(
     param => param.param.toLowerCase().includes('otp') || param.param.toLowerCase().includes('code'),
   );
@@ -104,10 +103,10 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('email.otp.submit.button')}
+        {t('sms.otp.submit.button')}
       </Button>
     </>
   );
 };
 
-export default EmailOtp;
+export default SmsOtp;

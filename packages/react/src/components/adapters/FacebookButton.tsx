@@ -17,15 +17,22 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
+import {WithPreferences} from '@asgardeo/browser';
 import Button from '../primitives/Button/Button';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
 import useTranslation from '../../hooks/useTranslation';
+
+export interface FacebookButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * Facebook Sign-In Button Component.
  * Handles authentication with Facebook identity provider.
  */
-const FacebookButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const FacebookButton: FC<FacebookButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,

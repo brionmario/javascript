@@ -25,12 +25,12 @@ import {
 import {ReactElement} from 'react';
 import UsernamePassword from './UsernamePassword';
 import IdentifierFirst from './IdentifierFirst';
-import GoogleButton from '../../../adapters/GoogleButton';
-import GitHubButton from '../../../adapters/GitHubButton';
-import MicrosoftButton from '../../../adapters/MicrosoftButton';
-import FacebookButton from '../../../adapters/FacebookButton';
-import LinkedInButton from '../../../adapters/LinkedInButton';
-import SignInWithEthereumButton from '../../../adapters/SignInWithEthereumButton';
+import GoogleButton from '../../../../adapters/GoogleButton';
+import GitHubButton from '../../../../adapters/GitHubButton';
+import MicrosoftButton from '../../../../adapters/MicrosoftButton';
+import FacebookButton from '../../../../adapters/FacebookButton';
+import LinkedInButton from '../../../../adapters/LinkedInButton';
+import SignInWithEthereumButton from '../../../../adapters/SignInWithEthereumButton';
 import EmailOtp from './EmailOtp';
 import Totp from './Totp';
 import SmsOtp from './SmsOtp';
@@ -118,7 +118,6 @@ export const createSignInOption = ({
         <GoogleButton
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}
-          authenticator={authenticator}
           preferences={preferences}
           {...rest}
         />
@@ -127,7 +126,6 @@ export const createSignInOption = ({
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.GitHub:
       return (
         <GitHubButton
-          authenticator={authenticator}
           preferences={preferences}
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}
@@ -138,7 +136,6 @@ export const createSignInOption = ({
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Microsoft:
       return (
         <MicrosoftButton
-          authenticator={authenticator}
           preferences={preferences}
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}
@@ -149,7 +146,6 @@ export const createSignInOption = ({
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.Facebook:
       return (
         <FacebookButton
-          authenticator={authenticator}
           preferences={preferences}
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}
@@ -160,7 +156,6 @@ export const createSignInOption = ({
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.LinkedIn:
       return (
         <LinkedInButton
-          authenticator={authenticator}
           preferences={preferences}
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}
@@ -171,7 +166,6 @@ export const createSignInOption = ({
     case ApplicationNativeAuthenticationConstants.SupportedAuthenticators.SignInWithEthereum:
       return (
         <SignInWithEthereumButton
-          authenticator={authenticator}
           preferences={preferences}
           className={buttonClassName}
           onClick={() => onSubmit(authenticator)}

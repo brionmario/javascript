@@ -17,15 +17,22 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
+import {WithPreferences} from '@asgardeo/browser';
 import useTranslation from '../../hooks/useTranslation';
 import Button from '../primitives/Button/Button';
+
+export interface GoogleButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * Google Sign-In Button Component.
  * Handles authentication with Google identity provider.
  */
-const GoogleButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const GoogleButton: FC<GoogleButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,

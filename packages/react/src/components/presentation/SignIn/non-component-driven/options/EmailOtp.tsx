@@ -18,19 +18,19 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../factories/FieldFactory';
-import Button from '../../../primitives/Button/Button';
-import OtpField from '../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../factories/FieldFactory';
+import Button from '../../../../primitives/Button/Button';
+import OtpField from '../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 
 /**
- * TOTP Sign-In Option Component.
- * Handles Time-based One-Time Password (TOTP) authentication.
+ * Email OTP Sign-In Option Component.
+ * Handles email-based OTP authentication.
  */
-const Totp: FC<BaseSignInOptionProps> = ({
+const EmailOtp: FC<BaseSignInOptionProps> = ({
   authenticator,
   formValues,
   touchedFields,
@@ -48,22 +48,23 @@ const Totp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('totp.title'));
-    setSubtitle(t('totp.subtitle'));
+    setTitle(t('email.otp.title'));
+    setSubtitle(t('email.otp.subtitle'));
   }, [setTitle, setSubtitle, t]);
 
-  const hasTotpField = formFields.some(
-    param => param.param.toLowerCase().includes('totp') || param.param.toLowerCase().includes('token'),
+  // Check if this is an OTP field (typically has 'otpCode' or similar parameter)
+  const hasOtpField = formFields.some(
+    param => param.param.toLowerCase().includes('otp') || param.param.toLowerCase().includes('code'),
   );
 
   return (
     <>
       {formFields.map(param => {
-        const isTotpParam = param.param.toLowerCase().includes('totp') || param.param.toLowerCase().includes('token');
+        const isOtpParam = param.param.toLowerCase().includes('otp') || param.param.toLowerCase().includes('code');
 
         return (
           <div key={param.param}>
-            {isTotpParam && hasTotpField ? (
+            {isOtpParam && hasOtpField ? (
               <OtpField
                 length={6}
                 value={formValues[param.param] || ''}
@@ -103,10 +104,10 @@ const Totp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('totp.submit.button')}
+        {t('email.otp.submit.button')}
       </Button>
     </>
   );
 };
 
-export default Totp;
+export default EmailOtp;

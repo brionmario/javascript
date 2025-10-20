@@ -22,9 +22,8 @@ import {
   EmbeddedSignInFlowHandleRequestPayload,
 } from '@asgardeo/browser';
 import {FC} from 'react';
-import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
+import BaseSignIn, {BaseSignInProps} from './non-component-driven/BaseSignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
-import {CardProps} from '../../primitives/Card/Card';
 
 /**
  * Props for the SignIn component.

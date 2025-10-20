@@ -19,13 +19,20 @@
 import {FC, HTMLAttributes} from 'react';
 import Button from '../primitives/Button/Button';
 import useTranslation from '../../hooks/useTranslation';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
+import {WithPreferences} from '@asgardeo/browser';
+
+export interface SignInWithEthereumButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * Sign In With Ethereum Button Component.
  * Handles authentication with Sign In With Ethereum identity provider.
  */
-const SignInWithEthereumButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const SignInWithEthereumButton: FC<SignInWithEthereumButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,

@@ -18,19 +18,19 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../factories/FieldFactory';
-import Button from '../../../primitives/Button/Button';
-import OtpField from '../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../factories/FieldFactory';
+import Button from '../../../../primitives/Button/Button';
+import OtpField from '../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../hooks/useTranslation';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 
 /**
- * SMS OTP Sign-In Option Component.
- * Handles SMS-based OTP authentication.
+ * TOTP Sign-In Option Component.
+ * Handles Time-based One-Time Password (TOTP) authentication.
  */
-const SmsOtp: FC<BaseSignInOptionProps> = ({
+const Totp: FC<BaseSignInOptionProps> = ({
   authenticator,
   formValues,
   touchedFields,
@@ -48,22 +48,22 @@ const SmsOtp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('sms.otp.title'));
-    setSubtitle(t('sms.otp.subtitle'));
+    setTitle(t('totp.title'));
+    setSubtitle(t('totp.subtitle'));
   }, [setTitle, setSubtitle, t]);
 
-  const hasOtpField = formFields.some(
-    param => param.param.toLowerCase().includes('otp') || param.param.toLowerCase().includes('code'),
+  const hasTotpField = formFields.some(
+    param => param.param.toLowerCase().includes('totp') || param.param.toLowerCase().includes('token'),
   );
 
   return (
     <>
       {formFields.map(param => {
-        const isOtpParam = param.param.toLowerCase().includes('otp') || param.param.toLowerCase().includes('code');
+        const isTotpParam = param.param.toLowerCase().includes('totp') || param.param.toLowerCase().includes('token');
 
         return (
           <div key={param.param}>
-            {isOtpParam && hasOtpField ? (
+            {isTotpParam && hasTotpField ? (
               <OtpField
                 length={6}
                 value={formValues[param.param] || ''}
@@ -103,10 +103,10 @@ const SmsOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('sms.otp.submit.button')}
+        {t('totp.submit.button')}
       </Button>
     </>
   );
 };
 
-export default SmsOtp;
+export default Totp;

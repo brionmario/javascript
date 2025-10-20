@@ -17,15 +17,22 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
+import {WithPreferences} from '@asgardeo/browser';
 import Button from '../primitives/Button/Button';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
 import useTranslation from '../../hooks/useTranslation';
+
+export interface GithubButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * GitHub Sign-In Button Component.
  * Handles authentication with GitHub identity provider.
  */
-const GitHubButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const GitHubButton: FC<GithubButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,

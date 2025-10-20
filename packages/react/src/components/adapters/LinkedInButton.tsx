@@ -18,14 +18,21 @@
 
 import {FC, HTMLAttributes} from 'react';
 import Button from '../primitives/Button/Button';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
+import {WithPreferences} from '@asgardeo/browser';
 import useTranslation from '../../hooks/useTranslation';
+
+export interface LinkedInButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * LinkedIn Sign-In Button Component.
  * Handles authentication with LinkedIn identity provider.
  */
-const LinkedInButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const LinkedInButton: FC<LinkedInButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,

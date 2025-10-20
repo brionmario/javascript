@@ -18,14 +18,21 @@
 
 import {FC, HTMLAttributes} from 'react';
 import Button from '../primitives/Button/Button';
-import {BaseSignInOptionProps} from '../presentation/SignIn/options/SignInOptionFactory';
+import {WithPreferences} from '@asgardeo/browser';
 import useTranslation from '../../hooks/useTranslation';
+
+export interface MicrosoftButtonProps extends WithPreferences {
+  /**
+   * Whether the component is in loading state.
+   */
+  isLoading?: boolean;
+}
 
 /**
  * Microsoft Sign-In Button Component.
  * Handles authentication with Microsoft identity provider.
  */
-const MicrosoftButton: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>> = ({
+const MicrosoftButton: FC<MicrosoftButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
   isLoading,
   preferences,
   children,
