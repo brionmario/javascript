@@ -1,5 +1,5 @@
 ---
-'@asgardeo/tanstack-router': major
+'@asgardeo/tanstack-router': minor
 ---
 
 Add TanStack Router integration package with protected route support
