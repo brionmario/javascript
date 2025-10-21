@@ -273,13 +273,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         });
       }
 
-      await onSubmit?.(
-        {
-          flowType: EmbeddedFlowType.Authentication,
+      let payload: EmbeddedSignInFlowRequestV2 = {};
+
+      if (component.config['actionId']) {
+        payload = {
+          ...payload,
+          actionId: component.config['actionId'],
+        };
+      } else {
+        payload = {
+          ...payload,
           inputs: filteredInputs,
-        },
-        component,
-      );
+        };
+      }
+
+      await onSubmit?.(payload, component);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : t('errors.sign.in.flow.failure');
       setError(errorMessage);

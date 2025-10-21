@@ -21,6 +21,9 @@ import {AsgardeoRuntimeError, EmbeddedFlowComponent, FieldType} from '@asgardeo/
 import {EmbeddedFlowComponentType} from '@asgardeo/browser';
 import {createField} from '../../../factories/FieldFactory';
 import Button from '../../../primitives/Button/Button';
+import GoogleButton from '../../../adapters/GoogleButton';
+import GitHubButton from '../../../adapters/GitHubButton';
+import FacebookButton from '../../../adapters/FacebookButton';
 import Typography from '../../../primitives/Typography/Typography';
 import Divider from '../../../primitives/Divider/Divider';
 
@@ -104,17 +107,29 @@ const createSignInComponentFromFlow = (
       const handleClick = () => {
         if (options.onSubmit) {
           const formData: Record<string, any> = {};
-
           Object.keys(formValues).forEach(field => {
             if (formValues[field]) {
               formData[field] = formValues[field];
             }
           });
-
           options.onSubmit(component, formData);
         }
       };
 
+      // Render branded social login buttons for known action IDs
+      const actionId: string = component.config['actionId'];
+
+      if (actionId === 'google_auth') {
+        return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (actionId === 'github_auth') {
+        return <GitHubButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (actionId === 'facebook_auth') {
+        return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+
+      // Fallback to generic button
       return (
         <Button
           fullWidth

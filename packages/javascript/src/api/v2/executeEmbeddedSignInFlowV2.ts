@@ -16,17 +16,20 @@
  * under the License.
  */
 
-import {EmbeddedSignInFlowResponseV2} from '../../models/v2/embedded-signin-flow-v2';
+import {
+  EmbeddedFlowExecuteRequestConfigV2,
+  EmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowStatusV2,
+} from '../../models/v2/embedded-signin-flow-v2';
 import AsgardeoAPIError from '../../errors/AsgardeoAPIError';
-import {EmbeddedFlowExecuteRequestConfig} from '../../models/embedded-flow';
 
 const executeEmbeddedSignInFlowV2 = async ({
   url,
   baseUrl,
   payload,
-  platform,
+  sessionDataKey,
   ...requestConfig
-}: EmbeddedFlowExecuteRequestConfig): Promise<EmbeddedSignInFlowResponseV2> => {
+}: EmbeddedFlowExecuteRequestConfigV2): Promise<EmbeddedSignInFlowResponseV2> => {
   if (!payload) {
     throw new AsgardeoAPIError(
       'Authorization payload is required',
@@ -66,7 +69,11 @@ const executeEmbeddedSignInFlowV2 = async ({
 
   // IMPORTANT: Only applicable for Asgardeo V2 platform.
   // Check if the flow is complete and has an assertion and sessionDataKey is provided, then call OAuth2 authorize.
-  if (flowResponse.flowStatus === 'COMPLETE' && (flowResponse as any).assertion && payload?.sessionDataKey) {
+  if (
+    flowResponse.flowStatus === EmbeddedSignInFlowStatusV2.Complete &&
+    (flowResponse as any).assertion &&
+    sessionDataKey
+  ) {
     try {
       const oauth2Response: Response = await fetch(`${baseUrl}/oauth2/authorize`, {
         method: 'POST',
@@ -77,7 +84,7 @@ const executeEmbeddedSignInFlowV2 = async ({
         },
         body: JSON.stringify({
           assertion: (flowResponse as any).assertion,
-          sessionDataKey: payload?.sessionDataKey,
+          sessionDataKey,
         }),
         credentials: 'include',
       });

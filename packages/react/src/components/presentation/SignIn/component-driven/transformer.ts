@@ -70,6 +70,7 @@ const getInputPlaceholder = (name: string, type: string, t: UseTranslation['t'])
   return placeholder;
 };
 
+
 /**
  * Convert simple input to component-driven input component
  */
@@ -102,33 +103,80 @@ const convertSimpleInputToComponent = (
 };
 
 /**
- * Transform simple flow response to component-driven format
+ * Convert action to component-driven button component
  */
-export const transformSimpleToComponentDriven = (response: any, t: UseTranslation['t']): EmbeddedFlowComponent[] => {
-  // Create a form container with input components
-  const inputComponents = response?.data?.inputs?.map((input: any) => convertSimpleInputToComponent(input, t));
-
-  // Add a submit button with i18n
-  const submitButton: EmbeddedFlowComponent = {
-    id: generateId('button'),
+const convertActionToComponent = (
+  action: { type: string; id: string },
+  t: UseTranslation['t'],
+): EmbeddedFlowComponent => {
+  // Use i18n key for button text, fallback to capitalized id
+  const i18nKey = `elements.buttons.${action.id}`;
+  let text = t(i18nKey);
+  if (!text || text === i18nKey) {
+    text = action.id.replace(/_/g, ' ');
+    text = text.charAt(0).toUpperCase() + text.slice(1);
+  }
+  return {
+    id: generateId('action'),
     type: EmbeddedFlowComponentType.Button,
-    variant: 'PRIMARY',
+    variant: 'SECONDARY',
     config: {
-      type: 'submit',
-      text: t('elements.buttons.signIn'),
+      type: 'button',
+      text,
+      actionId: action.id,
+      actionType: action.type,
     },
     components: [],
   };
+};
 
-  // Create a form component containing all inputs and the submit button
-  const formComponent: EmbeddedFlowComponent = {
-    id: generateId('form'),
-    type: EmbeddedFlowComponentType.Form,
-    config: {},
-    components: [...inputComponents, submitButton],
-  };
 
-  return [formComponent];
+/**
+ * Transform simple flow response to component-driven format
+ */
+export const transformSimpleToComponentDriven = (response: any, t: UseTranslation['t']): EmbeddedFlowComponent[] => {
+  // Create input components if present
+  const inputComponents = response?.data?.inputs?.map((input: any) => convertSimpleInputToComponent(input, t)) || [];
+
+  // Create action buttons if present
+  const actionComponents = response?.data?.actions?.map((action: any) => convertActionToComponent(action, t)) || [];
+
+  // Add a submit button if there are inputs
+  const submitButton: EmbeddedFlowComponent | null = inputComponents.length > 0
+    ? {
+        id: generateId('button'),
+        type: EmbeddedFlowComponentType.Button,
+        variant: 'PRIMARY',
+        config: {
+          type: 'submit',
+          text: t('elements.buttons.signIn'),
+        },
+        components: [],
+      }
+    : null;
+
+  // Compose form components
+  const formComponents: EmbeddedFlowComponent[] = [];
+  if (inputComponents.length > 0) {
+    formComponents.push(...inputComponents);
+    if (submitButton) formComponents.push(submitButton);
+  }
+  if (actionComponents.length > 0) {
+    formComponents.push(...actionComponents);
+  }
+
+  // Wrap in a form container if there are any components
+  if (formComponents.length > 0) {
+    return [
+      {
+        id: generateId('form'),
+        type: EmbeddedFlowComponentType.Form,
+        config: {},
+        components: formComponents,
+      },
+    ];
+  }
+  return [];
 };
 
 /**

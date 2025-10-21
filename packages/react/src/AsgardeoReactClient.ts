@@ -326,11 +326,13 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
 
       if (config.platform === Platform.AsgardeoV2) {
+        const sessionDataKey: string = new URL(window.location.href).searchParams.get('sessionDataKey');
+
         return executeEmbeddedSignInFlowV2({
           payload: arg1 as EmbeddedSignInFlowHandleRequestPayload,
           url: arg2?.url,
           baseUrl: config?.baseUrl,
-          platform: config?.platform as keyof typeof Platform,
+          sessionDataKey,
         });
       }
 
@@ -338,7 +340,6 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
         return executeEmbeddedSignInFlow({
           payload: arg1,
           url: arg2.url,
-          platform: config?.platform as keyof typeof Platform,
         });
       }
 

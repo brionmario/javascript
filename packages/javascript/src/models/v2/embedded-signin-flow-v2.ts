@@ -16,10 +16,18 @@
  * under the License.
  */
 
-import {EmbeddedFlowResponseType, EmbeddedFlowStatus, EmbeddedFlowType} from '../embedded-flow';
+import {EmbeddedFlowExecuteRequestConfig, EmbeddedFlowResponseType, EmbeddedFlowType} from '../embedded-flow';
 
-export type EmbeddedSignInFlowStatusV2 = EmbeddedFlowStatus | 'ERROR';
-export type EmbeddedSignInFlowTypeV2 = EmbeddedFlowResponseType;
+export enum EmbeddedSignInFlowStatusV2 {
+  Complete = 'COMPLETE',
+  Incomplete = 'INCOMPLETE',
+  Error = 'ERROR',
+}
+
+export enum EmbeddedSignInFlowTypeV2 {
+  Redirection = 'REDIRECTION',
+  View = 'VIEW',
+}
 
 /**
  * Response structure for the new Asgardeo V2 embedded sign-in flow.
@@ -67,4 +75,12 @@ export interface EmbeddedSignInFlowRequestV2 extends Partial<EmbeddedSignInFlowI
   flowId?: string;
   actionId?: string;
   inputs?: Record<string, any>;
+}
+
+/**
+ * Request config for executing the new Asgardeo V2 embedded sign-in flow.
+ * @experimental
+ */
+export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlowExecuteRequestConfig<T> {
+  sessionDataKey?: string;
 }

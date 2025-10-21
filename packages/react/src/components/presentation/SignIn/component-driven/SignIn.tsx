@@ -25,6 +25,7 @@ import {
   EmbeddedFlowType,
   EmbeddedSignInFlowResponseV2,
   EmbeddedSignInFlowRequestV2,
+  EmbeddedSignInFlowStatusV2,
 } from '@asgardeo/browser';
 import {normalizeFlowResponse} from './transformer';
 import useTranslation from '../../../../hooks/useTranslation';
@@ -98,6 +99,15 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   const [isFlowInitialized, setIsFlowInitialized] = useState(false);
   const initializationAttemptedRef = useRef(false);
 
+  // Initialize the flow on component mount
+  useEffect(() => {
+    if (isInitialized && !isLoading && !isFlowInitialized && !initializationAttemptedRef.current) {
+      initializationAttemptedRef.current = true;
+
+      initializeFlow();
+    }
+  }, [isInitialized, isLoading, isFlowInitialized]);
+
   /**
    * Initialize the authentication flow.
    */
@@ -139,24 +149,30 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   /**
    * Handle form submission from BaseSignIn.
    */
-  const handleSubmit = async (
-    payload: EmbeddedSignInFlowRequestV2,
-    component: EmbeddedFlowComponent,
-  ): Promise<void> => {
+  const handleSubmit = async (payload: EmbeddedSignInFlowRequestV2): Promise<void> => {
     if (!currentFlowId) {
       throw new Error('No active flow ID');
     }
 
     try {
-      const sessionDataKey: string = new URL(window.location.href).searchParams.get('sessionDataKey');
-
       const response = await signIn({
         flowId: currentFlowId,
-        inputs: payload.inputs,
-        sessionDataKey,
+        ...payload,
       });
 
       const {flowId, components} = normalizeFlowResponse(response, t);
+
+      if (response.flowStatus === EmbeddedSignInFlowStatusV2.Complete) {
+        onSuccess &&
+          onSuccess({
+            redirectUrl: response.redirectUrl || afterSignInUrl,
+            ...response.data,
+          });
+
+        window.location.href = response.redirectUrl || afterSignInUrl;
+
+        return;
+      }
 
       if (flowId && components) {
         setCurrentFlowId(flowId);
@@ -175,27 +191,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   };
 
   /**
-   * Handle successful authentication and extract token.
-   */
-  const handleSuccess = (authData: Record<string, any>): void => {
-    // Call the parent onSuccess callback
-    onSuccess?.(authData);
-
-    // Handle redirect if configured
-    if (afterSignInUrl) {
-      const url: URL = new URL(afterSignInUrl, window.location.origin);
-
-      Object.entries(authData).forEach(([key, value]: [string, any]) => {
-        if (value !== undefined && value !== null) {
-          url.searchParams.append(key, String(value));
-        }
-      });
-
-      window.location.href = url.toString();
-    }
-  };
-
-  /**
    * Handle authentication errors.
    */
   const handleError = (error: Error): void => {
@@ -203,20 +198,11 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     onError?.(error);
   };
 
-  // Initialize the flow on component mount
-  useEffect(() => {
-    if (isInitialized && !isLoading && !isFlowInitialized && !initializationAttemptedRef.current) {
-      initializationAttemptedRef.current = true;
-      initializeFlow();
-    }
-  }, [isInitialized, isLoading, isFlowInitialized]);
-
   return (
     <BaseSignIn
       components={components}
       isLoading={isLoading || !isInitialized || !isFlowInitialized}
       onSubmit={handleSubmit}
-      onSuccess={handleSuccess}
       onError={handleError}
       className={className}
       size={size}

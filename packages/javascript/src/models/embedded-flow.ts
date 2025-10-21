@@ -75,5 +75,4 @@ export interface EmbeddedFlowExecuteRequestConfig<T = any> extends Partial<Reque
   baseUrl?: string;
   payload?: T;
   url?: string;
-  platform?: keyof typeof Platform;
 }
