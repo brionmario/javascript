@@ -132,7 +132,7 @@ export type AsgardeoContextProps = {
    * @returns Promise resolving to boolean indicating success.
    */
   reInitialize: (config: Partial<AsgardeoReactConfig>) => Promise<boolean>;
-} & Pick<AsgardeoReactConfig, 'storage'>;
+} & Pick<AsgardeoReactConfig, 'storage' | 'platform'>;
 
 /**
  * Context object for managing the Authentication flow builder core context.
@@ -163,6 +163,7 @@ const AsgardeoContext: Context<AsgardeoContextProps | null> = createContext<null
   exchangeToken: null,
   storage: 'sessionStorage',
   reInitialize: null,
+  platform: undefined,
 });
 
 AsgardeoContext.displayName = 'AsgardeoContext';

@@ -41,6 +41,8 @@ const translations: I18nTranslations = {
 
   /* Fields */
   'elements.fields.placeholder': 'మీ {field} ను నమోదు చేయండి',
+  'elements.fields.username': 'వినియోగదారు పేరు',
+  'elements.fields.password': 'పాస్వర్డ్',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */

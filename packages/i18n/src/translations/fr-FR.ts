@@ -41,6 +41,8 @@ const translations: I18nTranslations = {
 
   /* Fields */
   'elements.fields.placeholder': 'Entrez votre {field}',
+  'elements.fields.username': "Nom d'utilisateur",
+  'elements.fields.password': 'Mot de passe',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */

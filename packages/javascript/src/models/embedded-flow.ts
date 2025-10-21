@@ -16,7 +16,10 @@
  * under the License.
  */
 
+import {Platform} from './platforms';
+
 export enum EmbeddedFlowType {
+  Authentication = 'AUTHENTICATION',
   Registration = 'REGISTRATION',
 }
 
@@ -72,4 +75,5 @@ export interface EmbeddedFlowExecuteRequestConfig<T = any> extends Partial<Reque
   baseUrl?: string;
   payload?: T;
   url?: string;
+  platform?: keyof typeof Platform;
 }

@@ -20,9 +20,11 @@ import {
   EmbeddedSignInFlowInitiateResponse,
   EmbeddedSignInFlowHandleResponse,
   EmbeddedSignInFlowHandleRequestPayload,
+  Platform,
 } from '@asgardeo/browser';
 import {FC} from 'react';
 import BaseSignIn, {BaseSignInProps} from './non-component-driven/BaseSignIn';
+import ComponentDrivenSignIn from './component-driven/SignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 
 /**
@@ -57,7 +59,7 @@ export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onE
  * ```
  */
 const SignIn: FC<SignInProps> = ({className, size = 'medium', ...rest}: SignInProps) => {
-  const {signIn, afterSignInUrl, isInitialized, isLoading} = useAsgardeo();
+  const {signIn, afterSignInUrl, isInitialized, isLoading, platform} = useAsgardeo();
 
   /**
    * Initialize the authentication flow.
@@ -92,6 +94,18 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', ...rest}: SignInPr
       window.location.href = url.toString();
     }
   };
+
+  if (platform === Platform.AsgardeoV2) {
+    return (
+      <ComponentDrivenSignIn
+        className={className}
+        size={size}
+        variant={rest.variant}
+        onSuccess={rest.onSuccess}
+        onError={rest.onError}
+      />
+    );
+  }
 
   return (
     <BaseSignIn

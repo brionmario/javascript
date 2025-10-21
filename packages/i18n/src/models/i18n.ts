@@ -38,6 +38,8 @@ export interface I18nTranslations {
 
   /* Fields */
   'elements.fields.placeholder': string;
+  'elements.fields.username': string;
+  'elements.fields.password': string;
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */

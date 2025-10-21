@@ -41,6 +41,8 @@ const translations: I18nTranslations = {
 
   /* Fields */
   'elements.fields.placeholder': '{field} உள்ளிடவும்',
+  'elements.fields.username': 'பயனர்பெயர்',
+  'elements.fields.password': 'கடவுச்சொல்',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */

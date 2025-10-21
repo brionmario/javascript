@@ -41,6 +41,8 @@ const translations: I18nTranslations = {
 
   /* Fields */
   'elements.fields.placeholder': '{field}を入力してください',
+  'elements.fields.username': 'ユーザー名',
+  'elements.fields.password': 'パスワード',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */

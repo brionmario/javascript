@@ -45,6 +45,7 @@ export {default as getOrganization, OrganizationDetails, GetOrganizationConfig} 
 export {default as updateOrganization, createPatchOperations, UpdateOrganizationConfig} from './api/updateOrganization';
 export {default as updateMeProfile, UpdateMeProfileConfig} from './api/updateMeProfile';
 export {default as getBrandingPreference, GetBrandingPreferenceConfig} from './api/getBrandingPreference';
+export {default as executeEmbeddedSignInFlowV2} from './api/v2/executeEmbeddedSignInFlowV2';
 
 export {default as ApplicationNativeAuthenticationConstants} from './constants/ApplicationNativeAuthenticationConstants';
 export {default as TokenConstants} from './constants/TokenConstants';
@@ -71,6 +72,13 @@ export {
   EmbeddedSignInFlowAuthenticatorPromptType,
   EmbeddedSignInFlowAuthenticatorKnownIdPType,
 } from './models/embedded-signin-flow';
+export {
+  EmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowStatusV2,
+  EmbeddedSignInFlowTypeV2,
+  EmbeddedSignInFlowInitiateRequestV2,
+  EmbeddedSignInFlowRequestV2,
+} from './models/v2/embedded-signin-flow-v2';
 export {
   EmbeddedFlowType,
   EmbeddedFlowStatus,

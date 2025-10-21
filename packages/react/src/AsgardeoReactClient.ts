@@ -32,6 +32,7 @@ import {
   executeEmbeddedSignUpFlow,
   EmbeddedSignInFlowHandleRequestPayload,
   executeEmbeddedSignInFlow,
+  executeEmbeddedSignInFlowV2,
   Organization,
   IdToken,
   EmbeddedFlowExecuteRequestConfig,
@@ -46,6 +47,7 @@ import {
   getRedirectBasedSignUpUrl,
   Config,
   TokenExchangeRequestConfig,
+  Platform,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -321,10 +323,22 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       const arg1 = args[0];
       const arg2 = args[1];
 
+      const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
+
+      if (config.platform === Platform.AsgardeoV2) {
+        return executeEmbeddedSignInFlowV2({
+          payload: arg1 as EmbeddedSignInFlowHandleRequestPayload,
+          url: arg2?.url,
+          baseUrl: config?.baseUrl,
+          platform: config?.platform as keyof typeof Platform,
+        });
+      }
+
       if (typeof arg1 === 'object' && 'flowId' in arg1 && typeof arg2 === 'object' && 'url' in arg2) {
         return executeEmbeddedSignInFlow({
           payload: arg1,
           url: arg2.url,
+          platform: config?.platform as keyof typeof Platform,
         });
       }
 

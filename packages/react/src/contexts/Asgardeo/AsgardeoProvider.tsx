@@ -435,6 +435,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       getDecodedIdToken: asgardeo.getDecodedIdToken.bind(asgardeo),
       exchangeToken: asgardeo.exchangeToken.bind(asgardeo),
       syncSession,
+      platform: config?.platform,
     }),
     [
       applicationId,

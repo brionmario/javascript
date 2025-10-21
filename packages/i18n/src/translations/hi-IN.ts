@@ -40,6 +40,8 @@ const translations: I18nTranslations = {
 
   /* Fields */
   'elements.fields.placeholder': '{field} दर्ज करें',
+  'elements.fields.username': 'उपयोगकर्ता नाम',
+  'elements.fields.password': 'पासवर्ड',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
