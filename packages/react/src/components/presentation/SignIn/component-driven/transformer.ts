@@ -70,7 +70,6 @@ const getInputPlaceholder = (name: string, type: string, t: UseTranslation['t'])
   return placeholder;
 };
 
-
 /**
  * Convert simple input to component-driven input component
  */
@@ -106,7 +105,7 @@ const convertSimpleInputToComponent = (
  * Convert action to component-driven button component
  */
 const convertActionToComponent = (
-  action: { type: string; id: string },
+  action: {type: string; id: string},
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
   // Use i18n key for button text, fallback to capitalized id
@@ -130,7 +129,6 @@ const convertActionToComponent = (
   };
 };
 
-
 /**
  * Transform simple flow response to component-driven format
  */
@@ -142,41 +140,42 @@ export const transformSimpleToComponentDriven = (response: any, t: UseTranslatio
   const actionComponents = response?.data?.actions?.map((action: any) => convertActionToComponent(action, t)) || [];
 
   // Add a submit button if there are inputs
-  const submitButton: EmbeddedFlowComponent | null = inputComponents.length > 0
-    ? {
-        id: generateId('button'),
-        type: EmbeddedFlowComponentType.Button,
-        variant: 'PRIMARY',
-        config: {
-          type: 'submit',
-          text: t('elements.buttons.signIn'),
-        },
-        components: [],
-      }
-    : null;
+  const submitButton: EmbeddedFlowComponent | null =
+    inputComponents.length > 0
+      ? {
+          id: generateId('button'),
+          type: EmbeddedFlowComponentType.Button,
+          variant: 'PRIMARY',
+          config: {
+            type: 'submit',
+            text: t('elements.buttons.signIn'),
+          },
+          components: [],
+        }
+      : null;
 
-  // Compose form components
+  // Compose form components (inputs + submit only)
   const formComponents: EmbeddedFlowComponent[] = [];
   if (inputComponents.length > 0) {
     formComponents.push(...inputComponents);
     if (submitButton) formComponents.push(submitButton);
   }
-  if (actionComponents.length > 0) {
-    formComponents.push(...actionComponents);
-  }
 
-  // Wrap in a form container if there are any components
+  const result: EmbeddedFlowComponent[] = [];
+  // Add form if there are input fields
   if (formComponents.length > 0) {
-    return [
-      {
-        id: generateId('form'),
-        type: EmbeddedFlowComponentType.Form,
-        config: {},
-        components: formComponents,
-      },
-    ];
+    result.push({
+      id: generateId('form'),
+      type: EmbeddedFlowComponentType.Form,
+      config: {},
+      components: formComponents,
+    });
   }
-  return [];
+  // Add actions outside the form
+  if (actionComponents.length > 0) {
+    result.push(...actionComponents);
+  }
+  return result;
 };
 
 /**

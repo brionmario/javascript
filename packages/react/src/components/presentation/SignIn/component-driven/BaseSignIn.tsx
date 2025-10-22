@@ -18,12 +18,7 @@
 
 import {FC, useState, useCallback, ReactElement} from 'react';
 import {cx} from '@emotion/css';
-import {
-  EmbeddedFlowComponent,
-  withVendorCSSClassPrefix,
-  EmbeddedSignInFlowRequestV2,
-  EmbeddedFlowType,
-} from '@asgardeo/browser';
+import {EmbeddedFlowComponent, withVendorCSSClassPrefix, EmbeddedSignInFlowRequestV2} from '@asgardeo/browser';
 import useTranslation from '../../../../hooks/useTranslation';
 import Card, {CardProps} from '../../../primitives/Card/Card';
 import Spinner from '../../../primitives/Spinner/Spinner';
@@ -31,7 +26,7 @@ import Alert from '../../../primitives/Alert/Alert';
 import Logo from '../../../primitives/Logo/Logo';
 import Typography from '../../../primitives/Typography/Typography';
 import useTheme from '../../../../contexts/Theme/useTheme';
-import useStyles from '../non-component-driven/BaseSignIn.styles';
+import useStyles from '../BaseSignIn.styles';
 import useFlow from '../../../../contexts/Flow/useFlow';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
@@ -422,7 +417,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
           </Alert>
         )}
 
-        {components && renderComponents(components)}
+        <div className={styles.contentContainer}>{components && renderComponents(components)}</div>
       </Card.Content>
     </Card>
   );
