@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {FC, useState, useCallback, ReactElement} from 'react';
+import {FC, useState, useCallback, ReactElement, ReactNode} from 'react';
 import {cx} from '@emotion/css';
 import {EmbeddedFlowComponent, withVendorCSSClassPrefix, EmbeddedSignInFlowRequestV2} from '@asgardeo/browser';
 import useTranslation from '../../../../hooks/useTranslation';
@@ -31,6 +31,76 @@ import useFlow from '../../../../contexts/Flow/useFlow';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
+
+/**
+ * Render props for custom UI rendering
+ */
+export interface BaseSignInRenderProps {
+  /**
+   * Form values
+   */
+  values: Record<string, string>;
+
+  /**
+   * Form errors
+   */
+  errors: Record<string, string>;
+
+  /**
+   * Touched fields
+   */
+  touched: Record<string, boolean>;
+
+  /**
+   * Whether the form is valid
+   */
+  isValid: boolean;
+
+  /**
+   * Loading state
+   */
+  isLoading: boolean;
+
+  /**
+   * Current error message
+   */
+  error: string | null;
+
+  /**
+   * Flow components
+   */
+  components: EmbeddedFlowComponent[];
+
+  /**
+   * Function to handle input changes
+   */
+  handleInputChange: (name: string, value: string) => void;
+
+  /**
+   * Function to handle form submission
+   */
+  handleSubmit: (component: EmbeddedFlowComponent, data?: Record<string, any>) => Promise<void>;
+
+  /**
+   * Function to validate the form
+   */
+  validateForm: () => {isValid: boolean; errors: Record<string, string>};
+
+  /**
+   * Flow title
+   */
+  title: string;
+
+  /**
+   * Flow subtitle
+   */
+  subtitle: string;
+
+  /**
+   * Flow messages
+   */
+  messages: Array<{message: string; type: string}>;
+}
 
 /**
  * Props for the BaseSignIn component.
@@ -99,6 +169,11 @@ export interface BaseSignInProps {
    * Theme variant for the component.
    */
   variant?: CardProps['variant'];
+
+  /**
+   * Render props function for custom UI
+   */
+  children?: (props: BaseSignInRenderProps) => ReactNode;
 }
 
 /**
@@ -107,30 +182,47 @@ export interface BaseSignInProps {
  * structure to component-driven format automatically.
  *
  * @example
+ * // Default UI
  * ```tsx
  * import { BaseSignIn } from '@asgardeo/react';
  *
  * const MySignIn = () => {
  *   return (
  *     <BaseSignIn
- *       onInitialize={async (payload) => {
- *         // Your API call to initialize authentication
- *         return await initializeAuth(payload);
- *       }}
+ *       components={components}
  *       onSubmit={async (payload) => {
- *         // Your API call to handle authentication
  *         return await handleAuth(payload);
  *       }}
  *       onSuccess={(authData) => {
  *         console.log('Success:', authData);
  *       }}
- *       onError={(error) => {
- *         console.error('Error:', error);
- *       }}
  *       className="max-w-md mx-auto"
  *     />
  *   );
  * };
+ * ```
+ *
+ * @example
+ * // Custom UI with render props
+ * ```tsx
+ * <BaseSignIn components={components} onSubmit={handleSubmit}>
+ *   {({values, errors, handleInputChange, handleSubmit, isLoading, components}) => (
+ *     <div className="custom-form">
+ *       <input
+ *         name="username"
+ *         value={values.username || ''}
+ *         onChange={(e) => handleInputChange('username', e.target.value)}
+ *       />
+ *       {errors.username && <span>{errors.username}</span>}
+ *       <button
+ *         onClick={() => handleSubmit(components[0], values)}
+ *         disabled={isLoading}
+ *       >
+ *         Sign In
+ *       </button>
+ *     </div>
+ *   )}
+ * </BaseSignIn>
  * ```
  */
 const BaseSignIn: FC<BaseSignInProps> = props => {
@@ -164,6 +256,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   size = 'medium',
   variant = 'outlined',
   isLoading: externalIsLoading,
+  children,
 }) => {
   const {theme} = useTheme();
   const {t} = useTranslation();
@@ -172,7 +265,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [messages, setMessages] = useState<Array<{message: string; type: string}>>([]);
 
   const isLoading = externalIsLoading || isSubmitting;
 
@@ -230,7 +322,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     setTouched: setFormTouched,
     validateForm,
     touchAllFields,
-    reset: resetForm,
   } = form;
 
   /**
@@ -255,7 +346,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
     setIsSubmitting(true);
     setError(null);
-    setMessages([]);
 
     try {
       // Filter out empty or undefined input values
@@ -361,6 +451,28 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     ],
   );
 
+  // If render props are provided, use them
+  if (children) {
+    const renderProps: BaseSignInRenderProps = {
+      values: formValues,
+      errors: formErrors,
+      touched: touchedFields,
+      isValid: isFormValid,
+      isLoading,
+      error,
+      components,
+      handleInputChange,
+      handleSubmit,
+      validateForm,
+      title: flowTitle || t('signin.title'),
+      subtitle: flowSubtitle || t('signin.subtitle'),
+      messages: flowMessages || [],
+    };
+
+    return <div className={containerClasses}>{children(renderProps)}</div>;
+  }
+
+  // Default UI rendering
   if (isLoading) {
     return (
       <Card className={cx(containerClasses, styles.card)} variant={variant}>

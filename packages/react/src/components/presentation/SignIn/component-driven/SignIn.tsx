@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {FC, useState, useEffect, useRef} from 'react';
+import {FC, useState, useEffect, useRef, ReactNode} from 'react';
 import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
 import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
 import {
@@ -29,6 +29,41 @@ import {
 } from '@asgardeo/browser';
 import {normalizeFlowResponse} from './transformer';
 import useTranslation from '../../../../hooks/useTranslation';
+
+/**
+ * Render props function parameters
+ */
+export interface SignInRenderProps {
+  /**
+   * Function to manually initialize the flow
+   */
+  initialize: () => Promise<void>;
+
+  /**
+   * Function to submit authentication data (primary)
+   */
+  onSubmit: (payload: EmbeddedSignInFlowRequestV2) => Promise<void>;
+
+  /**
+   * Loading state indicator
+   */
+  isLoading: boolean;
+
+  /**
+   * Whether the flow has been initialized
+   */
+  isInitialized: boolean;
+
+  /**
+   * Current flow components
+   */
+  components: EmbeddedFlowComponent[];
+
+  /**
+   * Current error if any
+   */
+  error: Error | null;
+}
 
 /**
  * Props for the SignIn component.
@@ -61,6 +96,11 @@ export type SignInProps = {
    * Size variant for the component.
    */
   size?: 'small' | 'medium' | 'large';
+
+  /**
+   * Render props function for custom UI
+   */
+  children?: (props: SignInRenderProps) => ReactNode;
 };
 
 /**
@@ -69,6 +109,7 @@ export type SignInProps = {
  * It automatically transforms simple input-based responses into component-driven UI format.
  *
  * @example
+ * // Default UI
  * ```tsx
  * import { SignIn } from '@asgardeo/react/component-driven';
  *
@@ -77,7 +118,6 @@ export type SignInProps = {
  *     <SignIn
  *       onSuccess={(authData) => {
  *         console.log('Authentication successful:', authData);
- *         // Handle successful authentication (e.g., redirect, store tokens)
  *       }}
  *       onError={(error) => {
  *         console.error('Authentication failed:', error);
@@ -88,8 +128,43 @@ export type SignInProps = {
  *   );
  * };
  * ```
+ *
+ * @example
+ * // Custom UI with render props
+ * ```tsx
+ * import { SignIn } from '@asgardeo/react/component-driven';
+ *
+ * const App = () => {
+ *   return (
+ *     <SignIn
+ *       onSuccess={(authData) => console.log('Success:', authData)}
+ *       onError={(error) => console.error('Error:', error)}
+ *     >
+ *       {({signIn, isLoading, components, error, isInitialized}) => (
+ *         <div className="custom-signin">
+ *           <h1>Custom Sign In</h1>
+ *           {!isInitialized ? (
+ *             <p>Initializing...</p>
+ *           ) : error ? (
+ *             <div className="error">{error.message}</div>
+ *           ) : (
+ *             <form onSubmit={(e) => {
+ *               e.preventDefault();
+ *               signIn({inputs: {username: 'user', password: 'pass'}});
+ *             }}>
+ *               <button type="submit" disabled={isLoading}>
+ *                 {isLoading ? 'Signing in...' : 'Sign In'}
+ *               </button>
+ *             </form>
+ *           )}
+ *         </div>
+ *       )}
+ *     </SignIn>
+ *   );
+ * };
+ * ```
  */
-const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError, variant}) => {
+const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError, variant, children}) => {
   const {applicationId, afterSignInUrl, signIn, isInitialized, isLoading, baseUrl} = useAsgardeo();
   const {t} = useTranslation();
 
@@ -97,13 +172,14 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   const [components, setComponents] = useState<EmbeddedFlowComponent[]>([]);
   const [currentFlowId, setCurrentFlowId] = useState<string | null>(null);
   const [isFlowInitialized, setIsFlowInitialized] = useState(false);
+  const [flowError, setFlowError] = useState<Error | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const initializationAttemptedRef = useRef(false);
 
-  // Initialize the flow on component mount
+  // Initialize the flow on component mount (always initialize)
   useEffect(() => {
     if (isInitialized && !isLoading && !isFlowInitialized && !initializationAttemptedRef.current) {
       initializationAttemptedRef.current = true;
-
       initializeFlow();
     }
   }, [isInitialized, isLoading, isFlowInitialized]);
@@ -113,15 +189,18 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
    */
   const initializeFlow = async (): Promise<void> => {
     if (!applicationId) {
-      throw new AsgardeoRuntimeError(
+      const error = new AsgardeoRuntimeError(
         `Application ID is required for authentication`,
         'SignIn-initializeFlow-RuntimeError-001',
         'react',
         'Something went wrong while trying to sign in. Please try again later.',
       );
+      setFlowError(error);
+      throw error;
     }
 
     try {
+      setFlowError(null);
       const response: EmbeddedSignInFlowResponseV2 = await signIn({
         applicationId,
         flowType: EmbeddedFlowType.Authentication,
@@ -135,7 +214,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         setIsFlowInitialized(true);
       }
     } catch (error) {
-      onError?.(error as Error);
+      const err = error as Error;
+      setFlowError(err);
+      onError?.(err);
 
       throw new AsgardeoRuntimeError(
         `Failed to initialize authentication flow: ${error instanceof Error ? error.message : String(error)}`,
@@ -147,7 +228,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   };
 
   /**
-   * Handle form submission from BaseSignIn.
+   * Handle form submission from BaseSignIn or render props.
    */
   const handleSubmit = async (payload: EmbeddedSignInFlowRequestV2): Promise<void> => {
     if (!currentFlowId) {
@@ -155,6 +236,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     }
 
     try {
+      setIsSubmitting(true);
+      setFlowError(null);
+
       const response = await signIn({
         flowId: currentFlowId,
         ...payload,
@@ -179,7 +263,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         setComponents(components);
       }
     } catch (error) {
-      onError?.(error as Error);
+      const err = error as Error;
+      setFlowError(err);
+      onError?.(err);
 
       throw new AsgardeoRuntimeError(
         `Failed to submit authentication flow: ${error instanceof Error ? error.message : String(error)}`,
@@ -187,6 +273,8 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         'react',
         'Something went wrong while trying to sign in. Please try again later.',
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -195,9 +283,25 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
    */
   const handleError = (error: Error): void => {
     console.error('Authentication error:', error);
+    setFlowError(error);
     onError?.(error);
   };
 
+  // If render props are provided, use them
+  if (children) {
+    const renderProps: SignInRenderProps = {
+      initialize: initializeFlow,
+      onSubmit: handleSubmit,
+      isLoading: isLoading || isSubmitting || !isInitialized,
+      isInitialized: isFlowInitialized,
+      components,
+      error: flowError,
+    };
+
+    return <>{children(renderProps)}</>;
+  }
+
+  // Otherwise, render the default BaseSignIn component
   return (
     <BaseSignIn
       components={components}

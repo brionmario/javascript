@@ -22,16 +22,21 @@ import {
   EmbeddedSignInFlowHandleRequestPayload,
   Platform,
 } from '@asgardeo/browser';
-import {FC} from 'react';
+import {FC, ReactElement} from 'react';
 import BaseSignIn, {BaseSignInProps} from './non-component-driven/BaseSignIn';
-import ComponentDrivenSignIn from './component-driven/SignIn';
+import ComponentDrivenSignIn, {SignInRenderProps} from './component-driven/SignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 
 /**
  * Props for the SignIn component.
  * Extends BaseSignInProps for full compatibility with the React BaseSignIn component
  */
-export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'>;
+export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'> & {
+  /**
+   * Render function for custom UI (render props pattern).
+   */
+  children?: (props: SignInRenderProps) => ReactElement;
+};
 
 /**
  * A styled SignIn component that provides native authentication flow with pre-built styling.
@@ -58,7 +63,7 @@ export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onE
  * };
  * ```
  */
-const SignIn: FC<SignInProps> = ({className, size = 'medium', ...rest}: SignInProps) => {
+const SignIn: FC<SignInProps> = ({className, size = 'medium', children, ...rest}: SignInProps) => {
   const {signIn, afterSignInUrl, isInitialized, isLoading, platform} = useAsgardeo();
 
   /**
@@ -103,7 +108,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', ...rest}: SignInPr
         variant={rest.variant}
         onSuccess={rest.onSuccess}
         onError={rest.onError}
-      />
+      >
+        {children}
+      </ComponentDrivenSignIn>
     );
   }
 
