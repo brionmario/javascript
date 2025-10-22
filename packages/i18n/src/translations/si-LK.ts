@@ -36,6 +36,7 @@ const translations: I18nTranslations = {
   'elements.buttons.microsoft': 'Microsoft සමග ඉදිරියට යන්න',
   'elements.buttons.linkedin': 'LinkedIn සමග ඉදිරියට යන්න',
   'elements.buttons.ethereum': 'Ethereum සමග ඉදිරියට යන්න',
+  'elements.buttons.smsotp': 'SMS සමග ඉදිරියට යන්න',
   'elements.buttons.multi.option': '{connection} සමග ඉදිරියට යන්න',
   'elements.buttons.social': '{connection} සමග ඉදිරියට යන්න',
 

@@ -36,6 +36,7 @@ const translations: I18nTranslations = {
   'elements.buttons.microsoft': 'Continue with Microsoft',
   'elements.buttons.linkedin': 'Continue with LinkedIn',
   'elements.buttons.ethereum': 'Continue with Sign In Ethereum',
+  'elements.buttons.smsotp': 'Continue with SMS OTP',
   'elements.buttons.multi.option': 'Continue with {connection}',
   'elements.buttons.social': 'Continue with {connection}',
 

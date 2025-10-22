@@ -26,6 +26,7 @@ import GitHubButton from '../../../adapters/GitHubButton';
 import FacebookButton from '../../../adapters/FacebookButton';
 import Typography from '../../../primitives/Typography/Typography';
 import Divider from '../../../primitives/Divider/Divider';
+import SmsOtpButton from '../../../adapters/SmsOtpButton';
 
 /**
  * Get the appropriate FieldType for an input component.
@@ -127,6 +128,9 @@ const createSignInComponentFromFlow = (
       }
       if (actionId === 'facebook_auth') {
         return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (actionId === 'prompt_mobile') {
+        return <SmsOtpButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
 
       // Fallback to generic button

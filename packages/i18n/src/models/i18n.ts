@@ -33,6 +33,7 @@ export interface I18nTranslations {
   'elements.buttons.microsoft': string;
   'elements.buttons.linkedin': string;
   'elements.buttons.ethereum': string;
+  'elements.buttons.smsotp': string;
   'elements.buttons.multi.option': string;
   'elements.buttons.social': string;
 

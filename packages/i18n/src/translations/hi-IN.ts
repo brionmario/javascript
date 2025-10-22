@@ -35,6 +35,7 @@ const translations: I18nTranslations = {
   'elements.buttons.microsoft': 'Microsoft के साथ जारी रखें',
   'elements.buttons.linkedin': 'LinkedIn के साथ जारी रखें',
   'elements.buttons.ethereum': 'Ethereum के साथ साइन इन करें',
+  'elements.buttons.smsotp': 'SMS के साथ जारी रखें',
   'elements.buttons.multi.option': '{connection} के साथ जारी रखें',
   'elements.buttons.social': '{connection} के साथ जारी रखें',
 

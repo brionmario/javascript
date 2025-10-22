@@ -36,6 +36,7 @@ const translations: I18nTranslations = {
   'elements.buttons.microsoft': 'Microsoft తో కొనసాగించండి',
   'elements.buttons.linkedin': 'LinkedIn తో కొనసాగించండి',
   'elements.buttons.ethereum': 'Ethereum తో సైన్ ఇన్ చేయండి',
+  'elements.buttons.smsotp': 'SMS తో కొనసాగించండి',
   'elements.buttons.multi.option': '{connection} తో కొనసాగించండి',
   'elements.buttons.social': '{connection} తో కొనసాగించండి',
 
