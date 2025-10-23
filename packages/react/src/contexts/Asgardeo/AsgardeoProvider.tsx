@@ -416,6 +416,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       signUpUrl,
       afterSignInUrl,
       baseUrl,
+      clearSession: asgardeo.clearSession.bind(asgardeo),
       getAccessToken: asgardeo.getAccessToken.bind(asgardeo),
       isInitialized: isInitializedSync,
       isLoading: isLoadingSync,

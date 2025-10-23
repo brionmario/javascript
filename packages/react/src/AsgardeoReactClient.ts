@@ -364,6 +364,17 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       throw new Error('The second argument must be a function.');
     }
 
+    const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
+
+    // TEMPORARY: Handle Asgardeo V2 sign-out differently until the sign-out flow is implemented in the platform.
+    // Tracker: https://github.com/asgardeo/javascript/issues/212#issuecomment-3435713699
+    if (config.platform === Platform.AsgardeoV2) {
+      this.asgardeo.clearSession();
+      args[1]?.(config.afterSignOutUrl || '');
+
+      return Promise.resolve(config.afterSignOutUrl || '');
+    }
+
     const response: boolean = await this.asgardeo.signOut(args[1]);
 
     return Promise.resolve(String(response));
@@ -399,6 +410,10 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     return this.withLoading(async () => {
       return this.asgardeo.getAccessToken(sessionId);
     });
+  }
+
+  override clearSession(sessionId?: string): void {
+    this.asgardeo.clearSession(sessionId);
   }
 }
 
