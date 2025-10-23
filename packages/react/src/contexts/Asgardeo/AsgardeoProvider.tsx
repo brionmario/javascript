@@ -344,6 +344,12 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
 
   // Auto-fetch branding when initialized and configured
   useEffect(() => {
+    // TEMPORARY: Asgardeo V2 platform does not support branding preference yet.
+    // Tracker: https://github.com/asgardeo/javascript/issues/212
+    if (config.platform !== Platform.AsgardeoV2) {
+      return;
+    }
+
     // Enable branding by default or when explicitly enabled
     const shouldFetchBranding = preferences?.theme?.inheritFromBranding !== false;
 
