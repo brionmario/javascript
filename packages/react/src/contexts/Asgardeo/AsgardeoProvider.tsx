@@ -253,21 +253,38 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
         setBaseUrl(_baseUrl);
       }
 
-      const user: User = await asgardeo.getUser({baseUrl: _baseUrl});
-      const userProfile: UserProfile = await asgardeo.getUserProfile({baseUrl: _baseUrl});
-      const currentOrganization: Organization = await asgardeo.getCurrentOrganization();
-      const myOrganizations: Organization[] = await asgardeo.getMyOrganizations();
+      try {
+        const user: User = await asgardeo.getUser({baseUrl: _baseUrl});
+        setUser(user);
+      } catch (error) {
+        // TODO: Add an error log.
+      }
 
-      // Update user data first
-      setUser(user);
-      setUserProfile(userProfile);
-      setCurrentOrganization(currentOrganization);
-      setMyOrganizations(myOrganizations);
+      try {
+        const userProfile: UserProfile = await asgardeo.getUserProfile({baseUrl: _baseUrl});
+        setUserProfile(userProfile);
+      } catch (error) {
+        // TODO: Add an error log.
+      }
+
+      try {
+        const currentOrganization: Organization = await asgardeo.getCurrentOrganization();
+        setCurrentOrganization(currentOrganization);
+      } catch (error) {
+        // TODO: Add an error log.
+      }
+
+      try {
+        const myOrganizations: Organization[] = await asgardeo.getMyOrganizations();
+        setMyOrganizations(myOrganizations);
+      } catch (error) {
+        // TODO: Add an error log.
+      }
 
       // CRITICAL: Update sign-in status BEFORE setting loading to false
       // This prevents the race condition where ProtectedRoute sees isLoading=false but isSignedIn=false
       const currentSignInStatus = await asgardeo.isSignedIn();
-      setIsSignedInSync(await asgardeo.isSignedIn());
+      setIsSignedInSync(currentSignInStatus);
     } catch (error) {
       // TODO: Add an error log.
     } finally {

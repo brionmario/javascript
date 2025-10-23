@@ -232,14 +232,23 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   }
 
   override async getCurrentOrganization(): Promise<Organization | null> {
-    return this.withLoading(async () => {
-      const idToken: IdToken = await this.getDecodedIdToken();
-      return {
-        orgHandle: idToken?.org_handle,
-        name: idToken?.org_name,
-        id: idToken?.org_id,
-      };
-    });
+    try {
+      return this.withLoading(async () => {
+        const idToken: IdToken = await this.getDecodedIdToken();
+        return {
+          orgHandle: idToken?.org_handle,
+          name: idToken?.org_name,
+          id: idToken?.org_id,
+        };
+      });
+    } catch (error) {
+      throw new AsgardeoRuntimeError(
+        `Failed to fetch the current organization: ${error instanceof Error ? error.message : String(error)}`,
+        'AsgardeoReactClient-getCurrentOrganization-RuntimeError-001',
+        'react',
+        'An error occurred while fetching the current organization of the signed-in user.',
+      );
+    }
   }
 
   override async switchOrganization(organization: Organization, sessionId?: string): Promise<TokenResponse | Response> {
