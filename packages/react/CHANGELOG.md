@@ -1,5 +1,18 @@
 # @asgardeo/react
 
+## 0.5.29
+
+### Patch Changes
+
+- [#213](https://github.com/asgardeo/javascript/pull/213)
+  [`b411539`](https://github.com/asgardeo/javascript/commit/b4115392902db7f3fbf1be4e136deaaf9f256c68) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add `asagrdeo/thunder` support
+
+- Updated dependencies
+  [[`b411539`](https://github.com/asgardeo/javascript/commit/b4115392902db7f3fbf1be4e136deaaf9f256c68)]:
+  - @asgardeo/browser@0.1.22
+  - @asgardeo/i18n@0.3.1
+
 ## 0.5.28
 
 ### Patch Changes
