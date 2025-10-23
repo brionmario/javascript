@@ -140,11 +140,43 @@ const asgardeoMiddleware = (
   return async (request: NextRequest): Promise<NextResponse> => {
     const resolvedOptions = typeof options === 'function' ? options(request) : options || {};
 
+    const url: URL = new URL(request.url);
+    const hasCallbackParams: boolean = url.searchParams.has('code') && url.searchParams.has('state');
+
+    let isValidOAuthCallback: boolean = false;
+    if (hasCallbackParams) {
+      // OAuth callbacks should not contain error parameters that indicate failed auth
+      const hasError: boolean = url.searchParams.has('error');
+
+      if (!hasError) {
+        // Validate that there's a temporary session that initiated this OAuth flow
+        const tempSessionToken: string | undefined = request.cookies.get(
+          SessionManager.getTempSessionCookieName(),
+        )?.value;
+        if (tempSessionToken) {
+          try {
+            // Verify the temporary session exists and is valid
+            await SessionManager.verifyTempSession(tempSessionToken);
+            isValidOAuthCallback = true;
+          } catch {
+            // Invalid temp session - this is not a legitimate OAuth callback
+            isValidOAuthCallback = false;
+          }
+        }
+      }
+    }
+
     const sessionId = await getSessionIdFromRequestMiddleware(request);
     const isAuthenticated = await hasValidSession(request);
 
     const asgardeo: AsgardeoMiddlewareContext = {
       protectRoute: async (options?: {redirect?: string}): Promise<NextResponse | void> => {
+        // Skip protection if this is a validated OAuth callback - let the callback handler process it first
+        // This prevents race conditions where middleware redirects before OAuth callback completes
+        if (isValidOAuthCallback) {
+          return;
+        }
+
         if (!isAuthenticated) {
           const referer = request.headers.get('referer');
           // TODO: Make this configurable or call the signIn() from here.

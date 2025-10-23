@@ -20,12 +20,12 @@
 
 import {cookies} from 'next/headers';
 import {
-  CookieConfig,
   generateSessionId,
   EmbeddedSignInFlowStatus,
   EmbeddedSignInFlowHandleRequestPayload,
   EmbeddedFlowExecuteRequestConfig,
   EmbeddedSignInFlowInitiateResponse,
+  isEmpty,
 } from '@asgardeo/node';
 import AsgardeoNextClient from '../../AsgardeoNextClient';
 import SessionManager from '../../utils/SessionManager';
@@ -96,7 +96,7 @@ const signInAction = async (
     }
 
     // If no payload provided, redirect to sign-in URL for redirect-based sign-in.
-    if (!payload) {
+    if (!payload || isEmpty(payload)) {
       const defaultSignInUrl = await client.getAuthorizeRequestUrl({}, sessionId);
       return {success: true, data: {signInUrl: String(defaultSignInUrl)}};
     }
