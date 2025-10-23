@@ -188,7 +188,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
    * Initialize the authentication flow.
    */
   const initializeFlow = async (): Promise<void> => {
-    if (!applicationId) {
+    const applicationIdFromUrl: string = new URL(window.location.href).searchParams.get('applicationId');
+
+    if (!applicationIdFromUrl && !applicationId) {
       const error = new AsgardeoRuntimeError(
         `Application ID is required for authentication`,
         'SignIn-initializeFlow-RuntimeError-001',
@@ -202,7 +204,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     try {
       setFlowError(null);
       const response: EmbeddedSignInFlowResponseV2 = await signIn({
-        applicationId,
+        applicationId: applicationId || applicationIdFromUrl,
         flowType: EmbeddedFlowType.Authentication,
       });
 
