@@ -40,6 +40,7 @@ import LogOut from '../../primitives/Icons/LogOut';
 import User from '../../primitives/Icons/User';
 import Typography from '../../primitives/Typography/Typography';
 import useStyles from './BaseUserDropdown.styles';
+import getDisplayName from '../../../utils/getDisplayName';
 
 interface MenuItem {
   href?: string;
@@ -143,7 +144,7 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
 
   const {getReferenceProps, getFloatingProps} = useInteractions([click, dismiss, role]);
 
-  const defaultAttributeMappings = {
+  const defaultAttributeMappings: {[key: string]: string | string[] | undefined} = {
     picture: ['profile', 'profileUrl', 'picture', 'URL'],
     firstName: ['name.givenName', 'given_name'],
     lastName: ['name.familyName', 'family_name'],
@@ -151,17 +152,9 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
     username: ['userName', 'username', 'user_name'],
   };
 
-  const mergedMappings = {...defaultAttributeMappings, ...attributeMapping};
-
-  const getDisplayName = () => {
-    const firstName = getMappedUserProfileValue('firstName', mergedMappings, user);
-    const lastName = getMappedUserProfileValue('lastName', mergedMappings, user);
-
-    if (firstName && lastName) {
-      return `${firstName} ${lastName}`;
-    }
-
-    return getMappedUserProfileValue('username', mergedMappings, user) || '';
+  const mergedMappings: {[key: string]: string | string[] | undefined} = {
+    ...defaultAttributeMappings,
+    ...attributeMapping,
   };
 
   if (fallback && !user && !isLoading) {
@@ -215,16 +208,16 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
       >
         <Avatar
           imageUrl={getMappedUserProfileValue('picture', mergedMappings, user)}
-          name={getDisplayName()}
+          name={getDisplayName(mergedMappings, user)}
           size={avatarSize}
-          alt={`${getDisplayName()}'s avatar`}
+          alt={`${getDisplayName(mergedMappings, user)}'s avatar`}
         />
         {showTriggerLabel && (
           <Typography
             variant="body2"
             className={cx(withVendorCSSClassPrefix('user-dropdown__trigger-label'), styles.userName)}
           >
-            {getDisplayName()}
+            {getDisplayName(mergedMappings, user)}
           </Typography>
         )}
       </Button>
@@ -241,9 +234,9 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
               <div className={cx(withVendorCSSClassPrefix('user-dropdown__header'), styles.dropdownHeader)}>
                 <Avatar
                   imageUrl={getMappedUserProfileValue('picture', mergedMappings, user)}
-                  name={getDisplayName()}
+                  name={getDisplayName(mergedMappings, user)}
                   size={avatarSize * 1.25}
-                  alt={`${getDisplayName()}'s avatar`}
+                  alt={`${getDisplayName(mergedMappings, user)}'s avatar`}
                 />
                 <div className={cx(withVendorCSSClassPrefix('user-dropdown__header-info'), styles.headerInfo)}>
                   <Typography
@@ -252,7 +245,7 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
                     variant="body1"
                     fontWeight="medium"
                   >
-                    {getDisplayName()}
+                    {getDisplayName(mergedMappings, user)}
                   </Typography>
                   <Typography
                     noWrap
