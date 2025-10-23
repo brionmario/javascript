@@ -228,7 +228,12 @@ export const BaseUserDropdown: FC<BaseUserDropdownProps> = ({
             <div
               ref={refs.setFloating}
               className={cx(withVendorCSSClassPrefix('user-dropdown__content'), styles.dropdownContent)}
-              style={floatingStyles}
+              style={{
+                ...floatingStyles,
+                // Floating UI doesn't set a z-index by default, so we set a high value to ensure the dropdown appears above other elements.
+                // https://floating-ui.com/docs/misc#z-index-stacking
+                zIndex: 9999,
+              }}
               {...getFloatingProps()}
             >
               <div className={cx(withVendorCSSClassPrefix('user-dropdown__header'), styles.dropdownHeader)}>
