@@ -28,6 +28,8 @@ import {
   BrandingPreference,
   IdToken,
   getActiveTheme,
+  Platform,
+  extractUserClaimsFromIdToken,
 } from '@asgardeo/browser';
 import {FC, RefObject, PropsWithChildren, ReactElement, useEffect, useMemo, useRef, useState, useCallback} from 'react';
 import AsgardeoContext from './AsgardeoContext';
@@ -253,32 +255,38 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
         setBaseUrl(_baseUrl);
       }
 
-      try {
-        const user: User = await asgardeo.getUser({baseUrl: _baseUrl});
-        setUser(user);
-      } catch (error) {
-        // TODO: Add an error log.
-      }
+      // TEMPORARY: Asgardeo V2 platform does not support SCIM2, Organizations endpoints yet.
+      // Tracker: https://github.com/asgardeo/javascript/issues/212
+      if (config.platform !== Platform.AsgardeoV2) {
+        setUser(extractUserClaimsFromIdToken(decodedToken));
+      } else {
+        try {
+          const user: User = await asgardeo.getUser({baseUrl: _baseUrl});
+          setUser(user);
+        } catch (error) {
+          // TODO: Add an error log.
+        }
 
-      try {
-        const userProfile: UserProfile = await asgardeo.getUserProfile({baseUrl: _baseUrl});
-        setUserProfile(userProfile);
-      } catch (error) {
-        // TODO: Add an error log.
-      }
+        try {
+          const userProfile: UserProfile = await asgardeo.getUserProfile({baseUrl: _baseUrl});
+          setUserProfile(userProfile);
+        } catch (error) {
+          // TODO: Add an error log.
+        }
 
-      try {
-        const currentOrganization: Organization = await asgardeo.getCurrentOrganization();
-        setCurrentOrganization(currentOrganization);
-      } catch (error) {
-        // TODO: Add an error log.
-      }
+        try {
+          const currentOrganization: Organization = await asgardeo.getCurrentOrganization();
+          setCurrentOrganization(currentOrganization);
+        } catch (error) {
+          // TODO: Add an error log.
+        }
 
-      try {
-        const myOrganizations: Organization[] = await asgardeo.getMyOrganizations();
-        setMyOrganizations(myOrganizations);
-      } catch (error) {
-        // TODO: Add an error log.
+        try {
+          const myOrganizations: Organization[] = await asgardeo.getMyOrganizations();
+          setMyOrganizations(myOrganizations);
+        } catch (error) {
+          // TODO: Add an error log.
+        }
       }
 
       // CRITICAL: Update sign-in status BEFORE setting loading to false
