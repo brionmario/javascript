@@ -257,7 +257,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
 
       // TEMPORARY: Asgardeo V2 platform does not support SCIM2, Organizations endpoints yet.
       // Tracker: https://github.com/asgardeo/javascript/issues/212
-      if (config.platform !== Platform.AsgardeoV2) {
+      if (config.platform === Platform.AsgardeoV2) {
         setUser(extractUserClaimsFromIdToken(decodedToken));
       } else {
         try {

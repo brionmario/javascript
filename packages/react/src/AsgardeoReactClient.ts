@@ -335,7 +335,12 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
 
       const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
 
-      if (config.platform === Platform.AsgardeoV2 && typeof arg1 === 'object' && !isEmpty(arg1)) {
+      if (
+        config.platform === Platform.AsgardeoV2 &&
+        typeof arg1 === 'object' &&
+        !isEmpty(arg1) &&
+        ('flowId' in arg1 || 'applicationId' in arg1)
+      ) {
         const sessionDataKey: string = new URL(window.location.href).searchParams.get('sessionDataKey');
 
         return executeEmbeddedSignInFlowV2({
