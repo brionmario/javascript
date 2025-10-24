@@ -1,5 +1,17 @@
 # @asgardeo/react-router
 
+## 0.0.24
+
+### Patch Changes
+
+- [#218](https://github.com/asgardeo/javascript/pull/218)
+  [`2bf7be4`](https://github.com/asgardeo/javascript/commit/2bf7be42f298273fb6888bd55cf55e5eba3476a9) Thanks
+  [@brionmario](https://github.com/brionmario)! - `ProtectedRoute` should work without any props
+
+- Updated dependencies
+  [[`2bf7be4`](https://github.com/asgardeo/javascript/commit/2bf7be42f298273fb6888bd55cf55e5eba3476a9)]:
+  - @asgardeo/react@0.5.31
+
 ## 0.0.23
 
 ### Patch Changes
