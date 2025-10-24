@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.5.30
+
+### Patch Changes
+
+- [#217](https://github.com/asgardeo/javascript/pull/217)
+  [`218f930`](https://github.com/asgardeo/javascript/commit/218f930c5f32b779c12af6c1a9fd0c5ea6879525) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix `SignInButton` issue with `AsgardeoV2`
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.23
+
 ## 0.5.29
 
 ### Patch Changes
