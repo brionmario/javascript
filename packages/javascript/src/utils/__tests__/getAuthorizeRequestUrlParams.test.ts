@@ -148,12 +148,12 @@ describe('getAuthorizeRequestUrlParams', (): void => {
   });
 
   it('should set scope to undefined if none provided', (): void => {
-  const params: Map<string, string> = getAuthorizeRequestUrlParams(
+    const params: Map<string, string> = getAuthorizeRequestUrlParams(
       {
         redirectUri: 'https://app/callback',
         clientId: 'client123',
       },
-      { key: pkceKey },
+      {key: pkceKey},
       {},
     );
 

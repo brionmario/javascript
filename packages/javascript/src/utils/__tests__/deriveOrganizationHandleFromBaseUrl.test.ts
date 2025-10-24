@@ -68,25 +68,25 @@ describe('deriveOrganizationHandleFromBaseUrl', () => {
     afterEach(() => {
       warnSpy.mockRestore();
     });
-  
+
     it('should return empty string and warn for custom domain without asgardeo.io', () => {
       const result = deriveOrganizationHandleFromBaseUrl('https://custom.example.com/auth');
 
       expect(result).toBe('');
       expect(warnSpy).toHaveBeenCalled();
-        expect(warnSpy.mock.calls[0][0]).toContain(
-          'Organization handle is required since a custom domain is configured.'
-        );
-        warnSpy.mockRestore();
-      });
+      expect(warnSpy.mock.calls[0][0]).toContain(
+        'Organization handle is required since a custom domain is configured.',
+      );
+      warnSpy.mockRestore();
+    });
 
-      it('should return empty string and warn for URLs without /t/ pattern', () => {
+    it('should return empty string and warn for URLs without /t/ pattern', () => {
       const result = deriveOrganizationHandleFromBaseUrl('https://auth.asgardeo.io/oauth2/token');
 
       expect(result).toBe('');
       expect(warnSpy).toHaveBeenCalled();
       expect(warnSpy.mock.calls[0][0]).toContain(
-        'Organization handle is required since a custom domain is configured.'
+        'Organization handle is required since a custom domain is configured.',
       );
     });
 
@@ -140,30 +140,39 @@ describe('deriveOrganizationHandleFromBaseUrl', () => {
   });
 
   describe('Error Details', () => {
-    it('should throw AsgardeoRuntimeError with correct error codes', () => {
+    it('should surface correct error codes for missing/invalid baseUrl and warn for custom domains', () => {
+      // 1) Missing baseUrl -> throws with *-ValidationError-001
       try {
-        deriveOrganizationHandleFromBaseUrl(undefined);
-      } catch (error) {
+        deriveOrganizationHandleFromBaseUrl(undefined as any);
+        expect(false).toBe(true);
+      } catch (error: any) {
         expect(error).toBeInstanceOf(AsgardeoRuntimeError);
         expect(error.code).toBe('javascript-deriveOrganizationHandleFromBaseUrl-ValidationError-001');
         expect(error.origin).toBe('@asgardeo/javascript');
       }
 
+      // 2) Invalid baseUrl -> throws with *-ValidationError-002
       try {
         deriveOrganizationHandleFromBaseUrl('invalid-url');
-      } catch (error) {
+        expect(false).toBe(true);
+      } catch (error: any) {
         expect(error).toBeInstanceOf(AsgardeoRuntimeError);
         expect(error.code).toBe('javascript-deriveOrganizationHandleFromBaseUrl-ValidationError-002');
         expect(error.origin).toBe('@asgardeo/javascript');
       }
 
-      try {
-        deriveOrganizationHandleFromBaseUrl('https://custom.domain.com/auth');
-      } catch (error) {
-        expect(error).toBeInstanceOf(AsgardeoRuntimeError);
-        expect(error.code).toBe('javascript-deriveOrganizationHandleFromBaseUrl-CustomDomainError-001');
-        expect(error.origin).toBe('@asgardeo/javascript');
-      }
+      // 3) Custom domain (no /t/{org}) -> DOES NOT throw; warns and returns ''
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const res = deriveOrganizationHandleFromBaseUrl('https://custom.domain.com/auth');
+
+      expect(res).toBe('');
+      expect(warnSpy).toHaveBeenCalled();
+
+      const warned = String(warnSpy.mock.calls[0][0]);
+      expect(warned).toContain('AsgardeoRuntimeError');
+      expect(warned).toContain('javascript-deriveOrganizationHandleFromBaseUrl-CustomDomainError-002');
+
+      warnSpy.mockRestore();
     });
   });
 });
