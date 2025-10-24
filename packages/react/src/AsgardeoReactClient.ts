@@ -48,6 +48,7 @@ import {
   Config,
   TokenExchangeRequestConfig,
   Platform,
+  isEmpty,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -334,7 +335,7 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
 
       const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
 
-      if (config.platform === Platform.AsgardeoV2) {
+      if (config.platform === Platform.AsgardeoV2 && typeof arg1 === 'object' && !isEmpty(arg1)) {
         const sessionDataKey: string = new URL(window.location.href).searchParams.get('sessionDataKey');
 
         return executeEmbeddedSignInFlowV2({
