@@ -16,8 +16,6 @@
  * under the License.
  */
 
-import {Platform} from './platforms';
-
 export enum EmbeddedFlowType {
   Authentication = 'AUTHENTICATION',
   Registration = 'REGISTRATION',
