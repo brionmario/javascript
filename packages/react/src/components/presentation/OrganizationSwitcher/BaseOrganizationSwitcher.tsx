@@ -34,7 +34,6 @@ import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useState} from 'react';
 import useTheme from '../../../contexts/Theme/useTheme';
 import useTranslation from '../../../hooks/useTranslation';
-import useRTL from '../../../hooks/useRTL';
 import {Avatar} from '../../primitives/Avatar/Avatar';
 import Button from '../../primitives/Button/Button';
 import Building from '../../primitives/Icons/Building';
@@ -187,12 +186,12 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
   avatarSize = 24,
   fallback = null,
 }): ReactElement => {
-  const {theme, colorScheme} = useTheme();
+  const {theme, colorScheme, direction} = useTheme();
   const styles = useStyles(theme, colorScheme);
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
   const {t} = useTranslation();
-  const {isRTL} = useRTL();
+  const isRTL = direction === 'rtl';
 
   const {refs, floatingStyles, context} = useFloating({
     open: isOpen,
@@ -310,7 +309,9 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
             )}
           </>
         )}
-        <ChevronDown width="16" height="16" style={{transform: isRTL ? 'scaleX(-1)' : 'none'}} />
+        <span style={{transform: isRTL ? 'scaleX(-1)' : 'none', display: 'inline-flex'}}>
+          <ChevronDown width="16" height="16" />
+        </span>
       </Button>
 
       {isOpen && (

@@ -38,6 +38,7 @@ vi.mock('../../../contexts/Theme/useTheme', () => ({
       },
     },
     colorScheme: 'light',
+    direction: (document.documentElement.getAttribute('dir') as 'ltr' | 'rtl') || 'ltr',
   }),
 }));
 
