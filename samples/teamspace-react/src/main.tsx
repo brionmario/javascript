@@ -16,7 +16,6 @@ createRoot(document.getElementById('root')!).render(
       scopes="openid address email profile user:email read:user internal_organization_create internal_organization_view internal_organization_update internal_organization_delete internal_org_organization_update internal_org_organization_create internal_org_organization_view internal_org_organization_delete"
       preferences={{
         theme: {
-          direction: 'rtl', // RTL (Right-to-Left) - Arabic/Hebrew support
           // overrides: {
           //   colors: {
           //     primary: {
