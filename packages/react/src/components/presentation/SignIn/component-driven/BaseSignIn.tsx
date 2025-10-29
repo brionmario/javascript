@@ -281,7 +281,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             const identifier: string = (component.config['identifier'] as string) || component.id;
             fields.push({
               name: identifier,
-              required: component.config['required'] as boolean || false,
+              required: component.config['required'] as unknown as boolean || false,
               initialValue: '',
               validator: (value: string) => {
                 if (component.config['required'] && (!value || value.trim() === '')) {

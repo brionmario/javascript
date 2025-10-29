@@ -94,7 +94,7 @@ const createSignInComponentFromFlow = (
         name: identifier,
         label: component.config['label'] as string || '',
         placeholder: component.config['placeholder'] as string || '',
-        required: component.config['required'] as boolean || false,
+        required: component.config['required'] as unknown as boolean || false,
         value,
         error,
         onChange: (newValue: string) => onInputChange(identifier, newValue),
