@@ -76,6 +76,7 @@ jobs:
     strategy:
       matrix:
         node-version: [lts/*]
+        pnpm-version: [latest]
     steps:
       - name: ⬇️ Checkout
         id: checkout
@@ -134,6 +135,7 @@ jobs:
     strategy:
       matrix:
         node-version: [lts/*]
+        pnpm-version: [latest]
     steps:
       - name: ⬇️ Checkout
         id: checkout
@@ -187,6 +189,7 @@ jobs:
     strategy:
       matrix:
         node-version: [lts/*]
+        pnpm-version: [latest]
     steps:
       - name: ⬇️ Checkout
         id: checkout
