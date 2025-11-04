@@ -28,6 +28,7 @@ import {
 import {cx} from '@emotion/css';
 import {FC, ReactElement, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
+import {transformSimpleToComponentDriven} from './transformer';
 import FlowProvider from '../../../contexts/Flow/FlowProvider';
 import useFlow from '../../../contexts/Flow/useFlow';
 import {useForm, FormField} from '../../../hooks/useForm';
@@ -206,6 +207,35 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   const initializationAttemptedRef = useRef(false);
 
   /**
+   * Normalize flow response to ensure component-driven format
+   */
+  const normalizeFlowResponse = useCallback(
+    (response: EmbeddedFlowExecuteResponse): EmbeddedFlowExecuteResponse => {
+      // If response already has components, return as-is (Asgardeo/IS format)
+      if (response?.data?.components && Array.isArray(response.data.components)) {
+        return response;
+      }
+
+      // If response has simple inputs/actions (Thunder format), transform to component-driven
+      if (response?.data && ((response.data as any).inputs || (response.data as any).actions)) {
+        const transformedComponents = transformSimpleToComponentDriven(response, t);
+
+        return {
+          ...response,
+          data: {
+            ...response.data,
+            components: transformedComponents,
+          },
+        };
+      }
+
+      // Return as-is if no transformation needed
+      return response;
+    },
+    [t],
+  );
+
+  /**
    * Extract form fields from flow components
    */
   const extractFormFields = useCallback(
@@ -331,7 +361,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         actionId: component.id,
       } as any;
 
-      const response = await onSubmit(payload);
+      const rawResponse = await onSubmit(payload);
+      const response = normalizeFlowResponse(rawResponse);
       onFlowChange?.(response);
 
       if (response.flowStatus === EmbeddedFlowStatus.Complete) {
@@ -600,7 +631,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         setError(null);
 
         try {
-          const response = await onInitialize();
+          const rawResponse = await onInitialize();
+          const response = normalizeFlowResponse(rawResponse);
 
           setCurrentFlow(response);
           setIsFlowInitialized(true);
@@ -632,6 +664,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     onError,
     onFlowChange,
     setupFormFields,
+    normalizeFlowResponse,
     afterSignUpUrl,
     t,
   ]);

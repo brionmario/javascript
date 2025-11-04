@@ -46,6 +46,7 @@ export {default as updateOrganization, createPatchOperations, UpdateOrganization
 export {default as updateMeProfile, UpdateMeProfileConfig} from './api/updateMeProfile';
 export {default as getBrandingPreference, GetBrandingPreferenceConfig} from './api/getBrandingPreference';
 export {default as executeEmbeddedSignInFlowV2} from './api/v2/executeEmbeddedSignInFlowV2';
+export {default as executeEmbeddedSignUpFlowV2} from './api/v2/executeEmbeddedSignUpFlowV2';
 
 export {default as ApplicationNativeAuthenticationConstants} from './constants/ApplicationNativeAuthenticationConstants';
 export {default as TokenConstants} from './constants/TokenConstants';
@@ -90,6 +91,16 @@ export {
   EmbeddedFlowExecuteRequestPayload,
   EmbeddedFlowExecuteRequestConfig,
 } from './models/embedded-flow';
+export {
+  EmbeddedSignUpFlowStatusV2,
+  EmbeddedSignUpFlowInitiateRequestV2,
+  EmbeddedSignUpFlowRequestV2,
+  EmbeddedSignUpFlowCompleteResponse,
+  EmbeddedSignUpFlowResponseV2,
+  ExtendedEmbeddedSignUpFlowResponseV2,
+  EmbeddedSignUpFlowTypeV2,
+  EmbeddedFlowExecuteRequestConfigV2,
+} from './models/v2/embedded-signup-flow-v2';
 export {FlowMode} from './models/flow';
 export {AsgardeoClient} from './models/client';
 export {
