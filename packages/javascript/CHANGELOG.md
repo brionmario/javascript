@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.0
+
+### Minor Changes
+
+- [#232](https://github.com/asgardeo/javascript/pull/232)
+  [`2a85043`](https://github.com/asgardeo/javascript/commit/2a85043a71d9f20f923437bab74df4994593d754) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add ⚡️ Thunder support for `SignUp` component.
+
 ## 0.1.23
 
 ### Patch Changes
