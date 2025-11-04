@@ -21,21 +21,33 @@ import {
   EmbeddedFlowExecuteResponse,
   EmbeddedFlowResponseType,
   EmbeddedFlowType,
+  Platform,
 } from '@asgardeo/browser';
-import {FC} from 'react';
-import BaseSignUp, {BaseSignUpProps} from './BaseSignUp';
+import {FC, ReactNode} from 'react';
+import BaseSignUp, {BaseSignUpProps, BaseSignUpRenderProps} from './BaseSignUp';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+
+/**
+ * Render props function parameters (re-exported from BaseSignUp for convenience)
+ */
+export type SignUpRenderProps = BaseSignUpRenderProps;
 
 /**
  * Props for the SignUp component.
  */
-export type SignUpProps = BaseSignUpProps;
+export type SignUpProps = BaseSignUpProps & {
+  /**
+   * Render props function for custom UI
+   */
+  children?: (props: SignUpRenderProps) => ReactNode;
+};
 
 /**
  * A styled SignUp component that provides embedded sign-up flow with pre-built styling.
  * This component handles the API calls for sign-up and delegates UI logic to BaseSignUp.
  *
  * @example
+ * // Default UI
  * ```tsx
  * import { SignUp } from '@asgardeo/react';
  *
@@ -60,6 +72,45 @@ export type SignUpProps = BaseSignUpProps;
  *   );
  * };
  * ```
+ *
+ * @example
+ * // Custom UI with render props
+ * ```tsx
+ * import { SignUp } from '@asgardeo/react';
+ *
+ * const App = () => {
+ *   return (
+ *     <SignUp
+ *       onError={(error) => console.error('Error:', error)}
+ *       onComplete={(response) => console.log('Success:', response)}
+ *     >
+ *       {({values, errors, handleInputChange, handleSubmit, isLoading, components}) => (
+ *         <div className="custom-signup">
+ *           <h1>Custom Sign Up</h1>
+ *           {isLoading ? (
+ *             <p>Loading...</p>
+ *           ) : (
+ *             <form onSubmit={(e) => {
+ *               e.preventDefault();
+ *               handleSubmit(components[0], values);
+ *             }}>
+ *               <input
+ *                 name="username"
+ *                 value={values.username || ''}
+ *                 onChange={(e) => handleInputChange('username', e.target.value)}
+ *               />
+ *               {errors.username && <span>{errors.username}</span>}
+ *               <button type="submit" disabled={isLoading}>
+ *                 {isLoading ? 'Signing up...' : 'Sign Up'}
+ *               </button>
+ *             </form>
+ *           )}
+ *         </div>
+ *       )}
+ *     </SignUp>
+ *   );
+ * };
+ * ```
  */
 const SignUp: FC<SignUpProps> = ({
   className,
@@ -68,25 +119,35 @@ const SignUp: FC<SignUpProps> = ({
   onError,
   onComplete,
   shouldRedirectAfterSignUp = true,
+  children,
   ...rest
 }) => {
-  const {signUp, isInitialized} = useAsgardeo();
+  const {signUp, isInitialized, applicationId, platform} = useAsgardeo();
 
   /**
    * Initialize the sign-up flow.
    */
-  const handleInitialize = async (payload?: EmbeddedFlowExecuteRequestPayload): Promise<EmbeddedFlowExecuteResponse> =>
-    await signUp(
-      payload || {
-        flowType: EmbeddedFlowType.Registration,
-      },
-    ) as EmbeddedFlowExecuteResponse;
+  const handleInitialize = async (
+    payload?: EmbeddedFlowExecuteRequestPayload,
+  ): Promise<EmbeddedFlowExecuteResponse> => {
+    // For Thunder/AsgardeoV2 platform, it uses the same API but might return different response format
+    // The transformation will be handled by BaseSignUp's normalizeFlowResponse function
+
+    // If no payload provided, create initial payload
+    // For Thunder (Platform.AsgardeoV2), include applicationId for proper initialization
+    const initialPayload = payload || {
+      flowType: EmbeddedFlowType.Registration,
+      ...(platform === Platform.AsgardeoV2 && applicationId && {applicationId}),
+    };
+
+    return (await signUp(initialPayload)) as EmbeddedFlowExecuteResponse;
+  };
 
   /**
    * Handle sign-up steps.
    */
   const handleOnSubmit = async (payload: EmbeddedFlowExecuteRequestPayload): Promise<EmbeddedFlowExecuteResponse> =>
-    await signUp(payload) as EmbeddedFlowExecuteResponse;
+    (await signUp(payload)) as EmbeddedFlowExecuteResponse;
 
   /**
    * Handle successful sign-up and redirect.
@@ -122,6 +183,7 @@ const SignUp: FC<SignUpProps> = ({
       className={className}
       size={size}
       isInitialized={isInitialized}
+      children={children}
       {...rest}
     />
   );

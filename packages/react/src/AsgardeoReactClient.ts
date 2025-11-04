@@ -50,6 +50,7 @@ import {
   Platform,
   isEmpty,
   EmbeddedSignInFlowResponseV2,
+  executeEmbeddedSignUpFlowV2,
 } from '@asgardeo/browser';
 import AuthAPI from './__temp__/api';
 import getMeOrganizations from './api/getMeOrganizations';
@@ -399,19 +400,25 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
   override async signUp(options?: SignUpOptions): Promise<void>;
   override async signUp(payload: EmbeddedFlowExecuteRequestPayload): Promise<EmbeddedFlowExecuteResponse>;
   override async signUp(...args: any[]): Promise<void | EmbeddedFlowExecuteResponse> {
-    const configData = await this.asgardeo.getConfigData();
+    const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
     const firstArg = args[0];
+    const baseUrl: string = config?.baseUrl;
+
+    if (config.platform === Platform.AsgardeoV2) {
+      return executeEmbeddedSignUpFlowV2({
+        baseUrl,
+        payload: firstArg as EmbeddedFlowExecuteRequestPayload,
+      }) as any;
+    }
 
     if (typeof firstArg === 'object' && 'flowType' in firstArg) {
-      const baseUrl: string = configData?.baseUrl;
-
       return executeEmbeddedSignUpFlow({
         baseUrl,
         payload: firstArg as EmbeddedFlowExecuteRequestPayload,
       });
     }
 
-    navigate(getRedirectBasedSignUpUrl(configData as Config));
+    navigate(getRedirectBasedSignUpUrl(config as Config));
   }
 
   async request(requestConfig?: HttpRequestConfig): Promise<HttpResponse<any>> {
