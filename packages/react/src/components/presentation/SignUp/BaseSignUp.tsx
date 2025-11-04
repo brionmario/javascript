@@ -26,7 +26,7 @@ import {
   AsgardeoAPIError,
 } from '@asgardeo/browser';
 import {cx} from '@emotion/css';
-import {FC, ReactElement, useEffect, useState, useCallback, useRef} from 'react';
+import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
 import {transformSimpleToComponentDriven} from './transformer';
 import FlowProvider from '../../../contexts/Flow/FlowProvider';
@@ -39,6 +39,76 @@ import Card, {CardProps} from '../../primitives/Card/Card';
 import Logo from '../../primitives/Logo/Logo';
 import Spinner from '../../primitives/Spinner/Spinner';
 import useStyles from './BaseSignUp.styles';
+
+/**
+ * Render props for custom UI rendering
+ */
+export interface BaseSignUpRenderProps {
+  /**
+   * Form values
+   */
+  values: Record<string, string>;
+
+  /**
+   * Form errors
+   */
+  errors: Record<string, string>;
+
+  /**
+   * Touched fields
+   */
+  touched: Record<string, boolean>;
+
+  /**
+   * Whether the form is valid
+   */
+  isValid: boolean;
+
+  /**
+   * Loading state
+   */
+  isLoading: boolean;
+
+  /**
+   * Current error message
+   */
+  error: string | null;
+
+  /**
+   * Flow components
+   */
+  components: any[];
+
+  /**
+   * Function to handle input changes
+   */
+  handleInputChange: (name: string, value: string) => void;
+
+  /**
+   * Function to handle form submission
+   */
+  handleSubmit: (component: any, data?: Record<string, any>) => Promise<void>;
+
+  /**
+   * Function to validate the form
+   */
+  validateForm: () => {isValid: boolean; errors: Record<string, string>};
+
+  /**
+   * Flow title
+   */
+  title: string;
+
+  /**
+   * Flow subtitle
+   */
+  subtitle: string;
+
+  /**
+   * Flow messages
+   */
+  messages: Array<{message: string; type: string}>;
+}
 
 /**
  * Props for the BaseSignUp component.
@@ -121,6 +191,11 @@ export interface BaseSignUpProps {
    *  Whether to redirect after sign-up.
    */
   shouldRedirectAfterSignUp?: boolean;
+
+  /**
+   * Render props function for custom UI
+   */
+  children?: (props: BaseSignUpRenderProps) => ReactNode;
 }
 
 /**
@@ -129,6 +204,7 @@ export interface BaseSignUpProps {
  * It accepts API functions as props to maintain framework independence.
  *
  * @example
+ * // Default UI
  * ```tsx
  * import { BaseSignUp } from '@asgardeo/react';
  *
@@ -143,19 +219,40 @@ export interface BaseSignUpProps {
  *         // Your API call to handle sign-up
  *         return await handleSignUp(payload);
  *       }}
- *       onSuccess={(response) => {
- *         console.log('Success:', response);
- *       }}       *       onError={(error) => {
+ *       onError={(error) => {
  *         console.error('Error:', error);
  *       }}
- *       onComplete={(redirectUrl) => {
+ *       onComplete={(response) => {
  *         // Platform-specific redirect handling (e.g., Next.js router.push)
- *         router.push(redirectUrl); // or window.location.href = redirectUrl
+ *         router.push(response); // or window.location.href = redirectUrl
  *       }}
  *       className="max-w-md mx-auto"
  *     />
  *   );
  * };
+ * ```
+ *
+ * @example
+ * // Custom UI with render props
+ * ```tsx
+ * <BaseSignUp onInitialize={initializeSignUp} onSubmit={handleSignUp}>
+ *   {({values, errors, handleInputChange, handleSubmit, isLoading, components}) => (
+ *     <div className="custom-form">
+ *       <input
+ *         name="username"
+ *         value={values.username || ''}
+ *         onChange={(e) => handleInputChange('username', e.target.value)}
+ *       />
+ *       {errors.username && <span>{errors.username}</span>}
+ *       <button
+ *         onClick={() => handleSubmit(components[0], values)}
+ *         disabled={isLoading}
+ *       >
+ *         Sign Up
+ *       </button>
+ *     </div>
+ *   )}
+ * </BaseSignUp>
  * ```
  */
 const BaseSignUp: FC<BaseSignUpProps> = props => {
@@ -192,6 +289,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   size = 'medium',
   variant = 'outlined',
   isInitialized,
+  children,
 }) => {
   const {theme, colorScheme} = useTheme();
   const {t} = useTranslation();
@@ -668,6 +766,27 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     afterSignUpUrl,
     t,
   ]);
+
+  // If render props are provided, use them
+  if (children) {
+    const renderProps: BaseSignUpRenderProps = {
+      values: formValues,
+      errors: formErrors,
+      touched: touchedFields,
+      isValid: isFormValid,
+      isLoading,
+      error,
+      components: currentFlow?.data?.components || [],
+      handleInputChange,
+      handleSubmit,
+      validateForm,
+      title: flowTitle || t('signup.title'),
+      subtitle: flowSubtitle || t('signup.subtitle'),
+      messages: flowMessages || [],
+    };
+
+    return <div className={containerClasses}>{children(renderProps)}</div>;
+  }
 
   if (!isFlowInitialized && isLoading) {
     return (
