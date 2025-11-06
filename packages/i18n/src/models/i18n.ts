@@ -143,6 +143,11 @@ export interface I18nTranslations {
   'errors.sign.in.flow.completion.failure': string;
   'errors.sign.in.flow.passkeys.failure': string;
   'errors.sign.in.flow.passkeys.completion.failure': string;
+  'errors.sign.up.initialization': string;
+  'errors.sign.up.flow.failure': string;
+  'errors.sign.up.flow.initialization.failure': string;
+  'errors.sign.up.components.not.available': string;
+  'errors.sign.in.components.not.available': string;
 }
 
 export type I18nTextDirection = 'ltr' | 'rtl';

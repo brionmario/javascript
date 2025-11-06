@@ -141,9 +141,16 @@ const translations: I18nTranslations = {
   'errors.sign.in.flow.failure': 'サインイン処理中にエラーが発生しました。後でもう一度お試しください。',
   'errors.sign.in.flow.completion.failure':
     'サインイン処理の完了中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.in.flow.passkeys.failure': 'パスキーでのサインイン中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.sign.in.flow.passkeys.failure':
+    'パスキーでのサインイン中にエラーが発生しました。後でもう一度お試しください。',
   'errors.sign.in.flow.passkeys.completion.failure':
     'パスキーによるサインイン完了中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.sign.up.initialization': '初期化中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.sign.up.flow.failure': 'サインアップフロー中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.sign.up.flow.initialization.failure':
+    'サインアップフローの初期化中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.sign.up.components.not.available': 'サインアップフォームは現在利用できません。後でもう一度お試しください。',
+  'errors.sign.in.components.not.available': 'サインインフォームは現在利用できません。後でもう一度お試しください。',
 };
 
 const metadata: I18nMetadata = {

@@ -141,6 +141,12 @@ const translations: I18nTranslations = {
   'errors.sign.in.flow.completion.failure': 'साइन-इन प्रक्रिया पूरी करते समय त्रुटि। कृपया बाद में पुनः प्रयास करें।',
   'errors.sign.in.flow.passkeys.failure': 'पासकीज़ के साथ साइन-इन करते समय त्रुटि।',
   'errors.sign.in.flow.passkeys.completion.failure': 'पासकीज़ साइन-इन पूरी करते समय त्रुटि।',
+  'errors.sign.up.initialization': 'प्रारंभीकरण के दौरान एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।',
+  'errors.sign.up.flow.failure': 'साइन-अप प्रक्रिया में त्रुटि। कृपया बाद में पुनः प्रयास करें।',
+  'errors.sign.up.flow.initialization.failure':
+    'साइन-अप प्रक्रिया प्रारंभ करते समय त्रुटि। कृपया बाद में पुनः प्रयास करें।',
+  'errors.sign.up.components.not.available': 'साइन-अप फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
+  'errors.sign.in.components.not.available': 'साइन-इन फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
 };
 
 const metadata: I18nMetadata = {

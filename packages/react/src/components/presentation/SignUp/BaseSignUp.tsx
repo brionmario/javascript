@@ -38,6 +38,7 @@ import Alert from '../../primitives/Alert/Alert';
 import Card, {CardProps} from '../../primitives/Card/Card';
 import Logo from '../../primitives/Logo/Logo';
 import Spinner from '../../primitives/Spinner/Spinner';
+import Typography from '../../primitives/Typography/Typography';
 import useStyles from './BaseSignUp.styles';
 
 /**
@@ -815,21 +816,28 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      {flowMessages && flowMessages.length > 0 && (
-        <Card.Header className={styles.header}>
-          <div className={styles.messagesContainer}>
+      <Card.Header className={styles.header}>
+        <Card.Title level={2} className={styles.title}>
+          {flowTitle || t('signup.title')}
+        </Card.Title>
+        <Typography variant="body1" className={styles.subtitle}>
+          {flowSubtitle || t('signup.subtitle')}
+        </Typography>
+        {flowMessages && flowMessages.length > 0 && (
+          <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message: any, index: number) => (
               <Alert
                 key={message.id || index}
                 variant={message.type?.toLowerCase() === 'error' ? 'error' : 'info'}
-                className={cx(styles.messageItem, messageClasses)}
+                className={cx(styles.flowMessageItem, messageClasses)}
               >
                 <Alert.Description>{message.message}</Alert.Description>
               </Alert>
             ))}
           </div>
-        </Card.Header>
-      )}
+        )}
+      </Card.Header>
+
       <Card.Content>
         {error && (
           <Alert variant="error" className={cx(styles.errorContainer, errorClasses)}>
@@ -839,7 +847,13 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         )}
 
         <div className={styles.contentContainer}>
-          {currentFlow.data?.components && renderComponents(currentFlow.data.components)}
+          {currentFlow.data?.components && currentFlow.data.components.length > 0 ? (
+            renderComponents(currentFlow.data.components)
+          ) : (
+            <Alert variant="warning">
+              <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>
+            </Alert>
+          )}
         </div>
       </Card.Content>
     </Card>
