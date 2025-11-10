@@ -36,7 +36,17 @@ const generateId = (prefix: string): string => {
 /**
  * Convert simple input type to component variant
  */
-const getInputVariant = (type: string): 'TEXT' | 'EMAIL' | 'PASSWORD' => {
+const getInputVariant = (type: string, name: string): 'TEXT' | 'EMAIL' | 'PASSWORD' => {
+  // Check name first (e.g., "password" field name)
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes('password')) {
+    return 'PASSWORD';
+  }
+  if (lowerName.includes('email')) {
+    return 'EMAIL';
+  }
+
+  // Then check type
   switch (type.toLowerCase()) {
     case 'email':
       return 'EMAIL';
@@ -92,7 +102,7 @@ const convertSimpleInputToComponent = (
   },
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
-  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(input.type);
+  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(input.type, input.name);
   const label: string = getInputLabel(input.name, input.type, t);
   const placeholder: string = getInputPlaceholder(input.name, input.type, t);
 
@@ -101,7 +111,7 @@ const convertSimpleInputToComponent = (
     type: EmbeddedFlowComponentType.Input,
     variant,
     config: {
-      type: input.type === 'string' ? 'text' : input.type,
+      type: input.type,
       label,
       placeholder,
       required: input.required as boolean,
