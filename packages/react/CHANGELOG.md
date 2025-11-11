@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.2
+
+### Patch Changes
+
+- [#241](https://github.com/asgardeo/javascript/pull/241)
+  [`93ef5c5`](https://github.com/asgardeo/javascript/commit/93ef5c50f999b24cb0786937e4a8226a27784804) Thanks
+  [@brionmario](https://github.com/brionmario)! - Update input variant logic to handle password fields correctly
+
 ## 0.6.1
 
 ### Patch Changes
