@@ -37,15 +37,6 @@ const generateId = (prefix: string): string => {
  * Convert simple input type to component variant
  */
 const getInputVariant = (type: string, name: string): 'TEXT' | 'EMAIL' | 'PASSWORD' => {
-  // Check name first (e.g., "password" field name)
-  const lowerName = name.toLowerCase();
-  if (lowerName.includes('password')) {
-    return 'PASSWORD';
-  }
-  if (lowerName.includes('email')) {
-    return 'EMAIL';
-  }
-
   // Then check type
   switch (type.toLowerCase()) {
     case 'email':
@@ -102,6 +93,15 @@ const convertSimpleInputToComponent = (
   },
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
+  let fieldType: string = input.type;
+
+  // If the field name contains 'password' but type is 'string', change it to 'password'
+  // TODO: Need to remove this one the following improvement is done.
+  // Tracker: https://github.com/asgardeo/thunder/issues/725
+  if (input.name.toLowerCase().includes('password') && input.type.toLowerCase() === 'string') {
+    fieldType = 'password';
+  }
+
   const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(input.type, input.name);
   const label: string = getInputLabel(input.name, input.type, t);
   const placeholder: string = getInputPlaceholder(input.name, input.type, t);
@@ -129,10 +129,15 @@ const convertActionToComponent = (
   action: {type: string; id: string},
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
-  const i18nKey: string = `elements.buttons.${action.id}`;
+  // Normalize action ID for translation lookup (e.g., "google_auth" -> "google")
+  const normalizedId: string = action.id.replace(/_auth$/, '');
+
+  // Use i18n key for button text, fallback to capitalized id
+  const i18nKey: string = `elements.buttons.${normalizedId}`;
   let text: string = t(i18nKey);
 
   if (!text || text === i18nKey) {
+    // Fallback: format the original action ID
     text = action.id.replace(/_/g, ' ');
     text = text.charAt(0).toUpperCase() + text.slice(1);
   }
