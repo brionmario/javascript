@@ -1,5 +1,18 @@
 # @asgardeo/react
 
+## 0.6.1
+
+### Patch Changes
+
+- [#237](https://github.com/asgardeo/javascript/pull/237)
+  [`3063eb8`](https://github.com/asgardeo/javascript/commit/3063eb8566cb0f1c03803ae6ed0fb5eaf5bfaa57) Thanks
+  [@brionmario](https://github.com/brionmario)! - - Fix `SignUp` component issues with `AsgardeoV2`
+  - Fix `Password` field display issue in `SignIn` component
+- Updated dependencies
+  [[`3063eb8`](https://github.com/asgardeo/javascript/commit/3063eb8566cb0f1c03803ae6ed0fb5eaf5bfaa57)]:
+  - @asgardeo/i18n@0.3.2
+  - @asgardeo/browser@0.1.26
+
 ## 0.6.0
 
 ### Minor Changes
