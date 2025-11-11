@@ -117,13 +117,19 @@ const convertActionToComponent = (
   action: {type: string; id: string},
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
+  // Normalize action ID for translation lookup (e.g., "google_auth" -> "google")
+  const normalizedId: string = action.id.replace(/_auth$/, '');
+
   // Use i18n key for button text, fallback to capitalized id
-  const i18nKey = `elements.buttons.${action.id}`;
-  let text = t(i18nKey);
+  const i18nKey: string = `elements.buttons.${normalizedId}`;
+  let text: string = t(i18nKey);
+
   if (!text || text === i18nKey) {
+    // Fallback: format the original action ID
     text = action.id.replace(/_/g, ' ');
     text = text.charAt(0).toUpperCase() + text.slice(1);
   }
+
   return {
     id: generateId('action'),
     type: EmbeddedFlowComponentType.Button,
