@@ -28,7 +28,7 @@ import {
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
-import {transformSimpleToComponentDriven} from './transformer';
+import {transformSimpleToComponentDriven, extractErrorMessage} from './transformer';
 import FlowProvider from '../../../contexts/Flow/FlowProvider';
 import useFlow from '../../../contexts/Flow/useFlow';
 import {useForm, FormField} from '../../../hooks/useForm';
@@ -38,6 +38,7 @@ import Alert from '../../primitives/Alert/Alert';
 import Card, {CardProps} from '../../primitives/Card/Card';
 import Logo from '../../primitives/Logo/Logo';
 import Spinner from '../../primitives/Spinner/Spinner';
+import Typography from '../../primitives/Typography/Typography';
 import useStyles from './BaseSignUp.styles';
 
 /**
@@ -68,11 +69,6 @@ export interface BaseSignUpRenderProps {
    * Loading state
    */
   isLoading: boolean;
-
-  /**
-   * Current error message
-   */
-  error: string | null;
 
   /**
    * Flow components
@@ -293,13 +289,30 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 }) => {
   const {theme, colorScheme} = useTheme();
   const {t} = useTranslation();
-  const {subtitle: flowSubtitle, title: flowTitle, messages: flowMessages} = useFlow();
+  const {subtitle: flowSubtitle, title: flowTitle, messages: flowMessages, addMessage, clearMessages} = useFlow();
   const styles = useStyles(theme, colorScheme);
+
+  /**
+   * Handle error responses and extract meaningful error messages
+   * Uses the transformer's extractErrorMessage function for consistency
+   */
+  const handleError = useCallback(
+    (error: any) => {
+      const errorMessage: string = extractErrorMessage(error, t);
+
+      // Clear existing messages and add the error message
+      clearMessages();
+      addMessage({
+        type: 'error',
+        message: errorMessage,
+      });
+    },
+    [t, addMessage, clearMessages],
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFlowInitialized, setIsFlowInitialized] = useState(false);
   const [currentFlow, setCurrentFlow] = useState<EmbeddedFlowExecuteResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<Record<string, any>>({});
 
   const initializationAttemptedRef = useRef(false);
@@ -439,7 +452,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     }
 
     setIsLoading(true);
-    setError(null);
+    clearMessages();
 
     try {
       // Filter out empty or undefined input values
@@ -477,8 +490,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         setupFormFields(response);
       }
     } catch (err) {
-      const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.sign.up.flow.failure');
-      setError(errorMessage);
+      handleError(err);
       onError?.(err as Error);
     } finally {
       setIsLoading(false);
@@ -550,8 +562,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             popup.close();
             cleanup();
           } catch (err) {
-            const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.sign.up.flow.failure');
-            setError(errorMessage);
+            handleError(err);
             onError?.(err as Error);
             popup.close();
             cleanup();
@@ -629,8 +640,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
                   popup.close();
                 } catch (err) {
-                  const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.sign.up.flow.failure');
-                  setError(errorMessage);
+                  handleError(err);
                   onError?.(err as Error);
                   popup.close();
                 }
@@ -697,7 +707,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         handleInputChange,
         {
           buttonClassName: buttonClasses,
-          error,
           inputClassName: inputClasses,
           onSubmit: handleSubmit,
           size,
@@ -712,7 +721,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       isLoading,
       size,
       variant,
-      error,
       inputClasses,
       buttonClasses,
       handleSubmit,
@@ -726,7 +734,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
       (async () => {
         setIsLoading(true);
-        setError(null);
+        clearMessages();
 
         try {
           const rawResponse = await onInitialize();
@@ -746,8 +754,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             setupFormFields(response);
           }
         } catch (err) {
-          const errorMessage = err instanceof Error ? err.message : t('errors.sign.up.flow.initialization.failure');
-          setError(errorMessage);
+          handleError(err);
           onError?.(err as Error);
         } finally {
           setIsLoading(false);
@@ -775,7 +782,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       touched: touchedFields,
       isValid: isFormValid,
       isLoading,
-      error,
       components: currentFlow?.data?.components || [],
       handleInputChange,
       handleSubmit,
@@ -805,8 +811,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="error" className={errorClasses}>
-            <Alert.Title>{t('errors.title') || 'Error'}</Alert.Title>
-            <Alert.Description>{error || t('errors.sign.up.flow.initialization.failure')}</Alert.Description>
+            <Alert.Title>{t('errors.title')}</Alert.Title>
+            <Alert.Description>{t('errors.sign.up.flow.initialization.failure')}</Alert.Description>
           </Alert>
         </Card.Content>
       </Card>
@@ -815,31 +821,37 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      {flowMessages && flowMessages.length > 0 && (
-        <Card.Header className={styles.header}>
-          <div className={styles.messagesContainer}>
+      <Card.Header className={styles.header}>
+        <Card.Title level={2} className={styles.title}>
+          {flowTitle || t('signup.title')}
+        </Card.Title>
+        <Typography variant="body1" className={styles.subtitle}>
+          {flowSubtitle || t('signup.subtitle')}
+        </Typography>
+        {flowMessages && flowMessages.length > 0 && (
+          <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message: any, index: number) => (
               <Alert
                 key={message.id || index}
                 variant={message.type?.toLowerCase() === 'error' ? 'error' : 'info'}
-                className={cx(styles.messageItem, messageClasses)}
+                className={cx(styles.flowMessageItem, messageClasses)}
               >
                 <Alert.Description>{message.message}</Alert.Description>
               </Alert>
             ))}
           </div>
-        </Card.Header>
-      )}
-      <Card.Content>
-        {error && (
-          <Alert variant="error" className={cx(styles.errorContainer, errorClasses)}>
-            <Alert.Title>{t('errors.title') || 'Error'}</Alert.Title>
-            <Alert.Description>{error}</Alert.Description>
-          </Alert>
         )}
+      </Card.Header>
 
+      <Card.Content>
         <div className={styles.contentContainer}>
-          {currentFlow.data?.components && renderComponents(currentFlow.data.components)}
+          {currentFlow.data?.components && currentFlow.data.components.length > 0 ? (
+            renderComponents(currentFlow.data.components)
+          ) : (
+            <Alert variant="warning">
+              <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>
+            </Alert>
+          )}
         </div>
       </Card.Content>
     </Card>

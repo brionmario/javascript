@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'පරිශීලක නාමය',
   'elements.fields.password': 'මුරපදය',
 
+  /* Validation */
+  'field.required': 'මෙම ක්ෂේත්‍රය අවශ්‍යයි',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -144,6 +147,12 @@ const translations: I18nTranslations = {
   'errors.sign.in.flow.passkeys.failure': 'passkeys සමඟ ලොග් වීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
   'errors.sign.in.flow.passkeys.completion.failure':
     'passkeys සමඟ ලොග් වීමේ ක්‍රියාවලිය සම්පූර්ණ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.sign.up.initialization': 'ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.sign.up.flow.failure': 'ගිණුම් තැනීමේ ක්‍රියාවලියේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.sign.up.flow.initialization.failure':
+    'ගිණුම් තැනීමේ ක්‍රියාවලිය ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.sign.up.components.not.available': 'ගිණුම් තැනීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.sign.in.components.not.available': 'ප්‍රවේශ වීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
 };
 
 const metadata: I18nMetadata = {

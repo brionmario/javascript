@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': "Nom d'utilisateur",
   'elements.fields.password': 'Mot de passe',
 
+  /* Validation */
+  'field.required': 'Ce champ est obligatoire',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -146,6 +149,14 @@ const translations: I18nTranslations = {
     "Une erreur est survenue lors de la connexion avec les clefs d'accès. Veuillez réessayer plus tard.",
   'errors.sign.in.flow.passkeys.completion.failure':
     "Une erreur est survenue lors de la finalisation du flux de connexion avec les clefs d'accès. Veuillez réessayer plus tard.",
+  'errors.sign.up.initialization': "Une erreur est survenue lors de l'initialisation. Veuillez réessayer plus tard.",
+  'errors.sign.up.flow.failure': "Une erreur est survenue lors du flux d'inscription. Veuillez réessayer plus tard.",
+  'errors.sign.up.flow.initialization.failure':
+    "Une erreur est survenue lors de l'initialisation du flux d'inscription. Veuillez réessayer plus tard.",
+  'errors.sign.up.components.not.available':
+    "Le formulaire d'inscription n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
+  'errors.sign.in.components.not.available':
+    "Le formulaire de connexion n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
 };
 
 const metadata: I18nMetadata = {

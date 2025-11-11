@@ -52,11 +52,6 @@ export interface BaseSignUpOptionProps extends WithPreferences {
   component: EmbeddedFlowComponent;
 
   /**
-   * Global error message to display.
-   */
-  error?: string | null;
-
-  /**
    * Form validation errors.
    */
   formErrors: Record<string, string>;
@@ -145,7 +140,7 @@ export const createSignUpComponent = ({component, onSubmit, ...rest}: BaseSignUp
 
     case EmbeddedFlowComponentType.Button: {
       const buttonVariant: string | undefined = component.variant?.toUpperCase();
-      const buttonText: string = component.config['text'] as string || component.config['label'] as string || '';
+      const buttonText: string = (component.config['text'] as string) || (component.config['label'] as string) || '';
 
       // TODO: The connection type should come as metadata.
       if (buttonVariant === 'SOCIAL') {
@@ -230,7 +225,6 @@ export const createSignUpOptionFromComponent = (
   onInputChange: (name: string, value: string) => void,
   options?: {
     buttonClassName?: string;
-    error?: string | null;
     inputClassName?: string;
     key?: string | number;
     onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
@@ -262,7 +256,6 @@ export const renderSignUpComponents = (
   onInputChange: (name: string, value: string) => void,
   options?: {
     buttonClassName?: string;
-    error?: string | null;
     inputClassName?: string;
     onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
     size?: 'small' | 'medium' | 'large';

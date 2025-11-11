@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'பயனர்பெயர்',
   'elements.fields.password': 'கடவுச்சொல்',
 
+  /* Validation */
+  'field.required': 'இந்த புலம் தேவை',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -146,6 +149,12 @@ const translations: I18nTranslations = {
     'பாஸ்கீக்கள் மூலம் உள்நுழையும்போது பிழை ஏற்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும்.',
   'errors.sign.in.flow.passkeys.completion.failure':
     'பாஸ்கீ உள்நுழைவு முடிக்கும் போது பிழை ஏற்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும்.',
+  'errors.sign.up.initialization': 'தொடங்கும்போது பிழை ஏற்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும்.',
+  'errors.sign.up.flow.failure': 'பதிவு செய்யும் செயல்பாட்டில் பிழை ஏற்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும்.',
+  'errors.sign.up.flow.initialization.failure':
+    'பதிவு செய்யும் செயல்பாட்டை தொடங்கும்போது பிழை ஏற்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும்.',
+  'errors.sign.up.components.not.available': 'பதிவு படிவம் இப்போது கிடைக்கவில்லை. பின்னர் மீண்டும் முயற்சிக்கவும்.',
+  'errors.sign.in.components.not.available': 'உள்நுழைவு படிவம் இப்போது கிடைக்கவில்லை. பின்னர் மீண்டும் முயற்சிக்கவும்.',
 };
 
 const metadata: I18nMetadata = {

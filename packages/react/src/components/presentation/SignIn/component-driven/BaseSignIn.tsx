@@ -271,7 +271,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   /**
    * Extract form fields from flow components
    */
-  const extractFormFields = useCallback(
+  const extractFormFields: (components: EmbeddedFlowComponent[]) => FormField[] = useCallback(
     (components: EmbeddedFlowComponent[]): FormField[] => {
       const fields: FormField[] = [];
 
@@ -281,7 +281,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             const identifier: string = (component.config['identifier'] as string) || component.id;
             fields.push({
               name: identifier,
-              required: component.config['required'] as unknown as boolean || false,
+              required: (component.config['required'] as unknown as boolean) || false,
               initialValue: '',
               validator: (value: string) => {
                 if (component.config['required'] && (!value || value.trim() === '')) {
@@ -303,9 +303,9 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     [t],
   );
 
-  const formFields = components ? extractFormFields(components) : [];
+  const formFields: FormField[] = components ? extractFormFields(components) : [];
 
-  const form = useForm<Record<string, string>>({
+  const form: ReturnType<typeof useForm> = useForm<Record<string, string>>({
     initialValues: {},
     fields: formFields,
     validateOnBlur: true,
@@ -327,15 +327,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   /**
    * Handle input value changes.
    */
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: string): void => {
     setFormValue(name, value);
+  };
+
+  /**
+   * Handle input blur events (when field loses focus).
+   */
+  const handleInputBlur = (name: string): void => {
     setFormTouched(name, true);
   };
 
   /**
    * Handle component submission (for buttons and actions).
    */
-  const handleSubmit = async (component: EmbeddedFlowComponent, data?: Record<string, any>) => {
+  const handleSubmit = async (component: EmbeddedFlowComponent, data?: Record<string, any>): Promise<void> => {
     // Mark all fields as touched before validation
     touchAllFields();
 
@@ -431,6 +437,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
           buttonClassName: buttonClasses,
           error,
           inputClassName: inputClasses,
+          onInputBlur: handleInputBlur,
           onSubmit: handleSubmit,
           size,
           variant,
@@ -447,6 +454,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       error,
       inputClasses,
       buttonClasses,
+      handleInputBlur,
       handleSubmit,
     ],
   );

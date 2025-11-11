@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'వినియోగదారు పేరు',
   'elements.fields.password': 'పాస్వర్డ్',
 
+  /* Validation */
+  'field.required': 'ఈ ఫీల్డ్ అవసరం',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -140,8 +143,18 @@ const translations: I18nTranslations = {
   'errors.sign.in.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
   'errors.sign.in.flow.failure': 'సైన్ ఇన్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
   'errors.sign.in.flow.completion.failure': 'సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.passkeys.failure': 'పాస్‌కీలతో సైన్ ఇన్ చేస్తూ లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.passkeys.completion.failure': 'పాస్‌కీ సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.in.flow.passkeys.failure':
+    'పాస్‌కీలతో సైన్ ఇన్ చేస్తూ లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.in.flow.passkeys.completion.failure':
+    'పాస్‌కీ సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.up.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.up.flow.failure': 'సైన్ అప్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.up.flow.initialization.failure':
+    'సైన్ అప్ ప్రక్రియను ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.up.components.not.available':
+    'సైన్ అప్ ఫారం ప్రస్తుతం అందుబాటులో లేదు. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.sign.in.components.not.available':
+    'సైన్ ఇన్ ఫారం ప్రస్తుతం అందుబాటులో లేదు. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
 };
 
 const metadata: I18nMetadata = {

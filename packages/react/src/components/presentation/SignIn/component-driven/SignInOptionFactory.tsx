@@ -74,6 +74,7 @@ const createSignInComponentFromFlow = (
     error?: string | null;
     inputClassName?: string;
     key?: string | number;
+    onInputBlur?: (name: string) => void;
     onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
     size?: 'small' | 'medium' | 'large';
     variant?: any;
@@ -83,7 +84,7 @@ const createSignInComponentFromFlow = (
 
   switch (component.type) {
     case EmbeddedFlowComponentType.Input: {
-      const identifier: string = component.config['identifier'] as string || component.id;
+      const identifier: string = (component.config['identifier'] as string) || component.id;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
@@ -92,12 +93,13 @@ const createSignInComponentFromFlow = (
       const field = createField({
         type: fieldType as FieldType,
         name: identifier,
-        label: component.config['label'] as string || '',
-        placeholder: component.config['placeholder'] as string || '',
-        required: component.config['required'] as unknown as boolean || false,
+        label: (component.config['label'] as string) || '',
+        placeholder: (component.config['placeholder'] as string) || '',
+        required: (component.config['required'] as unknown as boolean) || false,
         value,
         error,
         onChange: (newValue: string) => onInputChange(identifier, newValue),
+        onBlur: () => options.onInputBlur?.(identifier),
         className: options.inputClassName,
       });
 
@@ -144,7 +146,7 @@ const createSignInComponentFromFlow = (
           variant={component.variant?.toLowerCase() === 'primary' ? 'solid' : 'outline'}
           color={component.variant?.toLowerCase() === 'primary' ? 'primary' : 'secondary'}
         >
-          {component.config['text'] as string || 'Submit'}
+          {(component.config['text'] as string) || 'Submit'}
         </Button>
       );
     }
@@ -153,7 +155,7 @@ const createSignInComponentFromFlow = (
       const variant = getTypographyVariant(component.variant || 'H3');
       return (
         <Typography key={key} variant={variant}>
-          {component.config['text'] as string || ''}
+          {(component.config['text'] as string) || ''}
         </Typography>
       );
     }
@@ -216,6 +218,7 @@ export const renderSignInComponents = (
     buttonClassName?: string;
     error?: string | null;
     inputClassName?: string;
+    onInputBlur?: (name: string) => void;
     onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
     size?: 'small' | 'medium' | 'large';
     variant?: any;

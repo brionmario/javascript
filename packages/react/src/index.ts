@@ -118,8 +118,8 @@ export * from './components/control/SignedOut';
 export {default as Loading} from './components/control/Loading';
 export * from './components/control/Loading';
 
-export {default as BaseSignIn} from './components/presentation/SignIn/non-component-driven/BaseSignIn';
-export * from './components/presentation/SignIn/non-component-driven/BaseSignIn';
+export {default as BaseSignIn} from './components/presentation/SignIn/BaseSignIn';
+export * from './components/presentation/SignIn/BaseSignIn';
 
 export {default as SignIn} from './components/presentation/SignIn/SignIn';
 export * from './components/presentation/SignIn/SignIn';

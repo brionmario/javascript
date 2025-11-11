@@ -90,6 +90,7 @@ export {
   EmbeddedFlowComponentType,
   EmbeddedFlowExecuteRequestPayload,
   EmbeddedFlowExecuteRequestConfig,
+  EmbeddedFlowExecuteErrorResponse,
 } from './models/embedded-flow';
 export {
   EmbeddedSignUpFlowStatusV2,
@@ -100,6 +101,7 @@ export {
   ExtendedEmbeddedSignUpFlowResponseV2,
   EmbeddedSignUpFlowTypeV2,
   EmbeddedFlowExecuteRequestConfigV2,
+  EmbeddedSignUpFlowErrorResponseV2,
 } from './models/v2/embedded-signup-flow-v2';
 export {FlowMode} from './models/flow';
 export {AsgardeoClient} from './models/client';

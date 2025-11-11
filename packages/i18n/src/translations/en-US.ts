@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'Username',
   'elements.fields.password': 'Password',
 
+  /* Validation */
+  'field.required': 'This field is required',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -144,6 +147,12 @@ const translations: I18nTranslations = {
   'errors.sign.in.flow.passkeys.failure': 'An error occurred while signing in with passkeys. Please try again later.',
   'errors.sign.in.flow.passkeys.completion.failure':
     'An error occurred while completing the passkeys sign-in flow. Please try again later.',
+  'errors.sign.up.initialization': 'An error occurred while initializing. Please try again later.',
+  'errors.sign.up.flow.failure': 'An error occurred during the sign-up flow. Please try again later.',
+  'errors.sign.up.flow.initialization.failure':
+    'An error occurred while initializing the sign-up flow. Please try again later.',
+  'errors.sign.up.components.not.available': 'Sign-up form is not available at the moment. Please try again later.',
+  'errors.sign.in.components.not.available': 'Sign-in form is not available at the moment. Please try again later.',
 };
 
 const metadata: I18nMetadata = {

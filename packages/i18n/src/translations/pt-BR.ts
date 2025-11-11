@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'Nome de usuário',
   'elements.fields.password': 'Senha',
 
+  /* Validation */
+  'field.required': 'Este campo é obrigatório',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
@@ -144,6 +147,14 @@ const translations: I18nTranslations = {
     'Ocorreu um erro ao entrar com as chaves de acesso (passkeys). Tente novamente mais tarde.',
   'errors.sign.in.flow.passkeys.completion.failure':
     'Ocorreu um erro ao completar o login com as chaves de acesso (passkeys). Tente novamente mais tarde.',
+  'errors.sign.up.initialization': 'Ocorreu um erro durante a inicialização. Tente novamente mais tarde.',
+  'errors.sign.up.flow.failure': 'Ocorreu um erro durante o fluxo de cadastro. Tente novamente mais tarde.',
+  'errors.sign.up.flow.initialization.failure':
+    'Ocorreu um erro ao inicializar o fluxo de cadastro. Tente novamente mais tarde.',
+  'errors.sign.up.components.not.available':
+    'O formulário de cadastro não está disponível no momento. Tente novamente mais tarde.',
+  'errors.sign.in.components.not.available':
+    'O formulário de login não está disponível no momento. Tente novamente mais tarde.',
 };
 
 const metadata: I18nMetadata = {
