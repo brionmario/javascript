@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'వినియోగదారు పేరు',
   'elements.fields.password': 'పాస్వర్డ్',
 
+  /* Validation */
+  'field.required': 'ఈ ఫీల్డ్ అవసరం',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */

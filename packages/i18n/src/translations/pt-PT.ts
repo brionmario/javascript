@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'Nome de utilizador',
   'elements.fields.password': 'Palavra-passe',
 
+  /* Validation */
+  'field.required': 'Este campo é obrigatório',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */

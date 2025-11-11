@@ -42,6 +42,9 @@ export interface I18nTranslations {
   'elements.fields.username': string;
   'elements.fields.password': string;
 
+  /* Validation */
+  'field.required': string;
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */

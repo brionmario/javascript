@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'ユーザー名',
   'elements.fields.password': 'パスワード',
 
+  /* Validation */
+  'field.required': 'この項目は必須です',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */

@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'පරිශීලක නාමය',
   'elements.fields.password': 'මුරපදය',
 
+  /* Validation */
+  'field.required': 'මෙම ක්ෂේත්‍රය අවශ්‍යයි',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */

@@ -45,6 +45,9 @@ const translations: I18nTranslations = {
   'elements.fields.username': 'பயனர்பெயர்',
   'elements.fields.password': 'கடவுச்சொல்',
 
+  /* Validation */
+  'field.required': 'இந்த புலம் தேவை',
+
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
