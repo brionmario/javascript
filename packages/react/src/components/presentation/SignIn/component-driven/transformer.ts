@@ -31,16 +31,6 @@ const generateId = (prefix: string): string => {
  * Convert simple input type to component variant
  */
 const getInputVariant = (type: string, name: string): 'TEXT' | 'EMAIL' | 'PASSWORD' => {
-  // Check name first (e.g., "password" field name)
-  const lowerName = name.toLowerCase();
-  if (lowerName.includes('password')) {
-    return 'PASSWORD';
-  }
-  if (lowerName.includes('email')) {
-    return 'EMAIL';
-  }
-
-  // Then check type
   switch (type.toLowerCase()) {
     case 'email':
       return 'EMAIL';
@@ -91,16 +81,25 @@ const convertSimpleInputToComponent = (
   },
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
-  const variant = getInputVariant(input.type, input.name);
-  const label = getInputLabel(input.name, input.type, t);
-  const placeholder = getInputPlaceholder(input.name, input.type, t);
+  let fieldType: string = input.type;
+
+  // If the field name contains 'password' but type is 'string', change it to 'password'
+  // TODO: Need to remove this one the following improvement is done.
+  // Tracker: https://github.com/asgardeo/thunder/issues/725
+  if (input.name.toLowerCase().includes('password') && input.type.toLowerCase() === 'string') {
+    fieldType = 'password';
+  }
+
+  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(fieldType, input.name);
+  const label: string = getInputLabel(input.name, fieldType, t);
+  const placeholder: string = getInputPlaceholder(input.name, fieldType, t);
 
   return {
     id: generateId('input'),
     type: EmbeddedFlowComponentType.Input,
     variant,
     config: {
-      type: input.type,
+      type: fieldType,
       label,
       placeholder,
       required: input.required as boolean,
