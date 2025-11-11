@@ -23,15 +23,15 @@ import {
   Platform,
 } from '@asgardeo/browser';
 import {FC, ReactElement} from 'react';
-import BaseSignIn, {BaseSignInProps} from './non-component-driven/BaseSignIn';
-import ComponentDrivenSignIn, {SignInRenderProps} from './component-driven/SignIn';
+import BaseSignInV1, {BaseSignInProps as BaseSignInV1Props} from './non-component-driven/BaseSignIn';
+import SignInV2, {SignInRenderProps} from './component-driven/SignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 
 /**
  * Props for the SignIn component.
  * Extends BaseSignInProps for full compatibility with the React BaseSignIn component
  */
-export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'> & {
+export type SignInProps = Pick<BaseSignInV1Props, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'> & {
   /**
    * Render function for custom UI (render props pattern).
    */
@@ -102,7 +102,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', children, ...rest}
 
   if (platform === Platform.AsgardeoV2) {
     return (
-      <ComponentDrivenSignIn
+      <SignInV2
         className={className}
         size={size}
         variant={rest.variant}
@@ -110,12 +110,12 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', children, ...rest}
         onError={rest.onError}
       >
         {children}
-      </ComponentDrivenSignIn>
+      </SignInV2>
     );
   }
 
   return (
-    <BaseSignIn
+    <BaseSignInV1
       isLoading={isLoading || !isInitialized}
       afterSignInUrl={afterSignInUrl}
       onInitialize={handleInitialize}
