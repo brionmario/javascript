@@ -55,6 +55,10 @@ export interface FieldConfig {
    */
   onChange: (value: string) => void;
   /**
+   * Callback function when the field loses focus.
+   */
+  onBlur?: () => void;
+  /**
    * Whether the field is disabled.
    */
   disabled?: boolean;
@@ -136,6 +140,7 @@ export const createField = (config: FieldConfig): ReactElement => {
     required,
     value,
     onChange,
+    onBlur,
     disabled = false,
     error,
     className,
@@ -155,6 +160,7 @@ export const createField = (config: FieldConfig): ReactElement => {
     className,
     value,
     placeholder,
+    onBlur,
   };
 
   switch (type) {
