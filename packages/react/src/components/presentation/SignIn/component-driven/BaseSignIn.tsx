@@ -341,7 +341,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   /**
    * Handle component submission (for buttons and actions).
    */
-  const handleSubmit = async (component: EmbeddedFlowComponent, data?: Record<string, any>): void => {
+  const handleSubmit = async (component: EmbeddedFlowComponent, data?: Record<string, any>): Promise<void> => {
     // Mark all fields as touched before validation
     touchAllFields();
 
