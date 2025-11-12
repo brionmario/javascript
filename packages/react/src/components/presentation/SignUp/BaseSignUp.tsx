@@ -828,6 +828,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         <Typography variant="body1" className={styles.subtitle}>
           {flowSubtitle || t('signup.subtitle')}
         </Typography>
+      </Card.Header>
+      <Card.Content>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message: any, index: number) => (
@@ -841,9 +843,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             ))}
           </div>
         )}
-      </Card.Header>
-
-      <Card.Content>
         <div className={styles.contentContainer}>
           {currentFlow.data?.components && currentFlow.data.components.length > 0 ? (
             renderComponents(currentFlow.data.components)

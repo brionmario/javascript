@@ -66,7 +66,8 @@ const useStyles = (theme: Theme, colorScheme: string, variant: CardVariant, clic
     `;
 
     const headerStyles = css`
-      padding: calc(${theme.vars.spacing.unit} * 2) calc(${theme.vars.spacing.unit} * 2) 0;
+      padding: 0 calc(${theme.vars.spacing.unit} * 2);
+      margin-top: calc(${theme.vars.spacing.unit} * 2);
       display: flex;
       flex-direction: column;
       gap: ${theme.vars.spacing.unit};
@@ -89,7 +90,8 @@ const useStyles = (theme: Theme, colorScheme: string, variant: CardVariant, clic
     `;
 
     const contentStyles = css`
-      padding: calc(${theme.vars.spacing.unit} * 2);
+      padding: 0 calc(${theme.vars.spacing.unit} * 2);
+      margin-bottom: calc(${theme.vars.spacing.unit} * 2);
       flex: 1;
     `;
 

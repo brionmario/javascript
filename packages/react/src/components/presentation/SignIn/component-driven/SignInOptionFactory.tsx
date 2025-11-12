@@ -71,7 +71,6 @@ const createSignInComponentFromFlow = (
   onInputChange: (name: string, value: string) => void,
   options: {
     buttonClassName?: string;
-    error?: string | null;
     inputClassName?: string;
     key?: string | number;
     onInputBlur?: (name: string) => void;
@@ -216,7 +215,6 @@ export const renderSignInComponents = (
   onInputChange: (name: string, value: string) => void,
   options?: {
     buttonClassName?: string;
-    error?: string | null;
     inputClassName?: string;
     onInputBlur?: (name: string) => void;
     onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;

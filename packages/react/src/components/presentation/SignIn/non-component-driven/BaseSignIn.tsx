@@ -44,7 +44,7 @@ import Divider from '../../../primitives/Divider/Divider';
 import Logo from '../../../primitives/Logo/Logo';
 import Spinner from '../../../primitives/Spinner/Spinner';
 import Typography from '../../../primitives/Typography/Typography';
-import useStyles from './BaseSignIn.styles';
+import useStyles from '../BaseSignIn.styles';
 
 /**
  * Check if the authenticator is a passkey/FIDO authenticator
