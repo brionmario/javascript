@@ -1,5 +1,18 @@
 # @asgardeo/react
 
+## 0.6.3
+
+### Patch Changes
+
+- [#243](https://github.com/asgardeo/javascript/pull/243)
+  [`7d932db`](https://github.com/asgardeo/javascript/commit/7d932db39b8b5b5d7fac7e7aa23b167e61ab83a6) Thanks
+  [@brionmario](https://github.com/brionmario)! - improve `SignIn` & `SignUp` styling
+
+- Updated dependencies
+  [[`7d932db`](https://github.com/asgardeo/javascript/commit/7d932db39b8b5b5d7fac7e7aa23b167e61ab83a6)]:
+  - @asgardeo/i18n@0.3.3
+  - @asgardeo/browser@0.1.27
+
 ## 0.6.2
 
 ### Patch Changes
