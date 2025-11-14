@@ -96,6 +96,7 @@ const convertSimpleInputToComponent = (
     name: string;
     type: string;
     required: boolean;
+    options?: string[];
   },
   t: UseTranslation['t'],
 ): EmbeddedFlowComponent => {
@@ -106,6 +107,28 @@ const convertSimpleInputToComponent = (
   // Tracker: https://github.com/asgardeo/thunder/issues/725
   if (input.name.toLowerCase().includes('password') && input.type.toLowerCase() === 'string') {
     fieldType = 'password';
+  }
+
+  // Handle dropdown type
+  if (input.type.toLowerCase() === 'dropdown') {
+    const label: string = getInputLabel(input.name, fieldType, t);
+    const placeholder: string = getInputPlaceholder(input.name, fieldType, t);
+
+    return {
+      id: generateId('select'),
+      type: EmbeddedFlowComponentType.Select,
+      variant: 'SELECT',
+      config: {
+        type: fieldType,
+        label,
+        placeholder,
+        required: input.required as boolean,
+        identifier: input.name,
+        hint: '',
+        options: input.options || [],
+      },
+      components: [],
+    };
   }
 
   const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(fieldType, input.name);

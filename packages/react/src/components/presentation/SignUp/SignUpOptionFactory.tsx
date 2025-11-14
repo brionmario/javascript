@@ -29,6 +29,7 @@ import PasswordInput from '../../adapters/PasswordInput';
 import ButtonComponent from '../../adapters/SubmitButton';
 import TelephoneInput from '../../adapters/TelephoneInput';
 import TextInput from '../../adapters/TextInput';
+import SelectInput from '../../adapters/SelectInput';
 import Typography from '../../adapters/Typography';
 import GoogleButton from '../../adapters/GoogleButton';
 import GitHubButton from '../../adapters/GitHubButton';
@@ -200,6 +201,9 @@ export const createSignUpComponent = ({component, onSubmit, ...rest}: BaseSignUp
 
     case EmbeddedFlowComponentType.Form:
       return <FormContainer component={component} onSubmit={onSubmit} {...rest} />;
+
+    case EmbeddedFlowComponentType.Select:
+      return <SelectInput component={component} onSubmit={onSubmit} {...rest} />;
 
     case EmbeddedFlowComponentType.Divider:
       return <DividerComponent component={component} onSubmit={onSubmit} {...rest} />;
