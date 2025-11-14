@@ -31,7 +31,7 @@ import {
   handleWebAuthnAuthentication,
 } from '@asgardeo/browser';
 import {cx} from '@emotion/css';
-import {FC, FormEvent, useEffect, useState, useCallback, useRef} from 'react';
+import {FC, FormEvent, useEffect, useState, useCallback, useRef, ReactElement} from 'react';
 import {createSignInOptionFromAuthenticator} from './options/SignInOptionFactory';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import useFlow from '../../../../contexts/Flow/useFlow';
@@ -44,7 +44,7 @@ import Divider from '../../../primitives/Divider/Divider';
 import Logo from '../../../primitives/Logo/Logo';
 import Spinner from '../../../primitives/Spinner/Spinner';
 import Typography from '../../../primitives/Typography/Typography';
-import useStyles from './BaseSignIn.styles';
+import useStyles from '../BaseSignIn.styles';
 
 /**
  * Check if the authenticator is a passkey/FIDO authenticator
@@ -132,6 +132,21 @@ export interface BaseSignInProps {
    * Theme variant for the component.
    */
   variant?: CardProps['variant'];
+
+  /**
+   * Whether to show the title.
+   */
+  showTitle?: boolean;
+
+  /**
+   * Whether to show the subtitle.
+   */
+  showSubtitle?: boolean;
+
+  /**
+   * Whether to show the logo.
+   */
+  showLogo?: boolean;
 }
 
 /**
@@ -166,17 +181,19 @@ export interface BaseSignInProps {
  * };
  * ```
  */
-const BaseSignIn: FC<BaseSignInProps> = props => {
+const BaseSignIn: FC<BaseSignInProps> = ({showLogo = true, ...rest}: BaseSignInProps): ReactElement => {
   const {theme} = useTheme();
   const styles = useStyles(theme, theme.vars.colors.text.primary);
 
   return (
     <div>
-      <div className={styles.logoContainer}>
-        <Logo size="large" />
-      </div>
+      {showLogo && (
+        <div className={styles.logoContainer}>
+          <Logo size="large" />
+        </div>
+      )}
       <FlowProvider>
-        <BaseSignInContent {...props} />
+        <BaseSignInContent showLogo={showLogo} {...rest} />
       </FlowProvider>
     </div>
   );
@@ -207,6 +224,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   messageClassName = '',
   size = 'medium',
   variant = 'outlined',
+  showTitle = true,
+  showSubtitle = true,
 }: BaseSignInProps) => {
   const {theme} = useTheme();
   const {t} = useTranslation();
@@ -989,15 +1008,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
     return (
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
-        <Card.Header className={styles.header}>
-          <Card.Title level={2} className={styles.title}>
-            {flowTitle || t('signin.title')}
-          </Card.Title>
-          {flowSubtitle && (
-            <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signin.subtitle')}
-            </Typography>
-          )}
+        {(showTitle || showSubtitle) && (
+          <Card.Header className={styles.header}>
+            {showTitle && (
+              <Card.Title level={2} className={styles.title}>
+                {flowTitle || t('signin.title')}
+              </Card.Title>
+            )}
+            {showSubtitle && (
+              <Typography variant="body1" className={styles.subtitle}>
+                {flowSubtitle || t('signin.subtitle')}
+              </Typography>
+            )}
+          </Card.Header>
+        )}
+        <Card.Content>
           {flowMessages && flowMessages.length > 0 && (
             <div className={styles.flowMessagesContainer}>
               {flowMessages.map((flowMessage, index) => (
@@ -1031,9 +1056,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
               })}
             </div>
           )}
-        </Card.Header>
-
-        <Card.Content>
           {error && (
             <Alert variant="error" className={cx(styles.errorContainer, errorClasses)}>
               <Alert.Title>Error</Alert.Title>

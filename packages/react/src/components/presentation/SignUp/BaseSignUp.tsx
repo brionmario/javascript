@@ -192,6 +192,21 @@ export interface BaseSignUpProps {
    * Render props function for custom UI
    */
   children?: (props: BaseSignUpRenderProps) => ReactNode;
+
+  /**
+   * Whether to show the title.
+   */
+  showTitle?: boolean;
+
+  /**
+   * Whether to show the subtitle.
+   */
+  showSubtitle?: boolean;
+
+  /**
+   * Whether to show the logo.
+   */
+  showLogo?: boolean;
 }
 
 /**
@@ -251,17 +266,19 @@ export interface BaseSignUpProps {
  * </BaseSignUp>
  * ```
  */
-const BaseSignUp: FC<BaseSignUpProps> = props => {
+const BaseSignUp: FC<BaseSignUpProps> = ({showLogo = true, ...rest}: BaseSignUpProps): ReactElement => {
   const {theme, colorScheme} = useTheme();
   const styles = useStyles(theme, colorScheme);
 
   return (
     <div>
-      <div className={styles.logoContainer}>
-        <Logo size="large" />
-      </div>
+      {showLogo && (
+        <div className={styles.logoContainer}>
+          <Logo size="large" />
+        </div>
+      )}
       <FlowProvider>
-        <BaseSignUpContent {...props} />
+        <BaseSignUpContent showLogo={showLogo} {...rest} />
       </FlowProvider>
     </div>
   );
@@ -286,6 +303,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   variant = 'outlined',
   isInitialized,
   children,
+  showTitle = true,
+  showSubtitle = true,
 }) => {
   const {theme, colorScheme} = useTheme();
   const {t} = useTranslation();
@@ -821,13 +840,21 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      <Card.Header className={styles.header}>
-        <Card.Title level={2} className={styles.title}>
-          {flowTitle || t('signup.title')}
-        </Card.Title>
-        <Typography variant="body1" className={styles.subtitle}>
-          {flowSubtitle || t('signup.subtitle')}
-        </Typography>
+      {(showTitle || showSubtitle) && (
+        <Card.Header className={styles.header}>
+          {showTitle && (
+            <Card.Title level={2} className={styles.title}>
+              {flowTitle || t('signup.title')}
+            </Card.Title>
+          )}
+          {showSubtitle && (
+            <Typography variant="body1" className={styles.subtitle}>
+              {flowSubtitle || t('signup.subtitle')}
+            </Typography>
+          )}
+        </Card.Header>
+      )}
+      <Card.Content>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message: any, index: number) => (
@@ -841,9 +868,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             ))}
           </div>
         )}
-      </Card.Header>
-
-      <Card.Content>
         <div className={styles.contentContainer}>
           {currentFlow.data?.components && currentFlow.data.components.length > 0 ? (
             renderComponents(currentFlow.data.components)

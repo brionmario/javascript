@@ -31,6 +31,7 @@ import useFlow from '../../../../contexts/Flow/useFlow';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
+import {extractErrorMessage} from '../../SignUp/transformer';
 
 /**
  * Render props for custom UI rendering
@@ -60,11 +61,6 @@ export interface BaseSignInRenderProps {
    * Loading state
    */
   isLoading: boolean;
-
-  /**
-   * Current error message
-   */
-  error: string | null;
 
   /**
    * Flow components
@@ -174,6 +170,21 @@ export interface BaseSignInProps {
    * Render props function for custom UI
    */
   children?: (props: BaseSignInRenderProps) => ReactNode;
+
+  /**
+   * Whether to show the title.
+   */
+  showTitle?: boolean;
+
+  /**
+   * Whether to show the subtitle.
+   */
+  showSubtitle?: boolean;
+
+  /**
+   * Whether to show the logo.
+   */
+  showLogo?: boolean;
 }
 
 /**
@@ -225,17 +236,19 @@ export interface BaseSignInProps {
  * </BaseSignIn>
  * ```
  */
-const BaseSignIn: FC<BaseSignInProps> = props => {
+const BaseSignIn: FC<BaseSignInProps> = ({showLogo = true, ...rest}: BaseSignInProps): ReactElement => {
   const {theme} = useTheme();
   const styles = useStyles(theme, theme.vars.colors.text.primary);
 
   return (
     <div>
-      <div className={styles.logoContainer}>
-        <Logo size="large" />
-      </div>
+      {showLogo && (
+        <div className={styles.logoContainer}>
+          <Logo size="large" />
+        </div>
+      )}
       <FlowProvider>
-        <BaseSignInContent {...props} />
+        <BaseSignInContent showLogo={showLogo} {...rest} />
       </FlowProvider>
     </div>
   );
@@ -257,16 +270,36 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   variant = 'outlined',
   isLoading: externalIsLoading,
   children,
+  showTitle = true,
+  showSubtitle = true,
+  showLogo = true,
 }) => {
   const {theme} = useTheme();
   const {t} = useTranslation();
-  const {subtitle: flowSubtitle, title: flowTitle, messages: flowMessages} = useFlow();
+  const {subtitle: flowSubtitle, title: flowTitle, messages: flowMessages, addMessage, clearMessages} = useFlow();
   const styles = useStyles(theme, theme.vars.colors.text.primary);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const isLoading: boolean = externalIsLoading || isSubmitting;
+
+  /**
+   * Handle error responses and extract meaningful error messages
+   * Uses the transformer's extractErrorMessage function for consistency
+   */
+  const handleError = useCallback(
+    (error: any) => {
+      const errorMessage: string = extractErrorMessage(error, t);
+
+      // Clear existing messages and add the error message
+      clearMessages();
+      addMessage({
+        type: 'error',
+        message: errorMessage,
+      });
+    },
+    [t, addMessage, clearMessages],
+  );
 
   /**
    * Extract form fields from flow components
@@ -351,7 +384,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     }
 
     setIsSubmitting(true);
-    setError(null);
+    clearMessages();
 
     try {
       // Filter out empty or undefined input values
@@ -380,8 +413,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
       await onSubmit?.(payload, component);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : t('errors.sign.in.flow.failure');
-      setError(errorMessage);
+      handleError(err);
       onError?.(err as Error);
     } finally {
       setIsSubmitting(false);
@@ -435,7 +467,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         handleInputChange,
         {
           buttonClassName: buttonClasses,
-          error,
           inputClassName: inputClasses,
           onInputBlur: handleInputBlur,
           onSubmit: handleSubmit,
@@ -451,7 +482,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       isLoading,
       size,
       variant,
-      error,
       inputClasses,
       buttonClasses,
       handleInputBlur,
@@ -467,7 +497,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       touched: touchedFields,
       isValid: isFormValid,
       isLoading,
-      error,
       components,
       handleInputChange,
       handleSubmit,
@@ -507,13 +536,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      <Card.Header className={styles.header}>
-        <Card.Title level={2} className={styles.title}>
-          {flowTitle || t('signin.title')}
-        </Card.Title>
-        <Typography variant="body1" className={styles.subtitle}>
-          {flowSubtitle || t('signin.subtitle')}
-        </Typography>
+      {(showTitle || showSubtitle) && (
+        <Card.Header className={styles.header}>
+          {showTitle && (
+            <Card.Title level={2} className={styles.title}>
+              {flowTitle || t('signin.title')}
+            </Card.Title>
+          )}
+          {showSubtitle && (
+            <Typography variant="body1" className={styles.subtitle}>
+              {flowSubtitle || t('signin.subtitle')}
+            </Typography>
+          )}
+        </Card.Header>
+      )}
+      <Card.Content>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message, index) => (
@@ -527,16 +564,6 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             ))}
           </div>
         )}
-      </Card.Header>
-
-      <Card.Content>
-        {error && (
-          <Alert variant="error" className={cx(styles.errorContainer, errorClasses)}>
-            <Alert.Title>{t('errors.title')}</Alert.Title>
-            <Alert.Description>{error}</Alert.Description>
-          </Alert>
-        )}
-
         <div className={styles.contentContainer}>{components && renderComponents(components)}</div>
       </Card.Content>
     </Card>

@@ -44,11 +44,12 @@ const useStyles = (theme: Theme, colorScheme: string) => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: calc(${theme.vars.spacing.unit} * 3);
+      margin-bottom: calc(${theme.vars.spacing.unit} * 2);
     `;
 
     const header = css`
       gap: 0;
+      align-items: center;
     `;
 
     const title = css`
@@ -57,7 +58,7 @@ const useStyles = (theme: Theme, colorScheme: string) => {
     `;
 
     const subtitle = css`
-      margin-top: calc(${theme.vars.spacing.unit} * 1);
+      margin-bottom: calc(${theme.vars.spacing.unit} * 1);
       color: ${theme.vars.colors.text.secondary};
     `;
 
@@ -144,7 +145,7 @@ const useStyles = (theme: Theme, colorScheme: string) => {
     `;
 
     const flowMessagesContainer = css`
-      margin-top: calc(${theme.vars.spacing.unit} * 2);
+      margin-bottom: calc(${theme.vars.spacing.unit} * 2);
     `;
 
     const flowMessageItem = css`

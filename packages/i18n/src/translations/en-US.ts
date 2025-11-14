@@ -54,7 +54,7 @@ const translations: I18nTranslations = {
 
   /* Base Sign In */
   'signin.title': 'Sign In',
-  'signin.subtitle': 'Enter your credentials to continue.',
+  'signin.subtitle': 'Welcome back! Please sign in to continue.',
 
   /* Base Sign Up */
   'signup.title': 'Sign Up',
