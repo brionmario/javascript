@@ -56,7 +56,13 @@ const getInputLabel = (name: string, type: string, t: UseTranslation['t']): stri
   const label: string = t(i18nKey);
 
   if (label === i18nKey || !label) {
-    return name.charAt(0).toUpperCase() + name.slice(1);
+    // Convert camelCase to sentence case (e.g., "firstName" -> "First name")
+    // TODO: Need to remove this one the following improvement is done.
+    // Tracker: https://github.com/asgardeo/thunder/issues/725
+    return name
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase())
+      .trim();
   }
 
   return label;
@@ -102,9 +108,9 @@ const convertSimpleInputToComponent = (
     fieldType = 'password';
   }
 
-  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(input.type, input.name);
-  const label: string = getInputLabel(input.name, input.type, t);
-  const placeholder: string = getInputPlaceholder(input.name, input.type, t);
+  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(fieldType, input.name);
+  const label: string = getInputLabel(input.name, fieldType, t);
+  const placeholder: string = getInputPlaceholder(input.name, fieldType, t);
 
   return {
     id: generateId('input'),
