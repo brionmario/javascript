@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.5
+
+### Patch Changes
+
+- [#247](https://github.com/asgardeo/javascript/pull/247)
+  [`0a65c1f`](https://github.com/asgardeo/javascript/commit/0a65c1fdb5084c5670d2ad0729a26f8adcdcbf8c) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix passwords still having `text` type
+
 ## 0.6.4
 
 ### Patch Changes
