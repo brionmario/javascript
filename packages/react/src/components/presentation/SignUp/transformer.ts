@@ -117,7 +117,7 @@ const convertSimpleInputToComponent = (
     type: EmbeddedFlowComponentType.Input,
     variant,
     config: {
-      type: input.type,
+      type: fieldType,
       label,
       placeholder,
       required: input.required as boolean,
