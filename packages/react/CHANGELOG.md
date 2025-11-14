@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.4
+
+### Patch Changes
+
+- [#245](https://github.com/asgardeo/javascript/pull/245)
+  [`d2ac85b`](https://github.com/asgardeo/javascript/commit/d2ac85b356cce2d6a7b78125974006d3c7a6d934) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix password field type
+
 ## 0.6.3
 
 ### Patch Changes
