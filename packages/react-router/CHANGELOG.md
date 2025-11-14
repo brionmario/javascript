@@ -1,5 +1,13 @@
 # @asgardeo/react-router
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  [[`d2ac85b`](https://github.com/asgardeo/javascript/commit/d2ac85b356cce2d6a7b78125974006d3c7a6d934)]:
+  - @asgardeo/react@0.6.4
+
 ## 1.0.3
 
 ### Patch Changes
