@@ -189,6 +189,9 @@ const SignUp: FC<SignUpProps> = ({
       size={size}
       isInitialized={isInitialized}
       children={children}
+      showLogo={true}
+      showTitle={platform === Platform.AsgardeoV2}
+      showSubtitle={platform === Platform.AsgardeoV2}
       {...rest}
     />
   );

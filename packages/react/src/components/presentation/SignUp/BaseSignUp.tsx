@@ -840,21 +840,20 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      {showTitle ||
-        (showSubtitle && (
-          <Card.Header className={styles.header}>
-            {showTitle && (
-              <Card.Title level={2} className={styles.title}>
-                {flowTitle || t('signup.title')}
-              </Card.Title>
-            )}
-            {showSubtitle && (
-              <Typography variant="body1" className={styles.subtitle}>
-                {flowSubtitle || t('signup.subtitle')}
-              </Typography>
-            )}
-          </Card.Header>
-        ))}
+      {(showTitle || showSubtitle) && (
+        <Card.Header className={styles.header}>
+          {showTitle && (
+            <Card.Title level={2} className={styles.title}>
+              {flowTitle || t('signup.title')}
+            </Card.Title>
+          )}
+          {showSubtitle && (
+            <Typography variant="body1" className={styles.subtitle}>
+              {flowSubtitle || t('signup.subtitle')}
+            </Typography>
+          )}
+        </Card.Header>
+      )}
       <Card.Content>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
