@@ -132,12 +132,17 @@ const SignUp: FC<SignUpProps> = ({
   ): Promise<EmbeddedFlowExecuteResponse> => {
     // For Thunder/AsgardeoV2 platform, it uses the same API but might return different response format
     // The transformation will be handled by BaseSignUp's normalizeFlowResponse function
+    const urlParams: URLSearchParams = new URL(window.location.href).searchParams;
+    const applicationIdFromUrl: string = urlParams.get('applicationId');
+
+    // Priority order: flowId from URL > applicationId from context > applicationId from URL
+    const effectiveApplicationId = applicationId || applicationIdFromUrl;
 
     // If no payload provided, create initial payload
     // For Thunder (Platform.AsgardeoV2), include applicationId for proper initialization
     const initialPayload = payload || {
       flowType: EmbeddedFlowType.Registration,
-      ...(platform === Platform.AsgardeoV2 && applicationId && {applicationId}),
+      ...(platform === Platform.AsgardeoV2 && effectiveApplicationId && {applicationId: effectiveApplicationId}),
     };
 
     return (await signUp(initialPayload)) as EmbeddedFlowExecuteResponse;

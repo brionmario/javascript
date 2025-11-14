@@ -170,6 +170,21 @@ export interface BaseSignInProps {
    * Render props function for custom UI
    */
   children?: (props: BaseSignInRenderProps) => ReactNode;
+
+  /**
+   * Whether to show the title.
+   */
+  showTitle?: boolean;
+
+  /**
+   * Whether to show the subtitle.
+   */
+  showSubtitle?: boolean;
+
+  /**
+   * Whether to show the logo.
+   */
+  showLogo?: boolean;
 }
 
 /**
@@ -221,17 +236,19 @@ export interface BaseSignInProps {
  * </BaseSignIn>
  * ```
  */
-const BaseSignIn: FC<BaseSignInProps> = props => {
+const BaseSignIn: FC<BaseSignInProps> = ({showLogo = true, ...rest}: BaseSignInProps): ReactElement => {
   const {theme} = useTheme();
   const styles = useStyles(theme, theme.vars.colors.text.primary);
 
   return (
     <div>
-      <div className={styles.logoContainer}>
-        <Logo size="large" />
-      </div>
+      {showLogo && (
+        <div className={styles.logoContainer}>
+          <Logo size="large" />
+        </div>
+      )}
       <FlowProvider>
-        <BaseSignInContent {...props} />
+        <BaseSignInContent showLogo={showLogo} {...rest} />
       </FlowProvider>
     </div>
   );
@@ -253,6 +270,9 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   variant = 'outlined',
   isLoading: externalIsLoading,
   children,
+  showTitle = true,
+  showSubtitle = true,
+  showLogo = true,
 }) => {
   const {theme} = useTheme();
   const {t} = useTranslation();
@@ -516,14 +536,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
-      <Card.Header className={styles.header}>
-        <Card.Title level={2} className={styles.title}>
-          {flowTitle || t('signin.title')}
-        </Card.Title>
-        <Typography variant="body1" className={styles.subtitle}>
-          {flowSubtitle || t('signin.subtitle')}
-        </Typography>
-      </Card.Header>
+      {showTitle ||
+        (showSubtitle && (
+          <Card.Header className={styles.header}>
+            {showTitle && (
+              <Card.Title level={2} className={styles.title}>
+                {flowTitle || t('signin.title')}
+              </Card.Title>
+            )}
+            {showSubtitle && (
+              <Typography variant="body1" className={styles.subtitle}>
+                {flowSubtitle || t('signin.subtitle')}
+              </Typography>
+            )}
+          </Card.Header>
+        ))}
       <Card.Content>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
