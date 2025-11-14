@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.6
+
+### Patch Changes
+
+- [#250](https://github.com/asgardeo/javascript/pull/250)
+  [`3a5f116`](https://github.com/asgardeo/javascript/commit/3a5f11677571fc3901ffa03968317c0fc558254c) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add `Select` support for `DROPDOWN` types
+
 ## 0.6.5
 
 ### Patch Changes
