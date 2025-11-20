@@ -30,6 +30,7 @@ import {
   getActiveTheme,
   Platform,
   extractUserClaimsFromIdToken,
+  EmbeddedSignInFlowResponseV2,
 } from '@asgardeo/browser';
 import {FC, RefObject, PropsWithChildren, ReactElement, useEffect, useMemo, useRef, useState, useCallback} from 'react';
 import AsgardeoContext from './AsgardeoContext';
@@ -113,7 +114,15 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
   useEffect(() => {
     (async (): Promise<void> => {
       await asgardeo.initialize(config);
-      setConfig(await asgardeo.getConfiguration());
+      const initializedConfig = await asgardeo.getConfiguration();
+      setConfig(initializedConfig);
+
+      if (initializedConfig?.platform) {
+        sessionStorage.setItem('asgardeo_platform', initializedConfig.platform);
+      }
+      if (initializedConfig?.baseUrl) {
+        sessionStorage.setItem('asgardeo_base_url', initializedConfig.baseUrl);
+      }
     })();
   }, []);
 
@@ -145,7 +154,9 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       const currentUrl: URL = new URL(window.location.href);
       const hasAuthParamsResult: boolean = hasAuthParams(currentUrl, afterSignInUrl);
 
-      if (hasAuthParamsResult) {
+      const isV2Platform = config.platform === Platform.AsgardeoV2;
+
+      if (hasAuthParamsResult && !isV2Platform) {
         try {
           await signIn(
             {callOnlyOnRedirect: true},
@@ -365,22 +376,40 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     fetchBranding,
   ]);
 
-  const signIn = async (...args: any): Promise<User> => {
+  const signIn = async (...args: any): Promise<User | EmbeddedSignInFlowResponseV2> => {
+    // Check if this is a V2 embedded flow request BEFORE calling signIn
+    // This allows us to skip session checks entirely for V2 flows
+    const arg1 = args[0];
+    const isV2FlowRequest =
+      config.platform === Platform.AsgardeoV2 &&
+      typeof arg1 === 'object' &&
+      arg1 !== null &&
+      ('flowId' in arg1 || 'applicationId' in arg1);
+
     try {
-      setIsUpdatingSession(true);
-      setIsLoadingSync(true);
-      const response: User = await asgardeo.signIn(...args);
+      if (!isV2FlowRequest) {
+        setIsUpdatingSession(true);
+        setIsLoadingSync(true);
+      }
+
+      const response: User | EmbeddedSignInFlowResponseV2 = await asgardeo.signIn(...args);
+
+      if (isV2FlowRequest || (response && typeof response === 'object' && 'flowStatus' in response)) {
+        return response;
+      }
 
       if (await asgardeo.isSignedIn()) {
         await updateSession();
       }
 
-      return response;
+      return response as User;
     } catch (error) {
-      throw new Error(`Error while signing in: ${error}`);
+      throw new Error(`Error while signing in: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
-      setIsUpdatingSession(false);
-      setIsLoadingSync(asgardeo.isLoading());
+      if (!isV2FlowRequest) {
+        setIsUpdatingSession(false);
+        setIsLoadingSync(asgardeo.isLoading());
+      }
     }
   };
 
