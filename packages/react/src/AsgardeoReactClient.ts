@@ -204,8 +204,7 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       return getMeOrganizations({baseUrl});
     } catch (error) {
       throw new AsgardeoRuntimeError(
-        `Failed to fetch the user's associated organizations: ${
-          error instanceof Error ? error.message : String(error)
+        `Failed to fetch the user's associated organizations: ${error instanceof Error ? error.message : String(error)
         }`,
         'AsgardeoReactClient-getMyOrganizations-RuntimeError-001',
         'react',
@@ -335,20 +334,39 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       const arg1 = args[0];
       const arg2 = args[1];
 
-      const config: AsgardeoReactConfig = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig;
+      const config: AsgardeoReactConfig | undefined = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig | undefined;
+
+      const platformFromStorage = sessionStorage.getItem('asgardeo_platform');
+      const isV2Platform =
+        (config && config.platform === Platform.AsgardeoV2) ||
+        platformFromStorage === 'AsgardeoV2';
 
       if (
-        config.platform === Platform.AsgardeoV2 &&
+        isV2Platform &&
         typeof arg1 === 'object' &&
+        arg1 !== null &&
+        (arg1 as any).callOnlyOnRedirect === true
+      ) {
+        return undefined as any;
+      }
+
+      if (
+        isV2Platform &&
+        typeof arg1 === 'object' &&
+        arg1 !== null &&
         !isEmpty(arg1) &&
         ('flowId' in arg1 || 'applicationId' in arg1)
       ) {
-        const sessionDataKey: string = new URL(window.location.href).searchParams.get('sessionDataKey');
+        const sessionDataKeyFromUrl: string = new URL(window.location.href).searchParams.get('sessionDataKey');
+        const sessionDataKeyFromStorage: string = sessionStorage.getItem('asgardeo_session_data_key');
+        const sessionDataKey: string = sessionDataKeyFromUrl || sessionDataKeyFromStorage;
+        const baseUrlFromStorage: string = sessionStorage.getItem('asgardeo_base_url');
+        const baseUrl: string = config?.baseUrl || baseUrlFromStorage;
 
         return executeEmbeddedSignInFlowV2({
           payload: arg1 as EmbeddedSignInFlowHandleRequestPayload,
           url: arg2?.url,
-          baseUrl: config?.baseUrl,
+          baseUrl,
           sessionDataKey,
         });
       }
