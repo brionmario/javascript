@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.8
+
+### Patch Changes
+
+- [#256](https://github.com/asgardeo/javascript/pull/256)
+  [`1f15e28`](https://github.com/asgardeo/javascript/commit/1f15e2831dc234394d4c3f2885bbf2cac216e0b4) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Re-trigger react package
+
 ## 0.6.7
 
 ### Patch Changes
