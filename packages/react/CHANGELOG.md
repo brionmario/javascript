@@ -1,5 +1,17 @@
 # @asgardeo/react
 
+## 0.6.7
+
+### Patch Changes
+
+- [#252](https://github.com/asgardeo/javascript/pull/252)
+  [`c0dc8e8`](https://github.com/asgardeo/javascript/commit/c0dc8e881af8d90e4cfc2e90adb026a3fbc2582e) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Add redirect handling for external IdP flows
+
+- [#253](https://github.com/asgardeo/javascript/pull/253)
+  [`09256e9`](https://github.com/asgardeo/javascript/commit/09256e97ce2d80ca76028c58cb8eca7971815e8b) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Fix action id
+
 ## 0.6.6
 
 ### Patch Changes
