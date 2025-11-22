@@ -8,6 +8,6 @@ packages:
   - '!samples/teamspace-nextjs'
 
 catalog:
-  '@wso2/eslint-plugin': 'https://gitpkg.now.sh/brionmario/wso2-ui-configs/packages/eslint-plugin?a1fc6eb570653c999828aea9f5027cba06af4391'
-  '@wso2/prettier-config': 'https://gitpkg.now.sh/brionmario/wso2-ui-configs/packages/prettier-config?a1fc6eb570653c999828aea9f5027cba06af4391'
-  '@wso2/stylelint-config': 'https://gitpkg.now.sh/brionmario/wso2-ui-configs/packages/stylelint-config?a1fc6eb570653c999828aea9f5027cba06af4391'
+  '@wso2/eslint-plugin': 'git+https://github.com/brionmario/wso2-ui-configs.git#a1fc6eb570653c999828aea9f5027cba06af4391&path:packages/eslint-plugin'
+  '@wso2/prettier-config': 'git+https://github.com/brionmario/wso2-ui-configs.git#a1fc6eb570653c999828aea9f5027cba06af4391&path:packages/prettier-config'
+  '@wso2/stylelint-config': 'git+https://github.com/brionmario/wso2-ui-configs.git#a1fc6eb570653c999828aea9f5027cba06af4391&path:packages/stylelint-config'
