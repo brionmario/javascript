@@ -24,6 +24,7 @@ import {
   EmbeddedFlowResponseType,
   withVendorCSSClassPrefix,
   AsgardeoAPIError,
+  Platform,
 } from '@asgardeo/browser';
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
@@ -34,6 +35,7 @@ import useFlow from '../../../contexts/Flow/useFlow';
 import {useForm, FormField} from '../../../hooks/useForm';
 import useTranslation from '../../../hooks/useTranslation';
 import useTheme from '../../../contexts/Theme/useTheme';
+import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 import Alert from '../../primitives/Alert/Alert';
 import Card, {CardProps} from '../../primitives/Card/Card';
 import Logo from '../../primitives/Logo/Logo';
@@ -309,6 +311,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   const {theme, colorScheme} = useTheme();
   const {t} = useTranslation();
   const {subtitle: flowSubtitle, title: flowTitle, messages: flowMessages, addMessage, clearMessages} = useFlow();
+  const {platform} = useAsgardeo();
   const styles = useStyles(theme, colorScheme);
 
   /**
@@ -484,11 +487,16 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         });
       }
 
+      // For AsgardeoV2 platform, use actionId from component.config, otherwise use component.id
+      const actionId = platform === Platform.AsgardeoV2
+        ? component.config?.actionId
+        : component.id;
+
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
         inputs: filteredInputs,
-        actionId: component.id,
+        ...(actionId && { actionId: actionId as string }),
       } as any;
 
       const rawResponse = await onSubmit(payload);
