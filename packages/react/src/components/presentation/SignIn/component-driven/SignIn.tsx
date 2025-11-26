@@ -317,6 +317,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     return false;
   };
 
+  /**
+   * Initialize the flow and handle cleanup of stale flow state.
+   */
   useEffect(() => {
     const storedFlowId = sessionStorage.getItem('asgardeo_flow_id');
     const urlParams = getUrlParams();
@@ -329,32 +332,16 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
 
     handleSessionDataKey(urlParams.sessionDataKey);
 
-    if (urlParams.code) {
-      const flowIdFromState = resolveFlowId(
-        currentFlowId,
-        urlParams.state,
-        urlParams.flowId,
-        storedFlowId,
-      );
-
-      // Only process code if we have a valid flowId to use
-      if (flowIdFromState) {
-        setFlowId(flowIdFromState);
-        setIsFlowInitialized(true);
-        initializationAttemptedRef.current = true;
-        // Clean up flowId from URL after setting it in state
-        cleanupFlowUrlParams();
-      } else {
-        console.warn('[SignIn] OAuth code in URL but no valid flowId found. Cleaning up stale OAuth parameters.');
-        cleanupOAuthUrlParams(true);
-      }
+    // Skip OAuth code processing - let the dedicated OAuth useEffect handle it
+    if (urlParams.code || urlParams.state) {
       return;
     }
 
-    // If flowId is in URL or sessionStorage but no code and no active flow state
-    if ((urlParams.flowId || storedFlowId) && !urlParams.code && !currentFlowId) {
+    // If flowId is in URL or sessionStorage but no active flow state, clean it up
+    // This handles stale flowIds from previous sessions or incomplete flows
+    if ((urlParams.flowId || storedFlowId) && !currentFlowId) {
       console.warn(
-        '[SignIn] FlowId in URL/sessionStorage but no active flow state detected. '
+        '[SignIn] FlowId in URL/sessionStorage but no active flow state detected. Cleaning up stale flowId.'
       );
       setFlowId(null);
       sessionStorage.removeItem('asgardeo_flow_id');
@@ -362,19 +349,19 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       // Continue to initialize with applicationId instead
     }
 
+    // Only initialize if we're not processing an OAuth callback or submission
+    const currentUrlParams = getUrlParams();
     if (
       isInitialized &&
       !isLoading &&
       !isFlowInitialized &&
       !initializationAttemptedRef.current &&
-      !currentFlowId
+      !currentFlowId &&
+      !currentUrlParams.code &&
+      !currentUrlParams.state &&
+      !isSubmitting &&
+      !oauthCodeProcessedRef.current
     ) {
-      // Clean up any stale OAuth parameters before starting a new flow
-      const urlParams = getUrlParams();
-      if (urlParams.code || urlParams.state) {
-        console.debug('[SignIn] Cleaning up stale OAuth parameters before starting new flow');
-        cleanupOAuthUrlParams(true);
-      }
       initializationAttemptedRef.current = true;
       initializeFlow();
     }
@@ -535,6 +522,8 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       if (flowId && components) {
         setFlowId(flowId);
         setComponents(components);
+        // Ensure flow is marked as initialized when we have components
+        setIsFlowInitialized(true);
         // Clean up flowId from URL after setting it in state
         cleanupFlowUrlParams();
       }
@@ -598,7 +587,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
 
     if (!currentFlowId) {
       setFlowId(flowIdToUse);
-      setIsFlowInitialized(true);
     }
     const submitPayload: EmbeddedSignInFlowRequestV2 = {
       flowId: flowIdToUse,
