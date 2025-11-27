@@ -265,6 +265,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     const url = new URL(window.location.href);
     url.searchParams.delete('flowId');
     url.searchParams.delete('sessionDataKey');
+    url.searchParams.delete('applicationId');
     window?.history?.replaceState({}, '', url.toString());
   };
 
@@ -337,18 +338,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       return;
     }
 
-    // If flowId is in URL or sessionStorage but no active flow state, clean it up
-    // This handles stale flowIds from previous sessions or incomplete flows
-    if ((urlParams.flowId || storedFlowId) && !currentFlowId) {
-      console.warn(
-        '[SignIn] FlowId in URL/sessionStorage but no active flow state detected. Cleaning up stale flowId.'
-      );
-      setFlowId(null);
-      sessionStorage.removeItem('asgardeo_flow_id');
-      cleanupFlowUrlParams();
-      // Continue to initialize with applicationId instead
-    }
-
     // Only initialize if we're not processing an OAuth callback or submission
     const currentUrlParams = getUrlParams();
     if (
@@ -365,6 +354,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       initializationAttemptedRef.current = true;
       initializeFlow();
     }
+
   }, [isInitialized, isLoading, isFlowInitialized, currentFlowId]);
 
   /**
