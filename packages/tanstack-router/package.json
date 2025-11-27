@@ -59,7 +59,7 @@
   },
   "peerDependencies": {
     "@asgardeo/react": "workspace:*",
-    "react": "16.14.0",
+    "react": "19.1.0",
     "@tanstack/react-router": "1.134.4"
   },
   "dependencies": {
