@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.10
+
+### Patch Changes
+
+- [#260](https://github.com/asgardeo/javascript/pull/260)
+  [`ef9ae48`](https://github.com/asgardeo/javascript/commit/ef9ae48d5450c400b16fa2b2b500b75833b8ed11) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Improve sign-in v2 error handling flows
+
 ## 0.6.9
 
 ### Patch Changes
