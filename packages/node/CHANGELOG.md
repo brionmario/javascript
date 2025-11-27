@@ -1,5 +1,17 @@
 # @asgardeo/node
 
+## 0.0.29
+
+### Patch Changes
+
+- [#261](https://github.com/asgardeo/javascript/pull/261)
+  [`f2acb21`](https://github.com/asgardeo/javascript/commit/f2acb21e8c95391a40c77c43612bf0ef83f9b19c) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Demote dependencies to versions before 1/11/2025
+
+- Updated dependencies
+  [[`f2acb21`](https://github.com/asgardeo/javascript/commit/f2acb21e8c95391a40c77c43612bf0ef83f9b19c)]:
+  - @asgardeo/javascript@0.2.3
+
 ## 0.0.28
 
 ### Patch Changes
