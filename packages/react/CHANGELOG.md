@@ -1,5 +1,14 @@
 # @asgardeo/react
 
+## 0.6.12
+
+### Patch Changes
+
+- Updated dependencies
+  [[`2b763d6`](https://github.com/asgardeo/javascript/commit/2b763d69e6f9abe38a24edff996e587c4e2139ad)]:
+  - @asgardeo/i18n@0.3.5
+  - @asgardeo/browser@0.1.29
+
 ## 0.6.11
 
 ### Patch Changes
