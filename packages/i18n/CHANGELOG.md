@@ -1,5 +1,13 @@
 # @asgardeo/i18n
 
+## 0.3.5
+
+### Patch Changes
+
+- [#267](https://github.com/asgardeo/javascript/pull/267)
+  [`2b763d6`](https://github.com/asgardeo/javascript/commit/2b763d69e6f9abe38a24edff996e587c4e2139ad) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Add OU i18n
+
 ## 0.3.4
 
 ### Patch Changes
