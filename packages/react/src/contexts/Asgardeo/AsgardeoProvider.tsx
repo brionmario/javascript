@@ -156,14 +156,28 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
 
       const isV2Platform = config.platform === Platform.AsgardeoV2;
 
-      if (hasAuthParamsResult && !isV2Platform) {
+      if (hasAuthParamsResult) {
         try {
-          await signIn(
-            {callOnlyOnRedirect: true},
-            // authParams?.authorizationCode,
-            // authParams?.sessionState,
-            // authParams?.state,
-          );
+          if (isV2Platform) {
+            // For V2 platform, check if this is an embedded flow or traditional OAuth
+            const urlParams = currentUrl.searchParams;
+            const code = urlParams.get('code');
+            const flowIdFromUrl = urlParams.get('flowId');
+            const storedFlowId = sessionStorage.getItem('asgardeo_flow_id');
+
+            // If there's a code and no flowId, exchange OAuth code for tokens
+            if (code && !flowIdFromUrl && !storedFlowId) {
+              await signIn();
+            }
+          } else {
+            // If non-V2 platform, use traditional OAuth callback handling
+            await signIn(
+              {callOnlyOnRedirect: true},
+              // authParams?.authorizationCode,
+              // authParams?.sessionState,
+              // authParams?.state,
+            );
+          }
           // setError(null);
         } catch (error) {
           if (error && Object.prototype.hasOwnProperty.call(error, 'code')) {
