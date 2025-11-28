@@ -1,5 +1,13 @@
 # @asgardeo/tanstack-router
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  [[`932126a`](https://github.com/asgardeo/javascript/commit/932126a2fdac16c6a4cdfe43d9f25d84297f3f70)]:
+  - @asgardeo/react@0.6.11
+
 ## 1.0.10
 
 ### Patch Changes
