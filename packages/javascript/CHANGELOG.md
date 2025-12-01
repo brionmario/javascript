@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.5
+
+### Patch Changes
+
+- [#271](https://github.com/asgardeo/javascript/pull/271)
+  [`a035bed`](https://github.com/asgardeo/javascript/commit/a035bed825aa0860e761ac3c89c77ca385e201f7) Thanks
+  [@brionmario](https://github.com/brionmario)! - Throw JWT verification errors
+
 ## 0.2.4
 
 ### Patch Changes

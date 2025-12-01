@@ -1,6 +1,6 @@
 {
   "name": "@asgardeo/express",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "Express.js implementation of Asgardeo JavaScript SDK.",
   "keywords": [
     "asgardeo",
