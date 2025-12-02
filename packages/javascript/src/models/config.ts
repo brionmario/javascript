@@ -79,6 +79,24 @@ export interface BaseConfig<T = unknown> extends WithPreferences {
   afterSignOutUrl?: string | undefined;
 
   /**
+   * A list of external API base URLs that the SDK is allowed to attach access tokens to when making HTTP requests.
+   *
+   * When making authenticated HTTP requests using the SDK's HTTP client, the access token will only be attached
+   * to requests whose URLs start with one of these specified base URLs. This provides a security layer by
+   * preventing tokens from being sent to unauthorized servers.
+   *
+   * @remarks
+   * - This is only applicable when the storage type is `webWorker`.
+   * - Each URL should be a base URL without trailing slashes (e.g., "https://api.example.com").
+   * - The SDK will check if the request URL starts with any of these base URLs before attaching the token.
+   * - If a request is made to a URL that doesn't match any of these base URLs, an error will be thrown.
+   *
+   * @example
+   * allowedExternalUrls: ["https://api.example.com", "https://api.another-service.com"]
+   */
+  allowedExternalUrls?: string[];
+
+  /**
    * Optional organization handle for the Organization in Asgardeo.
    * This is used to identify the organization in the Asgardeo identity server in cases like Branding, etc.
    * If not provided, the framework layer will try to use the `baseUrl` to determine the organization handle.

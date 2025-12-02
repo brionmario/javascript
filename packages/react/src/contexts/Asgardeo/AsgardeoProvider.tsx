@@ -31,6 +31,7 @@ import {
   Platform,
   extractUserClaimsFromIdToken,
   EmbeddedSignInFlowResponseV2,
+  TokenResponse,
 } from '@asgardeo/browser';
 import {FC, RefObject, PropsWithChildren, ReactElement, useEffect, useMemo, useRef, useState, useCallback} from 'react';
 import AsgardeoContext from './AsgardeoContext';
@@ -459,15 +460,17 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
     }
   };
 
-  const switchOrganization = async (organization: Organization): Promise<void> => {
+  const switchOrganization = async (organization: Organization): Promise<TokenResponse | Response> => {
     try {
       setIsUpdatingSession(true);
       setIsLoadingSync(true);
-      await asgardeo.switchOrganization(organization);
+      const response: TokenResponse | Response = await asgardeo.switchOrganization(organization);
 
       if (await asgardeo.isSignedIn()) {
         await updateSession();
       }
+
+      return response;
     } catch (error) {
       throw new AsgardeoRuntimeError(
         `Failed to switch organization: ${error instanceof Error ? error.message : String(JSON.stringify(error))}`,
@@ -519,6 +522,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       exchangeToken: asgardeo.exchangeToken.bind(asgardeo),
       syncSession,
       platform: config?.platform,
+      switchOrganization,
     }),
     [
       applicationId,
@@ -537,6 +541,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       asgardeo,
       signInOptions,
       syncSession,
+      switchOrganization,
     ],
   );
 

@@ -29,6 +29,7 @@ import {
   OIDCEndpoints,
   TokenResponse,
   extractPkceStorageKeyFromState,
+  Config,
 } from '@asgardeo/javascript';
 import {SPAHelper} from './spa-helper';
 import {
@@ -103,6 +104,7 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     config: SPACustomGrantConfig,
     enableRetrievingSignOutURLFromSession?: (config: SPACustomGrantConfig) => void,
   ): Promise<User | Response> {
+    const _config: Config = (await this._storageManager.getConfigData()) as Config;
     let useDefaultEndpoint = true;
     let matches = false;
 
@@ -110,19 +112,23 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     if (config?.tokenEndpoint) {
       useDefaultEndpoint = false;
 
-      for (const baseUrl of [
-        ...((await this._storageManager.getConfigData())?.resourceServerURLs ?? []),
-        (config as any).baseUrl,
-      ]) {
-        if (baseUrl && config.tokenEndpoint?.startsWith(baseUrl)) {
-          matches = true;
-          break;
+      // Only validate URLs for WebWorker storage
+      if (_config.storage === BrowserStorage.WebWorker) {
+        for (const baseUrl of [...(_config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+          if (baseUrl && config.tokenEndpoint?.startsWith(baseUrl)) {
+            matches = true;
+            break;
+          }
         }
+      } else {
+        matches = true;
       }
     }
+
     if (config.shouldReplayAfterRefresh) {
       this._storageManager.setTemporaryDataParameter(CUSTOM_GRANT_CONFIG, JSON.stringify(config));
     }
+
     if (useDefaultEndpoint || matches) {
       return this._authenticationClient
         .exchangeToken(config)
@@ -147,9 +153,9 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
         new AsgardeoAuthException(
           'SPA-MAIN_THREAD_CLIENT-RCG-IV01',
           'Request to the provided endpoint is prohibited.',
-          'Requests can only be sent to resource servers specified by the `resourceServerURLs`' +
+          'Requests can only be sent to resource servers specified by the `allowedExternalUrls`' +
             ' attribute while initializing the SDK. The specified token endpoint in this request ' +
-            'cannot be found among the `resourceServerURLs`',
+            'cannot be found among the `allowedExternalUrls`',
         ),
       );
     }
@@ -224,14 +230,19 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     enableRetrievingSignOutURLFromSession?: (config: SPACustomGrantConfig) => void,
   ): Promise<HttpResponse> {
     let matches = false;
-    const config = await this._storageManager.getConfigData();
+    const config: Config = (await this._storageManager.getConfigData()) as Config;
 
-    for (const baseUrl of [...((await config?.resourceServerURLs) ?? []), (config as any).baseUrl]) {
-      if (baseUrl && requestConfig?.url?.startsWith(baseUrl)) {
-        matches = true;
+    // Only validate URLs for WebWorker storage
+    if (config.storage === BrowserStorage.WebWorker) {
+      for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+        if (baseUrl && requestConfig?.url?.startsWith(baseUrl)) {
+          matches = true;
 
-        break;
+          break;
+        }
       }
+    } else {
+      matches = true;
     }
 
     if (matches) {
@@ -319,9 +330,9 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
         new AsgardeoAuthException(
           'SPA-AUTH_HELPER-HR-IV02',
           'Request to the provided endpoint is prohibited.',
-          'Requests can only be sent to resource servers specified by the `resourceServerURLs`' +
+          'Requests can only be sent to resource servers specified by the `allowedExternalUrls`' +
             ' attribute while initializing the SDK. The specified endpoint in this request ' +
-            'cannot be found among the `resourceServerURLs`',
+            'cannot be found among the `allowedExternalUrls`',
         ),
       );
     }
@@ -335,23 +346,26 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     httpFinishCallback?: () => void,
   ): Promise<HttpResponse[] | undefined> {
     let matches = true;
-    const config = await this._storageManager.getConfigData();
+    const config: Config = (await this._storageManager.getConfigData()) as Config;
 
-    for (const requestConfig of requestConfigs) {
-      let urlMatches = false;
+    // Only validate URLs for WebWorker storage
+    if (config.storage === BrowserStorage.WebWorker) {
+      for (const requestConfig of requestConfigs) {
+        let urlMatches = false;
 
-      for (const baseUrl of [...((await config)?.resourceServerURLs ?? []), (config as any).baseUrl]) {
-        if (baseUrl && requestConfig.url?.startsWith(baseUrl)) {
-          urlMatches = true;
+        for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+          if (baseUrl && requestConfig.url?.startsWith(baseUrl)) {
+            urlMatches = true;
+
+            break;
+          }
+        }
+
+        if (!urlMatches) {
+          matches = false;
 
           break;
         }
-      }
-
-      if (!urlMatches) {
-        matches = false;
-
-        break;
       }
     }
 
@@ -436,9 +450,9 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
       throw new AsgardeoAuthException(
         'SPA-AUTH_HELPER-HRA-IV02',
         'Request to the provided endpoint is prohibited.',
-        'Requests can only be sent to resource servers specified by the `resourceServerURLs`' +
+        'Requests can only be sent to resource servers specified by the `allowedExternalUrls`' +
           ' attribute while initializing the SDK. The specified endpoint in this request ' +
-          'cannot be found among the `resourceServerURLs`',
+          'cannot be found among the `allowedExternalUrls`',
       );
     }
   }

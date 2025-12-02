@@ -28,7 +28,7 @@ export interface SPAConfig {
   syncSession?: boolean;
   checkSessionInterval?: number;
   sessionRefreshInterval?: number;
-  resourceServerURLs?: string[];
+  allowedExternalUrls?: string[];
   authParams?: Record<string, string>;
   periodicTokenRefresh?: boolean;
   autoLogoutOnTokenRefreshError?: boolean;
