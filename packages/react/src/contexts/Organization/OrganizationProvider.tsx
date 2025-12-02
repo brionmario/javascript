@@ -21,6 +21,7 @@ import {
   Organization,
   AllOrganizationsApiResponse,
   CreateOrganizationPayload,
+  TokenResponse,
 } from '@asgardeo/browser';
 import {FC, PropsWithChildren, ReactElement, useCallback, useMemo, useState} from 'react';
 import OrganizationContext, {OrganizationContextProps} from './OrganizationContext';
@@ -56,7 +57,7 @@ export interface OrganizationProviderProps {
   /**
    * Callback function called when switching organizations
    */
-  onOrganizationSwitch?: (organization: Organization) => Promise<void>;
+  onOrganizationSwitch?: (organization: Organization) => Promise<TokenResponse | Response>;
   /**
    * Refetch the my organizations list.
    * @returns
