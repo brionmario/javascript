@@ -58,8 +58,8 @@
     "vitest-browser-react": "0.1.1"
   },
   "peerDependencies": {
-    "@types/react": "19.1.5",
-    "react": "19.1.0"
+    "@types/react": ">=19.1.5",
+    "react": ">=19.1.0"
   },
   "dependencies": {
     "@asgardeo/i18n": "workspace:*",
