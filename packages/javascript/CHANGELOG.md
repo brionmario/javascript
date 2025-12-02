@@ -1,5 +1,14 @@
 # @asgardeo/javascript
 
+## 0.2.6
+
+### Patch Changes
+
+- [#274](https://github.com/asgardeo/javascript/pull/274)
+  [`15069ee`](https://github.com/asgardeo/javascript/commit/15069eee7b69d979bf7951ac53b2945147625c74) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add ability to call external endpoints without explicitly allowing
+  them in non `webWorker` storage modes
+
 ## 0.2.5
 
 ### Patch Changes
