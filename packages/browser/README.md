@@ -45,4 +45,4 @@ authClient.signOut();
 
 ## License
 
-Apache-2.0
+Licenses this source under the Apache License, Version 2.0 [LICENSE](./LICENSE), You may not use this file except in compliance with the License.

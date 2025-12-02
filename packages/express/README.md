@@ -21,52 +21,6 @@ pnpm add @asgardeo/express
 yarn add @asgardeo/express
 ```
 
-## Quick Start
-
-```javascript
-import { AsgardeoExpressClient } from "@asgardeo/express";
-
-// Initialize the client
-const authClient = new AsgardeoExpressClient({
-    clientId: "<your_client_id>",
-    clientSecret: "<your_client_secret>",
-    baseUrl: "https://api.asgardeo.io/t/<org_name>",
-    callbackURL: "http://localhost:3000/callback"
-});
-
-// Example Express.js integration
-import express from "express";
-const app = express();
-
-// Login endpoint
-app.get("/login", (req, res) => {
-    const authUrl = authClient.getSignInUrl();
-    res.redirect(authUrl);
-});
-
-// Callback handler
-app.get("/callback", async (req, res) => {
-    try {
-        const { code } = req.query;
-        const tokens = await authClient.exchangeAuthorizationCode(code);
-        // Store tokens and redirect to home page
-        res.redirect("/");
-    } catch (error) {
-        res.status(500).send("Authentication failed");
-    }
-});
-
-// Get user info
-app.get("/userinfo", async (req, res) => {
-    try {
-        const userInfo = await authClient.getUserInfo();
-        res.json(userInfo);
-    } catch (error) {
-        res.status(401).send("Unauthorized");
-    }
-});
-```
-
 ## License
 
-Apache-2.0
+Licenses this source under the Apache License, Version 2.0 [LICENSE](./LICENSE), You may not use this file except in compliance with the License.

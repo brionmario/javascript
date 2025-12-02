@@ -8,50 +8,11 @@
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 </div>
 
-## Installation
-
-```bash
-# Using npm
-npm install @asgardeo/javascript
-
-# or using pnpm
-pnpm add @asgardeo/javascript
-
-# or using yarn
-yarn add @asgardeo/javascript
-```
-
-## Quick Start
-
-```javascript
-import { AsgardeoAuth } from "@asgardeo/javascript";
-
-// Initialize the auth instance
-const auth = new AsgardeoAuth({
-    afterSignInUrl: "https://localhost:3000",
-    clientId: "<your_client_id>",
-    baseUrl: "https://api.asgardeo.io/t/<org_name>"
-});
-
-// Handle authentication
-auth.signIn()
-    .then(() => {
-        // Handle successful sign in
-    })
-    .catch((error) => {
-        // Handle sign in error
-    });
-
-// Get authenticated user
-auth.getUser()
-    .then((userInfo) => {
-        console.log(userInfo);
-    });
-
-// Sign out
-auth.signOut();
-```
+> [!IMPORTANT]
+> ⚠️ Do not directly use this in your applications.
+> `@asgardeo/javascript` is a framework agnostic SDK that provides core authentication functionalities.
+> For framework-specific integrations, consider using the dedicated SDKs such as `@asgardeo/react`, `@asgardeo/next`, etc.
 
 ## License
 
-Apache-2.0
+Licenses this source under the Apache License, Version 2.0 [LICENSE](./LICENSE), You may not use this file except in compliance with the License.
