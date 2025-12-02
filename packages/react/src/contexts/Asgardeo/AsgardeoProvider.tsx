@@ -519,6 +519,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       exchangeToken: asgardeo.exchangeToken.bind(asgardeo),
       syncSession,
       platform: config?.platform,
+      switchOrganization
     }),
     [
       applicationId,
@@ -537,6 +538,7 @@ const AsgardeoProvider: FC<PropsWithChildren<AsgardeoProviderProps>> = ({
       asgardeo,
       signInOptions,
       syncSession,
+      switchOrganization
     ],
   );
 
