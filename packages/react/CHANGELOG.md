@@ -1,5 +1,18 @@
 # @asgardeo/react
 
+## 0.6.14
+
+### Patch Changes
+
+- [#274](https://github.com/asgardeo/javascript/pull/274)
+  [`15069ee`](https://github.com/asgardeo/javascript/commit/15069eee7b69d979bf7951ac53b2945147625c74) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add ability to call external endpoints without explicitly allowing
+  them in non `webWorker` storage modes
+
+- Updated dependencies
+  [[`15069ee`](https://github.com/asgardeo/javascript/commit/15069eee7b69d979bf7951ac53b2945147625c74)]:
+  - @asgardeo/browser@0.1.31
+
 ## 0.6.13
 
 ### Patch Changes

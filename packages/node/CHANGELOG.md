@@ -1,5 +1,13 @@
 # @asgardeo/node
 
+## 0.0.32
+
+### Patch Changes
+
+- Updated dependencies
+  [[`15069ee`](https://github.com/asgardeo/javascript/commit/15069eee7b69d979bf7951ac53b2945147625c74)]:
+  - @asgardeo/javascript@0.2.6
+
 ## 0.0.31
 
 ### Patch Changes
