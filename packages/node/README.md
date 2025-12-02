@@ -8,65 +8,11 @@
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 </div>
 
-## Installation
-
-```bash
-# Using npm
-npm install @asgardeo/node
-
-# or using pnpm
-pnpm add @asgardeo/node
-
-# or using yarn
-yarn add @asgardeo/node
-```
-
-## Quick Start
-
-```javascript
-import { AsgardeoNodeClient } from "@asgardeo/node";
-
-// Initialize the client
-const authClient = new AsgardeoNodeClient({
-    clientId: "<your_client_id>",
-    clientSecret: "<your_client_secret>",
-    baseUrl: "https://api.asgardeo.io/t/<org_name>",
-    callbackURL: "http://localhost:3000/callback"
-});
-
-// Example Express.js integration
-import express from "express";
-const app = express();
-
-// Login endpoint
-app.get("/login", (req, res) => {
-    const authUrl = authClient.getSignInUrl();
-    res.redirect(authUrl);
-});
-
-// Callback handler
-app.get("/callback", async (req, res) => {
-    try {
-        const { code } = req.query;
-        const tokens = await authClient.exchangeAuthorizationCode(code);
-        // Store tokens and redirect to home page
-        res.redirect("/");
-    } catch (error) {
-        res.status(500).send("Authentication failed");
-    }
-});
-
-// Get user info
-app.get("/userinfo", async (req, res) => {
-    try {
-        const userInfo = await authClient.getUserInfo();
-        res.json(userInfo);
-    } catch (error) {
-        res.status(401).send("Unauthorized");
-    }
-});
-```
+> [!IMPORTANT]
+> ⚠️ Do not directly use this in your applications.
+> `@asgardeo/node` is a framework agnostic SDK that provides core authentication functionalities.
+> For framework-specific integrations, consider using the dedicated SDKs such as `@asgardeo/express`, etc.
 
 ## License
 
-Apache-2.0
+Licenses this source under the Apache License, Version 2.0 [LICENSE](./LICENSE), You may not use this file except in compliance with the License.

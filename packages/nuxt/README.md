@@ -8,19 +8,6 @@
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 </div>
 
-## Installation
-
-```bash
-# Using npm
-npm install @asgardeo/nuxt
-
-# or using pnpm
-pnpm add @asgardeo/nuxt
-
-# or using yarn
-yarn add @asgardeo/nuxt
-```
-
 ## License
 
-Apache-2.0
+Licenses this source under the Apache License, Version 2.0 [LICENSE](./LICENSE), You may not use this file except in compliance with the License.
