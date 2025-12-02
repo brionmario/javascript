@@ -112,11 +112,16 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     if (config?.tokenEndpoint) {
       useDefaultEndpoint = false;
 
-      for (const baseUrl of [...(_config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
-        if (baseUrl && config.tokenEndpoint?.startsWith(baseUrl)) {
-          matches = true;
-          break;
+      // Only validate URLs for WebWorker storage
+      if (_config.storage === BrowserStorage.WebWorker) {
+        for (const baseUrl of [...(_config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+          if (baseUrl && config.tokenEndpoint?.startsWith(baseUrl)) {
+            matches = true;
+            break;
+          }
         }
+      } else {
+        matches = true;
       }
     }
 
@@ -227,12 +232,17 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     let matches = false;
     const config: Config = (await this._storageManager.getConfigData()) as Config;
 
-    for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
-      if (baseUrl && requestConfig?.url?.startsWith(baseUrl)) {
-        matches = true;
+    // Only validate URLs for WebWorker storage
+    if (config.storage === BrowserStorage.WebWorker) {
+      for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+        if (baseUrl && requestConfig?.url?.startsWith(baseUrl)) {
+          matches = true;
 
-        break;
+          break;
+        }
       }
+    } else {
+      matches = true;
     }
 
     if (matches) {
@@ -338,21 +348,24 @@ export class AuthenticationHelper<T extends MainThreadClientConfig | WebWorkerCl
     let matches = true;
     const config: Config = (await this._storageManager.getConfigData()) as Config;
 
-    for (const requestConfig of requestConfigs) {
-      let urlMatches = false;
+    // Only validate URLs for WebWorker storage
+    if (config.storage === BrowserStorage.WebWorker) {
+      for (const requestConfig of requestConfigs) {
+        let urlMatches = false;
 
-      for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
-        if (baseUrl && requestConfig.url?.startsWith(baseUrl)) {
-          urlMatches = true;
+        for (const baseUrl of [...(config?.allowedExternalUrls ?? []), (config as any).baseUrl]) {
+          if (baseUrl && requestConfig.url?.startsWith(baseUrl)) {
+            urlMatches = true;
+
+            break;
+          }
+        }
+
+        if (!urlMatches) {
+          matches = false;
 
           break;
         }
-      }
-
-      if (!urlMatches) {
-        matches = false;
-
-        break;
       }
     }
 
