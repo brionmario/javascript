@@ -59,8 +59,8 @@
   },
   "peerDependencies": {
     "@asgardeo/react": "workspace:*",
-    "react": "19.1.0",
-    "@tanstack/react-router": "1.134.4"
+    "react": ">=19.1.0",
+    "@tanstack/react-router": ">=1.134.4"
   },
   "dependencies": {
     "tslib": "2.8.1"
