@@ -1,5 +1,17 @@
 # @asgardeo/tanstack-router
 
+## 1.0.15
+
+### Patch Changes
+
+- [#279](https://github.com/asgardeo/javascript/pull/279)
+  [`0f91f3e`](https://github.com/asgardeo/javascript/commit/0f91f3e50b3c4565d15195c1a11883c9403fb6f0) Thanks
+  [@brionmario](https://github.com/brionmario)! - Bump package versions
+
+- Updated dependencies
+  [[`0f91f3e`](https://github.com/asgardeo/javascript/commit/0f91f3e50b3c4565d15195c1a11883c9403fb6f0)]:
+  - @asgardeo/react@0.6.15
+
 ## 1.0.14
 
 ### Patch Changes
