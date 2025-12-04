@@ -13,8 +13,8 @@
     "@asgardeo/react": "workspace:*",
     "@asgardeo/tanstack-router": "workspace:*",
     "@tanstack/react-router": "1.132.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react": "19.1.2",
+    "react-dom": "19.1.2"
   },
   "devDependencies": {
     "@types/react": "19.1.2",
