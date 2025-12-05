@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.6.16
+
+### Patch Changes
+
+- [#278](https://github.com/asgardeo/javascript/pull/278)
+  [`dc849e8`](https://github.com/asgardeo/javascript/commit/dc849e8394abe47733d593408b8427eed592cca7) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Rename sessionDataKey to authId for V2
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.33
+
 ## 0.6.15
 
 ### Patch Changes
