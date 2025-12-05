@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.8
+
+### Patch Changes
+
+- [#278](https://github.com/asgardeo/javascript/pull/278)
+  [`dc849e8`](https://github.com/asgardeo/javascript/commit/dc849e8394abe47733d593408b8427eed592cca7) Thanks
+  [@thiva-k](https://github.com/thiva-k)! - Rename sessionDataKey to authId for V2
+
 ## 0.2.7
 
 ### Patch Changes
