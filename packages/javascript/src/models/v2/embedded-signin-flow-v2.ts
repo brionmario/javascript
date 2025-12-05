@@ -94,5 +94,5 @@ export interface EmbeddedSignInFlowRequestV2 extends Partial<EmbeddedSignInFlowI
  * @experimental
  */
 export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlowExecuteRequestConfig<T> {
-  sessionDataKey?: string;
+  authId?: string;
 }

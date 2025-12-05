@@ -27,7 +27,7 @@ const executeEmbeddedSignInFlowV2 = async ({
   url,
   baseUrl,
   payload,
-  sessionDataKey,
+  authId,
   ...requestConfig
 }: EmbeddedFlowExecuteRequestConfigV2): Promise<EmbeddedSignInFlowResponseV2> => {
   if (!payload) {
@@ -68,11 +68,11 @@ const executeEmbeddedSignInFlowV2 = async ({
   const flowResponse: EmbeddedSignInFlowResponseV2 = await response.json();
 
   // IMPORTANT: Only applicable for Asgardeo V2 platform.
-  // Check if the flow is complete and has an assertion and sessionDataKey is provided, then call OAuth2 authorize.
+  // Check if the flow is complete and has an assertion and authId is provided, then call OAuth2 authorize.
   if (
     flowResponse.flowStatus === EmbeddedSignInFlowStatusV2.Complete &&
     (flowResponse as any).assertion &&
-    sessionDataKey
+    authId
   ) {
     try {
       const oauth2Response: Response = await fetch(`${baseUrl}/oauth2/authorize`, {
@@ -84,7 +84,7 @@ const executeEmbeddedSignInFlowV2 = async ({
         },
         body: JSON.stringify({
           assertion: (flowResponse as any).assertion,
-          sessionDataKey,
+          authId,
         }),
         credentials: 'include',
       });

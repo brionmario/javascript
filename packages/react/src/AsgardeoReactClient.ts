@@ -357,9 +357,9 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
         !isEmpty(arg1) &&
         ('flowId' in arg1 || 'applicationId' in arg1)
       ) {
-        const sessionDataKeyFromUrl: string = new URL(window.location.href).searchParams.get('sessionDataKey');
-        const sessionDataKeyFromStorage: string = sessionStorage.getItem('asgardeo_session_data_key');
-        const sessionDataKey: string = sessionDataKeyFromUrl || sessionDataKeyFromStorage;
+        const authIdFromUrl: string = new URL(window.location.href).searchParams.get('authId');
+        const authIdFromStorage: string = sessionStorage.getItem('asgardeo_auth_id');
+        const authId: string = authIdFromUrl || authIdFromStorage;
         const baseUrlFromStorage: string = sessionStorage.getItem('asgardeo_base_url');
         const baseUrl: string = config?.baseUrl || baseUrlFromStorage;
 
@@ -367,7 +367,7 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
           payload: arg1 as EmbeddedSignInFlowHandleRequestPayload,
           url: arg2?.url,
           baseUrl,
-          sessionDataKey,
+          authId,
         });
       }
 

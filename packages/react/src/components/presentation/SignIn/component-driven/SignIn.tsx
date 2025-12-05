@@ -197,7 +197,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   const clearFlowState = (): void => {
     setFlowId(null);
     setIsFlowInitialized(false);
-    sessionStorage.removeItem('asgardeo_session_data_key');
+    sessionStorage.removeItem('asgardeo_auth_id');
     // Reset refs to allow new flows to start properly
     oauthCodeProcessedRef.current = false;
   };
@@ -215,16 +215,16 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       nonce: urlParams.get('nonce'),
       flowId: urlParams.get('flowId'),
       applicationId: urlParams.get('applicationId'),
-      sessionDataKey: urlParams.get('sessionDataKey'),
+      authId: urlParams.get('authId'),
     };
   };
 
   /**
-   * Handle sessionDataKey from URL and store it in sessionStorage.
+   * Handle authId from URL and store it in sessionStorage.
    */
-  const handleSessionDataKey = (sessionDataKey: string | null): void => {
-    if (sessionDataKey) {
-      sessionStorage.setItem('asgardeo_session_data_key', sessionDataKey);
+  const handleAuthId = (authId: string | null): void => {
+    if (authId) {
+      sessionStorage.setItem('asgardeo_auth_id', authId);
     }
   };
 
@@ -257,14 +257,14 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
   };
 
   /**
-   * Clean up flow-related URL parameters (flowId, sessionDataKey) from the browser URL.
+   * Clean up flow-related URL parameters (flowId, authId) from the browser URL.
    * Used after flowId is set in state to prevent using invalidated flowId from URL.
    */
   const cleanupFlowUrlParams = (): void => {
     if (!window?.location?.href) return;
     const url = new URL(window.location.href);
     url.searchParams.delete('flowId');
-    url.searchParams.delete('sessionDataKey');
+    url.searchParams.delete('authId');
     url.searchParams.delete('applicationId');
     window?.history?.replaceState({}, '', url.toString());
   };
@@ -309,7 +309,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         }
 
         const urlParams = getUrlParams();
-        handleSessionDataKey(urlParams.sessionDataKey);
+        handleAuthId(urlParams.authId);
 
         window.location.href = redirectURL;
         return true;
@@ -331,7 +331,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       return;
     }
 
-    handleSessionDataKey(urlParams.sessionDataKey);
+    handleAuthId(urlParams.authId);
 
     // Skip OAuth code processing - let the dedicated OAuth useEffect handle it
     if (urlParams.code || urlParams.state) {
@@ -367,7 +367,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     // Reset OAuth code processed ref when starting a new flow
     oauthCodeProcessedRef.current = false;
 
-    handleSessionDataKey(urlParams.sessionDataKey);
+    handleAuthId(urlParams.authId);
 
     const effectiveApplicationId = applicationId || urlParams.applicationId;
 
@@ -488,7 +488,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         setFlowId(null);
         setIsFlowInitialized(false);
         sessionStorage.removeItem('asgardeo_flow_id');
-        sessionStorage.removeItem('asgardeo_session_data_key');
+        sessionStorage.removeItem('asgardeo_auth_id');
 
         // Clean up OAuth URL params before redirect
         cleanupOAuthUrlParams(true);
