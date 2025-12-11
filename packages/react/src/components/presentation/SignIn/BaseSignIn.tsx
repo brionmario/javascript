@@ -16,16 +16,10 @@
  * under the License.
  */
 
-import {
-  EmbeddedSignInFlowInitiateResponse,
-  EmbeddedSignInFlowHandleResponse,
-  EmbeddedSignInFlowHandleRequestPayload,
-  Platform,
-} from '@asgardeo/browser';
-import {FC, ReactElement} from 'react';
-import BaseSignInV1, {BaseSignInProps as BaseSignInV1Props} from './non-component-driven/BaseSignIn';
-import BaseSignInV2, {BaseSignInProps as BaseSignInV2Props} from './component-driven/BaseSignIn';
-import ComponentDrivenSignIn, {SignInRenderProps} from './component-driven/SignIn';
+import {Platform} from '@asgardeo/browser';
+import {FC} from 'react';
+import BaseSignInV1, {BaseSignInProps as BaseSignInV1Props} from './v1/BaseSignIn';
+import BaseSignInV2, {BaseSignInProps as BaseSignInV2Props} from './v2/BaseSignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 
 /**
@@ -38,10 +32,10 @@ const BaseSignIn: FC<BaseSignInProps> = (props: BaseSignInProps) => {
   const {platform} = useAsgardeo();
 
   if (platform === Platform.AsgardeoV2) {
-    return <BaseSignInV2 {...props as BaseSignInV2Props} />;
+    return <BaseSignInV2 {...(props as BaseSignInV2Props)} />;
   }
 
-  return <BaseSignInV1 {...props as BaseSignInV1Props} />;
+  return <BaseSignInV1 {...(props as BaseSignInV1Props)} />;
 };
 
 export default BaseSignIn;

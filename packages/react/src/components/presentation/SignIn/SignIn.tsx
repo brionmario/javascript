@@ -23,15 +23,15 @@ import {
   Platform,
 } from '@asgardeo/browser';
 import {FC, ReactElement} from 'react';
-import BaseSignInV1, {BaseSignInProps as BaseSignInV1Props} from './non-component-driven/BaseSignIn';
-import SignInV2, {SignInRenderProps} from './component-driven/SignIn';
+import SignInV2, {SignInRenderProps} from './v2/SignIn';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
 
 /**
  * Props for the SignIn component.
  * Extends BaseSignInProps for full compatibility with the React BaseSignIn component
  */
-export type SignInProps = Pick<BaseSignInV1Props, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'> & {
+export type SignInProps = Pick<BaseSignInProps, 'className' | 'onSuccess' | 'onError' | 'variant' | 'size'> & {
   /**
    * Render function for custom UI (render props pattern).
    */
@@ -115,7 +115,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', children, ...rest}
   }
 
   return (
-    <BaseSignInV1
+    <BaseSignIn
       isLoading={isLoading || !isInitialized}
       afterSignInUrl={afterSignInUrl}
       onInitialize={handleInitialize}

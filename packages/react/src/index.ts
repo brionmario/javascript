@@ -131,20 +131,20 @@ export {default as SignUp} from './components/presentation/SignUp/SignUp';
 export * from './components/presentation/SignUp/SignUp';
 
 // Sign-In Options
-export {default as IdentifierFirst} from './components/presentation/SignIn/non-component-driven/options/IdentifierFirst';
-export {default as UsernamePassword} from './components/presentation/SignIn/non-component-driven/options/UsernamePassword';
+export {default as IdentifierFirst} from './components/presentation/SignIn/v1/options/IdentifierFirst';
+export {default as UsernamePassword} from './components/presentation/SignIn/v1/options/UsernamePassword';
 export {default as GoogleButton} from './components/adapters/GoogleButton';
 export {default as GitHubButton} from './components/adapters/GitHubButton';
 export {default as MicrosoftButton} from './components/adapters/MicrosoftButton';
 export {default as FacebookButton} from './components/adapters/FacebookButton';
 export {default as LinkedInButton} from './components/adapters/LinkedInButton';
 export {default as SignInWithEthereumButton} from './components/adapters/SignInWithEthereumButton';
-export {default as EmailOtp} from './components/presentation/SignIn/non-component-driven/options/EmailOtp';
-export {default as Totp} from './components/presentation/SignIn/non-component-driven/options/Totp';
-export {default as SmsOtp} from './components/presentation/SignIn/non-component-driven/options/SmsOtp';
-export {default as SocialButton} from './components/presentation/SignIn/non-component-driven/options/SocialButton';
-export {default as MultiOptionButton} from './components/presentation/SignIn/non-component-driven/options/MultiOptionButton';
-export * from './components/presentation/SignIn/non-component-driven/options/SignInOptionFactory';
+export {default as EmailOtp} from './components/presentation/SignIn/v1/options/EmailOtp';
+export {default as Totp} from './components/presentation/SignIn/v1/options/Totp';
+export {default as SmsOtp} from './components/presentation/SignIn/v1/options/SmsOtp';
+export {default as SocialButton} from './components/presentation/SignIn/v1/options/SocialButton';
+export {default as MultiOptionButton} from './components/presentation/SignIn/v1/options/MultiOptionButton';
+export * from './components/presentation/SignIn/v1/options/SignInOptionFactory';
 
 export {default as BaseUser} from './components/presentation/User/BaseUser';
 export * from './components/presentation/User/BaseUser';
