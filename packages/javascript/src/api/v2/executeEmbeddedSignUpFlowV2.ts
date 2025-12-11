@@ -42,6 +42,10 @@ const executeEmbeddedSignUpFlowV2 = async ({
 
   let endpoint: string = url ?? `${baseUrl}/flow/execute`;
 
+  // `verbose: true` is required to get the `meta` field in the response that includes component details.
+  const requestPayload: Record<string, unknown> =
+    typeof payload === 'object' && payload !== null && 'flowType' in payload ? {...payload, verbose: true} : payload;
+
   const response: Response = await fetch(endpoint, {
     ...requestConfig,
     method: requestConfig.method || 'POST',
@@ -50,7 +54,7 @@ const executeEmbeddedSignUpFlowV2 = async ({
       Accept: 'application/json',
       ...requestConfig.headers,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(requestPayload),
   });
 
   if (!response.ok) {
@@ -69,11 +73,7 @@ const executeEmbeddedSignUpFlowV2 = async ({
 
   // IMPORTANT: Only applicable for Asgardeo V2 platform.
   // Check if the flow is complete and has an assertion and authId is provided, then call OAuth2 authorize.
-  if (
-    flowResponse.flowStatus === EmbeddedSignUpFlowStatusV2.Complete &&
-    (flowResponse as any).assertion &&
-    authId
-  ) {
+  if (flowResponse.flowStatus === EmbeddedSignUpFlowStatusV2.Complete && (flowResponse as any).assertion && authId) {
     try {
       const oauth2Response: Response = await fetch(`${baseUrl}/oauth2/authorize`, {
         method: 'POST',
