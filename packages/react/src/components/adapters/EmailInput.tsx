@@ -18,13 +18,13 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import {createField} from '../factories/FieldFactory';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Email input component for sign-up forms.
  */
-const EmailInput: FC<BaseSignUpOptionProps> = ({
+const EmailInput: FC<AdapterProps> = ({
   component,
   formValues,
   touchedFields,

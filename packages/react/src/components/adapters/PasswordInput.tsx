@@ -18,13 +18,13 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import {createField} from '../factories/FieldFactory';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Password input component for sign-up forms.
  */
-const PasswordInput: FC<BaseSignUpOptionProps> = ({
+const PasswordInput: FC<AdapterProps> = ({
   component,
   formValues,
   touchedFields,

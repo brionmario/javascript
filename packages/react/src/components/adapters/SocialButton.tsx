@@ -17,20 +17,13 @@
  */
 
 import {FC} from 'react';
-
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import Button from '../primitives/Button/Button';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Social button component for sign-up forms.
  */
-const SocialButton: FC<BaseSignUpOptionProps> = ({
-  component,
-  isLoading,
-  buttonClassName,
-  size = 'medium',
-  onSubmit,
-}) => {
+const SocialButton: FC<AdapterProps> = ({component, isLoading, buttonClassName, size = 'medium', onSubmit}) => {
   const config: Record<string, unknown> = component.config || {};
   const buttonText: string = (config['text'] as string) || (config['label'] as string) || 'Continue with Social';
 

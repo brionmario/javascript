@@ -18,13 +18,13 @@
 
 import {FieldType} from '@asgardeo/browser';
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import {createField} from '../factories/FieldFactory';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Text input component for sign-up forms.
  */
-const TextInput: FC<BaseSignUpOptionProps> = ({
+const TextInput: FC<AdapterProps> = ({
   component,
   formValues,
   touchedFields,
@@ -40,9 +40,9 @@ const TextInput: FC<BaseSignUpOptionProps> = ({
   return createField({
     type: FieldType.Text,
     name: fieldName,
-    label: config['label'] as string || '',
-    placeholder: config['placeholder'] as string || '',
-    required: config['required'] as boolean || false,
+    label: (config['label'] as string) || '',
+    placeholder: (config['placeholder'] as string) || '',
+    required: (config['required'] as boolean) || false,
     value,
     error,
     onChange: (newValue: string) => onInputChange(fieldName, newValue),
