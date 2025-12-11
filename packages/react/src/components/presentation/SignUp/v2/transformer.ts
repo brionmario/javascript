@@ -16,13 +16,8 @@
  * under the License.
  */
 
-import {
-  EmbeddedFlowComponent,
-  EmbeddedFlowComponentType,
-  EmbeddedSignUpFlowErrorResponseV2,
-  EmbeddedFlowExecuteErrorResponse,
-} from '@asgardeo/browser';
-import useTranslation, {UseTranslation} from '../../../hooks/useTranslation';
+import {EmbeddedFlowComponent, EmbeddedFlowComponentType, EmbeddedSignUpFlowErrorResponseV2} from '@asgardeo/browser';
+import {UseTranslation} from '../../../../hooks/useTranslation';
 
 /**
  * Generate a unique ID for components
@@ -58,7 +53,7 @@ const getInputLabel = (name: string, type: string, t: UseTranslation['t']): stri
   if (label === i18nKey || !label) {
     // Convert camelCase to sentence case (e.g., "firstName" -> "First name")
     // TODO: Need to remove this one the following improvement is done.
-    // Tracker: https://github.com/asgardeo/thunder/issues/725
+    // Tracker: https://github.com/asgardeo/AsgardeoV2 (AKA thunder/issues/725
     return name
       .replace(/([A-Z])/g, ' $1')
       .replace(/^./, str => str.toUpperCase())
@@ -104,7 +99,7 @@ const convertSimpleInputToComponent = (
 
   // If the field name contains 'password' but type is 'string', change it to 'password'
   // TODO: Need to remove this one the following improvement is done.
-  // Tracker: https://github.com/asgardeo/thunder/issues/725
+  // Tracker: https://github.com/asgardeo/AsgardeoV2 (AKA thunder/issues/725
   if (input.name.toLowerCase().includes('password') && input.type.toLowerCase() === 'string') {
     fieldType = 'password';
   }
@@ -239,92 +234,32 @@ export const transformSimpleToComponentDriven = (response: any, t: UseTranslatio
 };
 
 /**
- * Extract error message from various error response formats.
- *
- * This function supports multiple error formats from different versions of Asgardeo APIs:
- * - **AsgardeoV2 format**: Uses `failureReason` field from responses with `flowStatus: "ERROR"`
- * - **AsgardeoV1 format**: Uses `description` or `message` fields from responses with error `code`
- * - **AsgardeoAPIError**: Parses JSON from error messages to extract detailed error information
- * - **Standard Error objects**: Falls back to the `message` property
- * - **String errors**: Returns the string as-is
- *
- * @param error - The error object, which can be:
- *   - AsgardeoV2 error response: `{ flowStatus: "ERROR", failureReason: string, ... }`
- *   - AsgardeoV1 error response: `{ code: string, message?: string, description?: string, ... }`
- *   - AsgardeoAPIError instance with JSON message
- *   - Standard Error object
- *   - String error message
- * @param t - Translation function for fallback error messages
- * @returns Localized error message extracted from the error object
- *
- * @example
- * ```typescript
- * // AsgardeoV2 error
- * const v2Error = { flowStatus: "ERROR", failureReason: "User already exists" };
- * const message = extractErrorMessage(v2Error, t); // "User already exists"
- *
- * // AsgardeoV1 error
- * const v1Error = { code: "FEE-60005", description: "Error while provisioning user" };
- * const message = extractErrorMessage(v1Error, t); // "Error while provisioning user"
- *
- * // AsgardeoAPIError
- * const apiError = new AsgardeoAPIError('{"failureReason": "Invalid credentials"}');
- * const message = extractErrorMessage(apiError, t); // "Invalid credentials"
- * ```
+ * Extract error message from AsgardeoV2 (AKA Thunder) error response format.
  */
-export const extractErrorMessage = (
-  error: EmbeddedSignUpFlowErrorResponseV2 | EmbeddedFlowExecuteErrorResponse,
-  t: UseTranslation['t'],
-): string => {
+export const extractErrorMessage = (error: EmbeddedSignUpFlowErrorResponseV2, t: UseTranslation['t']): string => {
   let errorMessage: string = t('errors.sign.up.flow.failure');
 
   if (error && typeof error === 'object') {
-    // Handle AsgardeoV2 error format with failureReason
+    // Handle AsgardeoV2 (AKA Thunder) error format with failureReason
     if (
       (error as EmbeddedSignUpFlowErrorResponseV2).flowStatus === 'ERROR' &&
       (error as EmbeddedSignUpFlowErrorResponseV2).failureReason
     ) {
       errorMessage = (error as EmbeddedSignUpFlowErrorResponseV2).failureReason;
-    } else if (
-      (error as EmbeddedFlowExecuteErrorResponse).code &&
-      ((error as EmbeddedFlowExecuteErrorResponse).message || (error as EmbeddedFlowExecuteErrorResponse).description)
-    ) {
-      errorMessage =
-        (error as EmbeddedFlowExecuteErrorResponse).description || (error as EmbeddedFlowExecuteErrorResponse).message;
     } else if (error instanceof Error && error.name === 'AsgardeoAPIError') {
       try {
-        const errorResponse: EmbeddedSignUpFlowErrorResponseV2 | EmbeddedFlowExecuteErrorResponse = JSON.parse(
-          error.message,
-        );
+        const errorResponse: EmbeddedSignUpFlowErrorResponseV2 = JSON.parse(error.message);
 
-        // Try AsgardeoV2 format first
         if ((errorResponse as EmbeddedSignUpFlowErrorResponseV2).failureReason) {
           errorMessage = (errorResponse as EmbeddedSignUpFlowErrorResponseV2).failureReason;
-        }
-
-        // Try AsgardeoV1 format
-        else if ((errorResponse as EmbeddedFlowExecuteErrorResponse).description) {
-          errorMessage = (errorResponse as EmbeddedFlowExecuteErrorResponse).description;
-        } else if ((errorResponse as EmbeddedFlowExecuteErrorResponse).message) {
-          errorMessage = (errorResponse as EmbeddedFlowExecuteErrorResponse).message;
         } else {
           errorMessage = error.message;
         }
       } catch {
         errorMessage = error.message;
       }
-    } else if (
-      (
-        error as {
-          message: string;
-        }
-      ).message
-    ) {
-      errorMessage = (
-        error as {
-          message: string;
-        }
-      ).message;
+    } else if ((error as any)?.message) {
+      errorMessage = (error as any).message;
     }
   } else if (typeof error === 'string') {
     errorMessage = error;
@@ -334,50 +269,10 @@ export const extractErrorMessage = (
 };
 
 /**
- * Check if a response is an error response and extract the error message.
- *
- * This function serves as a guard to identify error responses from successful responses
- * in both AsgardeoV1 and AsgardeoV2 API formats. It's particularly useful for flow
- * normalization where error responses should be handled differently from success responses.
- *
- * **Supported Error Response Formats:**
- * - **AsgardeoV2**: Responses with `flowStatus: "ERROR"` and `failureReason`
- * - **AsgardeoV1**: Responses with error `code` and `message`/`description` fields
- *
- * @param response - The API response object to check for error indicators
- * @param t - Translation function for extracting localized error messages
- * @returns `null` if the response is not an error, or the extracted error message string if it is an error
- *
- * @example
- * ```typescript
- * // Success response
- * const successResponse = { flowStatus: "INCOMPLETE", data: { components: [] } };
- * const error = checkForErrorResponse(successResponse, t); // null
- *
- * // AsgardeoV2 error response
- * const v2ErrorResponse = {
- *   flowStatus: "ERROR",
- *   failureReason: "User already exists with the provided username."
- * };
- * const error = checkForErrorResponse(v2ErrorResponse, t); // "User already exists with the provided username."
- *
- * // AsgardeoV1 error response
- * const v1ErrorResponse = {
- *   code: "FEE-60005",
- *   message: "Error while provisioning user.",
- *   description: "Error occurred while provisioning user in the request of flow id: ac57315c-6ca6-49dc-8664-fcdcff354f46"
- * };
- * const error = checkForErrorResponse(v1ErrorResponse, t); // "Error occurred while provisioning user in the request of flow id: ac57315c-6ca6-49dc-8664-fcdcff354f46"
- * ```
+ * Check if a response is an error response and extract the error message for AsgardeoV2 (AKA Thunder) format.
  */
 export const checkForErrorResponse = (response: any, t: UseTranslation['t']): string | null => {
-  // Check for AsgardeoV2 error response format
   if (response?.flowStatus === 'ERROR') {
-    return extractErrorMessage(response, t);
-  }
-
-  // Check for AsgardeoV1 error response format
-  if (response?.code && (response?.message || response?.description)) {
     return extractErrorMessage(response, t);
   }
 
@@ -385,8 +280,7 @@ export const checkForErrorResponse = (response: any, t: UseTranslation['t']): st
 };
 
 /**
- * Generic transformer that handles both simple and component-driven responses
- * Also handles AsgardeoV2 error responses that should be thrown as errors
+ * Transformer that handles simple responses and AsgardeoV2 (AKA Thunder) error responses
  */
 export const normalizeFlowResponse = (
   response: any,

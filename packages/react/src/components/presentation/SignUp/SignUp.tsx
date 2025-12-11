@@ -16,35 +16,21 @@
  * under the License.
  */
 
-import {
-  EmbeddedFlowExecuteRequestPayload,
-  EmbeddedFlowExecuteResponse,
-  EmbeddedFlowResponseType,
-  EmbeddedFlowType,
-  Platform,
-} from '@asgardeo/browser';
-import {FC, ReactNode} from 'react';
-import BaseSignUp, {BaseSignUpProps, BaseSignUpRenderProps} from './BaseSignUp';
+import {Platform} from '@asgardeo/browser';
+import {FC} from 'react';
+import SignUpV1, {SignUpProps as SignUpV1Props} from './v1/SignUp';
+import SignUpV2, {SignUpProps as SignUpV2Props} from './v2/SignUp';
 import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
 
 /**
- * Render props function parameters (re-exported from BaseSignUp for convenience)
- */
-export type SignUpRenderProps = BaseSignUpRenderProps;
-
-/**
  * Props for the SignUp component.
+ * Extends SignUpV1Props & SignUpV2Props for full compatibility with both React SignUp components.
  */
-export type SignUpProps = BaseSignUpProps & {
-  /**
-   * Render props function for custom UI
-   */
-  children?: (props: SignUpRenderProps) => ReactNode;
-};
+export type SignUpProps = SignUpV1Props | SignUpV2Props;
 
 /**
  * A styled SignUp component that provides embedded sign-up flow with pre-built styling.
- * This component handles the API calls for sign-up and delegates UI logic to BaseSignUp.
+ * This component routes to the appropriate version-specific implementation based on the platform.
  *
  * @example
  * // Default UI
@@ -112,89 +98,14 @@ export type SignUpProps = BaseSignUpProps & {
  * };
  * ```
  */
-const SignUp: FC<SignUpProps> = ({
-  className,
-  size = 'medium',
-  afterSignUpUrl,
-  onError,
-  onComplete,
-  shouldRedirectAfterSignUp = true,
-  children,
-  ...rest
-}) => {
-  const {signUp, isInitialized, applicationId, platform} = useAsgardeo();
+const SignUp: FC<SignUpProps> = (props: SignUpProps) => {
+  const {platform} = useAsgardeo();
 
-  /**
-   * Initialize the sign-up flow.
-   */
-  const handleInitialize = async (
-    payload?: EmbeddedFlowExecuteRequestPayload,
-  ): Promise<EmbeddedFlowExecuteResponse> => {
-    // For Thunder/AsgardeoV2 platform, it uses the same API but might return different response format
-    // The transformation will be handled by BaseSignUp's normalizeFlowResponse function
-    const urlParams: URLSearchParams = new URL(window.location.href).searchParams;
-    const applicationIdFromUrl: string = urlParams.get('applicationId');
+  if (platform === Platform.AsgardeoV2) {
+    return <SignUpV2 {...(props as SignUpV2Props)} />;
+  }
 
-    // Priority order: flowId from URL > applicationId from context > applicationId from URL
-    const effectiveApplicationId = applicationId || applicationIdFromUrl;
-
-    // If no payload provided, create initial payload
-    // For Thunder (Platform.AsgardeoV2), include applicationId for proper initialization
-    const initialPayload = payload || {
-      flowType: EmbeddedFlowType.Registration,
-      ...(platform === Platform.AsgardeoV2 && effectiveApplicationId && {applicationId: effectiveApplicationId}),
-    };
-
-    return (await signUp(initialPayload)) as EmbeddedFlowExecuteResponse;
-  };
-
-  /**
-   * Handle sign-up steps.
-   */
-  const handleOnSubmit = async (payload: EmbeddedFlowExecuteRequestPayload): Promise<EmbeddedFlowExecuteResponse> =>
-    (await signUp(payload)) as EmbeddedFlowExecuteResponse;
-
-  /**
-   * Handle successful sign-up and redirect.
-   */
-  const handleComplete = (response: EmbeddedFlowExecuteResponse) => {
-    onComplete?.(response);
-
-    // For non-redirection responses (regular sign-up completion), handle redirect if configured
-    if (shouldRedirectAfterSignUp && response?.type !== EmbeddedFlowResponseType.Redirection && afterSignUpUrl) {
-      window.location.href = afterSignUpUrl;
-    }
-
-    // For redirection responses (social sign-up), they are handled by BaseSignUp's popup mechanism
-    // and we only redirect after the OAuth flow is complete if shouldRedirectAfterSignUp is true
-    if (
-      shouldRedirectAfterSignUp &&
-      response?.type === EmbeddedFlowResponseType.Redirection &&
-      response?.data?.redirectURL &&
-      !response.data.redirectURL.includes('oauth') && // Not a social provider redirect
-      !response.data.redirectURL.includes('auth') // Not an auth provider redirect
-    ) {
-      window.location.href = response.data.redirectURL;
-    }
-  };
-
-  return (
-    <BaseSignUp
-      afterSignUpUrl={afterSignUpUrl}
-      onInitialize={handleInitialize}
-      onSubmit={handleOnSubmit}
-      onError={onError}
-      onComplete={handleComplete}
-      className={className}
-      size={size}
-      isInitialized={isInitialized}
-      children={children}
-      showLogo={true}
-      showTitle={platform === Platform.AsgardeoV2}
-      showSubtitle={platform === Platform.AsgardeoV2}
-      {...rest}
-    />
-  );
+  return <SignUpV1 {...(props as SignUpV1Props)} />;
 };
 
 export default SignUp;

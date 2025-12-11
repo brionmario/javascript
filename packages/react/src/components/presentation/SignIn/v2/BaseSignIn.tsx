@@ -31,7 +31,7 @@ import useFlow from '../../../../contexts/Flow/useFlow';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
-import {extractErrorMessage} from '../../SignUp/transformer';
+import { extractErrorMessage } from '../../SignUp/v2/transformer';
 
 /**
  * Render props for custom UI rendering
