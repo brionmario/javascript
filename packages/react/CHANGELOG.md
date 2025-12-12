@@ -1,5 +1,18 @@
 # @asgardeo/react
 
+## 0.6.17
+
+### Patch Changes
+
+- [#283](https://github.com/asgardeo/javascript/pull/283)
+  [`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Bump package versions
+
+- Updated dependencies
+  [[`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8)]:
+  - @asgardeo/browser@0.1.34
+  - @asgardeo/i18n@0.3.7
+
 ## 0.6.16
 
 ### Patch Changes

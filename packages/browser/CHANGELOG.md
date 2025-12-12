@@ -1,5 +1,17 @@
 # @asgardeo/browser
 
+## 0.1.34
+
+### Patch Changes
+
+- [#283](https://github.com/asgardeo/javascript/pull/283)
+  [`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Bump package versions
+
+- Updated dependencies
+  [[`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8)]:
+  - @asgardeo/javascript@0.2.9
+
 ## 0.1.33
 
 ### Patch Changes
