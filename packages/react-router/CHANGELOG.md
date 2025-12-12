@@ -1,5 +1,17 @@
 # @asgardeo/react-router
 
+## 1.0.17
+
+### Patch Changes
+
+- [#283](https://github.com/asgardeo/javascript/pull/283)
+  [`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Bump package versions
+
+- Updated dependencies
+  [[`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8)]:
+  - @asgardeo/react@0.6.17
+
 ## 1.0.16
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @asgardeo/i18n
 
+## 0.3.7
+
+### Patch Changes
+
+- [#283](https://github.com/asgardeo/javascript/pull/283)
+  [`f25f1c8`](https://github.com/asgardeo/javascript/commit/f25f1c83658192aafd35c79ddd53554847e706f8) Thanks
+  [@DonOmalVindula](https://github.com/DonOmalVindula)! - Bump package versions
+
 ## 0.3.6
 
 ### Patch Changes
