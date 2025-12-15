@@ -74,12 +74,33 @@ export {
   EmbeddedSignInFlowAuthenticatorKnownIdPType,
 } from './models/embedded-signin-flow';
 export {
-  EmbeddedSignInFlowResponseV2,
-  EmbeddedSignInFlowStatusV2,
-  EmbeddedSignInFlowTypeV2,
-  EmbeddedSignInFlowInitiateRequestV2,
-  EmbeddedSignInFlowRequestV2,
+  EmbeddedFlowComponentType as EmbeddedFlowComponentTypeV2,
+  EmbeddedFlowActionVariant as EmbeddedFlowActionVariantV2,
+  EmbeddedFlowTextVariant as EmbeddedFlowTextVariantV2,
+  EmbeddedFlowEventType as EmbeddedFlowEventTypeV2,
+  EmbeddedFlowComponent as EmbeddedFlowComponentV2,
+  EmbeddedFlowResponseData as EmbeddedFlowResponseDataV2,
+  EmbeddedFlowExecuteRequestConfig as EmbeddedFlowExecuteRequestConfigV2,
+} from './models/v2/embedded-flow-v2';
+export {
+  EmbeddedSignInFlowStatus as EmbeddedSignInFlowStatusV2,
+  EmbeddedSignInFlowType as EmbeddedSignInFlowTypeV2,
+  ExtendedEmbeddedSignInFlowResponse as ExtendedEmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowResponse as EmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowCompleteResponse as EmbeddedSignInFlowCompleteResponseV2,
+  EmbeddedSignInFlowInitiateRequest as EmbeddedSignInFlowInitiateRequestV2,
+  EmbeddedSignInFlowRequest as EmbeddedSignInFlowRequestV2,
 } from './models/v2/embedded-signin-flow-v2';
+export {
+  EmbeddedSignUpFlowStatus as EmbeddedSignUpFlowStatusV2,
+  EmbeddedSignUpFlowType as EmbeddedSignUpFlowTypeV2,
+  ExtendedEmbeddedSignUpFlowResponse as ExtendedEmbeddedSignUpFlowResponseV2,
+  EmbeddedSignUpFlowResponse as EmbeddedSignUpFlowResponseV2,
+  EmbeddedSignUpFlowCompleteResponse as EmbeddedSignUpFlowCompleteResponseV2,
+  EmbeddedSignUpFlowInitiateRequest as EmbeddedSignUpFlowInitiateRequestV2,
+  EmbeddedSignUpFlowRequest as EmbeddedSignUpFlowRequestV2,
+  EmbeddedSignUpFlowErrorResponse as EmbeddedSignUpFlowErrorResponseV2,
+} from './models/v2/embedded-signup-flow-v2';
 export {
   EmbeddedFlowType,
   EmbeddedFlowStatus,
@@ -92,17 +113,6 @@ export {
   EmbeddedFlowExecuteRequestConfig,
   EmbeddedFlowExecuteErrorResponse,
 } from './models/embedded-flow';
-export {
-  EmbeddedSignUpFlowStatusV2,
-  EmbeddedSignUpFlowInitiateRequestV2,
-  EmbeddedSignUpFlowRequestV2,
-  EmbeddedSignUpFlowCompleteResponse,
-  EmbeddedSignUpFlowResponseV2,
-  ExtendedEmbeddedSignUpFlowResponseV2,
-  EmbeddedSignUpFlowTypeV2,
-  EmbeddedFlowExecuteRequestConfigV2,
-  EmbeddedSignUpFlowErrorResponseV2,
-} from './models/v2/embedded-signup-flow-v2';
 export {FlowMode} from './models/flow';
 export {AsgardeoClient} from './models/client';
 export {

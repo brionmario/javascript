@@ -16,10 +16,10 @@
  * under the License.
  */
 
+import {EmbeddedFlowExecuteRequestConfig as EmbeddedFlowExecuteRequestConfigV2} from '../../models/v2/embedded-flow-v2';
 import {
-  EmbeddedFlowExecuteRequestConfigV2,
-  EmbeddedSignInFlowResponseV2,
-  EmbeddedSignInFlowStatusV2,
+  EmbeddedSignInFlowResponse as EmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowStatus as EmbeddedSignInFlowStatusV2,
 } from '../../models/v2/embedded-signin-flow-v2';
 import AsgardeoAPIError from '../../errors/AsgardeoAPIError';
 

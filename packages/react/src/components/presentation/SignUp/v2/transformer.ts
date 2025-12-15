@@ -16,271 +16,84 @@
  * under the License.
  */
 
-import {EmbeddedFlowComponent, EmbeddedFlowComponentType, EmbeddedSignUpFlowErrorResponseV2} from '@asgardeo/browser';
+import {
+  EmbeddedFlowComponent,
+  EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
+  EmbeddedSignUpFlowErrorResponseV2 as EmbeddedSignUpFlowErrorResponse,
+} from '@asgardeo/browser';
 import {UseTranslation} from '../../../../hooks/useTranslation';
 
 /**
- * Generate a unique ID for components
+ * Transform flow response using meta.components structure.
+ * Converts the API component format to the legacy format expected by UI components.
  */
-const generateId = (prefix: string): string => {
-  const suffix: string = Math.random().toString(36).substring(2, 6);
+export const transformToComponentDriven = (response: any): EmbeddedFlowComponent[] => {
+  if (!response?.data?.meta?.components) {
+    return [];
+  }
 
-  return `${prefix}_${suffix}`;
+  return transformComponents(response.data.meta.components);
 };
 
 /**
- * Convert simple input type to component variant
+ * Convert API component format to the format expected by UI components.
  */
-const getInputVariant = (type: string, name: string): 'TEXT' | 'EMAIL' | 'PASSWORD' => {
-  // Then check type
-  switch (type.toLowerCase()) {
-    case 'email':
-      return 'EMAIL';
-    case 'password':
-      return 'PASSWORD';
-    default:
-      return 'TEXT';
-  }
+const transformComponents = (apiComponents: any[]): EmbeddedFlowComponent[] => {
+  return apiComponents.map(transformSingleComponent).filter(Boolean);
 };
 
 /**
- * Get appropriate label for input based on name and type
+ * Transform a single API component to the expected format
  */
-const getInputLabel = (name: string, type: string, t: UseTranslation['t']): string => {
-  const i18nKey: string = `elements.fields.${name}`;
-  const label: string = t(i18nKey);
+const transformSingleComponent = (apiComponent: any): EmbeddedFlowComponent | null => {
+  if (!apiComponent?.type) return null;
 
-  if (label === i18nKey || !label) {
-    // Convert camelCase to sentence case (e.g., "firstName" -> "First name")
-    // TODO: Need to remove this one the following improvement is done.
-    // Tracker: https://github.com/asgardeo/AsgardeoV2 (AKA thunder/issues/725
-    return name
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, str => str.toUpperCase())
-      .trim();
-  }
-
-  return label;
-};
-
-/**
- * Get appropriate placeholder for input based on name and type.
- *
- * @param name - The input field name
- * @param type - The input field type
- * @param t - Translation function
- * @returns Localized or fallback placeholder for the input
- */
-const getInputPlaceholder = (name: string, type: string, t: UseTranslation['t']): string => {
-  const label: string = getInputLabel(name, type, t);
-  const placeholder: string = t('elements.fields.placeholder', {field: label});
-
-  // If translation not found, fallback
-  if (!placeholder || placeholder === 'elements.fields.placeholder') {
-    return `Enter your ${label}`;
-  }
-
-  return placeholder;
-};
-
-/**
- * Convert simple input to component-driven input component
- */
-const convertSimpleInputToComponent = (
-  input: {
-    name: string;
-    type: string;
-    required: boolean;
-    options?: string[];
-  },
-  t: UseTranslation['t'],
-): EmbeddedFlowComponent => {
-  let fieldType: string = input.type;
-
-  // If the field name contains 'password' but type is 'string', change it to 'password'
-  // TODO: Need to remove this one the following improvement is done.
-  // Tracker: https://github.com/asgardeo/AsgardeoV2 (AKA thunder/issues/725
-  if (input.name.toLowerCase().includes('password') && input.type.toLowerCase() === 'string') {
-    fieldType = 'password';
-  }
-
-  // Handle dropdown type
-  if (input.type.toLowerCase() === 'dropdown') {
-    const label: string = getInputLabel(input.name, fieldType, t);
-    const placeholder: string = getInputPlaceholder(input.name, fieldType, t);
-
-    return {
-      id: generateId('select'),
-      type: EmbeddedFlowComponentType.Select,
-      variant: 'SELECT',
-      config: {
-        type: fieldType,
-        label,
-        placeholder,
-        required: input.required as boolean,
-        identifier: input.name,
-        hint: '',
-        options: input.options || [],
-      },
-      components: [],
-    };
-  }
-
-  const variant: 'TEXT' | 'EMAIL' | 'PASSWORD' = getInputVariant(fieldType, input.name);
-  const label: string = getInputLabel(input.name, fieldType, t);
-  const placeholder: string = getInputPlaceholder(input.name, fieldType, t);
-
-  return {
-    id: generateId('input'),
-    type: EmbeddedFlowComponentType.Input,
-    variant,
+  const baseComponent: EmbeddedFlowComponent = {
+    id: apiComponent.id,
+    type: apiComponent.type,
+    variant: apiComponent.variant,
     config: {
-      type: fieldType,
-      label,
-      placeholder,
-      required: input.required as boolean,
-      identifier: input.name,
-      hint: '',
+      label: apiComponent.label,
+      placeholder: apiComponent.placeholder,
+      required: apiComponent.required,
+      identifier: apiComponent.id,
+      eventType: apiComponent.eventType,
     },
     components: [],
   };
+
+  // Handle nested components (for BLOCK type)
+  if (apiComponent.components && Array.isArray(apiComponent.components)) {
+    baseComponent.components = transformComponents(apiComponent.components);
+  }
+
+  return baseComponent;
 };
 
 /**
- * Convert action to component-driven button component
+ * Extract error message from error response format.
  */
-const convertActionToComponent = (
-  action: {type: string; id: string},
-  t: UseTranslation['t'],
-): EmbeddedFlowComponent => {
-  // Normalize action ID for translation lookup (e.g., "google_auth" -> "google")
-  const normalizedId: string = action.id.replace(/_auth$/, '');
-
-  // Use i18n key for button text, fallback to capitalized id
-  const i18nKey: string = `elements.buttons.${normalizedId}`;
-  let text: string = t(i18nKey);
-
-  if (!text || text === i18nKey) {
-    // Fallback: format the original action ID
-    text = action.id.replace(/_/g, ' ');
-    text = text.charAt(0).toUpperCase() + text.slice(1);
+export const extractErrorMessage = (error: EmbeddedSignUpFlowErrorResponse, t: UseTranslation['t']): string => {
+  if (error.failureReason) {
+    return error.failureReason;
   }
 
-  return {
-    id: generateId('action'),
-    type: EmbeddedFlowComponentType.Button,
-    variant: 'SECONDARY',
-    config: {
-      type: 'button',
-      text,
-      actionId: action.id,
-      actionType: action.type,
-    },
-    components: [],
-  };
+  // Fallback to a generic error message
+  return t('components.signUp.errors.generic');
 };
 
 /**
- * Transform simple flow response to component-driven format
- */
-export const transformSimpleToComponentDriven = (response: any, t: UseTranslation['t']): EmbeddedFlowComponent[] => {
-  // Create input components if present
-  const inputComponents: EmbeddedFlowComponent[] =
-    response?.data?.inputs?.map((input: any) => convertSimpleInputToComponent(input, t)) || [];
-
-  // Create action buttons if present
-  const actionComponents: EmbeddedFlowComponent[] =
-    response?.data?.actions?.map((action: any) => convertActionToComponent(action, t)) || [];
-
-  // Add a submit button if there are inputs
-  const submitButton: EmbeddedFlowComponent | null =
-    inputComponents.length > 0
-      ? {
-          id: generateId('button'),
-          type: EmbeddedFlowComponentType.Button,
-          variant: 'PRIMARY',
-          config: {
-            type: 'submit',
-            text: t('elements.buttons.signUp'),
-          },
-          components: [],
-        }
-      : null;
-
-  // Compose form components (inputs + submit only)
-  const formComponents: EmbeddedFlowComponent[] = [];
-  if (inputComponents.length > 0) {
-    formComponents.push(...inputComponents);
-    if (submitButton) formComponents.push(submitButton);
-  }
-
-  const result: EmbeddedFlowComponent[] = [];
-  // Add form if there are input fields
-  if (formComponents.length > 0) {
-    result.push({
-      id: generateId('form'),
-      type: EmbeddedFlowComponentType.Form,
-      config: {},
-      components: formComponents,
-    });
-  }
-
-  // Add actions outside the form
-  if (actionComponents.length > 0) {
-    result.push(...actionComponents);
-  }
-
-  return result;
-};
-
-/**
- * Extract error message from AsgardeoV2 (AKA Thunder) error response format.
- */
-export const extractErrorMessage = (error: EmbeddedSignUpFlowErrorResponseV2, t: UseTranslation['t']): string => {
-  let errorMessage: string = t('errors.sign.up.flow.failure');
-
-  if (error && typeof error === 'object') {
-    // Handle AsgardeoV2 (AKA Thunder) error format with failureReason
-    if (
-      (error as EmbeddedSignUpFlowErrorResponseV2).flowStatus === 'ERROR' &&
-      (error as EmbeddedSignUpFlowErrorResponseV2).failureReason
-    ) {
-      errorMessage = (error as EmbeddedSignUpFlowErrorResponseV2).failureReason;
-    } else if (error instanceof Error && error.name === 'AsgardeoAPIError') {
-      try {
-        const errorResponse: EmbeddedSignUpFlowErrorResponseV2 = JSON.parse(error.message);
-
-        if ((errorResponse as EmbeddedSignUpFlowErrorResponseV2).failureReason) {
-          errorMessage = (errorResponse as EmbeddedSignUpFlowErrorResponseV2).failureReason;
-        } else {
-          errorMessage = error.message;
-        }
-      } catch {
-        errorMessage = error.message;
-      }
-    } else if ((error as any)?.message) {
-      errorMessage = (error as any).message;
-    }
-  } else if (typeof error === 'string') {
-    errorMessage = error;
-  }
-
-  return errorMessage;
-};
-
-/**
- * Check if a response is an error response and extract the error message for AsgardeoV2 (AKA Thunder) format.
+ * Check if a response is an error response and extract the error message.
  */
 export const checkForErrorResponse = (response: any, t: UseTranslation['t']): string | null => {
-  if (response?.flowStatus === 'ERROR') {
-    return extractErrorMessage(response, t);
+  if (response?.flowStatus === 'ERROR' && response.failureReason) {
+    return extractErrorMessage(response as EmbeddedSignUpFlowErrorResponse, t);
   }
-
   return null;
 };
 
 /**
- * Transformer that handles simple responses and AsgardeoV2 (AKA Thunder) error responses
+ * Generic transformer that handles flow responses with error checking
  */
 export const normalizeFlowResponse = (
   response: any,
@@ -299,6 +112,6 @@ export const normalizeFlowResponse = (
 
   return {
     flowId: response.flowId,
-    components: transformSimpleToComponentDriven(response, t),
+    components: transformToComponentDriven(response),
   };
 };

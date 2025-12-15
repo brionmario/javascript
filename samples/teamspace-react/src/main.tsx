@@ -54,6 +54,13 @@ createRoot(document.getElementById('root')!).render(
         //   },
         // },
       }}
+      applicationId={import.meta.env.VITE_ASGARDEO_APPLICATION_ID}
+      platform="AsgardeoV2"
+      tokenValidation={{
+        idToken: {
+          validate: false,
+        },
+      }}
     >
       <App />
     </AsgardeoProvider>

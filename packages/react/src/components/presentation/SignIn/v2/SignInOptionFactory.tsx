@@ -18,7 +18,7 @@
 
 import React, {ReactElement} from 'react';
 import {AsgardeoRuntimeError, EmbeddedFlowComponent, FieldType} from '@asgardeo/browser';
-import {EmbeddedFlowComponentType} from '@asgardeo/browser';
+import {EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType, EmbeddedFlowTextVariantV2} from '@asgardeo/browser';
 import {createField} from '../../../factories/FieldFactory';
 import Button from '../../../primitives/Button/Button';
 import GoogleButton from '../../../adapters/GoogleButton';
@@ -27,6 +27,7 @@ import FacebookButton from '../../../adapters/FacebookButton';
 import Typography from '../../../primitives/Typography/Typography';
 import Divider from '../../../primitives/Divider/Divider';
 import SmsOtpButton from '../../../adapters/SmsOtpButton';
+import {TypographyVariant} from '../../../primitives/Typography/Typography.styles';
 
 /**
  * Get the appropriate FieldType for an input component.
@@ -47,14 +48,22 @@ const getFieldType = (variant: string): FieldType => {
  * Get typography variant from component variant.
  */
 const getTypographyVariant = (variant: string) => {
-  const variantMap: Record<string, any> = {
-    H1: 'h1',
-    H2: 'h2',
-    H3: 'h3',
-    H4: 'h4',
-    H5: 'h5',
-    H6: 'h6',
+  const variantMap: Record<EmbeddedFlowTextVariantV2, TypographyVariant> = {
+    HEADING_1: 'h1',
+    HEADING_2: 'h2',
+    HEADING_3: 'h3',
+    HEADING_4: 'h4',
+    HEADING_5: 'h5',
+    HEADING_6: 'h6',
+    SUBTITLE_1: 'subtitle1',
+    SUBTITLE_2: 'subtitle2',
+    BODY_1: 'body1',
+    BODY_2: 'body2',
+    CAPTION: 'caption',
+    OVERLINE: 'overline',
+    BUTTON_TEXT: 'button',
   };
+
   return variantMap[variant] || 'h3';
 };
 
@@ -82,12 +91,12 @@ const createSignInComponentFromFlow = (
   const key: string | number = options.key || component.id;
 
   switch (component.type) {
-    case EmbeddedFlowComponentType.Input: {
+    case EmbeddedFlowComponentType.TextInput: {
       const identifier: string = (component.config['identifier'] as string) || component.id;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
-      const fieldType: string = getFieldType(component.variant || 'TEXT');
+      const fieldType: string = getFieldType('TEXT');
 
       const field = createField({
         type: fieldType as FieldType,
@@ -105,7 +114,30 @@ const createSignInComponentFromFlow = (
       return React.cloneElement(field, {key});
     }
 
-    case EmbeddedFlowComponentType.Button: {
+    case EmbeddedFlowComponentType.PasswordInput: {
+      const identifier: string = (component.config['identifier'] as string) || component.id;
+      const value: string = formValues[identifier] || '';
+      const isTouched: boolean = touchedFields[identifier] || false;
+      const error: string = isTouched ? formErrors[identifier] : undefined;
+      const fieldType: string = getFieldType('PASSWORD');
+
+      const field = createField({
+        type: fieldType as FieldType,
+        name: identifier,
+        label: (component.config['label'] as string) || '',
+        placeholder: (component.config['placeholder'] as string) || '',
+        required: (component.config['required'] as unknown as boolean) || false,
+        value,
+        error,
+        onChange: (newValue: string) => onInputChange(identifier, newValue),
+        onBlur: () => options.onInputBlur?.(identifier),
+        className: options.inputClassName,
+      });
+
+      return React.cloneElement(field, {key});
+    }
+
+    case EmbeddedFlowComponentType.Action: {
       const handleClick = () => {
         if (options.onSubmit) {
           const formData: Record<string, any> = {};
@@ -120,17 +152,18 @@ const createSignInComponentFromFlow = (
 
       // Render branded social login buttons for known action IDs
       const actionId: string = component.config['actionId'] as string;
+      const eventType: string = component.config['eventType'] as string;
 
-      if (actionId === 'google_auth') {
+      if (actionId === 'google_auth' || eventType === 'google_auth') {
         return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'github_auth') {
+      if (actionId === 'github_auth' || eventType === 'github_auth') {
         return <GitHubButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'facebook_auth') {
+      if (actionId === 'facebook_auth' || eventType === 'facebook_auth') {
         return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'prompt_mobile') {
+      if (actionId === 'prompt_mobile' || eventType === 'prompt_mobile') {
         return <SmsOtpButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
 
@@ -145,23 +178,23 @@ const createSignInComponentFromFlow = (
           variant={component.variant?.toLowerCase() === 'primary' ? 'solid' : 'outline'}
           color={component.variant?.toLowerCase() === 'primary' ? 'primary' : 'secondary'}
         >
-          {(component.config['text'] as string) || 'Submit'}
+          {(component.config['label'] as string) || (component.config['text'] as string) || 'Submit'}
         </Button>
       );
     }
 
-    case EmbeddedFlowComponentType.Typography: {
-      const variant = getTypographyVariant(component.variant || 'H3');
+    case EmbeddedFlowComponentType.Text: {
+      const variant = getTypographyVariant(component.variant);
       return (
         <Typography key={key} variant={variant}>
-          {(component.config['text'] as string) || ''}
+          {(component.config['label'] as string) || (component.config['text'] as string) || ''}
         </Typography>
       );
     }
 
-    case EmbeddedFlowComponentType.Form: {
+    case EmbeddedFlowComponentType.Block: {
       if (component.components && component.components.length > 0) {
-        const formComponents = component.components
+        const blockComponents = component.components
           .map((childComponent, index) =>
             createSignInComponentFromFlow(
               childComponent,
@@ -179,18 +212,14 @@ const createSignInComponentFromFlow = (
           )
           .filter(Boolean);
 
-        return (
-          <form key={key} onSubmit={e => e.preventDefault()}>
-            {formComponents}
-          </form>
-        );
+        return <div key={key}>{blockComponents}</div>;
       }
       return null;
     }
 
-    case EmbeddedFlowComponentType.Divider: {
-      return <Divider key={key} />;
-    }
+    // case EmbeddedFlowComponentType.Divider: {
+    //   return <Divider key={key} />;
+    // }
 
     default:
       throw new AsgardeoRuntimeError(

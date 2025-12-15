@@ -16,83 +16,325 @@
  * under the License.
  */
 
-import {EmbeddedFlowExecuteRequestConfig, EmbeddedFlowResponseType, EmbeddedFlowType} from '../embedded-flow';
+import {
+  EmbeddedFlowResponseType as EmbeddedFlowResponseTypeV1,
+  EmbeddedFlowType as EmbeddedFlowTypeV1,
+} from '../embedded-flow';
+import {EmbeddedFlowResponseData as EmbeddedFlowResponseDataV2} from './embedded-flow-v2';
 
-export enum EmbeddedSignInFlowStatusV2 {
+/**
+ * Status enumeration for Asgardeo embedded sign-in flow operations.
+ *
+ * These statuses indicate the current state of the sign-in flow and determine
+ * the next action required by the client application. Each status provides
+ * specific guidance on how to proceed with the authentication process.
+ *
+ * @example
+ * ```typescript
+ * switch (response.flowStatus) {
+ *   case EmbeddedSignInFlowStatus.Incomplete:
+ *     // More user input needed - render form components
+ *     break;
+ *   case EmbeddedSignInFlowStatus.Complete:
+ *     // Authentication successful - handle completion
+ *     break;
+ *   case EmbeddedSignInFlowStatus.Error:
+ *     // Authentication failed - show error message
+ *     break;
+ * }
+ * ```
+ *
+ * @experimental Part of the new Asgardeo API
+ */
+export enum EmbeddedSignInFlowStatus {
+  /**
+   * Sign-in flow completed successfully.
+   *
+   * The user has been authenticated and the flow can proceed to
+   * OAuth2 completion or redirection. Check for redirectUrl or
+   * assertion data in the response.
+   */
   Complete = 'COMPLETE',
+
+  /**
+   * Sign-in flow requires additional user input.
+   *
+   * More authentication steps are needed. The response will contain
+   * components in data.meta.components that should be rendered to
+   * collect additional user input (e.g., MFA, password, etc.).
+   */
   Incomplete = 'INCOMPLETE',
+
+  /**
+   * Sign-in flow encountered an error.
+   *
+   * Authentication failed due to invalid credentials, system error,
+   * or other issues. Check error details in the response and handle
+   * appropriately (retry, show error message, etc.).
+   */
   Error = 'ERROR',
 }
 
-export enum EmbeddedSignInFlowTypeV2 {
+/**
+ * Type enumeration for Asgardeo embedded sign-in flow responses.
+ *
+ * Determines the nature of the flow response and how the client should
+ * handle the returned data. This affects both UI rendering and flow
+ * continuation logic.
+ *
+ * @experimental Part of the new Asgardeo API
+ */
+export enum EmbeddedSignInFlowType {
+  /**
+   * Response requires external redirection.
+   *
+   * Used for social login providers, external identity providers,
+   * or other flows that require navigating to an external URL.
+   * The response will contain redirection information.
+   */
   Redirection = 'REDIRECTION',
+
+  /**
+   * Response contains view components for rendering.
+   *
+   * Standard embedded flow response containing UI components
+   * that should be rendered within the current application
+   * context. Most common type for embedded authentication.
+   */
   View = 'VIEW',
 }
 
 /**
- * Extended response structure for the embedded sign-in flow V2.
- * @remarks This response is only done from the SDK level.
- * @experimental
+ * Extended response structure for Asgardeo embedded sign-in flow.
+ *
+ * This interface defines additional properties that are added at the SDK level
+ * to enhance the basic API response with client-side computed values. These
+ * properties provide convenience for common post-authentication operations.
+ *
+ * @remarks This response structure is enhanced by the SDK and contains
+ * properties beyond the raw API response. It's designed to simplify
+ * post-authentication handling for client applications.
+ *
+ * @experimental This interface is part of the new Asgardeo platform
  */
-export interface ExtendedEmbeddedSignInFlowResponseV2 {
+export interface ExtendedEmbeddedSignInFlowResponse {
   /**
-   * The URL to redirect the user after completing the sign-in flow.
+   * Computed redirect URL for post-authentication navigation.
+   *
+   * This URL is determined by the SDK based on the flow completion result
+   * and configured redirect settings. When present, the client application
+   * should navigate to this URL to complete the authentication process.
+   *
+   * @example "https://myapp.com/dashboard?session=abc123"
    */
   redirectUrl?: string;
 }
 
 /**
- * Response structure for the new Asgardeo V2 embedded sign-in flow.
- * @experimental
+ * Primary response structure for Asgardeo embedded sign-in flow operations.
+ *
+ * This is the main response interface returned by the sign-in API, combining
+ * the enhanced SDK properties with the core API response data. It provides all
+ * information needed to handle the current state of the authentication flow.
+ *
+ * The response structure adapts based on the flow status:
+ * - INCOMPLETE: Contains components for user interaction
+ * - COMPLETE: Contains completion data and potential redirection info
+ * - ERROR: Contains error information for troubleshooting
+ *
+ * @example
+ * ```typescript
+ * const response: EmbeddedSignInFlowResponse = {
+ *   flowId: "flow_12345",
+ *   flowStatus: EmbeddedSignInFlowStatus.Incomplete,
+ *   type: EmbeddedSignInFlowType.View,
+ *   data: {
+ *     meta: {
+ *       components: [
+ *         {
+ *           id: "username_field",
+ *           type: EmbeddedFlowComponentType.TextInput,
+ *           label: "Username",
+ *           required: true
+ *         }
+ *       ]
+ *     }
+ *   }
+ * };
+ * ```
+ *
+ * @experimental This interface is part of the new Asgardeo platform
  */
-export interface EmbeddedSignInFlowResponseV2 extends ExtendedEmbeddedSignInFlowResponseV2 {
+export interface EmbeddedSignInFlowResponse extends ExtendedEmbeddedSignInFlowResponse {
+  /**
+   * Unique identifier for this specific flow instance.
+   * Used to maintain state across multiple API calls during the authentication process.
+   */
   flowId: string;
-  flowStatus: EmbeddedSignInFlowStatusV2;
-  type: EmbeddedSignInFlowTypeV2;
-  data: {
+
+  /**
+   * Current status of the sign-in flow.
+   * Determines the next action required by the client application.
+   */
+  flowStatus: EmbeddedSignInFlowStatus;
+
+  /**
+   * Type of response indicating how to handle the returned data.
+   * Affects both UI rendering and navigation logic.
+   */
+  type: EmbeddedSignInFlowType;
+
+  /**
+   * Core response data containing UI components and flow metadata.
+   * Includes both modern meta.components structure and legacy fields for compatibility.
+   */
+  data: EmbeddedFlowResponseDataV2 & {
+    /**
+     * Legacy action definitions for backward compatibility.
+     * @deprecated Use data.meta.components for new implementations
+     */
     actions?: {
-      type: EmbeddedFlowResponseType;
+      /** Action type identifier */
+      type: EmbeddedFlowResponseTypeV1;
+      /** Unique action identifier */
       id: string;
     }[];
+
+    /**
+     * Legacy input field definitions for backward compatibility.
+     * @deprecated Use data.meta.components for new implementations
+     */
     inputs?: {
+      /** Field name identifier */
       name: string;
+      /** Input field type */
       type: string;
+      /** Whether the field is required */
       required: boolean;
     }[];
   };
 }
 
 /**
- * Response structure for the new Asgardeo V2 embedded sign-in flow when the flow is complete.
- * @experimental
+ * Response structure for completed Asgardeo embedded sign-in flows.
+ *
+ * This interface defines the response format when the embedded sign-in flow
+ * reaches the COMPLETE status and requires OAuth2 flow completion. It contains
+ * the redirect URI that should be used for the final authentication step.
+ *
+ * @example
+ * ```typescript
+ * const completeResponse: EmbeddedSignInFlowCompleteResponse = {
+ *   redirect_uri: "https://myapp.com/callback?code=abc123&state=xyz789"
+ * };
+ *
+ * // Typically handled automatically by the SDK
+ * window.location.href = completeResponse.redirect_uri;
+ * ```
+ *
+ * @experimental This interface is part of the new Asgardeo platform
  */
 export interface EmbeddedSignInFlowCompleteResponse {
+  /**
+   * OAuth2 redirect URI for completing the authentication flow.
+   *
+   * Contains the final redirect URL with authorization code, state,
+   * and other OAuth2 parameters needed to complete the authentication
+   * process. This URL should be navigated to automatically or manually
+   * depending on the application's requirements.
+   */
   redirect_uri: string;
 }
 
 /**
- * Request payload for initiating the new Asgardeo V2 embedded sign-in flow.
- * @experimental
+ * Request payload for initiating Asgardeo embedded sign-in flows.
+ *
+ * This type defines the minimum required information to start a new
+ * embedded sign-in flow. The flow type determines the kind of authentication
+ * process that will be initiated (e.g., standard login, MFA, etc.).
+ *
+ * @example
+ * ```typescript
+ * const initRequest: EmbeddedSignInFlowInitiateRequest = {
+ *   applicationId: "app_12345",
+ *   flowType: EmbeddedFlowType.Authentication
+ * };
+ *
+ * const response = await executeEmbeddedSignInFlow({
+ *   baseUrl: "https://api.asgardeo.io/t/myorg",
+ *   payload: initRequest
+ * });
+ * ```
+ *
+ * @experimental This type is part of the new Asgardeo platform
  */
-export type EmbeddedSignInFlowInitiateRequestV2 = {
+export type EmbeddedSignInFlowInitiateRequest = {
+  /**
+   * Unique identifier of the application initiating the sign-in flow.
+   * Must be a valid application ID registered in the Asgardeo organization.
+   */
   applicationId: string;
-  flowType: EmbeddedFlowType;
+
+  /**
+   * Type of embedded flow to initiate.
+   * Determines the authentication process and available options.
+   */
+  flowType: EmbeddedFlowTypeV1;
 };
 
 /**
- * Request payload for executing steps in the new Asgardeo V2 embedded sign-in flow.
- * @experimental
+ * Request payload for executing steps in Asgardeo embedded sign-in flows.
+ *
+ * This interface defines the structure for subsequent requests after flow initiation.
+ * It supports both continuing existing flows (with flowId) and submitting user
+ * input data collected from the rendered components.
+ *
+ * @example
+ * ```typescript
+ * // Continue existing flow with user input
+ * const stepRequest: EmbeddedSignInFlowRequest = {
+ *   flowId: "flow_12345",
+ *   actionId: "action_001",
+ *   inputs: {
+ *     username: "user@example.com",
+ *     password: "securePassword123"
+ *   }
+ * };
+ *
+ * // Submit to continue the flow
+ * const response = await executeEmbeddedSignInFlow({
+ *   baseUrl: "https://api.asgardeo.io/t/myorg",
+ *   payload: stepRequest
+ * });
+ * ```
+ *
+ * @experimental This interface is part of the new Asgardeo platform
  */
-export interface EmbeddedSignInFlowRequestV2 extends Partial<EmbeddedSignInFlowInitiateRequestV2> {
+export interface EmbeddedSignInFlowRequest extends Partial<EmbeddedSignInFlowInitiateRequest> {
+  /**
+   * Identifier of the flow instance to continue.
+   * Required when submitting data for an existing flow.
+   */
   flowId?: string;
-  actionId?: string;
-  inputs?: Record<string, any>;
-}
 
-/**
- * Request config for executing the new Asgardeo V2 embedded sign-in flow.
- * @experimental
- */
-export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlowExecuteRequestConfig<T> {
-  authId?: string;
+  /**
+   * Identifier of the specific action being triggered.
+   * Corresponds to action components in the UI (e.g., submit button, social login).
+   */
+  actionId?: string;
+
+  /**
+   * User input data collected from the form components.
+   * Keys should match the component identifiers from the response.
+   *
+   * @example
+   * ```typescript
+   * {
+   *   "username": "john.doe@example.com",
+   *   "password": "mySecurePassword",
+   *   "rememberMe": true
+   * }
+   * ```
+   */
+  inputs?: Record<string, any>;
 }

@@ -132,7 +132,7 @@ export interface EmbeddedFlowExecuteRequestConfig<T = any> extends Partial<Reque
  * // (Prefers description over message as it's usually more detailed)
  * ```
  *
- * @see {@link EmbeddedSignUpFlowErrorResponseV2} for the AsgardeoV2 equivalent error structure
+ * @see {@link EmbeddedSignUpFlowErrorResponse} for the AsgardeoV2 equivalent error structure
  */
 export interface EmbeddedFlowExecuteErrorResponse {
   /**

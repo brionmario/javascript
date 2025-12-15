@@ -204,7 +204,8 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       return getMeOrganizations({baseUrl});
     } catch (error) {
       throw new AsgardeoRuntimeError(
-        `Failed to fetch the user's associated organizations: ${error instanceof Error ? error.message : String(error)
+        `Failed to fetch the user's associated organizations: ${
+          error instanceof Error ? error.message : String(error)
         }`,
         'AsgardeoReactClient-getMyOrganizations-RuntimeError-001',
         'react',
@@ -334,19 +335,14 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
       const arg1 = args[0];
       const arg2 = args[1];
 
-      const config: AsgardeoReactConfig | undefined = (await this.asgardeo.getConfigData()) as AsgardeoReactConfig | undefined;
+      const config: AsgardeoReactConfig | undefined = (await this.asgardeo.getConfigData()) as
+        | AsgardeoReactConfig
+        | undefined;
 
       const platformFromStorage = sessionStorage.getItem('asgardeo_platform');
-      const isV2Platform =
-        (config && config.platform === Platform.AsgardeoV2) ||
-        platformFromStorage === 'AsgardeoV2';
+      const isV2Platform = (config && config.platform === Platform.AsgardeoV2) || platformFromStorage === 'AsgardeoV2';
 
-      if (
-        isV2Platform &&
-        typeof arg1 === 'object' &&
-        arg1 !== null &&
-        (arg1 as any).callOnlyOnRedirect === true
-      ) {
+      if (isV2Platform && typeof arg1 === 'object' && arg1 !== null && (arg1 as any).callOnlyOnRedirect === true) {
         return undefined as any;
       }
 
@@ -425,7 +421,10 @@ class AsgardeoReactClient<T extends AsgardeoReactConfig = AsgardeoReactConfig> e
     if (config.platform === Platform.AsgardeoV2) {
       return executeEmbeddedSignUpFlowV2({
         baseUrl,
-        payload: firstArg as EmbeddedFlowExecuteRequestPayload,
+        payload:
+          typeof firstArg === 'object' && 'flowType' in firstArg
+            ? {...(firstArg as EmbeddedFlowExecuteRequestPayload), verbose: true}
+            : (firstArg as EmbeddedFlowExecuteRequestPayload),
       }) as any;
     }
 

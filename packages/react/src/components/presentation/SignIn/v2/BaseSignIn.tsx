@@ -270,8 +270,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   variant = 'outlined',
   isLoading: externalIsLoading,
   children,
-  showTitle = true,
-  showSubtitle = true,
+  showTitle = false,
+  showSubtitle = false,
   showLogo = true,
 }) => {
   const {theme} = useTheme();

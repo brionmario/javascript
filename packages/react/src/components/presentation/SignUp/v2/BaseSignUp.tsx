@@ -27,7 +27,7 @@ import {
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
-import {transformSimpleToComponentDriven, extractErrorMessage} from './transformer';
+import {normalizeFlowResponse, extractErrorMessage} from './transformer';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import useFlow from '../../../../contexts/Flow/useFlow';
 import {useForm, FormField} from '../../../../hooks/useForm';
@@ -287,26 +287,31 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   /**
    * Normalize flow response to ensure component-driven format
-   * Uses transformSimpleToComponentDriven for AsgardeoV2 (AKA Thunder) format responses
+   * Uses normalizeFlowResponse for modern API format responses
    */
-  const normalizeFlowResponse = useCallback(
+  const normalizeFlowResponseLocal = useCallback(
     (response: EmbeddedFlowExecuteResponse): EmbeddedFlowExecuteResponse => {
-      // If response already has components, return as-is (Asgardeo/IS format)
+      // If response already has components, return as-is
       if (response?.data?.components && Array.isArray(response.data.components)) {
         return response;
       }
 
-      // If response has simple inputs/actions (AsgardeoV2 (AKA Thunder) format), transform to component-driven
-      if (response?.data && ((response.data as any).inputs || (response.data as any).actions)) {
-        const transformedComponents = transformSimpleToComponentDriven(response, t);
+      // Use the transformer to handle meta.components structure
+      if (response?.data) {
+        try {
+          const {components} = normalizeFlowResponse(response, t);
 
-        return {
-          ...response,
-          data: {
-            ...response.data,
-            components: transformedComponents,
-          },
-        };
+          return {
+            ...response,
+            data: {
+              ...response.data,
+              components: components,
+            },
+          };
+        } catch (error) {
+          // If transformer throws (e.g., error response), re-throw
+          throw error;
+        }
       }
 
       // Return as-is if no transformation needed
@@ -444,7 +449,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       } as any;
 
       const rawResponse = await onSubmit(payload);
-      const response = normalizeFlowResponse(rawResponse);
+      const response = normalizeFlowResponseLocal(rawResponse);
       onFlowChange?.(response);
 
       if (response.flowStatus === EmbeddedFlowStatus.Complete) {
@@ -727,7 +732,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
         try {
           const rawResponse = await onInitialize();
-          const response = normalizeFlowResponse(rawResponse);
+          const response = normalizeFlowResponseLocal(rawResponse);
 
           setCurrentFlow(response);
           setIsFlowInitialized(true);
@@ -757,7 +762,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     onError,
     onFlowChange,
     setupFormFields,
-    normalizeFlowResponse,
+    normalizeFlowResponseLocal,
     afterSignUpUrl,
     t,
   ]);
