@@ -1,8 +1,8 @@
 ---
-'@asgardeo/javascript': minor
-'@asgardeo/nextjs': minor
-'@asgardeo/react': minor
-'@asgardeo/i18n': minor
+'@asgardeo/javascript': patch
+'@asgardeo/nextjs': patch
+'@asgardeo/react': patch
+'@asgardeo/i18n': patch
 ---
 
 Add support to resolve component metadata from Thunder Flow APIs
