@@ -1,5 +1,20 @@
 # @asgardeo/react
 
+## 0.6.18
+
+### Patch Changes
+
+- [#285](https://github.com/asgardeo/javascript/pull/285)
+  [`be37350`](https://github.com/asgardeo/javascript/commit/be37350a906a72b4668313680c60e7201eb0b657) Thanks
+  [@brionmario](https://github.com/brionmario)! - Add support to resolve component metadata from Thunder Flow APIs
+
+  Refer: https://github.com/asgardeo/thunder/discussions/812
+
+- Updated dependencies
+  [[`be37350`](https://github.com/asgardeo/javascript/commit/be37350a906a72b4668313680c60e7201eb0b657)]:
+  - @asgardeo/i18n@0.3.8
+  - @asgardeo/browser@0.1.35
+
 ## 0.6.17
 
 ### Patch Changes
