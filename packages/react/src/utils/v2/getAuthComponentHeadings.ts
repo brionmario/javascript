@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import {EmbeddedFlowComponent} from '../../../javascript/src/models/v2/embedded-flow-v2';
+import {EmbeddedFlowComponentV2 as EmbeddedFlowComponent} from '@asgardeo/browser';
 
 /**
  * Result of heading extraction from flow components

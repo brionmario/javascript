@@ -36,7 +36,7 @@ import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
 import {extractErrorMessage} from '../../../../utils/v2/flowTransformer';
-import getAuthComponentHeadings from '../../../../utils/getAuthComponentHeadings';
+import getAuthComponentHeadings from '../../../../utils/v2/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering

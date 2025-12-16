@@ -40,7 +40,7 @@ import Logo from '../../../primitives/Logo/Logo';
 import Spinner from '../../../primitives/Spinner/Spinner';
 import Typography from '../../../primitives/Typography/Typography';
 import useStyles from '../BaseSignUp.styles';
-import getAuthComponentHeadings from '../../../../utils/getAuthComponentHeadings';
+import getAuthComponentHeadings from '../../../../utils/v2/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering
