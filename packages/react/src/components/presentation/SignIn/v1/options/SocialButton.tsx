@@ -49,7 +49,7 @@ const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>>
         </svg>
       }
     >
-      {t('elements.buttons.social', {connection: children as string})}
+      {t('elements.buttons.social.text', {connection: children as string})}
     </Button>
   );
 };

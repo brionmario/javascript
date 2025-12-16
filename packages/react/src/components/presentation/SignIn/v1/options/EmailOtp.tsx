@@ -48,8 +48,8 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('email.otp.title'));
-    setSubtitle(t('email.otp.subtitle'));
+    setTitle(t('email.otp.heading'));
+    setSubtitle(t('email.otp.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   // Check if this is an OTP field (typically has 'otpCode' or similar parameter)
@@ -104,7 +104,7 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('email.otp.submit.button')}
+        {t('email.otp.submit.button.text')}
       </Button>
     </>
   );

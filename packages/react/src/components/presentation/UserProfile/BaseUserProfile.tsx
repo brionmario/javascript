@@ -622,7 +622,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
     <Card className={containerClasses}>
       {error && (
         <Alert variant="error" className={cx(withVendorCSSClassPrefix(bem('user-profile', 'alert')), styles.alert)}>
-          <Alert.Title>{t('errors.title') || 'Error'}</Alert.Title>
+          <Alert.Title>{t('errors.heading') || 'Error'}</Alert.Title>
           <Alert.Description>{error}</Alert.Description>
         </Alert>
       )}
@@ -675,7 +675,7 @@ const BaseUserProfile: FC<BaseUserProfileProps> = ({
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <Dialog.Content>
-          <Dialog.Heading>{title ?? t('user.profile.title')}</Dialog.Heading>
+          <Dialog.Heading>{title ?? t('user.profile.heading')}</Dialog.Heading>
           <div className={styles.popup}>{profileContent}</div>
         </Dialog.Content>
       </Dialog>

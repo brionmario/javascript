@@ -323,7 +323,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
               initialValue: '',
               validator: (value: string) => {
                 if (component.required && (!value || value.trim() === '')) {
-                  return t('field.required');
+                  return t('validations.required.field.error');
                 }
                 return null;
               },
@@ -348,7 +348,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: false,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -500,8 +500,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       handleInputChange,
       handleSubmit,
       validateForm,
-      title: flowTitle || t('signin.title'),
-      subtitle: flowSubtitle || t('signin.subtitle'),
+      title: flowTitle || t('signin.heading'),
+      subtitle: flowSubtitle || t('signin.subheading'),
       messages: flowMessages || [],
     };
 
@@ -526,7 +526,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="warning">
-            <Typography variant="body1">{t('errors.sign.in.components.not.available')}</Typography>
+            <Typography variant="body1">{t('errors.signin.components.not.available')}</Typography>
           </Alert>
         </Card.Content>
       </Card>
@@ -538,8 +538,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     components as any,
     flowTitle,
     flowSubtitle,
-    t('signin.title'),
-    t('signin.subtitle'),
+    t('signin.heading'),
+    t('signin.subheading'),
   );
 
   return (

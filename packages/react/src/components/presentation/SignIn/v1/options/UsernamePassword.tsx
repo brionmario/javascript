@@ -48,8 +48,8 @@ const UsernamePassword: FC<BaseSignInOptionProps> = ({
     authenticator.metadata?.params?.sort((a, b) => a.order - b.order)?.filter(param => param.param !== 'totp') || []; // Exclude TOTP fields for username/password
 
   useEffect(() => {
-    setTitle(t('username.password.title'));
-    setSubtitle(t('username.password.subtitle'));
+    setTitle(t('username.password.heading'));
+    setSubtitle(t('username.password.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   return (
@@ -71,7 +71,7 @@ const UsernamePassword: FC<BaseSignInOptionProps> = ({
             disabled: isLoading,
             className: inputClassName,
             touched: touchedFields[param.param] || false,
-            placeholder: t(`elements.fields.placeholder`, {
+            placeholder: t(`elements.fields.generic.placeholder`, {
               field: (param.displayName || param.param).toLowerCase(),
             }),
           })}
@@ -88,7 +88,7 @@ const UsernamePassword: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('username.password.submit.button')}
+        {t('username.password.submit.button.text')}
       </Button>
     </>
   );

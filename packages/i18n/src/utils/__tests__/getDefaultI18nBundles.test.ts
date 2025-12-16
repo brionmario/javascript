@@ -88,11 +88,11 @@ describe('getDefaultI18nBundles', (): void => {
     Object.values(bundles).forEach((bundle: I18nBundle) => {
       const translations = bundle.translations;
 
-      expect(translations).toHaveProperty('elements.buttons.signIn');
-      expect(translations).toHaveProperty('elements.buttons.signOut');
-      expect(translations).toHaveProperty('signin.title');
-      expect(translations).toHaveProperty('signin.subtitle');
-      expect(translations).toHaveProperty('errors.title');
+      expect(translations).toHaveProperty('elements.buttons.signin.text');
+      expect(translations).toHaveProperty('elements.buttons.signout.text');
+      expect(translations).toHaveProperty('signin.heading');
+      expect(translations).toHaveProperty('signin.subheading');
+      expect(translations).toHaveProperty('errors.heading');
 
       Object.values(translations).forEach((value: string) => {
         expect(typeof value).toBe('string');

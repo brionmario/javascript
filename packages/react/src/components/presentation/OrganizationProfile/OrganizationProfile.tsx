@@ -207,7 +207,7 @@ const OrganizationProfile: FC<OrganizationProfileProps> = ({
       mode={mode === 'popup' ? 'popup' : 'inline'}
       open={open}
       onOpenChange={onOpenChange}
-      title={popupTitle || t('organization.profile.title')}
+      title={popupTitle || t('organization.profile.heading')}
       {...rest}
     />
   );

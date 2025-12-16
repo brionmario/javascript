@@ -47,8 +47,8 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('identifier.first.title'));
-    setSubtitle(t('identifier.first.subtitle'));
+    setTitle(t('identifier.first.heading'));
+    setSubtitle(t('identifier.first.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   return (
@@ -70,7 +70,7 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
             disabled: isLoading,
             className: inputClassName,
             touched: touchedFields[param.param] || false,
-            placeholder: t(`elements.fields.placeholder`, {
+            placeholder: t(`elements.fields.generic.placeholder`, {
               field: (param.displayName || param.param).toLowerCase(),
             }),
           })}
@@ -87,7 +87,7 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('identifier.first.submit.button')}
+        {t('identifier.first.submit.button.text')}
       </Button>
     </>
   );

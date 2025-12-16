@@ -27,135 +27,129 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'ලොග් වෙන්න',
-  'elements.buttons.signOut': 'ඉවත් වෙන්න',
-  'elements.buttons.signUp': 'ලියාපදිංචි වෙන්න',
-  'elements.buttons.facebook': 'Facebook සමග ඉදිරියට යන්න',
-  'elements.buttons.google': 'Google සමග ඉදිරියට යන්න',
-  'elements.buttons.github': 'GitHub සමග ඉදිරියට යන්න',
-  'elements.buttons.microsoft': 'Microsoft සමග ඉදිරියට යන්න',
-  'elements.buttons.linkedin': 'LinkedIn සමග ඉදිරියට යන්න',
-  'elements.buttons.ethereum': 'Ethereum සමග ඉදිරියට යන්න',
-  'elements.buttons.smsotp': 'SMS සමග ඉදිරියට යන්න',
-  'elements.buttons.multi.option': '{connection} සමග ඉදිරියට යන්න',
-  'elements.buttons.social': '{connection} සමග ඉදිරියට යන්න',
+  'elements.buttons.signin.text': 'ලොග් වෙන්න',
+  'elements.buttons.signout.text': 'ඉවත් වෙන්න',
+  'elements.buttons.signup.text': 'ලියාපදිංචි වෙන්න',
+  'elements.buttons.facebook.text': 'Facebook සමග ඉදිරියට යන්න',
+  'elements.buttons.google.text': 'Google සමග ඉදිරියට යන්න',
+  'elements.buttons.github.text': 'GitHub සමග ඉදිරියට යන්න',
+  'elements.buttons.microsoft.text': 'Microsoft සමග ඉදිරියට යන්න',
+  'elements.buttons.linkedin.text': 'LinkedIn සමග ඉදිරියට යන්න',
+  'elements.buttons.ethereum.text': 'Ethereum සමග ඉදිරියට යන්න',
+  'elements.buttons.smsotp.text': 'SMS සමග ඉදිරියට යන්න',
+  'elements.buttons.multi.option.text': '{connection} සමග ඉදිරියට යන්න',
+  'elements.buttons.social.text': '{connection} සමග ඉදිරියට යන්න',
 
   /* Fields */
-  'elements.fields.placeholder': 'ඔබේ {field} ඇතුලත් කරන්න',
-  'elements.fields.username': 'පරිශීලක නාමය',
-  'elements.fields.password': 'මුරපදය',
-  'elements.fields.ouName': 'සංවිධානයේ නම',
-  'elements.fields.ouHandle': 'සංවිධාන හැඳුනුම්පත',
-  'elements.fields.ouDescription': 'සංවිධානයේ විස්තරය',
+  'elements.fields.generic.placeholder': 'ඔබේ {field} ඇතුලත් කරන්න',
+  'elements.fields.username.label': 'පරිශීලක නාමය',
+  'elements.fields.password.label': 'මුරපදය',
+  'elements.fields.organization.name.label': 'සංවිධානයේ නම',
+  'elements.fields.organization.handle.label': 'සංවිධාන හැඳුනුම්පත',
+  'elements.fields.organization.description.label': 'සංවිධානයේ විස්තරය',
 
   /* Validation */
-  'field.required': 'මෙම ක්ෂේත්‍රය අවශ්‍යයි',
+  'validations.required.field.error': 'මෙම ක්ෂේත්‍රය අවශ්‍යයි',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'ලොග් වෙන්න',
-  'signin.subtitle': 'ඉදිරියට යාමට ඔබේ සත්‍යාපන තොරතුරු ඇතුළත් කරන්න.',
+  'signin.heading': 'ලොග් වෙන්න',
+  'signin.subheading': 'ඉදිරියට යාමට ඔබේ සත්‍යාපන තොරතුරු ඇතුළත් කරන්න.',
 
   /* Base Sign Up */
-  'signup.title': 'ලියාපදිංචි වන්න',
-  'signup.subtitle': 'ආරම්භ කිරීමට නව ගිණුමක් සාදන්න.',
+  'signup.heading': 'ලියාපදිංචි වන්න',
+  'signup.subheading': 'ආරම්භ කිරීමට නව ගිණුමක් සාදන්න.',
 
   /* Email OTP */
-  'email.otp.title': 'OTP සත්‍යාපනය',
-  'email.otp.subtitle': 'ඔබේ විද්‍යුත් තැපැල් ලිපිනයට යවන ලද කේතය ඇතුළත් කරන්න.',
-  'email.otp.submit.button': 'ඉදිරියට යන්න',
+  'email.otp.heading': 'OTP සත්‍යාපනය',
+  'email.otp.subheading': 'ඔබේ විද්‍යුත් තැපැල් ලිපිනයට යවන ලද කේතය ඇතුළත් කරන්න.',
+  'email.otp.submit.button.text': 'ඉදිරියට යන්න',
 
   /* Identifier First */
-  'identifier.first.title': 'ලොග් වෙන්න',
-  'identifier.first.subtitle': 'ඔබේ පරිශීලක නාමය හෝ විද්‍යුත් තැපැල් ලිපිනය ඇතුළත් කරන්න.',
-  'identifier.first.submit.button': 'ඉදිරියට යන්න',
+  'identifier.first.heading': 'ලොග් වෙන්න',
+  'identifier.first.subheading': 'ඔබේ පරිශීලක නාමය හෝ විද්‍යුත් තැපැල් ලිපිනය ඇතුළත් කරන්න.',
+  'identifier.first.submit.button.text': 'ඉදිරියට යන්න',
 
   /* SMS OTP */
-  'sms.otp.title': 'OTP සත්‍යාපනය',
-  'sms.otp.subtitle': 'ඔබේ දුරකථන අංකයට යවන ලද කේතය ඇතුළත් කරන්න.',
-  'sms.otp.submit.button': 'ඉදිරියට යන්න',
+  'sms.otp.heading': 'OTP සත්‍යාපනය',
+  'sms.otp.subheading': 'ඔබේ දුරකථන අංකයට යවන ලද කේතය ඇතුළත් කරන්න.',
+  'sms.otp.submit.button.text': 'ඉදිරියට යන්න',
 
   /* TOTP */
-  'totp.title': 'ඔබගේ අනන්‍යතාවය තහවුරු කරන්න',
-  'totp.subtitle': 'ඔබේ authenticator යෙදුමෙන් ලබාගත් කේතය ඇතුළත් කරන්න.',
-  'totp.submit.button': 'ඉදිරියට යන්න',
+  'totp.heading': 'ඔබගේ අනන්‍යතාවය තහවුරු කරන්න',
+  'totp.subheading': 'ඔබේ authenticator යෙදුමෙන් ලබාගත් කේතය ඇතුළත් කරන්න.',
+  'totp.submit.button.text': 'ඉදිරියට යන්න',
 
   /* Username Password */
-  'username.password.submit.button': 'ඉදිරියට යන්න',
-  'username.password.title': 'ලොග් වෙන්න',
-  'username.password.subtitle': 'ඉදිරියට යාමට ඔබේ පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.',
+  'username.password.submit.button.text': 'ඉදිරියට යන්න',
+  'username.password.heading': 'ලොග් වෙන්න',
+  'username.password.subheading': 'ඉදිරියට යාමට ඔබේ පරිශීලක නාමය සහ මුරපදය ඇතුළත් කරන්න.',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'පැතිකඩ',
+  'user.profile.heading': 'පැතිකඩ',
   'user.profile.update.generic.error': 'ඔබේ පැතිකඩ යාවත්කාලීන කිරීමේදී දෝෂයක් ඇතිවිය.කරුණාකර නැවත උත්සාහ කරන්න',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'සංවිධානය තෝරන්න',
+  'elements.fields.organization.select.label': 'සංවිධානය තෝරන්න',
   'organization.switcher.switch.organization': 'සංවිධානය මාරු කරන්න',
-  'organization.switcher.loading.organizations': 'සංවිධාන ලෝඩ් වෙමින්...',
+  'organization.switcher.loading.placeholder.organizations': 'සංවිධාන ලෝඩ් වෙමින්...',
   'organization.switcher.members': 'සාමාජිකයන්',
   'organization.switcher.member': 'සාමාජිකයා',
   'organization.switcher.create.organization': 'සංවිධානයක් සාදන්න',
   'organization.switcher.manage.organizations': 'සංවිධාන කළමනාකරණය කරන්න',
-  'organization.switcher.manage.button': 'කළමනාකරණය කරන්න',
-  'organization.switcher.organizations.title': 'සංවිධාන',
-  'organization.switcher.switch.button': 'මාරු කරන්න',
+  'organization.switcher.manage.button.text': 'කළමනාකරණය කරන්න',
+  'organization.switcher.organizations.heading': 'සංවිධාන',
+  'organization.switcher.switch.button.text': 'මාරු කරන්න',
   'organization.switcher.no.access': 'ප්‍රවේශය නැත',
   'organization.switcher.status.label': 'තත්ත්වය:',
   'organization.switcher.showing.count': 'මුළු සංවිධාන {showing} න් {total} ක් පෙන්වමින්',
-  'organization.switcher.refresh.button': 'නැවුම් කරන්න',
-  'organization.switcher.load.more': 'තවත් සංවිධාන ලෝඩ් කරන්න',
+  'organization.switcher.refresh.button.text': 'නැවුම් කරන්න',
+  'organization.switcher.load_more.button.text': 'තවත් සංවිධාන ලෝඩ් කරන්න',
   'organization.switcher.loading.more': 'ලෝඩ් වෙමින්...',
   'organization.switcher.no.organizations': 'සංවිධාන කිසිවක් හමු නොවීය.',
   'organization.switcher.error.prefix': 'දෝෂය:',
-  'organization.profile.title': 'සංවිධානයේ පැතිකඩ',
+  'organization.profile.heading': 'සංවිධානයේ පැතිකඩ',
   'organization.profile.loading': 'සංවිධානය ලෝඩ් වෙමින්...',
   'organization.profile.error': 'සංවිධානය ලෝඩ් කිරීමට අසමත් විය',
 
-  'organization.create.title': 'සංවිධානය සාදන්න',
-  'organization.create.name.label': 'සංවිධානයේ නම',
-  'organization.create.name.placeholder': 'සංවිධානයේ නම ඇතුළත් කරන්න',
-  'organization.create.handle.label': 'සංවිධානයේ හෑන්ඩලය',
-  'organization.create.handle.placeholder': 'my-organization',
-  'organization.create.description.label': 'විස්තරය',
-  'organization.create.description.placeholder': 'සංවිධානයේ විස්තරය ඇතුළත් කරන්න',
-  'organization.create.button': 'සංවිධානය සාදන්න',
-  'organization.create.creating': 'සාදමින්...',
-  'organization.create.cancel': 'අවලංගු කරන්න',
+  'organization.create.heading': 'සංවිධානය සාදන්න',
+  'organization.create.button.text': 'සංවිධානය සාදන්න',
+  'organization.create.button.loading.text': 'සාදමින්...',
+  'organization.create.cancel.button.text': 'අවලංගු කරන්න',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': 'ලෝඩ් වෙමින්...',
+  'messages.loading.placeholder': 'ලෝඩ් වෙමින්...',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'දෝෂය',
-  'errors.sign.in.initialization': 'ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.in.flow.failure': 'ලොග් වීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.in.flow.completion.failure':
+  'errors.heading': 'දෝෂය',
+  'errors.signin.initialization': 'ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signin.flow.failure': 'ලොග් වීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signin.flow.completion.failure':
     'ලොග් වීමේ ක්‍රියාවලිය සම්පූර්ණ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.in.flow.passkeys.failure': 'passkeys සමඟ ලොග් වීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.in.flow.passkeys.completion.failure':
+  'errors.signin.flow.passkeys.failure': 'passkeys සමඟ ලොග් වීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signin.flow.passkeys.completion.failure':
     'passkeys සමඟ ලොග් වීමේ ක්‍රියාවලිය සම්පූර්ණ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.up.initialization': 'ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.up.flow.failure': 'ගිණුම් තැනීමේ ක්‍රියාවලියේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.up.flow.initialization.failure':
+  'errors.signup.initialization': 'ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signup.flow.failure': 'ගිණුම් තැනීමේ ක්‍රියාවලියේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signup.flow.initialization.failure':
     'ගිණුම් තැනීමේ ක්‍රියාවලිය ආරම්භ කිරීමේදී දෝෂයක් සිදු විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.up.components.not.available': 'ගිණුම් තැනීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
-  'errors.sign.in.components.not.available': 'ප්‍රවේශ වීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signup.components.not.available': 'ගිණුම් තැනීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
+  'errors.signin.components.not.available': 'ප්‍රවේශ වීමේ පිටුව දැන් ලබා ගත නොහැකිය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.',
 };
 
 const metadata: I18nMetadata = {

@@ -113,7 +113,7 @@ const SignUpButton: ForwardRefExoticComponent<SignUpButtonProps & RefAttributes<
       preferences={preferences}
       {...rest}
     >
-      {children ?? t('elements.buttons.signUp')}
+      {children ?? t('elements.buttons.signup.text')}
     </BaseSignUpButton>
   );
 });

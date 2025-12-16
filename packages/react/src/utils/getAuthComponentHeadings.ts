@@ -57,8 +57,8 @@ export interface AuthComponentHeadingsResult {
  *   components,
  *   flowTitle,
  *   flowSubtitle,
- *   t('signin.title'),
- *   t('signin.subtitle')
+ *   t('signin.heading'),
+ *   t('signin.subheading')
  * );
  *
  * // Use resolved titles

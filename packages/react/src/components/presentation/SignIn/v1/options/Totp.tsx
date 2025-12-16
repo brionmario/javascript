@@ -48,8 +48,8 @@ const Totp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('totp.title'));
-    setSubtitle(t('totp.subtitle'));
+    setTitle(t('totp.heading'));
+    setSubtitle(t('totp.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   const hasTotpField = formFields.some(
@@ -103,7 +103,7 @@ const Totp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('totp.submit.button')}
+        {t('totp.submit.button.text')}
       </Button>
     </>
   );

@@ -88,7 +88,7 @@ const SignUpButton: ForwardRefExoticComponent<SignUpButtonProps & RefAttributes<
       if (signUpUrl) {
         router.push(signUpUrl);
       } else {
-        signUp && await signUp();
+        signUp && (await signUp());
       }
 
       if (onClick) {
@@ -115,7 +115,7 @@ const SignUpButton: ForwardRefExoticComponent<SignUpButtonProps & RefAttributes<
       preferences={preferences}
       {...rest}
     >
-      {children ?? t('elements.buttons.signUp')}
+      {children ?? t('elements.buttons.signup.text')}
     </BaseSignUpButton>
   );
 });

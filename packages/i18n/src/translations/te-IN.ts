@@ -27,136 +27,129 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'సైన్ ఇన్ చేయండి',
-  'elements.buttons.signOut': 'సైన్ అవుట్ చేయండి',
-  'elements.buttons.signUp': 'సైన్ అప్ చేయండి',
-  'elements.buttons.facebook': 'Facebook తో కొనసాగించండి',
-  'elements.buttons.google': 'Google తో కొనసాగించండి',
-  'elements.buttons.github': 'GitHub తో కొనసాగించండి',
-  'elements.buttons.microsoft': 'Microsoft తో కొనసాగించండి',
-  'elements.buttons.linkedin': 'LinkedIn తో కొనసాగించండి',
-  'elements.buttons.ethereum': 'Ethereum తో సైన్ ఇన్ చేయండి',
-  'elements.buttons.smsotp': 'SMS తో కొనసాగించండి',
-  'elements.buttons.multi.option': '{connection} తో కొనసాగించండి',
-  'elements.buttons.social': '{connection} తో కొనసాగించండి',
+  'elements.buttons.signin.text': 'సైన్ ఇన్ చేయండి',
+  'elements.buttons.signout.text': 'సైన్ అవుట్ చేయండి',
+  'elements.buttons.signup.text': 'సైన్ అప్ చేయండి',
+  'elements.buttons.facebook.text': 'Facebook తో కొనసాగించండి',
+  'elements.buttons.google.text': 'Google తో కొనసాగించండి',
+  'elements.buttons.github.text': 'GitHub తో కొనసాగించండి',
+  'elements.buttons.microsoft.text': 'Microsoft తో కొనసాగించండి',
+  'elements.buttons.linkedin.text': 'LinkedIn తో కొనసాగించండి',
+  'elements.buttons.ethereum.text': 'Ethereum తో సైన్ ఇన్ చేయండి',
+  'elements.buttons.smsotp.text': 'SMS తో కొనసాగించండి',
+  'elements.buttons.multi.option.text': '{connection} తో కొనసాగించండి',
+  'elements.buttons.social.text': '{connection} తో కొనసాగించండి',
 
   /* Fields */
-  'elements.fields.placeholder': 'మీ {field} ను నమోదు చేయండి',
-  'elements.fields.username': 'వినియోగదారు పేరు',
-  'elements.fields.password': 'పాస్వర్డ్',
-  'elements.fields.ouName': 'సంస్థ పేరు',
-  'elements.fields.ouHandle': 'సంస్థ హ్యాండిల్',
-  'elements.fields.ouDescription': 'సంస్థ వివరణ',
+  'elements.fields.generic.placeholder': 'మీ {field} ను నమోదు చేయండి',
+  'elements.fields.username.label': 'వినియోగదారు పేరు',
+  'elements.fields.password.label': 'పాస్వర్డ్',
+  'elements.fields.organization.name.label': 'సంస్థ పేరు',
+  'elements.fields.organization.handle.label': 'సంస్థ హ్యాండిల్',
+  'elements.fields.organization.description.label': 'సంస్థ వివరణ',
 
   /* Validation */
-  'field.required': 'ఈ ఫీల్డ్ అవసరం',
+  'validations.required.field.error': 'ఈ ఫీల్డ్ అవసరం',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'సైన్ ఇన్ చేయండి',
-  'signin.subtitle': 'కొనసాగించడానికి మీ వివరాలు ఇవ్వండి.',
+  'signin.heading': 'సైన్ ఇన్ చేయండి',
+  'signin.subheading': 'కొనసాగించడానికి మీ వివరాలు ఇవ్వండి.',
 
   /* Base Sign Up */
-  'signup.title': 'సైన్ అప్ చేయండి',
-  'signup.subtitle': 'కొత్త అకౌంట్ సృష్టించండి.',
+  'signup.heading': 'సైన్ అప్ చేయండి',
+  'signup.subheading': 'కొత్త అకౌంట్ సృష్టించండి.',
 
   /* Email OTP */
-  'email.otp.title': 'OTP వెరిఫికేషన్',
-  'email.otp.subtitle': 'మీ ఇమెయిల్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
-  'email.otp.submit.button': 'కొనసాగించండి',
+  'email.otp.heading': 'OTP వెరిఫికేషన్',
+  'email.otp.subheading': 'మీ ఇమెయిల్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
+  'email.otp.submit.button.text': 'కొనసాగించండి',
 
   /* Identifier First */
-  'identifier.first.title': 'సైన్ ఇన్ చేయండి',
-  'identifier.first.subtitle': 'మీ యూజర్ పేరు లేదా ఇమెయిల్ ఇవ్వండి.',
-  'identifier.first.submit.button': 'కొనసాగించండి',
+  'identifier.first.heading': 'సైన్ ఇన్ చేయండి',
+  'identifier.first.subheading': 'మీ యూజర్ పేరు లేదా ఇమెయిల్ ఇవ్వండి.',
+  'identifier.first.submit.button.text': 'కొనసాగించండి',
 
   /* SMS OTP */
-  'sms.otp.title': 'OTP వెరిఫికేషన్',
-  'sms.otp.subtitle': 'మీ ఫోన్ నంబర్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
-  'sms.otp.submit.button': 'కొనసాగించండి',
+  'sms.otp.heading': 'OTP వెరిఫికేషన్',
+  'sms.otp.subheading': 'మీ ఫోన్ నంబర్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
+  'sms.otp.submit.button.text': 'కొనసాగించండి',
 
   /* TOTP */
-  'totp.title': 'మీ గుర్తింపును ధృవీకరించండి',
-  'totp.subtitle': 'మీ ఆథెంటికేటర్ యాప్‌లోని కోడ్‌ను నమోదు చేయండి.',
-  'totp.submit.button': 'కొనసాగించండి',
+  'totp.heading': 'మీ గుర్తింపును ధృవీకరించండి',
+  'totp.subheading': 'మీ ఆథెంటికేటర్ యాప్‌లోని కోడ్‌ను నమోదు చేయండి.',
+  'totp.submit.button.text': 'కొనసాగించండి',
 
   /* Username Password */
-  'username.password.submit.button': 'కొనసాగించండి',
-  'username.password.title': 'సైన్ ఇన్ చేయండి',
-  'username.password.subtitle': 'మీ యూజర్ పేరు మరియు పాస్‌వర్డ్ ఇవ్వండి.',
+  'username.password.submit.button.text': 'కొనసాగించండి',
+  'username.password.heading': 'సైన్ ఇన్ చేయండి',
+  'username.password.subheading': 'మీ యూజర్ పేరు మరియు పాస్‌వర్డ్ ఇవ్వండి.',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'ప్రొఫైల్',
+  'user.profile.heading': 'ప్రొఫైల్',
   'user.profile.update.generic.error': 'ప్రొఫైల్ అప్‌డేట్ చేస్తూ లోపం వచ్చింది. దయచేసి మళ్లీ ప్రయత్నించండి.',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'ఆర్గనైజేషన్‌ను ఎంచుకోండి',
+  'elements.fields.organization.select.label': 'ఆర్గనైజేషన్‌ను ఎంచుకోండి',
   'organization.switcher.switch.organization': 'ఆర్గనైజేషన్ మార్చండి',
-  'organization.switcher.loading.organizations': 'ఆర్గనైజేషన్‌లు లోడ్ అవుతున్నాయి...',
+  'organization.switcher.loading.placeholder.organizations': 'ఆర్గనైజేషన్‌లు లోడ్ అవుతున్నాయి...',
   'organization.switcher.members': 'సభ్యులు',
   'organization.switcher.member': 'సభ్యుడు',
   'organization.switcher.create.organization': 'ఆర్గనైజేషన్ సృష్టించండి',
   'organization.switcher.manage.organizations': 'ఆర్గనైజేషన్‌లను నిర్వహించండి',
-  'organization.switcher.manage.button': 'నిర్వహించండి',
-  'organization.switcher.organizations.title': 'ఆర్గనైజేషన్‌లు',
-  'organization.switcher.switch.button': 'మార్చండి',
+  'organization.switcher.manage.button.text': 'నిర్వహించండి',
+  'organization.switcher.organizations.heading': 'ఆర్గనైజేషన్‌లు',
+  'organization.switcher.switch.button.text': 'మార్చండి',
   'organization.switcher.no.access': 'యాక్సెస్ లేదు',
   'organization.switcher.status.label': 'స్టేటస్:',
   'organization.switcher.showing.count': '{total} లో {showing} ఆర్గనైజేషన్‌లు చూపుతున్నాయి',
-  'organization.switcher.refresh.button': 'రిఫ్రెష్ చేయండి',
-  'organization.switcher.load.more': 'మరిన్ని ఆర్గనైజేషన్‌లను లోడ్ చేయండి',
+  'organization.switcher.refresh.button.text': 'రిఫ్రెష్ చేయండి',
+  'organization.switcher.load_more.button.text': 'మరిన్ని ఆర్గనైజేషన్‌లను లోడ్ చేయండి',
   'organization.switcher.loading.more': 'లోడ్ అవుతోంది...',
   'organization.switcher.no.organizations': 'ఏ ఆర్గనైజేషన్‌లు లభించలేదు',
   'organization.switcher.error.prefix': 'లోపం:',
-  'organization.profile.title': 'ఆర్గనైజేషన్ ప్రొఫైల్',
+  'organization.profile.heading': 'ఆర్గనైజేషన్ ప్రొఫైల్',
   'organization.profile.loading': 'లోడ్ అవుతోంది...',
   'organization.profile.error': 'ఆర్గనైజేషన్‌ను లోడ్ చేయడం విఫలమైంది',
 
-  'organization.create.title': 'ఆర్గనైజేషన్ సృష్టించండి',
-  'organization.create.name.label': 'ఆర్గనైజేషన్ పేరు',
-  'organization.create.name.placeholder': 'ఆర్గనైజేషన్ పేరు ఇవ్వండి',
-  'organization.create.handle.label': 'ఆర్గనైజేషన్ హ్యాండిల్',
-  'organization.create.handle.placeholder': 'నా-ఆర్గనైజేషన్',
-  'organization.create.description.label': 'వివరణ',
-  'organization.create.description.placeholder': 'వివరణ ఇవ్వండి',
-  'organization.create.button': 'సృష్టించండి',
-  'organization.create.creating': 'సృష్టిస్తోంది...',
-  'organization.create.cancel': 'రద్దు చేయండి',
+  'organization.create.heading': 'ఆర్గనైజేషన్ సృష్టించండి',
+  'organization.create.button.text': 'సృష్టించండి',
+  'organization.create.button.loading.text': 'సృష్టిస్తోంది...',
+  'organization.create.cancel.button.text': 'రద్దు చేయండి',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': 'లోడ్ అవుతోంది...',
+  'messages.loading.placeholder': 'లోడ్ అవుతోంది...',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'లోపం',
-  'errors.sign.in.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.failure': 'సైన్ ఇన్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.completion.failure': 'సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.passkeys.failure':
-    'పాస్‌కీలతో సైన్ ఇన్ చేస్తూ లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.flow.passkeys.completion.failure':
+  'errors.heading': 'లోపం',
+  'errors.signin.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signin.flow.failure': 'సైన్ ఇన్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signin.flow.completion.failure': 'సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signin.flow.passkeys.failure': 'పాస్‌కీలతో సైన్ ఇన్ చేస్తూ లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signin.flow.passkeys.completion.failure':
     'పాస్‌కీ సైన్ ఇన్ పూర్తి చేయడంలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.up.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.up.flow.failure': 'సైన్ అప్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.up.flow.initialization.failure':
+  'errors.signup.initialization': 'ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signup.flow.failure': 'సైన్ అప్ ప్రక్రియలో లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
+  'errors.signup.flow.initialization.failure':
     'సైన్ అప్ ప్రక్రియను ప్రారంభించేటప్పుడు లోపం వచ్చింది. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.up.components.not.available':
+  'errors.signup.components.not.available':
     'సైన్ అప్ ఫారం ప్రస్తుతం అందుబాటులో లేదు. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
-  'errors.sign.in.components.not.available':
+  'errors.signin.components.not.available':
     'సైన్ ఇన్ ఫారం ప్రస్తుతం అందుబాటులో లేదు. దయచేసి తరువాత మళ్లీ ప్రయత్నించండి.',
 };
 

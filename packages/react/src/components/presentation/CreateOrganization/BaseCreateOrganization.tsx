@@ -194,8 +194,8 @@ export const BaseCreateOrganization: FC<BaseCreateOrganizationProps> = ({
           )}
           <div className={cx(styles.fieldGroup)}>
             <TextField
-              label={`${t('organization.create.name.label')}`}
-              placeholder={t('organization.create.name.placeholder')}
+              label={`${t('elements.fields.organization.name.label')}`}
+              placeholder={t('elements.fields.organization.name.placeholder')}
               value={formData.name}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e.target.value)}
               disabled={loading}
@@ -206,8 +206,8 @@ export const BaseCreateOrganization: FC<BaseCreateOrganizationProps> = ({
           </div>
           <div className={cx(styles.fieldGroup)}>
             <TextField
-              label={`${t('organization.create.handle.label') || 'Organization Handle'}`}
-              placeholder={t('organization.create.handle.placeholder') || 'my-organization'}
+              label={`${t('elements.fields.organization.handle.label') || 'Organization Handle'}`}
+              placeholder={t('elements.fields.organization.handle.placeholder') || 'my-organization'}
               value={formData.handle}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange('handle', e.target.value)}
               disabled={loading}
@@ -219,7 +219,7 @@ export const BaseCreateOrganization: FC<BaseCreateOrganizationProps> = ({
           </div>
           <div className={cx(styles.fieldGroup)}>
             <FormControl error={formErrors.description}>
-              <InputLabel required>{t('organization.create.description.label')}</InputLabel>
+              <InputLabel required>{t('elements.fields.organization.description.label')}</InputLabel>
               <textarea
                 className={cx(styles.textarea, formErrors.description && styles.textareaError)}
                 placeholder={t('organization.create.description.placeholder')}
@@ -235,11 +235,11 @@ export const BaseCreateOrganization: FC<BaseCreateOrganizationProps> = ({
         <div className={cx(styles.actions)}>
           {onCancel && (
             <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
-              {t('organization.create.cancel')}
+              {t('organization.create.cancel.button.text')}
             </Button>
           )}
           <Button type="submit" variant="solid" color="primary" disabled={loading} form="create-organization-form">
-            {loading ? t('organization.create.creating') : t('organization.create.button')}
+            {loading ? t('organization.create.button.loading.text') : t('organization.create.button.text')}
           </Button>
         </div>
       </div>

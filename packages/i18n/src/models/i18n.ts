@@ -24,97 +24,97 @@ export interface I18nTranslations {
   /* |---------------------------------------------------------------| */
 
   //* Buttons */
-  'elements.buttons.signIn': string;
-  'elements.buttons.signOut': string;
-  'elements.buttons.signUp': string;
-  'elements.buttons.facebook': string;
-  'elements.buttons.google': string;
-  'elements.buttons.github': string;
-  'elements.buttons.microsoft': string;
-  'elements.buttons.linkedin': string;
-  'elements.buttons.ethereum': string;
-  'elements.buttons.smsotp': string;
-  'elements.buttons.multi.option': string;
-  'elements.buttons.social': string;
+  'elements.buttons.signin.text': string;
+  'elements.buttons.signout.text': string;
+  'elements.buttons.signup.text': string;
+  'elements.buttons.facebook.text': string;
+  'elements.buttons.google.text': string;
+  'elements.buttons.github.text': string;
+  'elements.buttons.microsoft.text': string;
+  'elements.buttons.linkedin.text': string;
+  'elements.buttons.ethereum.text': string;
+  'elements.buttons.smsotp.text': string;
+  'elements.buttons.multi.option.text': string;
+  'elements.buttons.social.text': string;
 
   /* Fields */
-  'elements.fields.placeholder': string;
-  'elements.fields.username': string;
-  'elements.fields.password': string;
-  'elements.fields.ouName': string;
-  'elements.fields.ouHandle': string;
-  'elements.fields.ouDescription': string;
+  'elements.fields.generic.placeholder': string;
+  'elements.fields.username.label': string;
+  'elements.fields.password.label': string;
+  'elements.fields.organization.name.label': string;
+  'elements.fields.organization.handle.label': string;
+  'elements.fields.organization.description.label': string;
+  'elements.fields.organization.select.label': string;
 
   /* Validation */
-  'field.required': string;
+  'validations.required.field.error': string;
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': string;
-  'signin.subtitle': string;
+  'signin.heading': string;
+  'signin.subheading': string;
 
   /* Base Sign Up */
-  'signup.title': string;
-  'signup.subtitle': string;
+  'signup.heading': string;
+  'signup.subheading': string;
 
   /* Email OTP */
-  'email.otp.title': string;
-  'email.otp.subtitle': string;
-  'email.otp.submit.button': string;
+  'email.otp.heading': string;
+  'email.otp.subheading': string;
+  'email.otp.submit.button.text': string;
 
   /* Identifier First */
-  'identifier.first.title': string;
-  'identifier.first.subtitle': string;
-  'identifier.first.submit.button': string;
+  'identifier.first.heading': string;
+  'identifier.first.subheading': string;
+  'identifier.first.submit.button.text': string;
 
   /* SMS OTP */
-  'sms.otp.title': string;
-  'sms.otp.subtitle': string;
-  'sms.otp.submit.button': string;
+  'sms.otp.heading': string;
+  'sms.otp.subheading': string;
+  'sms.otp.submit.button.text': string;
 
   /* TOTP */
-  'totp.title': string;
-  'totp.subtitle': string;
-  'totp.submit.button': string;
+  'totp.heading': string;
+  'totp.subheading': string;
+  'totp.submit.button.text': string;
 
   /* Username Password */
-  'username.password.submit.button': string;
-  'username.password.title': string;
-  'username.password.subtitle': string;
+  'username.password.submit.button.text': string;
+  'username.password.heading': string;
+  'username.password.subheading': string;
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': string;
+  'user.profile.heading': string;
   'user.profile.update.generic.error': string;
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': string;
   'organization.switcher.switch.organization': string;
-  'organization.switcher.loading.organizations': string;
+  'organization.switcher.loading.placeholder.organizations': string;
   'organization.switcher.members': string;
   'organization.switcher.member': string;
   'organization.switcher.create.organization': string;
   'organization.switcher.manage.organizations': string;
-  'organization.switcher.manage.button': string;
-  'organization.switcher.organizations.title': string;
-  'organization.switcher.switch.button': string;
+  'organization.switcher.manage.button.text': string;
+  'organization.switcher.organizations.heading': string;
+  'organization.switcher.switch.button.text': string;
   'organization.switcher.no.access': string;
   'organization.switcher.status.label': string;
   'organization.switcher.showing.count': string;
-  'organization.switcher.refresh.button': string;
-  'organization.switcher.load.more': string;
+  'organization.switcher.refresh.button.text': string;
+  'organization.switcher.load_more.button.text': string;
   'organization.switcher.loading.more': string;
   'organization.switcher.no.organizations': string;
   'organization.switcher.error.prefix': string;
-  'organization.profile.title': string;
+  'organization.profile.heading': string;
   'organization.profile.loading': string;
   'organization.profile.error': string;
 
@@ -122,38 +122,32 @@ export interface I18nTranslations {
   /* |                     Organization Creation                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.create.title': string;
-  'organization.create.name.label': string;
-  'organization.create.name.placeholder': string;
-  'organization.create.handle.label': string;
-  'organization.create.handle.placeholder': string;
-  'organization.create.description.label': string;
-  'organization.create.description.placeholder': string;
-  'organization.create.button': string;
-  'organization.create.creating': string;
-  'organization.create.cancel': string;
+  'organization.create.heading': string;
+  'organization.create.button.text': string;
+  'organization.create.button.loading.text': string;
+  'organization.create.cancel.button.text': string;
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': string;
+  'messages.loading.placeholder': string;
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': string;
-  'errors.sign.in.initialization': string;
-  'errors.sign.in.flow.failure': string;
-  'errors.sign.in.flow.completion.failure': string;
-  'errors.sign.in.flow.passkeys.failure': string;
-  'errors.sign.in.flow.passkeys.completion.failure': string;
-  'errors.sign.up.initialization': string;
-  'errors.sign.up.flow.failure': string;
-  'errors.sign.up.flow.initialization.failure': string;
-  'errors.sign.up.components.not.available': string;
-  'errors.sign.in.components.not.available': string;
+  'errors.heading': string;
+  'errors.signin.initialization': string;
+  'errors.signin.flow.failure': string;
+  'errors.signin.flow.completion.failure': string;
+  'errors.signin.flow.passkeys.failure': string;
+  'errors.signin.flow.passkeys.completion.failure': string;
+  'errors.signup.initialization': string;
+  'errors.signup.flow.failure': string;
+  'errors.signup.flow.initialization.failure': string;
+  'errors.signup.components.not.available': string;
+  'errors.signin.components.not.available': string;
 }
 
 export type I18nTextDirection = 'ltr' | 'rtl';

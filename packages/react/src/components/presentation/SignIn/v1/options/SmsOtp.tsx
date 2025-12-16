@@ -48,8 +48,8 @@ const SmsOtp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('sms.otp.title'));
-    setSubtitle(t('sms.otp.subtitle'));
+    setTitle(t('sms.otp.heading'));
+    setSubtitle(t('sms.otp.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   const hasOtpField = formFields.some(
@@ -103,7 +103,7 @@ const SmsOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('sms.otp.submit.button')}
+        {t('sms.otp.submit.button.text')}
       </Button>
     </>
   );

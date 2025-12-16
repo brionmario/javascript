@@ -106,7 +106,7 @@ const SignOutButton: ForwardRefExoticComponent<SignOutButtonProps & RefAttribute
       preferences={preferences}
       {...rest}
     >
-      {children ?? t('elements.buttons.signOut')}
+      {children ?? t('elements.buttons.signout.text')}
     </BaseSignOutButton>
   );
 });

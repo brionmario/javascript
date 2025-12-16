@@ -48,7 +48,7 @@ const MultiOptionButton: FC<BaseSignInOptionProps> = ({
 
     switch (authenticatorName) {
       default:
-        return t('elements.buttons.multi.option', {connection: authenticatorName});
+        return t('elements.buttons.multi.option.text', {connection: authenticatorName});
     }
   };
 

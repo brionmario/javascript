@@ -265,7 +265,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   const handleError = useCallback(
     (error: any) => {
-      let errorMessage: string = t('errors.sign.up.flow.failure');
+      let errorMessage: string = t('errors.signup.flow.failure');
 
       if (error && typeof error === 'object') {
         // Handle Asgardeo error format with code and description/message
@@ -325,7 +325,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
               initialValue: config.defaultValue || '',
               validator: (value: string) => {
                 if (config.required && (!value || value.trim() === '')) {
-                  return t('field.required');
+                  return t('validations.required.field.error');
                 }
                 // Add email validation if it's an email field
                 if (config.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -359,7 +359,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: true,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -746,8 +746,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       handleInputChange,
       handleSubmit,
       validateForm,
-      title: flowTitle || t('signup.title'),
-      subtitle: flowSubtitle || t('signup.subtitle'),
+      title: flowTitle || t('signup.heading'),
+      subtitle: flowSubtitle || t('signup.subheading'),
       messages: flowMessages || [],
     };
 
@@ -771,8 +771,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="error" className={errorClasses}>
-            <Alert.Title>{t('errors.title')}</Alert.Title>
-            <Alert.Description>{t('errors.sign.up.flow.initialization.failure')}</Alert.Description>
+            <Alert.Title>{t('errors.heading')}</Alert.Title>
+            <Alert.Description>{t('errors.signup.flow.initialization.failure')}</Alert.Description>
           </Alert>
         </Card.Content>
       </Card>
@@ -785,12 +785,12 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         <Card.Header className={styles.header}>
           {showTitle && (
             <Card.Title level={2} className={styles.title}>
-              {flowTitle || t('signup.title')}
+              {flowTitle || t('signup.heading')}
             </Card.Title>
           )}
           {showSubtitle && (
             <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signup.subtitle')}
+              {flowSubtitle || t('signup.subheading')}
             </Typography>
           )}
         </Card.Header>
@@ -814,7 +814,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             renderComponents(currentFlow.data.components)
           ) : (
             <Alert variant="warning">
-              <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>
+              <Typography variant="body1">{t('errors.signup.components.not.available')}</Typography>
             </Alert>
           )}
         </div>

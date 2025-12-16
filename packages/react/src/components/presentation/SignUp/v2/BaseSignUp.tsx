@@ -337,7 +337,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
               initialValue: '',
               validator: (value: string) => {
                 if (component.required && (!value || value.trim() === '')) {
-                  return t('field.required');
+                  return t('validations.required.field.error');
                 }
                 // Add email validation if it's an email field
                 if (component.variant === 'EMAIL' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -371,7 +371,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: true,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -776,8 +776,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       handleInputChange,
       handleSubmit,
       validateForm,
-      title: flowTitle || t('signup.title'),
-      subtitle: flowSubtitle || t('signup.subtitle'),
+      title: flowTitle || t('signup.heading'),
+      subtitle: flowSubtitle || t('signup.subheading'),
       messages: flowMessages || [],
     };
 
@@ -801,8 +801,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="error" className={errorClasses}>
-            <Alert.Title>{t('errors.title')}</Alert.Title>
-            <Alert.Description>{t('errors.sign.up.flow.initialization.failure')}</Alert.Description>
+            <Alert.Title>{t('errors.heading')}</Alert.Title>
+            <Alert.Description>{t('errors.signup.flow.initialization.failure')}</Alert.Description>
           </Alert>
         </Card.Content>
       </Card>
@@ -815,8 +815,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     componentsToRender,
     flowTitle,
     flowSubtitle,
-    t('signup.title'),
-    t('signup.subtitle'),
+    t('signup.heading'),
+    t('signup.subheading'),
   );
 
   return (
@@ -854,7 +854,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             renderComponents(componentsWithoutHeadings)
           ) : (
             <Alert variant="warning">
-              <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>
+              <Typography variant="body1">{t('errors.signup.components.not.available')}</Typography>
             </Alert>
           )}
         </div>

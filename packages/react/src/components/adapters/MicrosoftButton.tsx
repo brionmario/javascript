@@ -58,7 +58,7 @@ const MicrosoftButton: FC<MicrosoftButtonProps & HTMLAttributes<HTMLButtonElemen
         </svg>
       }
     >
-      {children ?? t('elements.buttons.microsoft')}
+      {children ?? t('elements.buttons.microsoft.text')}
     </Button>
   );
 };

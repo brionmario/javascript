@@ -27,135 +27,131 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'Sign In',
-  'elements.buttons.signOut': 'Sign Out',
-  'elements.buttons.signUp': 'Sign Up',
-  'elements.buttons.facebook': 'Continue with Facebook',
-  'elements.buttons.google': 'Continue with Google',
-  'elements.buttons.github': 'Continue with GitHub',
-  'elements.buttons.microsoft': 'Continue with Microsoft',
-  'elements.buttons.linkedin': 'Continue with LinkedIn',
-  'elements.buttons.ethereum': 'Continue with Sign In Ethereum',
-  'elements.buttons.smsotp': 'Continue with SMS OTP',
-  'elements.buttons.multi.option': 'Continue with {connection}',
-  'elements.buttons.social': 'Continue with {connection}',
+  'elements.buttons.signin.text': 'Sign In',
+  'elements.buttons.signout.text': 'Sign Out',
+  'elements.buttons.signup.text': 'Sign Up',
+  'elements.buttons.facebook.text': 'Continue with Facebook',
+  'elements.buttons.google.text': 'Continue with Google',
+  'elements.buttons.github.text': 'Continue with GitHub',
+  'elements.buttons.microsoft.text': 'Continue with Microsoft',
+  'elements.buttons.linkedin.text': 'Continue with LinkedIn',
+  'elements.buttons.ethereum.text': 'Continue with Sign In Ethereum',
+  'elements.buttons.smsotp.text': 'Continue with SMS OTP',
+  'elements.buttons.multi.option.text': 'Continue with {connection}',
+  'elements.buttons.social.text': 'Continue with {connection}',
 
   /* Fields */
-  'elements.fields.placeholder': 'Enter your {field}',
-  'elements.fields.username': 'Username',
-  'elements.fields.password': 'Password',
-  'elements.fields.ouName': 'Organization Name',
-  'elements.fields.ouHandle': 'Organization Handle',
-  'elements.fields.ouDescription': 'Organization Description',
+  'elements.fields.generic.placeholder': 'Enter your {field}',
+  'elements.fields.username.label': 'Username',
+  'elements.fields.password.label': 'Password',
+  'elements.fields.organization.name.label': 'Organization Name',
+  'elements.fields.organization.handle.label': 'Organization Handle',
+  'elements.fields.organization.description.label': 'Organization Description',
+  'elements.fields.organization.select.label': 'Select Organization',
 
   /* Validation */
-  'field.required': 'This field is required',
+  'validations.required.field.error': 'This field is required',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'Sign In',
-  'signin.subtitle': 'Welcome back! Please sign in to continue.',
+  'signin.heading': 'Sign In',
+  'signin.subheading': 'Welcome back! Please sign in to continue.',
 
   /* Base Sign Up */
-  'signup.title': 'Sign Up',
-  'signup.subtitle': 'Create a new account to get started.',
+  'signup.heading': 'Sign Up',
+  'signup.subheading': 'Create a new account to get started.',
 
   /* Email OTP */
-  'email.otp.title': 'OTP Verification',
-  'email.otp.subtitle': 'Enter the code sent to your email address.',
-  'email.otp.submit.button': 'Continue',
+  'email.otp.heading': 'OTP Verification',
+  'email.otp.subheading': 'Enter the code sent to your email address.',
+  'email.otp.submit.button.text': 'Continue',
 
   /* Identifier First */
-  'identifier.first.title': 'Sign In',
-  'identifier.first.subtitle': 'Enter your username or email address.',
-  'identifier.first.submit.button': 'Continue',
+  'identifier.first.heading': 'Sign In',
+  'identifier.first.subheading': 'Enter your username or email address.',
+  'identifier.first.submit.button.text': 'Continue',
 
   /* SMS OTP */
-  'sms.otp.title': 'OTP Verification',
-  'sms.otp.subtitle': 'Enter the code sent to your phone number.',
-  'sms.otp.submit.button': 'Continue',
+  'sms.otp.heading': 'OTP Verification',
+  'sms.otp.subheading': 'Enter the code sent to your phone number.',
+  'sms.otp.submit.button.text': 'Continue',
 
   /* TOTP */
-  'totp.title': 'Verify Your Identity',
-  'totp.subtitle': 'Enter the code from your authenticator app.',
-  'totp.submit.button': 'Continue',
+  'totp.heading': 'Verify Your Identity',
+  'totp.subheading': 'Enter the code from your authenticator app.',
+  'totp.submit.button.text': 'Continue',
 
   /* Username Password */
-  'username.password.submit.button': 'Continue',
-  'username.password.title': 'Sign In',
-  'username.password.subtitle': 'Enter your username and password to continue.',
+  'username.password.heading': 'Sign In',
+  'username.password.subheading': 'Enter your username and password to continue.',
+  'username.password.submit.button.text': 'Continue',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'Profile',
+  'user.profile.heading': 'Profile',
   'user.profile.update.generic.error': 'An error occurred while updating your profile. Please try again.',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'Select Organization',
   'organization.switcher.switch.organization': 'Switch Organization',
-  'organization.switcher.loading.organizations': 'Loading organizations...',
+  'organization.switcher.loading.placeholder.organizations': 'Loading organizations...',
   'organization.switcher.members': 'members',
   'organization.switcher.member': 'member',
   'organization.switcher.create.organization': 'Create Organization',
   'organization.switcher.manage.organizations': 'Manage Organizations',
-  'organization.switcher.manage.button': 'Manage',
-  'organization.switcher.organizations.title': 'Organizations',
-  'organization.switcher.switch.button': 'Switch',
+  'organization.switcher.manage.button.text': 'Manage',
+  'organization.switcher.organizations.heading': 'Organizations',
+  'organization.switcher.switch.button.text': 'Switch',
   'organization.switcher.no.access': 'No Access',
   'organization.switcher.status.label': 'Status:',
   'organization.switcher.showing.count': 'Showing {showing} of {total} organizations',
-  'organization.switcher.refresh.button': 'Refresh',
-  'organization.switcher.load.more': 'Load More Organizations',
+  'organization.switcher.refresh.button.text': 'Refresh',
+  'organization.switcher.load_more.button.text': 'Load More Organizations',
   'organization.switcher.loading.more': 'Loading...',
   'organization.switcher.no.organizations': 'No organizations found',
   'organization.switcher.error.prefix': 'Error:',
-  'organization.profile.title': 'Organization Profile',
+
+  'organization.profile.heading': 'Organization Profile',
   'organization.profile.loading': 'Loading organization...',
   'organization.profile.error': 'Failed to load organization',
 
-  'organization.create.title': 'Create Organization',
-  'organization.create.name.label': 'Organization Name',
-  'organization.create.name.placeholder': 'Enter organization name',
-  'organization.create.handle.label': 'Organization Handle',
-  'organization.create.handle.placeholder': 'my-organization',
-  'organization.create.description.label': 'Description',
-  'organization.create.description.placeholder': 'Enter organization description',
-  'organization.create.button': 'Create Organization',
-  'organization.create.creating': 'Creating...',
-  'organization.create.cancel': 'Cancel',
+  'organization.create.heading': 'Create Organization',
+  'organization.create.button.text': 'Create Organization',
+  'organization.create.button.loading.text': 'Creating...',
+  'organization.create.cancel.button.text': 'Cancel',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': 'Loading...',
+  'messages.loading.placeholder': 'Loading...',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'Error',
-  'errors.sign.in.initialization': 'An error occurred while initializing. Please try again later.',
-  'errors.sign.in.flow.failure': 'An error occurred during the sign-in flow. Please try again later.',
-  'errors.sign.in.flow.completion.failure':
+  'errors.heading': 'Error',
+  'errors.signin.components.not.available': 'Sign-in form is not available at the moment. Please try again later.',
+  'errors.signin.initialization': 'An error occurred while initializing. Please try again later.',
+  'errors.signin.flow.failure': 'An error occurred during the sign-in flow. Please try again later.',
+  'errors.signin.flow.completion.failure':
     'An error occurred while completing the sign-in flow. Please try again later.',
-  'errors.sign.in.flow.passkeys.failure': 'An error occurred while signing in with passkeys. Please try again later.',
-  'errors.sign.in.flow.passkeys.completion.failure':
+  'errors.signin.flow.passkeys.failure': 'An error occurred while signing in with passkeys. Please try again later.',
+  'errors.signin.flow.passkeys.completion.failure':
     'An error occurred while completing the passkeys sign-in flow. Please try again later.',
-  'errors.sign.up.initialization': 'An error occurred while initializing. Please try again later.',
-  'errors.sign.up.flow.failure': 'An error occurred during the sign-up flow. Please try again later.',
-  'errors.sign.up.flow.initialization.failure':
+
+  'errors.signup.initialization': 'An error occurred while initializing. Please try again later.',
+  'errors.signup.flow.failure': 'An error occurred during the sign-up flow. Please try again later.',
+  'errors.signup.flow.initialization.failure':
     'An error occurred while initializing the sign-up flow. Please try again later.',
-  'errors.sign.up.components.not.available': 'Sign-up form is not available at the moment. Please try again later.',
-  'errors.sign.in.components.not.available': 'Sign-in form is not available at the moment. Please try again later.',
+  'errors.signup.components.not.available': 'Sign-up form is not available at the moment. Please try again later.',
 };
 
 const metadata: I18nMetadata = {
