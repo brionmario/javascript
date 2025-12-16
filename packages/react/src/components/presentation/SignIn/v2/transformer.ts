@@ -18,19 +18,22 @@
 
 import {EmbeddedFlowComponentV2 as EmbeddedFlowComponent} from '@asgardeo/browser';
 import {UseTranslation} from '../../../../hooks/useTranslation';
+import resolveTranslationsInArray from '../../../../utils/v2/resolveTranslationsInArray';
 
 /**
- * Extract components from flow response meta structure.
+ * Extract components from flow response meta structure and resolve translation strings.
  * Since the API already returns components in the correct EmbeddedFlowComponent format,
- * we can use them directly without transformation.
+ * we can use them directly but need to resolve any translation strings.
  */
-export const transformToComponentDriven = (response: any): EmbeddedFlowComponent[] => {
+export const transformToComponentDriven = (response: any, t: UseTranslation['t']): EmbeddedFlowComponent[] => {
   if (!response?.data?.meta?.components) {
     return [];
   }
 
-  // Components are already in the correct format, just return them
-  return response.data.meta.components as EmbeddedFlowComponent[];
+  // Get components and resolve translation strings
+  const components: EmbeddedFlowComponent[] = response.data.meta.components;
+
+  return resolveTranslationsInArray(components, t);
 };
 
 /**
@@ -45,6 +48,6 @@ export const normalizeFlowResponse = (
 } => {
   return {
     flowId: response.flowId,
-    components: transformToComponentDriven(response),
+    components: transformToComponentDriven(response, t),
   };
 };
