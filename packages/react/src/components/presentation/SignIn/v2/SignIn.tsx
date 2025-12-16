@@ -28,7 +28,7 @@ import {
   EmbeddedSignInFlowStatusV2,
   EmbeddedSignInFlowTypeV2,
 } from '@asgardeo/browser';
-import {normalizeFlowResponse} from './transformer';
+import {normalizeFlowResponse} from '../../../../utils/v2/flowTransformer';
 import useTranslation from '../../../../hooks/useTranslation';
 
 /**

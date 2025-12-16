@@ -27,7 +27,7 @@ import {
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
-import {normalizeFlowResponse, extractErrorMessage} from './transformer';
+import {normalizeFlowResponse, extractErrorMessage} from '../../../../utils/v2/flowTransformer';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import useFlow from '../../../../contexts/Flow/useFlow';
 import {useForm, FormField} from '../../../../hooks/useForm';
@@ -300,7 +300,9 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       // Use the transformer to handle meta.components structure
       if (response?.data) {
         try {
-          const {components} = normalizeFlowResponse(response, t);
+          const {components} = normalizeFlowResponse(response, t, {
+            defaultErrorKey: 'components.signUp.errors.generic',
+          });
 
           return {
             ...response,
