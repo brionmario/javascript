@@ -22,28 +22,33 @@ import {
   FieldType,
   EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
   EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
+  EmbeddedFlowTextVariantV2 as EmbeddedFlowTextVariant,
 } from '@asgardeo/browser';
-import {createField} from '../../../../factories/FieldFactory';
-import Button from '../../../../primitives/Button/Button';
-import GoogleButton from '../../../../adapters/GoogleButton';
-import GitHubButton from '../../../../adapters/GitHubButton';
-import FacebookButton from '../../../../adapters/FacebookButton';
-import Typography from '../../../../primitives/Typography/Typography';
-import Divider from '../../../../primitives/Divider/Divider';
-import SmsOtpButton from '../../../../adapters/SmsOtpButton';
-import MicrosoftButton from '../../../../adapters/MicrosoftButton';
-import LinkedInButton from '../../../../adapters/LinkedInButton';
-import SignInWithEthereumButton from '../../../../adapters/SignInWithEthereumButton';
+import {createField} from '../../factories/FieldFactory';
+import Button from '../../primitives/Button/Button';
+import GoogleButton from '../../adapters/GoogleButton';
+import GitHubButton from '../../adapters/GitHubButton';
+import FacebookButton from '../../adapters/FacebookButton';
+import Typography from '../../primitives/Typography/Typography';
+import Divider from '../../primitives/Divider/Divider';
+import SmsOtpButton from '../../adapters/SmsOtpButton';
+import MicrosoftButton from '../../adapters/MicrosoftButton';
+import LinkedInButton from '../../adapters/LinkedInButton';
+import SignInWithEthereumButton from '../../adapters/SignInWithEthereumButton';
+import {TypographyVariant} from '../../primitives/Typography/Typography.styles';
+
+export type AuthType = 'signin' | 'signup';
+
 /**
  * Get the appropriate FieldType for an input component.
  */
-const getFieldType = (variant: string): FieldType => {
+const getFieldType = (variant: EmbeddedFlowComponentType): FieldType => {
   switch (variant) {
-    case 'EMAIL':
+    case EmbeddedFlowComponentType.EmailInput:
       return FieldType.Email;
-    case 'PASSWORD':
+    case EmbeddedFlowComponentType.PasswordInput:
       return FieldType.Password;
-    case 'TEXT':
+    case EmbeddedFlowComponentType.TextInput:
     default:
       return FieldType.Text;
   }
@@ -53,24 +58,50 @@ const getFieldType = (variant: string): FieldType => {
  * Get typography variant from component variant.
  */
 const getTypographyVariant = (variant: string) => {
-  const variantMap: Record<string, any> = {
-    H1: 'h1',
-    H2: 'h2',
-    H3: 'h3',
-    H4: 'h4',
-    H5: 'h5',
-    H6: 'h6',
+  const variantMap: Record<EmbeddedFlowTextVariant, TypographyVariant> = {
+    HEADING_1: 'h1',
+    HEADING_2: 'h2',
+    HEADING_3: 'h3',
+    HEADING_4: 'h4',
+    HEADING_5: 'h5',
+    HEADING_6: 'h6',
+    SUBTITLE_1: 'subtitle1',
+    SUBTITLE_2: 'subtitle2',
+    BODY_1: 'body1',
+    BODY_2: 'body2',
+    CAPTION: 'caption',
+    OVERLINE: 'overline',
+    BUTTON_TEXT: 'button',
   };
+
   return variantMap[variant] || 'h3';
 };
 
 /**
- * Create a sign-up component from flow component configuration.
+ * Check if a button text or action matches a social provider.
  */
+const matchesSocialProvider = (
+  actionId: string,
+  eventType: string,
+  buttonText: string,
+  provider: string,
+  authType: AuthType,
+): boolean => {
+  const providerId = `${provider}_auth`;
+  const providerMatches = actionId === providerId || eventType === providerId;
+
+  // For signup, also check button text
+  if (authType === 'signup') {
+    return providerMatches || buttonText.toLowerCase().includes(provider);
+  }
+
+  return providerMatches;
+};
+
 /**
- * Create a sign-up component from flow component configuration.
+ * Create an auth component from flow component configuration.
  */
-const createSignUpComponentFromFlow = (
+const createAuthComponentFromFlow = (
   component: EmbeddedFlowComponent,
   formValues: Record<string, string>,
   touchedFields: Record<string, boolean>,
@@ -78,6 +109,7 @@ const createSignUpComponentFromFlow = (
   isLoading: boolean,
   isFormValid: boolean,
   onInputChange: (name: string, value: string) => void,
+  authType: AuthType,
   options: {
     buttonClassName?: string;
     inputClassName?: string;
@@ -90,36 +122,19 @@ const createSignUpComponentFromFlow = (
 ): ReactElement | null => {
   const key: string | number = options.key || component.id;
 
+  if (authType === 'signin') {
+    console.log('Creating sign-in component for:', component);
+  }
+
   switch (component.type) {
-    case EmbeddedFlowComponentType.TextInput: {
+    case EmbeddedFlowComponentType.TextInput:
+    case EmbeddedFlowComponentType.PasswordInput:
+    case EmbeddedFlowComponentType.EmailInput: {
       const identifier: string = component.ref;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
-      const fieldType: string = getFieldType('TEXT');
-
-      const field = createField({
-        type: fieldType as FieldType,
-        name: identifier,
-        label: component.label || '',
-        placeholder: component.placeholder || '',
-        required: component.required || false,
-        value,
-        error,
-        onChange: (newValue: string) => onInputChange(identifier, newValue),
-        onBlur: () => options.onInputBlur?.(identifier),
-        className: options.inputClassName,
-      });
-
-      return React.cloneElement(field, {key});
-    }
-
-    case EmbeddedFlowComponentType.PasswordInput: {
-      const identifier: string = component.ref;
-      const value: string = formValues[identifier] || '';
-      const isTouched: boolean = touchedFields[identifier] || false;
-      const error: string = isTouched ? formErrors[identifier] : undefined;
-      const fieldType: string = getFieldType('PASSWORD');
+      const fieldType: string = getFieldType(component.type);
 
       const field = createField({
         type: fieldType as FieldType,
@@ -155,38 +170,22 @@ const createSignUpComponentFromFlow = (
       const eventType: string = (component.eventType as string) || '';
       const buttonText: string = component.label || '';
 
-      if (actionId === 'google_auth' || eventType === 'google_auth' || buttonText.toLowerCase().includes('google')) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'google', authType)) {
         return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'github_auth' || eventType === 'github_auth' || buttonText.toLowerCase().includes('github')) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'github', authType)) {
         return <GitHubButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (
-        actionId === 'facebook_auth' ||
-        eventType === 'facebook_auth' ||
-        buttonText.toLowerCase().includes('facebook')
-      ) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'facebook', authType)) {
         return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (
-        actionId === 'microsoft_auth' ||
-        eventType === 'microsoft_auth' ||
-        buttonText.toLowerCase().includes('microsoft')
-      ) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'microsoft', authType)) {
         return <MicrosoftButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (
-        actionId === 'linkedin_auth' ||
-        eventType === 'linkedin_auth' ||
-        buttonText.toLowerCase().includes('linkedin')
-      ) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'linkedin', authType)) {
         return <LinkedInButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (
-        actionId === 'ethereum_auth' ||
-        eventType === 'ethereum_auth' ||
-        buttonText.toLowerCase().includes('ethereum')
-      ) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'ethereum', authType)) {
         return <SignInWithEthereumButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
       if (actionId === 'prompt_mobile' || eventType === 'prompt_mobile') {
@@ -210,7 +209,7 @@ const createSignUpComponentFromFlow = (
     }
 
     case EmbeddedFlowComponentType.Text: {
-      const variant = getTypographyVariant(component.variant || 'H3');
+      const variant = getTypographyVariant(component.variant);
       return (
         <Typography key={key} variant={variant}>
           {component.label || ''}
@@ -222,7 +221,7 @@ const createSignUpComponentFromFlow = (
       if (component.components && component.components.length > 0) {
         const blockComponents = component.components
           .map((childComponent, index) =>
-            createSignUpComponentFromFlow(
+            createAuthComponentFromFlow(
               childComponent,
               formValues,
               touchedFields,
@@ -230,6 +229,7 @@ const createSignUpComponentFromFlow = (
               isLoading,
               isFormValid,
               onInputChange,
+              authType,
               {
                 ...options,
                 key: childComponent.id || `${component.id}_${index}`,
@@ -246,15 +246,54 @@ const createSignUpComponentFromFlow = (
     default:
       throw new AsgardeoRuntimeError(
         `Unsupported component type: ${component.type}`,
-        'SignUp-UnsupportedComponentType-001',
+        `${authType === 'signin' ? 'SignIn' : 'SignUp'}-UnsupportedComponentType-001`,
         'react',
-        'Something went wrong while rendering the sign-up component. Please try again later.',
+        `Something went wrong while rendering the ${authType} component. Please try again later.`,
       );
   }
 };
 
 /**
- * Processes an array of components and renders them as React elements.
+ * Processes an array of components and renders them as React elements for sign-in.
+ */
+export const renderSignInComponents = (
+  components: EmbeddedFlowComponent[],
+  formValues: Record<string, string>,
+  touchedFields: Record<string, boolean>,
+  formErrors: Record<string, string>,
+  isLoading: boolean,
+  isFormValid: boolean,
+  onInputChange: (name: string, value: string) => void,
+  options?: {
+    buttonClassName?: string;
+    inputClassName?: string;
+    onInputBlur?: (name: string) => void;
+    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
+    size?: 'small' | 'medium' | 'large';
+    variant?: any;
+  },
+): ReactElement[] =>
+  components
+    .map((component, index) =>
+      createAuthComponentFromFlow(
+        component,
+        formValues,
+        touchedFields,
+        formErrors,
+        isLoading,
+        isFormValid,
+        onInputChange,
+        'signin',
+        {
+          ...options,
+          key: component.id || index,
+        },
+      ),
+    )
+    .filter(Boolean);
+
+/**
+ * Processes an array of components and renders them as React elements for sign-up.
  */
 export const renderSignUpComponents = (
   components: EmbeddedFlowComponent[],
@@ -275,7 +314,7 @@ export const renderSignUpComponents = (
 ): ReactElement[] =>
   components
     .map((component, index) =>
-      createSignUpComponentFromFlow(
+      createAuthComponentFromFlow(
         component,
         formValues,
         touchedFields,
@@ -283,6 +322,7 @@ export const renderSignUpComponents = (
         isLoading,
         isFormValid,
         onInputChange,
+        'signup',
         {
           ...options,
           key: component.id || index,

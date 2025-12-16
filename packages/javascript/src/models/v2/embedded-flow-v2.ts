@@ -44,6 +44,11 @@ export enum EmbeddedFlowComponentType {
   /** Password input field with masking for sensitive data */
   PasswordInput = 'PASSWORD_INPUT',
 
+  /**
+   * Email input field with validation for email addresses.
+   */
+  EmailInput = 'EMAIL_INPUT',
+
   /** Text display component for labels, headings, and messages */
   Text = 'TEXT',
 
@@ -133,7 +138,7 @@ export interface EmbeddedFlowComponent {
    * Unique identifier for the component
    */
   id: string;
-  
+
   /**
    * Reference identifier for the component (e.g., field name, action ref)
    */
