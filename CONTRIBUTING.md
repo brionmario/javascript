@@ -199,8 +199,8 @@ Open your new language file and:
 
 ```typescript
 const translations: I18nTranslations = {
-  'elements.buttons.signIn': 'Se connecter',
-  'elements.buttons.signOut': 'Se déconnecter',
+  'elements.buttons.signin.text': 'Se connecter',
+  'elements.buttons.signout.text': 'Se déconnecter',
   // ... translate all other keys
 };
 

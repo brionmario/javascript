@@ -16,59 +16,104 @@
  * under the License.
  */
 
-import {EmbeddedFlowExecuteRequestConfig, EmbeddedFlowResponseType, EmbeddedFlowType} from '../embedded-flow';
+import {
+  EmbeddedFlowResponseType as EmbeddedFlowResponseTypeV1,
+  EmbeddedFlowType as EmbeddedFlowTypeV1,
+} from '../embedded-flow';
 
 /**
- * Status enumeration for AsgardeoV2 embedded sign-up flow responses.
+ * Status enumeration for Asgardeo embedded sign-up flow operations.
  *
- * This enum defines the possible states of a sign-up flow operation,
- * allowing client applications to determine the next appropriate action.
+ * These statuses indicate the current state of the registration flow and determine
+ * the next action required by the client application. Each status provides specific
+ * guidance on how to proceed with the user registration process.
  *
- * @experimental Part of the new AsgardeoV2 API
+ * @example
+ * ```typescript
+ * switch (response.flowStatus) {
+ *   case EmbeddedSignUpFlowStatus.Incomplete:
+ *     // More user input needed - render registration form components
+ *     break;
+ *   case EmbeddedSignUpFlowStatus.Complete:
+ *     // Registration successful - handle completion
+ *     break;
+ *   case EmbeddedSignUpFlowStatus.Error:
+ *     // Registration failed - show detailed error message
+ *     const errorResponse = response as EmbeddedSignUpFlowErrorResponse;
+ *     showError(errorResponse.failureReason);
+ *     break;
+ * }
+ * ```
+ *
+ * @experimental Part of the new Asgardeo API
  */
-export enum EmbeddedSignUpFlowStatusV2 {
+export enum EmbeddedSignUpFlowStatus {
   /**
-   * Sign-up flow has completed successfully.
+   * Sign-up flow completed successfully.
    *
-   * When this status is returned, the user has successfully registered
-   * and the flow can proceed to redirection or completion handling.
-   * The response will typically contain redirect information.
+   * The user has successfully registered and the flow can proceed to
+   * OAuth2 completion or redirection. Check for redirectUrl or assertion
+   * data in the response for next steps.
    */
   Complete = 'COMPLETE',
 
   /**
-   * Sign-up flow is in progress and requires additional user input.
+   * Sign-up flow requires additional user input.
    *
-   * This status indicates that more steps are needed to complete the
-   * sign-up process. The response will contain form components or
-   * actions that need to be presented to the user.
+   * More registration steps are needed. The response will contain
+   * components in data.meta.components that should be rendered to
+   * collect additional user information (e.g., profile data, verification).
    */
   Incomplete = 'INCOMPLETE',
 
   /**
    * Sign-up flow encountered an error and cannot proceed.
    *
-   * When this status is returned, the response will be of type
-   * `EmbeddedSignUpFlowErrorResponseV2` and will contain a `failureReason`
-   * field with details about what went wrong. This triggers error
-   * handling in the React components to display user-friendly messages.
+   * Registration failed due to validation errors, duplicate user,
+   * system errors, or other issues. The response will be of type
+   * `EmbeddedSignUpFlowErrorResponse` containing detailed failure
+   * information that can be displayed to the user.
    *
-   * @see {@link EmbeddedSignUpFlowErrorResponseV2} for error response structure
+   * @see {@link EmbeddedSignUpFlowErrorResponse} for error response structure
    */
   Error = 'ERROR',
 }
 
-export enum EmbeddedSignUpFlowTypeV2 {
+/**
+ * Type enumeration for Asgardeo embedded sign-up flow responses.
+ *
+ * Determines the nature of the registration flow response and how the client
+ * should handle the returned data. This affects both UI rendering and flow
+ * continuation logic during the user registration process.
+ *
+ * @experimental Part of the new Asgardeo API
+ */
+export enum EmbeddedSignUpFlowType {
+  /**
+   * Response requires external redirection.
+   *
+   * Used for social registration providers, external identity providers,
+   * or other flows that require navigating to an external URL during
+   * the registration process. The response will contain redirection information.
+   */
   Redirection = 'REDIRECTION',
+
+  /**
+   * Response contains view components for rendering.
+   *
+   * Standard embedded registration flow response containing UI components
+   * that should be rendered within the current application context.
+   * Most common type for embedded user registration.
+   */
   View = 'VIEW',
 }
 
 /**
- * Extended response structure for the embedded sign-up flow V2.
+ * Extended response structure for the embedded sign-up flow.
  * @remarks This response is only done from the SDK level.
  * @experimental
  */
-export interface ExtendedEmbeddedSignUpFlowResponseV2 {
+export interface ExtendedEmbeddedSignUpFlowResponse {
   /**
    * The URL to redirect the user after completing the sign-up flow.
    */
@@ -76,26 +121,26 @@ export interface ExtendedEmbeddedSignUpFlowResponseV2 {
 }
 
 /**
- * Response structure for the new Asgardeo V2 embedded sign-up flow.
+ * Response structure for the new Asgardeo embedded sign-up flow.
  *
  * This interface defines the structure for successful sign-up flow responses
- * from AsgardeoV2 APIs. For error responses, see `EmbeddedSignUpFlowErrorResponseV2`.
+ * from Asgardeo APIs. For error responses, see `EmbeddedSignUpFlowErrorResponse`.
  *
  * **Flow States:**
  * - `INCOMPLETE`: More user input required, `data` contains form components
  * - `COMPLETE`: Sign-up finished, may contain redirect information
- * - For `ERROR` status, a separate `EmbeddedSignUpFlowErrorResponseV2` structure is used
+ * - For `ERROR` status, a separate `EmbeddedSignUpFlowErrorResponse` structure is used
  *
  * **Component-Driven UI:**
  * The `data.inputs` and `data.actions` are transformed by the React transformer
  * into component-driven format for consistent UI rendering across different
  * Asgardeo versions.
  *
- * @experimental Part of the new AsgardeoV2 API
- * @see {@link EmbeddedSignUpFlowErrorResponseV2} for error response structure
- * @see {@link EmbeddedSignUpFlowStatusV2} for available flow statuses
+ * @experimental Part of the new Asgardeo API
+ * @see {@link EmbeddedSignUpFlowErrorResponse} for error response structure
+ * @see {@link EmbeddedSignUpFlowStatus} for available flow statuses
  */
-export interface EmbeddedSignUpFlowResponseV2 extends ExtendedEmbeddedSignUpFlowResponseV2 {
+export interface EmbeddedSignUpFlowResponse extends ExtendedEmbeddedSignUpFlowResponse {
   /**
    * Unique identifier for this sign-up flow instance.
    */
@@ -105,12 +150,12 @@ export interface EmbeddedSignUpFlowResponseV2 extends ExtendedEmbeddedSignUpFlow
    * Current status of the sign-up flow.
    * Determines whether more input is needed or the flow is complete.
    */
-  flowStatus: EmbeddedSignUpFlowStatusV2;
+  flowStatus: EmbeddedSignUpFlowStatus;
 
   /**
    * Type of response, indicating the expected user interaction.
    */
-  type: EmbeddedSignUpFlowTypeV2;
+  type: EmbeddedSignUpFlowType;
 
   /**
    * Flow data containing form inputs and available actions.
@@ -121,7 +166,7 @@ export interface EmbeddedSignUpFlowResponseV2 extends ExtendedEmbeddedSignUpFlow
      * Available actions the user can take (e.g., form submission, social sign-up).
      */
     actions?: {
-      type: EmbeddedFlowResponseType;
+      type: EmbeddedFlowResponseTypeV1;
       id: string;
     }[];
 
@@ -137,7 +182,7 @@ export interface EmbeddedSignUpFlowResponseV2 extends ExtendedEmbeddedSignUpFlow
 }
 
 /**
- * Response structure for the new Asgardeo V2 embedded sign-up flow when the flow is complete.
+ * Response structure for the new Asgardeo embedded sign-up flow when the flow is complete.
  * @experimental
  */
 export interface EmbeddedSignUpFlowCompleteResponse {
@@ -145,38 +190,30 @@ export interface EmbeddedSignUpFlowCompleteResponse {
 }
 
 /**
- * Request payload for initiating the new Asgardeo V2 embedded sign-up flow.
+ * Request payload for initiating the new Asgardeo embedded sign-up flow.
  * @experimental
  */
-export type EmbeddedSignUpFlowInitiateRequestV2 = {
+export type EmbeddedSignUpFlowInitiateRequest = {
   applicationId: string;
-  flowType: EmbeddedFlowType;
+  flowType: EmbeddedFlowTypeV1;
 };
 
 /**
- * Request payload for executing steps in the new Asgardeo V2 embedded sign-up flow.
+ * Request payload for executing steps in the new Asgardeo embedded sign-up flow.
  * @experimental
  */
-export interface EmbeddedSignUpFlowRequestV2 extends Partial<EmbeddedSignUpFlowInitiateRequestV2> {
+export interface EmbeddedSignUpFlowRequest extends Partial<EmbeddedSignUpFlowInitiateRequest> {
   flowId?: string;
   actionId?: string;
   inputs?: Record<string, any>;
 }
 
 /**
- * Request config for executing the new Asgardeo V2 embedded sign-up flow.
- * @experimental
- */
-export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlowExecuteRequestConfig<T> {
-  authId?: string;
-}
-
-/**
- * Error response structure for the new Asgardeo V2 embedded sign-up flow.
+ * Error response structure for the new Asgardeo embedded sign-up flow.
  *
- * This interface defines the structure of error responses returned by AsgardeoV2 APIs
+ * This interface defines the structure of error responses returned by Asgardeo APIs
  * when sign-up operations fail. Unlike AsgardeoV1 which uses generic error codes and
- * descriptions, AsgardeoV2 provides more specific failure reasons within the flow context.
+ * descriptions, Asgardeo provides more specific failure reasons within the flow context.
  *
  * **Key Differences from AsgardeoV1:**
  * - Uses `failureReason` instead of `message`/`description` for error details
@@ -191,10 +228,10 @@ export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlo
  *
  * @example
  * ```typescript
- * // Typical AsgardeoV2 error response
- * const errorResponse: EmbeddedSignUpFlowErrorResponseV2 = {
+ * // Typical Asgardeo error response
+ * const errorResponse: EmbeddedSignUpFlowErrorResponse = {
  *   flowId: "0ccfeaf9-18b3-43a5-bcc1-07d863dcb2c0",
- *   flowStatus: EmbeddedSignUpFlowStatusV2.Error,
+ *   flowStatus: EmbeddedSignUpFlowStatus.Error,
  *   data: {},
  *   failureReason: "User already exists with the provided username."
  * };
@@ -203,11 +240,11 @@ export interface EmbeddedFlowExecuteRequestConfigV2<T = any> extends EmbeddedFlo
  * // "User already exists with the provided username."
  * ```
  *
- * @experimental This is part of the new AsgardeoV2 API and may change in future versions
- * @see {@link EmbeddedSignUpFlowStatusV2.Error} for the error status enum value
- * @see {@link EmbeddedSignUpFlowResponseV2} for the corresponding success response structure
+ * @experimental This is part of the new Asgardeo API and may change in future versions
+ * @see {@link EmbeddedSignUpFlowStatus.Error} for the error status enum value
+ * @see {@link EmbeddedSignUpFlowResponse} for the corresponding success response structure
  */
-export interface EmbeddedSignUpFlowErrorResponseV2 {
+export interface EmbeddedSignUpFlowErrorResponse {
   /**
    * Unique identifier for the sign-up flow instance.
    * This ID is used to track the flow state and correlate error responses
@@ -216,11 +253,11 @@ export interface EmbeddedSignUpFlowErrorResponseV2 {
   flowId: string;
 
   /**
-   * Status of the sign-up flow, which will be `EmbeddedSignUpFlowStatusV2.Error`
+   * Status of the sign-up flow, which will be `EmbeddedSignUpFlowStatus.Error`
    * for error responses. This field is used by error detection logic to
    * identify failed flow responses.
    */
-  flowStatus: EmbeddedSignUpFlowStatusV2;
+  flowStatus: EmbeddedSignUpFlowStatus;
 
   /**
    * Additional response data, typically empty for error responses.

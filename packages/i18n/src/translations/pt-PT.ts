@@ -27,137 +27,142 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'Iniciar Sessão',
-  'elements.buttons.signOut': 'Terminar Sessão',
-  'elements.buttons.signUp': 'Registar-se',
-  'elements.buttons.facebook': 'Iniciar Sessão com Facebook',
-  'elements.buttons.google': 'Iniciar Sessão com Google',
-  'elements.buttons.github': 'Iniciar Sessão com GitHub',
-  'elements.buttons.microsoft': 'Iniciar Sessão com Microsoft',
-  'elements.buttons.linkedin': 'Iniciar Sessão com LinkedIn',
-  'elements.buttons.ethereum': 'Iniciar Sessão com Ethereum',
-  'elements.buttons.smsotp': 'Iniciar Sessão com SMS',
-  'elements.buttons.multi.option': 'Iniciar Sessão com {connection}',
-  'elements.buttons.social': 'Iniciar Sessão com {connection}',
+  'elements.buttons.signin.text': 'Iniciar Sessão',
+  'elements.buttons.signout.text': 'Terminar Sessão',
+  'elements.buttons.signup.text': 'Registar-se',
+  'elements.buttons.submit.text': 'Continuar',
+  'elements.buttons.facebook.text': 'Iniciar Sessão com Facebook',
+  'elements.buttons.google.text': 'Iniciar Sessão com Google',
+  'elements.buttons.github.text': 'Iniciar Sessão com GitHub',
+  'elements.buttons.microsoft.text': 'Iniciar Sessão com Microsoft',
+  'elements.buttons.linkedin.text': 'Iniciar Sessão com LinkedIn',
+  'elements.buttons.ethereum.text': 'Iniciar Sessão com Ethereum',
+  'elements.buttons.smsotp.text': 'Iniciar Sessão com SMS',
+  'elements.buttons.multi.option.text': 'Iniciar Sessão com {connection}',
+  'elements.buttons.social.text': 'Iniciar Sessão com {connection}',
 
   /* Fields */
-  'elements.fields.placeholder': 'Introduza o seu {field}',
-  'elements.fields.username': 'Nome de utilizador',
-  'elements.fields.password': 'Palavra-passe',
-  'elements.fields.ouName': 'Nome da Organização',
-  'elements.fields.ouHandle': 'Identificador da Organização',
-  'elements.fields.ouDescription': 'Descrição da Organização',
+  'elements.fields.generic.placeholder': 'Introduza o seu {field}',
+  'elements.fields.username.label': 'Nome de utilizador',
+  'elements.fields.username.placeholder': 'Introduza o nome de utilizador',
+  'elements.fields.password.label': 'Palavra-passe',
+  'elements.fields.password.placeholder': 'Introduza a palavra-passe',
+  'elements.fields.first_name.label': 'Primeiro nome',
+  'elements.fields.first_name.placeholder': 'Introduza o primeiro nome',
+  'elements.fields.last_name.label': 'Apelido',
+  'elements.fields.last_name.placeholder': 'Introduza o apelido',
+  'elements.fields.email.label': 'Email',
+  'elements.fields.email.placeholder': 'Introduza o email',
+  'elements.fields.organization.name.label': 'Nome da Organização',
+  'elements.fields.organization.handle.label': 'Identificador da Organização',
+  'elements.fields.organization.description.label': 'Descrição da Organização',
+  'elements.fields.organization.select.label': 'Selecionar Organização',
+  'elements.fields.organization.select.placeholder': 'Selecione uma organização',
 
   /* Validation */
-  'field.required': 'Este campo é obrigatório',
+  'validations.required.field.error': 'Este campo é obrigatório',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'Iniciar Sessão',
-  'signin.subtitle': 'Introduza as suas credenciais para continuar.',
+  'signin.heading': 'Iniciar Sessão',
+  'signin.subheading': 'Introduza as suas credenciais para continuar.',
 
   /* Base Sign Up */
-  'signup.title': 'Registar-se',
-  'signup.subtitle': 'Crie uma nova conta para começar.',
+  'signup.heading': 'Registar-se',
+  'signup.subheading': 'Crie uma nova conta para começar.',
 
   /* Email OTP */
-  'email.otp.title': 'Verificação OTP',
-  'email.otp.subtitle': 'Introduza o código enviado para o seu e-mail.',
-  'email.otp.submit.button': 'Continuar',
+  'email.otp.heading': 'Verificação OTP',
+  'email.otp.subheading': 'Introduza o código enviado para o seu e-mail.',
+  'email.otp.buttons.submit.text': 'Continuar',
 
   /* Identifier First */
-  'identifier.first.title': 'Iniciar Sessão',
-  'identifier.first.subtitle': 'Introduza o seu utilizador ou e-mail.',
-  'identifier.first.submit.button': 'Continuar',
+  'identifier.first.heading': 'Iniciar Sessão',
+  'identifier.first.subheading': 'Introduza o seu utilizador ou e-mail.',
+  'identifier.first.buttons.submit.text': 'Continuar',
 
   /* SMS OTP */
-  'sms.otp.title': 'Verificação OTP',
-  'sms.otp.subtitle': 'Introduza o código enviado para o seu telemóvel.',
-  'sms.otp.submit.button': 'Continuar',
+  'sms.otp.heading': 'Verificação OTP',
+  'sms.otp.subheading': 'Introduza o código enviado para o seu telemóvel.',
+  'sms.otp.buttons.submit.text': 'Continuar',
 
   /* TOTP */
-  'totp.title': 'Verifique a sua identidade',
-  'totp.subtitle': 'Introduza o código da sua aplicação autenticadora.',
-  'totp.submit.button': 'Continuar',
+  'totp.heading': 'Verifique a sua identidade',
+  'totp.subheading': 'Introduza o código da sua aplicação autenticadora.',
+  'totp.buttons.submit.text': 'Continuar',
 
   /* Username Password */
-  'username.password.submit.button': 'Continuar',
-  'username.password.title': 'Iniciar Sessão',
-  'username.password.subtitle': 'Introduza o seu utilizador e palavra-passe para continuar.',
+  'username.password.buttons.submit.text': 'Continuar',
+  'username.password.heading': 'Iniciar Sessão',
+  'username.password.subheading': 'Introduza o seu utilizador e palavra-passe para continuar.',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'Perfil',
+  'user.profile.heading': 'Perfil',
   'user.profile.update.generic.error': 'Ocorreu um erro ao actualizar o seu perfil. Tente novamente.',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'Escolher Organização',
   'organization.switcher.switch.organization': 'Trocar Organização',
-  'organization.switcher.loading.organizations': 'A carregar organizações...',
+  'organization.switcher.loading.placeholder.organizations': 'A carregar organizações...',
   'organization.switcher.members': 'membros',
   'organization.switcher.member': 'membro',
   'organization.switcher.create.organization': 'Criar Organização',
   'organization.switcher.manage.organizations': 'Gerir Organizações',
-  'organization.switcher.manage.button': 'Gerir',
-  'organization.switcher.organizations.title': 'Organizações',
-  'organization.switcher.switch.button': 'Trocar',
+  'organization.switcher.buttons.manage.text': 'Gerir',
+  'organization.switcher.organizations.heading': 'Organizações',
+  'organization.switcher.buttons.switch.text': 'Trocar',
   'organization.switcher.no.access': 'Sem Acesso',
   'organization.switcher.status.label': 'Estado:',
   'organization.switcher.showing.count': 'A mostrar {showing} de {total} organizações',
-  'organization.switcher.refresh.button': 'Actualizar',
-  'organization.switcher.load.more': 'Carregar Mais Organizações',
+  'organization.switcher.buttons.refresh.text': 'Actualizar',
+  'organization.switcher.buttons.load_more.text': 'Carregar Mais Organizações',
   'organization.switcher.loading.more': 'A carregar...',
   'organization.switcher.no.organizations': 'Nenhuma organização encontrada',
   'organization.switcher.error.prefix': 'Erro:',
-  'organization.profile.title': 'Perfil da Organização',
+
+  'organization.profile.heading': 'Perfil da Organização',
   'organization.profile.loading': 'A carregar organização...',
   'organization.profile.error': 'Falha ao carregar organização',
 
-  'organization.create.title': 'Criar Organização',
-  'organization.create.name.label': 'Nome da Organização',
-  'organization.create.name.placeholder': 'Introduza o nome da organização',
-  'organization.create.handle.label': 'Identificador da Organização',
-  'organization.create.handle.placeholder': 'minha-organizacao',
-  'organization.create.description.label': 'Descrição',
-  'organization.create.description.placeholder': 'Introduza a descrição da organização',
-  'organization.create.button': 'Criar Organização',
-  'organization.create.creating': 'A criar...',
-  'organization.create.cancel': 'Cancelar',
+  'organization.create.heading': 'Criar Organização',
+  'organization.create.buttons.create_organization.text': 'Criar Organização',
+  'organization.create.buttons.create_organization.loading.text': 'A criar...',
+  'organization.create.buttons.cancel.text': 'Cancelar',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': 'A carregar...',
+  'messages.loading.placeholder': 'A carregar...',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'Erro',
-  'errors.sign.in.initialization': 'Ocorreu um erro ao inicializar. Tente novamente mais tarde.',
-  'errors.sign.in.flow.failure': 'Ocorreu um erro durante o início de sessão. Tente novamente mais tarde.',
-  'errors.sign.in.flow.completion.failure':
+  'errors.heading': 'Erro',
+  'errors.signin.initialization': 'Ocorreu um erro ao inicializar. Tente novamente mais tarde.',
+  'errors.signin.flow.failure': 'Ocorreu um erro durante o início de sessão. Tente novamente mais tarde.',
+  'errors.signin.flow.completion.failure':
     'Ocorreu um erro ao completar o início de sessão. Tente novamente mais tarde.',
-  'errors.sign.in.flow.passkeys.failure':
+  'errors.signin.flow.passkeys.failure':
     'Ocorreu um erro ao iniciar sessão com as chaves de acesso (passkeys). Tente novamente mais tarde.',
-  'errors.sign.in.flow.passkeys.completion.failure':
+  'errors.signin.flow.passkeys.completion.failure':
     'Ocorreu um erro ao completar o início de sessão com as chaves de acesso (passkeys). Tente novamente mais tarde.',
-  'errors.sign.up.initialization': 'Ocorreu um erro durante a inicialização. Tente novamente mais tarde.',
-  'errors.sign.up.flow.failure': 'Ocorreu um erro durante o fluxo de registo. Tente novamente mais tarde.',
-  'errors.sign.up.flow.initialization.failure':
+  'errors.signup.initialization': 'Ocorreu um erro durante a inicialização. Tente novamente mais tarde.',
+  'errors.signup.flow.failure': 'Ocorreu um erro durante o fluxo de registo. Tente novamente mais tarde.',
+  'errors.signup.flow.initialization.failure':
     'Ocorreu um erro ao inicializar o fluxo de registo. Tente novamente mais tarde.',
-  'errors.sign.up.components.not.available':
+  'errors.signup.components.not.available':
     'O formulário de registo não está disponível de momento. Tente novamente mais tarde.',
-  'errors.sign.in.components.not.available':
+  'errors.signin.components.not.available':
     'O formulário de início de sessão não está disponível de momento. Tente novamente mais tarde.',
 };
 

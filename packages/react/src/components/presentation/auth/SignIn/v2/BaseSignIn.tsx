@@ -18,20 +18,25 @@
 
 import {FC, useState, useCallback, ReactElement, ReactNode} from 'react';
 import {cx} from '@emotion/css';
-import {EmbeddedFlowComponent, withVendorCSSClassPrefix, EmbeddedSignInFlowRequestV2} from '@asgardeo/browser';
-import useTranslation from '../../../../hooks/useTranslation';
-import Card, {CardProps} from '../../../primitives/Card/Card';
-import Spinner from '../../../primitives/Spinner/Spinner';
-import Alert from '../../../primitives/Alert/Alert';
-import Logo from '../../../primitives/Logo/Logo';
-import Typography from '../../../primitives/Typography/Typography';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import {
+  withVendorCSSClassPrefix,
+  EmbeddedSignInFlowRequestV2 as EmbeddedSignInFlowRequest,
+  EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
+} from '@asgardeo/browser';
+import useTranslation from '../../../../../hooks/useTranslation';
+import Card, {CardProps} from '../../../../primitives/Card/Card';
+import Spinner from '../../../../primitives/Spinner/Spinner';
+import Alert from '../../../../primitives/Alert/Alert';
+import Logo from '../../../../primitives/Logo/Logo';
+import Typography from '../../../../primitives/Typography/Typography';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 import useStyles from '../BaseSignIn.styles';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import FlowProvider from '../../../../contexts/Flow/FlowProvider';
-import {FormField, useForm} from '../../../../hooks/useForm';
-import {renderSignInComponents} from './SignInOptionFactory';
-import {extractErrorMessage} from '../../SignUp/transformer';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import FlowProvider from '../../../../../contexts/Flow/FlowProvider';
+import {FormField, useForm} from '../../../../../hooks/useForm';
+import {renderSignInComponents} from '../../AuthOptionFactory';
+import {extractErrorMessage} from '../../../../../utils/v2/flowTransformer';
+import getAuthComponentHeadings from '../../../../../utils/v2/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering
@@ -148,7 +153,7 @@ export interface BaseSignInProps {
    * @param payload - The form data to submit.
    * @param component - The component that triggered the submission.
    */
-  onSubmit?: (payload: EmbeddedSignInFlowRequestV2, component: EmbeddedFlowComponent) => Promise<void>;
+  onSubmit?: (payload: EmbeddedSignInFlowRequest, component: EmbeddedFlowComponent) => Promise<void>;
 
   /**
    * Callback function called when authentication is successful.
@@ -310,15 +315,15 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
       const processComponents = (comps: EmbeddedFlowComponent[]) => {
         comps.forEach(component => {
-          if (component.type === 'INPUT' && component.config) {
-            const identifier: string = (component.config['identifier'] as string) || component.id;
+          if (component.type === 'TEXT_INPUT' || component.type === 'PASSWORD_INPUT') {
+            const identifier: string = component.ref;
             fields.push({
               name: identifier,
-              required: (component.config['required'] as unknown as boolean) || false,
+              required: component.required || false,
               initialValue: '',
               validator: (value: string) => {
-                if (component.config['required'] && (!value || value.trim() === '')) {
-                  return t('field.required');
+                if (component.required && (!value || value.trim() === '')) {
+                  return t('validations.required.field.error');
                 }
                 return null;
               },
@@ -343,7 +348,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: false,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -385,6 +390,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
     setIsSubmitting(true);
     clearMessages();
+    console.log('Submitting component:', component, 'with data:', data);
 
     try {
       // Filter out empty or undefined input values
@@ -397,19 +403,14 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         });
       }
 
-      let payload: EmbeddedSignInFlowRequestV2 = {};
+      let payload: EmbeddedSignInFlowRequest = {};
 
-      if (component.config['actionId']) {
-        payload = {
-          ...payload,
-          actionId: component.config['actionId'] as string,
-        };
-      } else {
-        payload = {
-          ...payload,
-          inputs: filteredInputs,
-        };
-      }
+      // For V2, we always send inputs and action
+      payload = {
+        ...payload,
+        ...(component.id && {action: component.id}),
+        inputs: filteredInputs,
+      };
 
       await onSubmit?.(payload, component);
     } catch (err) {
@@ -501,8 +502,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       handleInputChange,
       handleSubmit,
       validateForm,
-      title: flowTitle || t('signin.title'),
-      subtitle: flowSubtitle || t('signin.subtitle'),
+      title: flowTitle || t('signin.heading'),
+      subtitle: flowSubtitle || t('signin.subheading'),
       messages: flowMessages || [],
     };
 
@@ -527,12 +528,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="warning">
-            <Typography variant="body1">{t('errors.sign.in.components.not.available')}</Typography>
+            <Typography variant="body1">{t('errors.signin.components.not.available')}</Typography>
           </Alert>
         </Card.Content>
       </Card>
     );
   }
+
+  // Extract heading and subheading components and filter them from the main components
+  const {title, subtitle, componentsWithoutHeadings} = getAuthComponentHeadings(
+    components as any,
+    flowTitle,
+    flowSubtitle,
+    t('signin.heading'),
+    t('signin.subheading'),
+  );
 
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
@@ -540,12 +550,12 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         <Card.Header className={styles.header}>
           {showTitle && (
             <Card.Title level={2} className={styles.title}>
-              {flowTitle || t('signin.title')}
+              {title}
             </Card.Title>
           )}
           {showSubtitle && (
             <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signin.subtitle')}
+              {subtitle}
             </Typography>
           )}
         </Card.Header>
@@ -564,7 +574,9 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             ))}
           </div>
         )}
-        <div className={styles.contentContainer}>{components && renderComponents(components)}</div>
+        <div className={styles.contentContainer}>
+          {componentsWithoutHeadings && renderComponents(componentsWithoutHeadings)}
+        </div>
       </Card.Content>
     </Card>
   );

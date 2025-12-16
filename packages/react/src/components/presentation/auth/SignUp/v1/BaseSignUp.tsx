@@ -23,25 +23,22 @@ import {
   EmbeddedFlowComponentType,
   EmbeddedFlowResponseType,
   withVendorCSSClassPrefix,
-  AsgardeoAPIError,
-  Platform,
 } from '@asgardeo/browser';
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
-import {transformSimpleToComponentDriven, extractErrorMessage} from './transformer';
-import FlowProvider from '../../../contexts/Flow/FlowProvider';
-import useFlow from '../../../contexts/Flow/useFlow';
-import {useForm, FormField} from '../../../hooks/useForm';
-import useTranslation from '../../../hooks/useTranslation';
-import useTheme from '../../../contexts/Theme/useTheme';
-import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
-import Alert from '../../primitives/Alert/Alert';
-import Card, {CardProps} from '../../primitives/Card/Card';
-import Logo from '../../primitives/Logo/Logo';
-import Spinner from '../../primitives/Spinner/Spinner';
-import Typography from '../../primitives/Typography/Typography';
-import useStyles from './BaseSignUp.styles';
+import FlowProvider from '../../../../../contexts/Flow/FlowProvider';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import {useForm, FormField} from '../../../../../hooks/useForm';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useTheme from '../../../../../contexts/Theme/useTheme';
+import useAsgardeo from '../../../../../contexts/Asgardeo/useAsgardeo';
+import Alert from '../../../../primitives/Alert/Alert';
+import Card, {CardProps} from '../../../../primitives/Card/Card';
+import Logo from '../../../../primitives/Logo/Logo';
+import Spinner from '../../../../primitives/Spinner/Spinner';
+import Typography from '../../../../primitives/Typography/Typography';
+import useStyles from '../BaseSignUp.styles';
 
 /**
  * Render props for custom UI rendering
@@ -212,61 +209,11 @@ export interface BaseSignUpProps {
 }
 
 /**
- * Base SignUp component that provides embedded sign-up flow.
+ * BaseSignUp component that provides embedded sign-up flow for Asgardeo.
  * This component handles both the presentation layer and sign-up flow logic.
  * It accepts API functions as props to maintain framework independence.
  *
- * @example
- * // Default UI
- * ```tsx
- * import { BaseSignUp } from '@asgardeo/react';
- *
- * const MySignUp = () => {
- *   return (
- *     <BaseSignUp
- *       onInitialize={async (payload) => {
- *         // Your API call to initialize sign-up
- *         return await initializeSignUp(payload);
- *       }}
- *       onSubmit={async (payload) => {
- *         // Your API call to handle sign-up
- *         return await handleSignUp(payload);
- *       }}
- *       onError={(error) => {
- *         console.error('Error:', error);
- *       }}
- *       onComplete={(response) => {
- *         // Platform-specific redirect handling (e.g., Next.js router.push)
- *         router.push(response); // or window.location.href = redirectUrl
- *       }}
- *       className="max-w-md mx-auto"
- *     />
- *   );
- * };
- * ```
- *
- * @example
- * // Custom UI with render props
- * ```tsx
- * <BaseSignUp onInitialize={initializeSignUp} onSubmit={handleSignUp}>
- *   {({values, errors, handleInputChange, handleSubmit, isLoading, components}) => (
- *     <div className="custom-form">
- *       <input
- *         name="username"
- *         value={values.username || ''}
- *         onChange={(e) => handleInputChange('username', e.target.value)}
- *       />
- *       {errors.username && <span>{errors.username}</span>}
- *       <button
- *         onClick={() => handleSubmit(components[0], values)}
- *         disabled={isLoading}
- *       >
- *         Sign Up
- *       </button>
- *     </div>
- *   )}
- * </BaseSignUp>
- * ```
+ * @internal
  */
 const BaseSignUp: FC<BaseSignUpProps> = ({showLogo = true, ...rest}: BaseSignUpProps): ReactElement => {
   const {theme, colorScheme} = useTheme();
@@ -287,7 +234,9 @@ const BaseSignUp: FC<BaseSignUpProps> = ({showLogo = true, ...rest}: BaseSignUpP
 };
 
 /**
- * Internal component that consumes FlowContext and renders the sign-up UI.
+ * Component that consumes FlowContext and renders the sign-up UI.
+ *
+ * @internal
  */
 const BaseSignUpContent: FC<BaseSignUpProps> = ({
   afterSignUpUrl,
@@ -314,13 +263,33 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   const {platform} = useAsgardeo();
   const styles = useStyles(theme, colorScheme);
 
-  /**
-   * Handle error responses and extract meaningful error messages
-   * Uses the transformer's extractErrorMessage function for consistency
-   */
   const handleError = useCallback(
     (error: any) => {
-      const errorMessage: string = extractErrorMessage(error, t);
+      let errorMessage: string = t('errors.signup.flow.failure');
+
+      if (error && typeof error === 'object') {
+        // Handle Asgardeo error format with code and description/message
+        if (error.code && (error.message || error.description)) {
+          errorMessage = error.description || error.message;
+        } else if (error instanceof Error && error.name === 'AsgardeoAPIError') {
+          try {
+            const errorResponse = JSON.parse(error.message);
+            if (errorResponse.description) {
+              errorMessage = errorResponse.description;
+            } else if (errorResponse.message) {
+              errorMessage = errorResponse.message;
+            } else {
+              errorMessage = error.message;
+            }
+          } catch {
+            errorMessage = error.message;
+          }
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
 
       // Clear existing messages and add the error message
       clearMessages();
@@ -340,35 +309,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   const initializationAttemptedRef = useRef(false);
 
   /**
-   * Normalize flow response to ensure component-driven format
-   */
-  const normalizeFlowResponse = useCallback(
-    (response: EmbeddedFlowExecuteResponse): EmbeddedFlowExecuteResponse => {
-      // If response already has components, return as-is (Asgardeo/IS format)
-      if (response?.data?.components && Array.isArray(response.data.components)) {
-        return response;
-      }
-
-      // If response has simple inputs/actions (Thunder format), transform to component-driven
-      if (response?.data && ((response.data as any).inputs || (response.data as any).actions)) {
-        const transformedComponents = transformSimpleToComponentDriven(response, t);
-
-        return {
-          ...response,
-          data: {
-            ...response.data,
-            components: transformedComponents,
-          },
-        };
-      }
-
-      // Return as-is if no transformation needed
-      return response;
-    },
-    [t],
-  );
-
-  /**
    * Extract form fields from flow components
    */
   const extractFormFields = useCallback(
@@ -385,7 +325,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
               initialValue: config.defaultValue || '',
               validator: (value: string) => {
                 if (config.required && (!value || value.trim() === '')) {
-                  return t('field.required');
+                  return t('validations.required.field.error');
                 }
                 // Add email validation if it's an email field
                 if (config.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -419,7 +359,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: true,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -487,20 +427,16 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         });
       }
 
-      // For AsgardeoV2 platform, use actionId from component.config, otherwise use component.id
-      const actionId = platform === Platform.AsgardeoV2
-        ? component.config?.actionId
-        : component.id;
+      const actionId: string = component.id;
 
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
         inputs: filteredInputs,
-        ...(actionId && { actionId: actionId as string }),
+        ...(actionId && {actionId: actionId as string}),
       } as any;
 
-      const rawResponse = await onSubmit(payload);
-      const response = normalizeFlowResponse(rawResponse);
+      const response = await onSubmit(payload);
       onFlowChange?.(response);
 
       if (response.flowStatus === EmbeddedFlowStatus.Complete) {
@@ -754,29 +690,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     ],
   );
 
-  /**
-   * Parse URL parameters to check for OAuth redirect state.
-   */
-  const getUrlParams = () => {
-    const urlParams = new URL(window?.location?.href ?? '').searchParams;
-    return {
-      code: urlParams.get('code'),
-      state: urlParams.get('state'),
-      error: urlParams.get('error'),
-    };
-  };
-
   // Initialize the flow on component mount
   useEffect(() => {
-    // Skip initialization if we're in an OAuth redirect state
-    // Only apply this check for AsgardeoV2 platform
-    if (platform === Platform.AsgardeoV2) {
-      const urlParams = getUrlParams();
-      if (urlParams.code || urlParams.state) {
-        return;
-      }
-    }
-
     if (isInitialized && !isFlowInitialized && !initializationAttemptedRef.current) {
       initializationAttemptedRef.current = true;
 
@@ -785,8 +700,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         clearMessages();
 
         try {
-          const rawResponse = await onInitialize();
-          const response = normalizeFlowResponse(rawResponse);
+          const response = await onInitialize();
 
           setCurrentFlow(response);
           setIsFlowInitialized(true);
@@ -794,7 +708,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
           if (response.flowStatus === EmbeddedFlowStatus.Complete) {
             onComplete?.(response);
-
             return;
           }
 
@@ -817,7 +730,6 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     onError,
     onFlowChange,
     setupFormFields,
-    normalizeFlowResponse,
     afterSignUpUrl,
     t,
   ]);
@@ -834,8 +746,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       handleInputChange,
       handleSubmit,
       validateForm,
-      title: flowTitle || t('signup.title'),
-      subtitle: flowSubtitle || t('signup.subtitle'),
+      title: flowTitle || t('signup.heading'),
+      subtitle: flowSubtitle || t('signup.subheading'),
       messages: flowMessages || [],
     };
 
@@ -859,8 +771,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       <Card className={cx(containerClasses, styles.card)} variant={variant}>
         <Card.Content>
           <Alert variant="error" className={errorClasses}>
-            <Alert.Title>{t('errors.title')}</Alert.Title>
-            <Alert.Description>{t('errors.sign.up.flow.initialization.failure')}</Alert.Description>
+            <Alert.Title>{t('errors.heading')}</Alert.Title>
+            <Alert.Description>{t('errors.signup.flow.initialization.failure')}</Alert.Description>
           </Alert>
         </Card.Content>
       </Card>
@@ -873,12 +785,12 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         <Card.Header className={styles.header}>
           {showTitle && (
             <Card.Title level={2} className={styles.title}>
-              {flowTitle || t('signup.title')}
+              {flowTitle || t('signup.heading')}
             </Card.Title>
           )}
           {showSubtitle && (
             <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signup.subtitle')}
+              {flowSubtitle || t('signup.subheading')}
             </Typography>
           )}
         </Card.Header>
@@ -902,7 +814,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             renderComponents(currentFlow.data.components)
           ) : (
             <Alert variant="warning">
-              <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>
+              <Typography variant="body1">{t('errors.signup.components.not.available')}</Typography>
             </Alert>
           )}
         </div>

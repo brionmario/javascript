@@ -57,7 +57,7 @@ const SignInWithEthereumButton: FC<SignInWithEthereumButtonProps & HTMLAttribute
         </svg>
       }
     >
-      {children ?? t('elements.buttons.ethereum')}
+      {children ?? t('elements.buttons.ethereum.text')}
     </Button>
   );
 };

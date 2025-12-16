@@ -261,7 +261,7 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
   const defaultRenderLoading = () => (
     <div className={cx(styles.loadingContainer)}>
       <Typography variant="caption" className={cx(styles.loadingText)}>
-        {t('organization.switcher.loading.organizations')}
+        {t('organization.switcher.loading.placeholder.organizations')}
       </Typography>
     </div>
   );
@@ -304,7 +304,7 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
             <Building width={avatarSize} height={avatarSize} />
             {showTriggerLabel && (
               <Typography variant="body2" className={cx(styles.triggerLabel)}>
-                {t('organization.switcher.select.organization')}
+                {t('elements.fields.organization.select.label')}
               </Typography>
             )}
           </>
@@ -380,7 +380,7 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
                         </svg>
                       }
                     >
-                      {t('organization.switcher.manage.button')}
+                      {t('organization.switcher.buttons.manage.text')}
                     </Button>
                   )}
                 </div>

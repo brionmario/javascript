@@ -17,15 +17,14 @@
  */
 
 import {FC} from 'react';
-
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import Button from '../primitives/Button/Button';
 import Spinner from '../primitives/Spinner/Spinner';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Button component for sign-up forms that handles all button variants.
  */
-const ButtonComponent: FC<BaseSignUpOptionProps> = ({
+const ButtonComponent: FC<AdapterProps> = ({
   component,
   isLoading,
   isFormValid,

@@ -17,12 +17,13 @@
  */
 
 import {FC} from 'react';
-import {createSignUpComponent, BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
+import {createSignUpComponent} from '../presentation/auth/SignUp/v1/SignUpOptionFactory';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Form container component that renders child components.
  */
-const FormContainer: FC<BaseSignUpOptionProps> = props => {
+const FormContainer: FC<AdapterProps> = props => {
   const {component} = props;
 
   // If the form has child components, render them wrapped in a form element

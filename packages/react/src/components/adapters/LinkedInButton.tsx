@@ -57,7 +57,7 @@ const LinkedInButton: FC<LinkedInButtonProps & HTMLAttributes<HTMLButtonElement>
         </svg>
       }
     >
-      {children ?? t('elements.buttons.linkedin')}
+      {children ?? t('elements.buttons.linkedin.text')}
     </Button>
   );
 };

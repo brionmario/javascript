@@ -75,7 +75,7 @@ const SignOutButton = forwardRef<HTMLButtonElement, SignOutButtonProps>(
 
     return (
       <BaseSignOutButton ref={ref} onClick={handleOnClick} isLoading={isLoading} preferences={preferences} {...rest}>
-        {children ?? t('elements.buttons.signOut')}
+        {children ?? t('elements.buttons.signout.text')}
       </BaseSignOutButton>
     );
   },

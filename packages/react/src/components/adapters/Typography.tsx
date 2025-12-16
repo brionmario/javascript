@@ -17,14 +17,14 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import Typography from '../primitives/Typography/Typography';
 import useTheme from '../../contexts/Theme/useTheme';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Typography component for sign-up forms (titles, descriptions, etc.).
  */
-const TypographyComponent: FC<BaseSignUpOptionProps> = ({component}) => {
+const TypographyComponent: FC<AdapterProps> = ({component}) => {
   const {theme} = useTheme();
   const config: Record<string, unknown> = component.config || {};
   const text: string = (config['text'] as string) || (config['content'] as string) || '';

@@ -17,10 +17,10 @@
  */
 
 import {FC, JSX, ReactElement} from 'react';
-import Button from '../../../../primitives/Button/Button';
+import Button from '../../../../../primitives/Button/Button';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
 import {ApplicationNativeAuthenticationConstants, EmbeddedSignInFlowAuthenticatorKnownIdPType} from '@asgardeo/browser';
-import useTranslation from '../../../../../hooks/useTranslation';
+import useTranslation from '../../../../../../hooks/useTranslation';
 
 /**
  * Multi Option Button Component.
@@ -48,7 +48,7 @@ const MultiOptionButton: FC<BaseSignInOptionProps> = ({
 
     switch (authenticatorName) {
       default:
-        return t('elements.buttons.multi.option', {connection: authenticatorName});
+        return t('elements.buttons.multi.option.text', {connection: authenticatorName});
     }
   };
 

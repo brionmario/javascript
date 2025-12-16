@@ -21,11 +21,10 @@ import {
   EmbeddedFlowExecuteResponse,
   EmbeddedFlowResponseType,
   EmbeddedFlowType,
-  Platform,
 } from '@asgardeo/browser';
 import {FC, ReactNode} from 'react';
 import BaseSignUp, {BaseSignUpProps, BaseSignUpRenderProps} from './BaseSignUp';
-import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+import useAsgardeo from '../../../../../contexts/Asgardeo/useAsgardeo';
 
 /**
  * Render props function parameters (re-exported from BaseSignUp for convenience)
@@ -43,74 +42,8 @@ export type SignUpProps = BaseSignUpProps & {
 };
 
 /**
- * A styled SignUp component that provides embedded sign-up flow with pre-built styling.
+ * A styled SignUp component for Asgardeo platform that provides embedded sign-up flow with pre-built styling.
  * This component handles the API calls for sign-up and delegates UI logic to BaseSignUp.
- *
- * @example
- * // Default UI
- * ```tsx
- * import { SignUp } from '@asgardeo/react';
- *
- * const App = () => {
- *   return (
- *     <SignUp
- *       onSuccess={(response) => {
- *         console.log('Sign-up successful:', response);
- *         // Handle successful sign-up (e.g., redirect, show confirmation)
- *       }}
- *       onError={(error) => {
- *         console.error('Sign-up failed:', error);
- *       }}
- *       onComplete={(redirectUrl) => {
- *         // Platform-specific redirect handling (e.g., Next.js router.push)
- *         router.push(redirectUrl); // or window.location.href = redirectUrl
- *       }}
- *       size="medium"
- *       variant="outlined"
- *       afterSignUpUrl="/welcome"
- *     />
- *   );
- * };
- * ```
- *
- * @example
- * // Custom UI with render props
- * ```tsx
- * import { SignUp } from '@asgardeo/react';
- *
- * const App = () => {
- *   return (
- *     <SignUp
- *       onError={(error) => console.error('Error:', error)}
- *       onComplete={(response) => console.log('Success:', response)}
- *     >
- *       {({values, errors, handleInputChange, handleSubmit, isLoading, components}) => (
- *         <div className="custom-signup">
- *           <h1>Custom Sign Up</h1>
- *           {isLoading ? (
- *             <p>Loading...</p>
- *           ) : (
- *             <form onSubmit={(e) => {
- *               e.preventDefault();
- *               handleSubmit(components[0], values);
- *             }}>
- *               <input
- *                 name="username"
- *                 value={values.username || ''}
- *                 onChange={(e) => handleInputChange('username', e.target.value)}
- *               />
- *               {errors.username && <span>{errors.username}</span>}
- *               <button type="submit" disabled={isLoading}>
- *                 {isLoading ? 'Signing up...' : 'Sign Up'}
- *               </button>
- *             </form>
- *           )}
- *         </div>
- *       )}
- *     </SignUp>
- *   );
- * };
- * ```
  */
 const SignUp: FC<SignUpProps> = ({
   className,
@@ -122,7 +55,7 @@ const SignUp: FC<SignUpProps> = ({
   children,
   ...rest
 }) => {
-  const {signUp, isInitialized, applicationId, platform} = useAsgardeo();
+  const {signUp, isInitialized} = useAsgardeo();
 
   /**
    * Initialize the sign-up flow.
@@ -130,19 +63,9 @@ const SignUp: FC<SignUpProps> = ({
   const handleInitialize = async (
     payload?: EmbeddedFlowExecuteRequestPayload,
   ): Promise<EmbeddedFlowExecuteResponse> => {
-    // For Thunder/AsgardeoV2 platform, it uses the same API but might return different response format
-    // The transformation will be handled by BaseSignUp's normalizeFlowResponse function
-    const urlParams: URLSearchParams = new URL(window.location.href).searchParams;
-    const applicationIdFromUrl: string = urlParams.get('applicationId');
-
-    // Priority order: flowId from URL > applicationId from context > applicationId from URL
-    const effectiveApplicationId = applicationId || applicationIdFromUrl;
-
-    // If no payload provided, create initial payload
-    // For Thunder (Platform.AsgardeoV2), include applicationId for proper initialization
+    // Uses simple initialization without applicationId
     const initialPayload = payload || {
       flowType: EmbeddedFlowType.Registration,
-      ...(platform === Platform.AsgardeoV2 && effectiveApplicationId && {applicationId: effectiveApplicationId}),
     };
 
     return (await signUp(initialPayload)) as EmbeddedFlowExecuteResponse;
@@ -165,8 +88,7 @@ const SignUp: FC<SignUpProps> = ({
       window.location.href = afterSignUpUrl;
     }
 
-    // For redirection responses (social sign-up), they are handled by BaseSignUp's popup mechanism
-    // and we only redirect after the OAuth flow is complete if shouldRedirectAfterSignUp is true
+    // For redirection responses (social sign-up), handle direct redirect
     if (
       shouldRedirectAfterSignUp &&
       response?.type === EmbeddedFlowResponseType.Redirection &&
@@ -190,8 +112,8 @@ const SignUp: FC<SignUpProps> = ({
       isInitialized={isInitialized}
       children={children}
       showLogo={true}
-      showTitle={platform === Platform.AsgardeoV2}
-      showSubtitle={platform === Platform.AsgardeoV2}
+      showTitle={false}
+      showSubtitle={false}
       {...rest}
     />
   );

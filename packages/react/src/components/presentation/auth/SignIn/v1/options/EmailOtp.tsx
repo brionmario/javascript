@@ -18,13 +18,13 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../../factories/FieldFactory';
-import Button from '../../../../primitives/Button/Button';
-import OtpField from '../../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../../factories/FieldFactory';
+import Button from '../../../../../primitives/Button/Button';
+import OtpField from '../../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
-import useFlow from '../../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../../hooks/useTranslation';
+import useFlow from '../../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../../contexts/Theme/useTheme';
 
 /**
  * Email OTP Sign-In Option Component.
@@ -48,8 +48,8 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('email.otp.title'));
-    setSubtitle(t('email.otp.subtitle'));
+    setTitle(t('email.otp.heading'));
+    setSubtitle(t('email.otp.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   // Check if this is an OTP field (typically has 'otpCode' or similar parameter)
@@ -104,7 +104,7 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('email.otp.submit.button')}
+        {t('email.otp.buttons.submit.text')}
       </Button>
     </>
   );

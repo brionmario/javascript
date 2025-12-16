@@ -17,14 +17,14 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import Divider from '../primitives/Divider/Divider';
 import useTheme from '../../contexts/Theme/useTheme';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Divider component for sign-up forms.
  */
-const DividerComponent: FC<BaseSignUpOptionProps> = ({component}) => {
+const DividerComponent: FC<AdapterProps> = ({component}) => {
   const {theme} = useTheme();
   const config: Record<string, unknown> = component.config || {};
   const text = (config['text'] as string) || '';

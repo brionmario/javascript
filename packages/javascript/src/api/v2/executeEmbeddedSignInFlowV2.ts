@@ -16,10 +16,10 @@
  * under the License.
  */
 
+import {EmbeddedFlowExecuteRequestConfig as EmbeddedFlowExecuteRequestConfigV2} from '../../models/v2/embedded-flow-v2';
 import {
-  EmbeddedFlowExecuteRequestConfigV2,
-  EmbeddedSignInFlowResponseV2,
-  EmbeddedSignInFlowStatusV2,
+  EmbeddedSignInFlowResponse as EmbeddedSignInFlowResponseV2,
+  EmbeddedSignInFlowStatus as EmbeddedSignInFlowStatusV2,
 } from '../../models/v2/embedded-signin-flow-v2';
 import AsgardeoAPIError from '../../errors/AsgardeoAPIError';
 
@@ -42,6 +42,10 @@ const executeEmbeddedSignInFlowV2 = async ({
 
   let endpoint: string = url ?? `${baseUrl}/flow/execute`;
 
+  // `verbose: true` is required to get the `meta` field in the response that includes component details.
+  const requestPayload: Record<string, unknown> =
+    typeof payload === 'object' && payload !== null && 'flowType' in payload ? {...payload, verbose: true} : payload;
+
   const response: Response = await fetch(endpoint, {
     ...requestConfig,
     method: requestConfig.method || 'POST',
@@ -50,7 +54,7 @@ const executeEmbeddedSignInFlowV2 = async ({
       Accept: 'application/json',
       ...requestConfig.headers,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(requestPayload),
   });
 
   if (!response.ok) {
@@ -69,11 +73,7 @@ const executeEmbeddedSignInFlowV2 = async ({
 
   // IMPORTANT: Only applicable for Asgardeo V2 platform.
   // Check if the flow is complete and has an assertion and authId is provided, then call OAuth2 authorize.
-  if (
-    flowResponse.flowStatus === EmbeddedSignInFlowStatusV2.Complete &&
-    (flowResponse as any).assertion &&
-    authId
-  ) {
+  if (flowResponse.flowStatus === EmbeddedSignInFlowStatusV2.Complete && (flowResponse as any).assertion && authId) {
     try {
       const oauth2Response: Response = await fetch(`${baseUrl}/oauth2/authorize`, {
         method: 'POST',

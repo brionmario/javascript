@@ -26,133 +26,138 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'साइन इन',
-  'elements.buttons.signOut': 'साइन आउट',
-  'elements.buttons.signUp': 'साइन अप',
-  'elements.buttons.facebook': 'Facebook के साथ जारी रखें',
-  'elements.buttons.google': 'Google के साथ जारी रखें',
-  'elements.buttons.github': 'GitHub के साथ जारी रखें',
-  'elements.buttons.microsoft': 'Microsoft के साथ जारी रखें',
-  'elements.buttons.linkedin': 'LinkedIn के साथ जारी रखें',
-  'elements.buttons.ethereum': 'Ethereum के साथ साइन इन करें',
-  'elements.buttons.smsotp': 'SMS के साथ जारी रखें',
-  'elements.buttons.multi.option': '{connection} के साथ जारी रखें',
-  'elements.buttons.social': '{connection} के साथ जारी रखें',
+  'elements.buttons.signin.text': 'साइन इन',
+  'elements.buttons.signout.text': 'साइन आउट',
+  'elements.buttons.signup.text': 'साइन अप',
+  'elements.buttons.submit.text': 'जारी रखें',
+  'elements.buttons.facebook.text': 'Facebook के साथ जारी रखें',
+  'elements.buttons.google.text': 'Google के साथ जारी रखें',
+  'elements.buttons.github.text': 'GitHub के साथ जारी रखें',
+  'elements.buttons.microsoft.text': 'Microsoft के साथ जारी रखें',
+  'elements.buttons.linkedin.text': 'LinkedIn के साथ जारी रखें',
+  'elements.buttons.ethereum.text': 'Ethereum के साथ साइन इन करें',
+  'elements.buttons.smsotp.text': 'SMS के साथ जारी रखें',
+  'elements.buttons.multi.option.text': '{connection} के साथ जारी रखें',
+  'elements.buttons.social.text': '{connection} के साथ जारी रखें',
 
   /* Fields */
-  'elements.fields.placeholder': '{field} दर्ज करें',
-  'elements.fields.username': 'उपयोगकर्ता नाम',
-  'elements.fields.password': 'पासवर्ड',
-  'elements.fields.ouName': 'संगठन का नाम',
-  'elements.fields.ouHandle': 'संगठन हैंडल',
-  'elements.fields.ouDescription': 'संगठन विवरण',
+  'elements.fields.generic.placeholder': '{field} दर्ज करें',
+  'elements.fields.username.label': 'उपयोगकर्ता नाम',
+  'elements.fields.username.placeholder': 'अपना उपयोगकर्ता नाम दर्ज करें',
+  'elements.fields.password.label': 'पासवर्ड',
+  'elements.fields.password.placeholder': 'अपना पासवर्ड दर्ज करें',
+  'elements.fields.first_name.label': 'पहला नाम',
+  'elements.fields.first_name.placeholder': 'अपना पहला नाम दर्ज करें',
+  'elements.fields.last_name.label': 'अंतिम नाम',
+  'elements.fields.last_name.placeholder': 'अपना अंतिम नाम दर्ज करें',
+  'elements.fields.email.label': 'ईमेल',
+  'elements.fields.email.placeholder': 'अपना ईमेल दर्ज करें',
+  'elements.fields.organization.name.label': 'संगठन का नाम',
+  'elements.fields.organization.handle.label': 'संगठन हैंडल',
+  'elements.fields.organization.description.label': 'संगठन विवरण',
+  'elements.fields.organization.select.label': 'संगठन चुनें',
+  'elements.fields.organization.select.placeholder': 'एक संगठन चुनें',
 
   /* Validation */
-  'field.required': 'यह फील्ड आवश्यक है',
+  'validations.required.field.error': 'यह फील्ड आवश्यक है',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'साइन इन',
-  'signin.subtitle': 'जारी रखने के लिए अपनी प्रमाणिक जानकारी दर्ज करें।',
+  'signin.heading': 'साइन इन',
+  'signin.subheading': 'जारी रखने के लिए अपनी प्रमाणिक जानकारी दर्ज करें।',
 
   /* Base Sign Up */
-  'signup.title': 'साइन अप',
-  'signup.subtitle': 'शुरू करने के लिए नया खाता बनाएं।',
+  'signup.heading': 'साइन अप',
+  'signup.subheading': 'शुरू करने के लिए नया खाता बनाएं।',
 
   /* Email OTP */
-  'email.otp.title': 'OTP सत्यापन',
-  'email.otp.subtitle': 'अपनी ईमेल पर भेजा गया कोड दर्ज करें।',
-  'email.otp.submit.button': 'जारी रखें',
+  'email.otp.heading': 'OTP सत्यापन',
+  'email.otp.subheading': 'अपनी ईमेल पर भेजा गया कोड दर्ज करें।',
+  'email.otp.buttons.submit.text': 'जारी रखें',
 
   /* Identifier First */
-  'identifier.first.title': 'साइन इन',
-  'identifier.first.subtitle': 'अपना उपयोगकर्ता नाम या ईमेल दर्ज करें।',
-  'identifier.first.submit.button': 'जारी रखें',
+  'identifier.first.heading': 'साइन इन',
+  'identifier.first.subheading': 'अपना उपयोगकर्ता नाम या ईमेल दर्ज करें।',
+  'identifier.first.buttons.submit.text': 'जारी रखें',
 
   /* SMS OTP */
-  'sms.otp.title': 'OTP सत्यापन',
-  'sms.otp.subtitle': 'अपने फ़ोन नंबर पर भेजा गया कोड दर्ज करें।',
-  'sms.otp.submit.button': 'जारी रखें',
+  'sms.otp.heading': 'OTP सत्यापन',
+  'sms.otp.subheading': 'अपने फ़ोन नंबर पर भेजा गया कोड दर्ज करें।',
+  'sms.otp.buttons.submit.text': 'जारी रखें',
 
   /* TOTP */
-  'totp.title': 'अपनी पहचान सत्यापित करें',
-  'totp.subtitle': 'अपने ऑथेंटिकेटर ऐप से कोड दर्ज करें।',
-  'totp.submit.button': 'जारी रखें',
+  'totp.heading': 'अपनी पहचान सत्यापित करें',
+  'totp.subheading': 'अपने ऑथेंटिकेटर ऐप से कोड दर्ज करें।',
+  'totp.buttons.submit.text': 'जारी रखें',
 
   /* Username Password */
-  'username.password.submit.button': 'जारी रखें',
-  'username.password.title': 'साइन इन',
-  'username.password.subtitle': 'अपना उपयोगकर्ता नाम और पासवर्ड दर्ज करें।',
+  'username.password.buttons.submit.text': 'जारी रखें',
+  'username.password.heading': 'साइन इन',
+  'username.password.subheading': 'अपना उपयोगकर्ता नाम और पासवर्ड दर्ज करें।',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'प्रोफ़ाइल',
+  'user.profile.heading': 'प्रोफ़ाइल',
   'user.profile.update.generic.error': 'प्रोफ़ाइल अपडेट करते समय त्रुटि हुई। कृपया पुनः प्रयास करें।',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': 'संगठन चुनें',
   'organization.switcher.switch.organization': 'संगठन बदलें',
-  'organization.switcher.loading.organizations': 'संगठन लोड हो रहे हैं...',
+  'organization.switcher.loading.placeholder.organizations': 'संगठन लोड हो रहे हैं...',
   'organization.switcher.members': 'सदस्य',
   'organization.switcher.member': 'सदस्य',
   'organization.switcher.create.organization': 'संगठन बनाएं',
   'organization.switcher.manage.organizations': 'संगठनों का प्रबंधन करें',
-  'organization.switcher.manage.button': 'प्रबंधित करें',
-  'organization.switcher.organizations.title': 'संगठन',
-  'organization.switcher.switch.button': 'बदलें',
+  'organization.switcher.buttons.manage.text': 'प्रबंधित करें',
+  'organization.switcher.organizations.heading': 'संगठन',
+  'organization.switcher.buttons.switch.text': 'बदलें',
   'organization.switcher.no.access': 'कोई पहुँच नहीं',
   'organization.switcher.status.label': 'स्थिति:',
   'organization.switcher.showing.count': '{total} में से {showing} संगठन दिखा रहे हैं',
-  'organization.switcher.refresh.button': 'रिफ्रेश',
-  'organization.switcher.load.more': 'और संगठन लोड करें',
+  'organization.switcher.buttons.refresh.text': 'रिफ्रेश',
+  'organization.switcher.buttons.load_more.text': 'और संगठन लोड करें',
   'organization.switcher.loading.more': 'लोड हो रहा है...',
   'organization.switcher.no.organizations': 'कोई संगठन नहीं मिला',
   'organization.switcher.error.prefix': 'त्रुटि:',
-  'organization.profile.title': 'संगठन प्रोफ़ाइल',
+
+  'organization.profile.heading': 'संगठन प्रोफ़ाइल',
   'organization.profile.loading': 'संगठन लोड हो रहा है...',
   'organization.profile.error': 'संगठन लोड करने में विफल',
 
-  'organization.create.title': 'संगठन बनाएं',
-  'organization.create.name.label': 'संगठन का नाम',
-  'organization.create.name.placeholder': 'संगठन का नाम दर्ज करें',
-  'organization.create.handle.label': 'संगठन हैंडल',
-  'organization.create.handle.placeholder': 'my-organization',
-  'organization.create.description.label': 'विवरण',
-  'organization.create.description.placeholder': 'संगठन विवरण दर्ज करें',
-  'organization.create.button': 'संगठन बनाएं',
-  'organization.create.creating': 'बनाया जा रहा है...',
-  'organization.create.cancel': 'रद्द करें',
+  'organization.create.heading': 'संगठन बनाएं',
+  'organization.create.buttons.create_organization.text': 'संगठन बनाएं',
+  'organization.create.buttons.create_organization.loading.text': 'बनाया जा रहा है...',
+  'organization.create.buttons.cancel.text': 'रद्द करें',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': 'लोड हो रहा है...',
+  'messages.loading.placeholder': 'लोड हो रहा है...',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'त्रुटि',
-  'errors.sign.in.initialization': 'इनिशियलाइज़ेशन में त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.in.flow.failure': 'साइन-इन प्रक्रिया में त्रुटि। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.in.flow.completion.failure': 'साइन-इन प्रक्रिया पूरी करते समय त्रुटि। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.in.flow.passkeys.failure': 'पासकीज़ के साथ साइन-इन करते समय त्रुटि।',
-  'errors.sign.in.flow.passkeys.completion.failure': 'पासकीज़ साइन-इन पूरी करते समय त्रुटि।',
-  'errors.sign.up.initialization': 'प्रारंभीकरण के दौरान एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.up.flow.failure': 'साइन-अप प्रक्रिया में त्रुटि। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.up.flow.initialization.failure':
+  'errors.heading': 'त्रुटि',
+  'errors.signin.initialization': 'इनिशियलाइज़ेशन में त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signin.flow.failure': 'साइन-इन प्रक्रिया में त्रुटि। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signin.flow.completion.failure': 'साइन-इन प्रक्रिया पूरी करते समय त्रुटि। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signin.flow.passkeys.failure': 'पासकीज़ के साथ साइन-इन करते समय त्रुटि।',
+  'errors.signin.flow.passkeys.completion.failure': 'पासकीज़ साइन-इन पूरी करते समय त्रुटि।',
+  'errors.signup.initialization': 'प्रारंभीकरण के दौरान एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signup.flow.failure': 'साइन-अप प्रक्रिया में त्रुटि। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signup.flow.initialization.failure':
     'साइन-अप प्रक्रिया प्रारंभ करते समय त्रुटि। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.up.components.not.available': 'साइन-अप फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
-  'errors.sign.in.components.not.available': 'साइन-इन फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signup.components.not.available': 'साइन-अप फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
+  'errors.signin.components.not.available': 'साइन-इन फॉर्म फिलहाल उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।',
 };
 
 const metadata: I18nMetadata = {

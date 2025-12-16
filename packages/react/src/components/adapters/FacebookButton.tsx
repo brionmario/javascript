@@ -61,7 +61,7 @@ const FacebookButton: FC<FacebookButtonProps & HTMLAttributes<HTMLButtonElement>
         </svg>
       }
     >
-      {children ?? t('elements.buttons.facebook')}
+      {children ?? t('elements.buttons.facebook.text')}
     </Button>
   );
 };

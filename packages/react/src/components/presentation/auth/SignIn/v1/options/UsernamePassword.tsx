@@ -18,18 +18,18 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../../factories/FieldFactory';
-import Button from '../../../../primitives/Button/Button';
+import {createField} from '../../../../../factories/FieldFactory';
+import Button from '../../../../../primitives/Button/Button';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
-import useFlow from '../../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../../hooks/useTranslation';
+import useFlow from '../../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../../contexts/Theme/useTheme';
 
 /**
- * Identifier First Sign-In Option Component.
- * Handles identifier-first authentication flow (username first, then password).
+ * Username Password Sign-In Option Component.
+ * Handles traditional username and password authentication.
  */
-const IdentifierFirst: FC<BaseSignInOptionProps> = ({
+const UsernamePassword: FC<BaseSignInOptionProps> = ({
   authenticator,
   formValues,
   touchedFields,
@@ -44,11 +44,12 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
   const {t} = useTranslation(preferences?.i18n);
   const {setTitle, setSubtitle} = useFlow();
 
-  const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
+  const formFields =
+    authenticator.metadata?.params?.sort((a, b) => a.order - b.order)?.filter(param => param.param !== 'totp') || []; // Exclude TOTP fields for username/password
 
   useEffect(() => {
-    setTitle(t('identifier.first.title'));
-    setSubtitle(t('identifier.first.subtitle'));
+    setTitle(t('username.password.heading'));
+    setSubtitle(t('username.password.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   return (
@@ -70,7 +71,7 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
             disabled: isLoading,
             className: inputClassName,
             touched: touchedFields[param.param] || false,
-            placeholder: t(`elements.fields.placeholder`, {
+            placeholder: t(`elements.fields.generic.placeholder`, {
               field: (param.displayName || param.param).toLowerCase(),
             }),
           })}
@@ -87,10 +88,10 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('identifier.first.submit.button')}
+        {t('username.password.buttons.submit.text')}
       </Button>
     </>
   );
 };
 
-export default IdentifierFirst;
+export default UsernamePassword;

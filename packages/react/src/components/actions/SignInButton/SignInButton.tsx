@@ -75,51 +75,56 @@ export type SignInButtonProps = BaseSignInButtonProps & {
 const SignInButton: ForwardRefExoticComponent<SignInButtonProps & RefAttributes<HTMLButtonElement>> = forwardRef<
   HTMLButtonElement,
   SignInButtonProps
->(({children, onClick, preferences, signInOptions: overriddenSignInOptions = {}, ...rest}: SignInButtonProps, ref: Ref<HTMLButtonElement>): ReactElement => {
-  const {signIn, signInUrl, signInOptions} = useAsgardeo();
-  const {t} = useTranslation(preferences?.i18n);
+>(
+  (
+    {children, onClick, preferences, signInOptions: overriddenSignInOptions = {}, ...rest}: SignInButtonProps,
+    ref: Ref<HTMLButtonElement>,
+  ): ReactElement => {
+    const {signIn, signInUrl, signInOptions} = useAsgardeo();
+    const {t} = useTranslation(preferences?.i18n);
 
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = async (e?: MouseEvent<HTMLButtonElement>): Promise<void> => {
-    try {
-      setIsLoading(true);
+    const handleSignIn = async (e?: MouseEvent<HTMLButtonElement>): Promise<void> => {
+      try {
+        setIsLoading(true);
 
-      // If a custom `signInUrl` is provided, use it for navigation.
-      if (signInUrl) {
-        navigate(signInUrl);
-      } else {
-        await signIn(overriddenSignInOptions ?? signInOptions);
+        // If a custom `signInUrl` is provided, use it for navigation.
+        if (signInUrl) {
+          navigate(signInUrl);
+        } else {
+          await signIn(overriddenSignInOptions ?? signInOptions);
+        }
+
+        if (onClick) {
+          onClick(e);
+        }
+      } catch (error) {
+        throw new AsgardeoRuntimeError(
+          `Sign in failed: ${error instanceof Error ? error.message : String(JSON.stringify(error))}`,
+          'SignInButton-handleSignIn-RuntimeError-001',
+          'react',
+          'Something went wrong while trying to sign in. Please try again later.',
+        );
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      if (onClick) {
-        onClick(e);
-      }
-    } catch (error) {
-      throw new AsgardeoRuntimeError(
-        `Sign in failed: ${error instanceof Error ? error.message : String(JSON.stringify(error))}`,
-        'SignInButton-handleSignIn-RuntimeError-001',
-        'react',
-        'Something went wrong while trying to sign in. Please try again later.',
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <BaseSignInButton
-      ref={ref}
-      onClick={handleSignIn}
-      isLoading={isLoading}
-      signIn={handleSignIn}
-      preferences={preferences}
-      {...rest}
-    >
-      {children ?? t('elements.buttons.signIn')}
-    </BaseSignInButton>
-  );
-});
+    return (
+      <BaseSignInButton
+        ref={ref}
+        onClick={handleSignIn}
+        isLoading={isLoading}
+        signIn={handleSignIn}
+        preferences={preferences}
+        {...rest}
+      >
+        {children ?? t('elements.buttons.signin.text')}
+      </BaseSignInButton>
+    );
+  },
+);
 
 SignInButton.displayName = 'SignInButton';
 

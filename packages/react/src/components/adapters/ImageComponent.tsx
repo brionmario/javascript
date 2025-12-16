@@ -17,13 +17,13 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import useTheme from '../../contexts/Theme/useTheme';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Image component for sign-up forms.
  */
-const ImageComponent: FC<BaseSignUpOptionProps> = ({component}) => {
+const ImageComponent: FC<AdapterProps> = ({component}) => {
   const {theme} = useTheme();
   const config: Record<string, unknown> = component.config || {};
   const src = (config['src'] as string) || '';

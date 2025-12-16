@@ -27,136 +27,139 @@ const translations: I18nTranslations = {
   /* |---------------------------------------------------------------| */
 
   /* Buttons */
-  'elements.buttons.signIn': 'ログイン',
-  'elements.buttons.signOut': 'ログアウト',
-  'elements.buttons.signUp': 'サインアップ',
-  'elements.buttons.facebook': 'Facebookで続行',
-  'elements.buttons.google': 'Googleで続行',
-  'elements.buttons.github': 'GitHubで続行',
-  'elements.buttons.microsoft': 'Microsoftで続行',
-  'elements.buttons.linkedin': 'LinkedInで続行',
-  'elements.buttons.ethereum': 'Ethereumでサインイン',
-  'elements.buttons.smsotp': 'SMSで続行',
-  'elements.buttons.multi.option': '{connection}で続行',
-  'elements.buttons.social': '{connection}で続行',
+  'elements.buttons.signin.text': 'ログイン',
+  'elements.buttons.signout.text': 'ログアウト',
+  'elements.buttons.signup.text': 'サインアップ',
+  'elements.buttons.submit.text': '続行',
+  'elements.buttons.facebook.text': 'Facebookで続行',
+  'elements.buttons.google.text': 'Googleで続行',
+  'elements.buttons.github.text': 'GitHubで続行',
+  'elements.buttons.microsoft.text': 'Microsoftで続行',
+  'elements.buttons.linkedin.text': 'LinkedInで続行',
+  'elements.buttons.ethereum.text': 'Ethereumでサインイン',
+  'elements.buttons.smsotp.text': 'SMSで続行',
+  'elements.buttons.multi.option.text': '{connection}で続行',
+  'elements.buttons.social.text': '{connection}で続行',
 
   /* Fields */
-  'elements.fields.placeholder': '{field}を入力してください',
-  'elements.fields.username': 'ユーザー名',
-  'elements.fields.password': 'パスワード',
-  'elements.fields.ouName': '組織名',
-  'elements.fields.ouHandle': '組織ハンドル',
-  'elements.fields.ouDescription': '組織の説明',
+  'elements.fields.generic.placeholder': '{field}を入力してください',
+  'elements.fields.username.label': 'ユーザー名',
+  'elements.fields.username.placeholder': 'ユーザー名を入力してください',
+  'elements.fields.password.label': 'パスワード',
+  'elements.fields.password.placeholder': 'パスワードを入力してください',
+  'elements.fields.first_name.label': '名',
+  'elements.fields.first_name.placeholder': '名を入力してください',
+  'elements.fields.last_name.label': '姓',
+  'elements.fields.last_name.placeholder': '姓を入力してください',
+  'elements.fields.email.label': 'メールアドレス',
+  'elements.fields.email.placeholder': 'メールアドレスを入力してください',
+  'elements.fields.organization.name.label': '組織名',
+  'elements.fields.organization.handle.label': '組織ハンドル',
+  'elements.fields.organization.description.label': '組織の説明',
+  'elements.fields.organization.select.label': '組織を選択',
+  'elements.fields.organization.select.placeholder': '組織を選択してください',
 
   /* Validation */
-  'field.required': 'この項目は必須です',
+  'validations.required.field.error': 'この項目は必須です',
 
   /* |---------------------------------------------------------------| */
   /* |                        Widgets                                | */
   /* |---------------------------------------------------------------| */
 
   /* Base Sign In */
-  'signin.title': 'ログイン',
-  'signin.subtitle': '続行するには認証情報を入力してください。',
+  'signin.heading': 'ログイン',
+  'signin.subheading': '続行するには認証情報を入力してください。',
 
   /* Base Sign Up */
-  'signup.title': 'サインアップ',
-  'signup.subtitle': 'はじめるには新しいアカウントを作成してください。',
+  'signup.heading': 'サインアップ',
+  'signup.subheading': 'はじめるには新しいアカウントを作成してください。',
 
   /* Email OTP */
-  'email.otp.title': 'OTP認証',
-  'email.otp.subtitle': 'メールに送信されたコードを入力してください。',
-  'email.otp.submit.button': '続行',
+  'email.otp.heading': 'OTP認証',
+  'email.otp.subheading': 'メールに送信されたコードを入力してください。',
+  'email.otp.buttons.submit.text': '続行',
 
   /* Identifier First */
-  'identifier.first.title': 'ログイン',
-  'identifier.first.subtitle': 'ユーザー名またはメールアドレスを入力してください。',
-  'identifier.first.submit.button': '続行',
+  'identifier.first.heading': 'ログイン',
+  'identifier.first.subheading': 'ユーザー名またはメールアドレスを入力してください。',
+  'identifier.first.buttons.submit.text': '続行',
 
   /* SMS OTP */
-  'sms.otp.title': 'OTP認証',
-  'sms.otp.subtitle': '電話番号に送信されたコードを入力してください。',
-  'sms.otp.submit.button': '続行',
+  'sms.otp.heading': 'OTP認証',
+  'sms.otp.subheading': '電話番号に送信されたコードを入力してください。',
+  'sms.otp.buttons.submit.text': '続行',
 
   /* TOTP */
-  'totp.title': '本人確認',
-  'totp.subtitle': '認証アプリのコードを入力してください。',
-  'totp.submit.button': '続行',
+  'totp.heading': '本人確認',
+  'totp.subheading': '認証アプリのコードを入力してください。',
+  'totp.buttons.submit.text': '続行',
 
   /* Username Password */
-  'username.password.submit.button': '続行',
-  'username.password.title': 'ログイン',
-  'username.password.subtitle': 'ユーザー名とパスワードを入力してください。',
+  'username.password.buttons.submit.text': '続行',
+  'username.password.heading': 'ログイン',
+  'username.password.subheading': 'ユーザー名とパスワードを入力してください。',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
   /* |---------------------------------------------------------------| */
 
-  'user.profile.title': 'プロフィール',
+  'user.profile.heading': 'プロフィール',
   'user.profile.update.generic.error': 'プロフィール更新中にエラーが発生しました。もう一度お試しください。',
 
   /* |---------------------------------------------------------------| */
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'organization.switcher.select.organization': '組織を選択',
   'organization.switcher.switch.organization': '組織を切り替え',
-  'organization.switcher.loading.organizations': '組織を読み込み中…',
+  'organization.switcher.loading.placeholder.organizations': '組織を読み込み中…',
   'organization.switcher.members': 'メンバー',
   'organization.switcher.member': 'メンバー',
   'organization.switcher.create.organization': '組織を作成',
   'organization.switcher.manage.organizations': '組織を管理',
-  'organization.switcher.manage.button': '管理',
-  'organization.switcher.organizations.title': '組織',
-  'organization.switcher.switch.button': '切り替え',
+  'organization.switcher.buttons.manage.text': '管理',
+  'organization.switcher.organizations.heading': '組織',
+  'organization.switcher.buttons.switch.text': '切り替え',
   'organization.switcher.no.access': 'アクセス権がありません',
   'organization.switcher.status.label': 'ステータス:',
   'organization.switcher.showing.count': '全{total}件中{showing}件を表示',
-  'organization.switcher.refresh.button': '更新',
-  'organization.switcher.load.more': 'さらに読み込む',
+  'organization.switcher.buttons.refresh.text': '更新',
+  'organization.switcher.buttons.load_more.text': 'さらに読み込む',
   'organization.switcher.loading.more': '読み込み中…',
   'organization.switcher.no.organizations': '組織が見つかりません',
   'organization.switcher.error.prefix': 'エラー:',
-  'organization.profile.title': '組織プロファイル',
+
+  'organization.profile.heading': '組織プロファイル',
   'organization.profile.loading': '組織を読み込み中…',
   'organization.profile.error': '組織の読み込みに失敗しました',
 
-  'organization.create.title': '組織の作成',
-  'organization.create.name.label': '組織名',
-  'organization.create.name.placeholder': '組織名を入力',
-  'organization.create.handle.label': '組織ハンドル',
-  'organization.create.handle.placeholder': 'my-organization',
-  'organization.create.description.label': '説明',
-  'organization.create.description.placeholder': '組織の説明を入力',
-  'organization.create.button': '組織を作成',
-  'organization.create.creating': '作成中…',
-  'organization.create.cancel': 'キャンセル',
+  'organization.create.heading': '組織の作成',
+  'organization.create.buttons.create_organization.text': '組織を作成',
+  'organization.create.buttons.create_organization.loading.text': '作成中…',
+  'organization.create.buttons.cancel.text': 'キャンセル',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
   /* |---------------------------------------------------------------| */
 
-  'messages.loading': '読み込み中…',
+  'messages.loading.placeholder': '読み込み中…',
 
   /* |---------------------------------------------------------------| */
   /* |                        Errors                                 | */
   /* |---------------------------------------------------------------| */
 
-  'errors.title': 'エラー',
-  'errors.sign.in.initialization': '初期化中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.in.flow.failure': 'サインイン処理中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.in.flow.completion.failure':
-    'サインイン処理の完了中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.in.flow.passkeys.failure':
-    'パスキーでのサインイン中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.in.flow.passkeys.completion.failure':
+  'errors.heading': 'エラー',
+  'errors.signin.initialization': '初期化中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signin.flow.failure': 'サインイン処理中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signin.flow.completion.failure': 'サインイン処理の完了中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signin.flow.passkeys.failure': 'パスキーでのサインイン中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signin.flow.passkeys.completion.failure':
     'パスキーによるサインイン完了中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.up.initialization': '初期化中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.up.flow.failure': 'サインアップフロー中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.up.flow.initialization.failure':
+  'errors.signup.initialization': '初期化中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signup.flow.failure': 'サインアップフロー中にエラーが発生しました。後でもう一度お試しください。',
+  'errors.signup.flow.initialization.failure':
     'サインアップフローの初期化中にエラーが発生しました。後でもう一度お試しください。',
-  'errors.sign.up.components.not.available': 'サインアップフォームは現在利用できません。後でもう一度お試しください。',
-  'errors.sign.in.components.not.available': 'サインインフォームは現在利用できません。後でもう一度お試しください。',
+  'errors.signup.components.not.available': 'サインアップフォームは現在利用できません。後でもう一度お試しください。',
+  'errors.signin.components.not.available': 'サインインフォームは現在利用できません。後でもう一度お試しください。',
 };
 
 const metadata: I18nMetadata = {

@@ -18,92 +18,31 @@
 
 import {EmbeddedFlowComponent, EmbeddedFlowComponentType, WithPreferences} from '@asgardeo/browser';
 import {ReactElement} from 'react';
-import CheckboxInput from '../../adapters/CheckboxInput';
-import DateInput from '../../adapters/DateInput';
-import DividerComponent from '../../adapters/DividerComponent';
-import EmailInput from '../../adapters/EmailInput';
-import FormContainer from '../../adapters/FormContainer';
-import ImageComponent from '../../adapters/ImageComponent';
-import NumberInput from '../../adapters/NumberInput';
-import PasswordInput from '../../adapters/PasswordInput';
-import ButtonComponent from '../../adapters/SubmitButton';
-import TelephoneInput from '../../adapters/TelephoneInput';
-import TextInput from '../../adapters/TextInput';
-import SelectInput from '../../adapters/SelectInput';
-import Typography from '../../adapters/Typography';
-import GoogleButton from '../../adapters/GoogleButton';
-import GitHubButton from '../../adapters/GitHubButton';
-import MicrosoftButton from '../../adapters/MicrosoftButton';
-import LinkedInButton from '../../adapters/LinkedInButton';
-import FacebookButton from '../../adapters/FacebookButton';
-import SignInWithEthereumButton from '../../adapters/SignInWithEthereumButton';
-
-/**
- * Base props that all sign-up option components share.
- */
-export interface BaseSignUpOptionProps extends WithPreferences {
-  /**
-   * Custom CSS class name for buttons.
-   */
-  buttonClassName?: string;
-
-  /**
-   * The component configuration from the flow response.
-   */
-  component: EmbeddedFlowComponent;
-
-  /**
-   * Form validation errors.
-   */
-  formErrors: Record<string, string>;
-
-  /**
-   * Current form values.
-   */
-  formValues: Record<string, string>;
-
-  /**
-   * Custom CSS class name for form inputs.
-   */
-  inputClassName?: string;
-
-  /**
-   * Whether the form is valid.
-   */
-  isFormValid: boolean;
-
-  /**
-   * Whether the component is in loading state.
-   */
-  isLoading: boolean;
-
-  /**
-   * Callback function called when input values change.
-   */
-  onInputChange: (name: string, value: string) => void;
-
-  onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
-
-  /**
-   * Component size variant.
-   */
-  size?: 'small' | 'medium' | 'large';
-
-  /**
-   * Touched state for form fields.
-   */
-  touchedFields: Record<string, boolean>;
-
-  /**
-   * Component theme variant.
-   */
-  variant?: any;
-}
+import CheckboxInput from '../../../../adapters/CheckboxInput';
+import DateInput from '../../../../adapters/DateInput';
+import DividerComponent from '../../../../adapters/DividerComponent';
+import EmailInput from '../../../../adapters/EmailInput';
+import FormContainer from '../../../../adapters/FormContainer';
+import ImageComponent from '../../../../adapters/ImageComponent';
+import NumberInput from '../../../../adapters/NumberInput';
+import PasswordInput from '../../../../adapters/PasswordInput';
+import ButtonComponent from '../../../../adapters/SubmitButton';
+import TelephoneInput from '../../../../adapters/TelephoneInput';
+import TextInput from '../../../../adapters/TextInput';
+import SelectInput from '../../../../adapters/SelectInput';
+import Typography from '../../../../adapters/Typography';
+import GoogleButton from '../../../../adapters/GoogleButton';
+import GitHubButton from '../../../../adapters/GitHubButton';
+import MicrosoftButton from '../../../../adapters/MicrosoftButton';
+import LinkedInButton from '../../../../adapters/LinkedInButton';
+import FacebookButton from '../../../../adapters/FacebookButton';
+import SignInWithEthereumButton from '../../../../adapters/SignInWithEthereumButton';
+import {AdapterProps} from 'packages/react/src/models/adapters';
 
 /**
  * Creates the appropriate sign-up component based on the component type.
  */
-export const createSignUpComponent = ({component, onSubmit, ...rest}: BaseSignUpOptionProps): ReactElement => {
+export const createSignUpComponent = ({component, onSubmit, ...rest}: AdapterProps): ReactElement => {
   switch (component.type) {
     case EmbeddedFlowComponentType.Typography:
       return <Typography component={component} onSubmit={onSubmit} {...rest} />;

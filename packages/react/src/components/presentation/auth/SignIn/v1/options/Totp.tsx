@@ -18,13 +18,13 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../../factories/FieldFactory';
-import Button from '../../../../primitives/Button/Button';
-import OtpField from '../../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../../factories/FieldFactory';
+import Button from '../../../../../primitives/Button/Button';
+import OtpField from '../../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
-import useFlow from '../../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../../hooks/useTranslation';
+import useFlow from '../../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../../contexts/Theme/useTheme';
 
 /**
  * TOTP Sign-In Option Component.
@@ -48,8 +48,8 @@ const Totp: FC<BaseSignInOptionProps> = ({
   const formFields = authenticator.metadata?.params?.sort((a, b) => a.order - b.order) || [];
 
   useEffect(() => {
-    setTitle(t('totp.title'));
-    setSubtitle(t('totp.subtitle'));
+    setTitle(t('totp.heading'));
+    setSubtitle(t('totp.subheading'));
   }, [setTitle, setSubtitle, t]);
 
   const hasTotpField = formFields.some(
@@ -103,7 +103,7 @@ const Totp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('totp.submit.button')}
+        {t('totp.buttons.submit.text')}
       </Button>
     </>
   );

@@ -59,7 +59,7 @@ const GitHubButton: FC<GithubButtonProps & HTMLAttributes<HTMLButtonElement>> = 
         </svg>
       }
     >
-      {children ?? t('elements.buttons.github')}
+      {children ?? t('elements.buttons.github.text')}
     </Button>
   );
 };

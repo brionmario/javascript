@@ -32,7 +32,7 @@ export type SignInButtonProps = BaseSignInButtonProps & {
    * Additional parameters to pass to the `authorize` request.
    */
   signInOptions?: Record<string, any>;
-}
+};
 
 /**
  * SignInButton component that uses server actions for authentication in Next.js.
@@ -77,7 +77,7 @@ const SignInButton = forwardRef<HTMLButtonElement, SignInButtonProps>(
         if (signInUrl) {
           router.push(signInUrl);
         } else {
-          signIn && await signIn(signInOptions);
+          signIn && (await signIn(signInOptions));
         }
 
         if (onClick) {
@@ -104,7 +104,7 @@ const SignInButton = forwardRef<HTMLButtonElement, SignInButtonProps>(
         onClick={handleOnClick}
         {...rest}
       >
-        {children ?? t('elements.buttons.signIn')}
+        {children ?? t('elements.buttons.signin.text')}
       </BaseSignInButton>
     );
   },

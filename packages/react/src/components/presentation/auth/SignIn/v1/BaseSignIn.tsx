@@ -33,17 +33,17 @@ import {
 import {cx} from '@emotion/css';
 import {FC, FormEvent, useEffect, useState, useCallback, useRef, ReactElement} from 'react';
 import {createSignInOptionFromAuthenticator} from './options/SignInOptionFactory';
-import FlowProvider from '../../../../contexts/Flow/FlowProvider';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import {useForm, FormField} from '../../../../hooks/useForm';
-import useTranslation from '../../../../hooks/useTranslation';
-import useTheme from '../../../../contexts/Theme/useTheme';
-import Alert from '../../../primitives/Alert/Alert';
-import Card, {CardProps} from '../../../primitives/Card/Card';
-import Divider from '../../../primitives/Divider/Divider';
-import Logo from '../../../primitives/Logo/Logo';
-import Spinner from '../../../primitives/Spinner/Spinner';
-import Typography from '../../../primitives/Typography/Typography';
+import FlowProvider from '../../../../../contexts/Flow/FlowProvider';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import {useForm, FormField} from '../../../../../hooks/useForm';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useTheme from '../../../../../contexts/Theme/useTheme';
+import Alert from '../../../../primitives/Alert/Alert';
+import Card, {CardProps} from '../../../../primitives/Card/Card';
+import Divider from '../../../../primitives/Divider/Divider';
+import Logo from '../../../../primitives/Logo/Logo';
+import Spinner from '../../../../primitives/Spinner/Spinner';
+import Typography from '../../../../primitives/Typography/Typography';
 import useStyles from '../BaseSignIn.styles';
 
 /**
@@ -250,7 +250,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       initialValue: '',
       validator: (value: string) => {
         if (currentAuthenticator.requiredParams.includes(param.param) && (!value || value.trim() === '')) {
-          return t('field.required');
+          return t('validations.required.field.error');
         }
         return null;
       },
@@ -261,7 +261,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     fields: formFields,
     validateOnBlur: true,
     validateOnChange: false,
-    requiredMessage: t('field.required'),
+    requiredMessage: t('validations.required.field.error'),
   });
 
   const {
@@ -517,7 +517,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         response?.flowStatus === EmbeddedSignInFlowStatus.FailCompleted ||
         response?.flowStatus === EmbeddedSignInFlowStatus.FailIncomplete
       ) {
-        setError(t('errors.sign.in.flow.completion.failure'));
+        setError(t('errors.signin.flow.completion.failure'));
         return;
       }
 
@@ -553,7 +553,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         }
       }
     } catch (err) {
-      const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.sign.in.flow.failure');
+      const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.signin.flow.failure');
       setError(errorMessage);
       onError?.(err as Error);
     } finally {
@@ -617,7 +617,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             response?.flowStatus === EmbeddedSignInFlowStatus.FailCompleted ||
             response?.flowStatus === EmbeddedSignInFlowStatus.FailIncomplete
           ) {
-            setError(t('errors.sign.in.flow.passkeys.completion.failure'));
+            setError(t('errors.signin.flow.passkeys.completion.failure'));
             return;
           }
 
@@ -660,7 +660,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
           // Provide more context for common errors
           let errorMessage =
-            passkeyError instanceof Error ? passkeyError.message : t('errors.sign.in.flow.passkeys.failure');
+            passkeyError instanceof Error ? passkeyError.message : t('errors.signin.flow.passkeys.failure');
 
           // Add additional context for security errors
           if (passkeyError instanceof Error && passkeyError.message.includes('security')) {
@@ -968,7 +968,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
           );
         }
       } catch (err) {
-        const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.sign.in.initialization');
+        const errorMessage = err instanceof AsgardeoAPIError ? err.message : t('errors.signin.initialization');
         setError(errorMessage);
         onError?.(err as Error);
       } finally {
@@ -984,7 +984,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
           <div className={styles.loadingContainer}>
             <Spinner size="medium" />
             <Typography variant="body1" className={styles.loadingText}>
-              {t('messages.loading')}
+              {t('messages.loading.placeholder')}
             </Typography>
           </div>
         </Card.Content>
@@ -1012,12 +1012,12 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
           <Card.Header className={styles.header}>
             {showTitle && (
               <Card.Title level={2} className={styles.title}>
-                {flowTitle || t('signin.title')}
+                {flowTitle || t('signin.heading')}
               </Card.Title>
             )}
             {showSubtitle && (
               <Typography variant="body1" className={styles.subtitle}>
-                {flowSubtitle || t('signin.subtitle')}
+                {flowSubtitle || t('signin.subheading')}
               </Typography>
             )}
           </Card.Header>
@@ -1131,7 +1131,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         <Card.Content>
           {error && (
             <Alert variant="error" className={styles.errorAlert}>
-              <Alert.Title>{t('errors.title') || 'Error'}</Alert.Title>
+              <Alert.Title>{t('errors.heading') || 'Error'}</Alert.Title>
               <Alert.Description>{error}</Alert.Description>
             </Alert>
           )}
@@ -1169,10 +1169,10 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
       <Card.Header className={styles.header}>
         <Card.Title level={2} className={styles.title}>
-          {flowTitle || t('signin.title')}
+          {flowTitle || t('signin.heading')}
         </Card.Title>
         <Typography variant="body1" className={styles.subtitle}>
-          {flowSubtitle || t('signin.subtitle')}
+          {flowSubtitle || t('signin.subheading')}
         </Typography>
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
@@ -1212,7 +1212,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       <Card.Content>
         {error && (
           <Alert variant="error" className={cx(styles.errorContainer, errorClasses)}>
-            <Alert.Title>{t('errors.title')}</Alert.Title>
+            <Alert.Title>{t('errors.heading')}</Alert.Title>
             <Alert.Description>{error}</Alert.Description>
           </Alert>
         )}

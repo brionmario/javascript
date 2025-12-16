@@ -17,9 +17,9 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
-import Button from '../../../../primitives/Button/Button';
+import Button from '../../../../../primitives/Button/Button';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
+import useTranslation from '../../../../../../hooks/useTranslation';
 
 /**
  * Social Login Sign-In Option Component.
@@ -49,7 +49,7 @@ const SocialLogin: FC<BaseSignInOptionProps & HTMLAttributes<HTMLButtonElement>>
         </svg>
       }
     >
-      {t('elements.buttons.social', {connection: children as string})}
+      {t('elements.buttons.social.text', {connection: children as string})}
     </Button>
   );
 };

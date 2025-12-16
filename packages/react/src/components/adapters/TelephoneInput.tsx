@@ -17,13 +17,13 @@
  */
 
 import {FC} from 'react';
-import {BaseSignUpOptionProps} from '../presentation/SignUp/SignUpOptionFactory';
 import TextField from '../primitives/TextField/TextField';
+import {AdapterProps} from '../../models/adapters';
 
 /**
  * Telephone input component for sign-up forms.
  */
-const TelephoneInput: FC<BaseSignUpOptionProps> = ({
+const TelephoneInput: FC<AdapterProps> = ({
   component,
   formValues,
   touchedFields,
@@ -41,14 +41,14 @@ const TelephoneInput: FC<BaseSignUpOptionProps> = ({
       key={component.id}
       name={fieldName}
       type="tel"
-      label={config['label'] as string || ''}
-      placeholder={config['placeholder'] as string || ''}
-      required={config['required'] as boolean || false}
+      label={(config['label'] as string) || ''}
+      placeholder={(config['placeholder'] as string) || ''}
+      required={(config['required'] as boolean) || false}
       value={value}
       error={error}
       onChange={e => onInputChange(fieldName, e.target.value)}
       className={inputClassName}
-      helperText={config['hint'] as string || ''}
+      helperText={(config['hint'] as string) || ''}
     />
   );
 };

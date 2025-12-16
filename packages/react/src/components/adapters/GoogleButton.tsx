@@ -75,7 +75,7 @@ const GoogleButton: FC<GoogleButtonProps & HTMLAttributes<HTMLButtonElement>> = 
         </svg>
       }
     >
-      {children ?? t('elements.buttons.google')}
+      {children ?? t('elements.buttons.google.text')}
     </Button>
   );
 };

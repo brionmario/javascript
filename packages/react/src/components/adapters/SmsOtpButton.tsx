@@ -32,7 +32,12 @@ export interface SmsOtpButtonProps extends WithPreferences {
  * SMS OTP Sign-In Button Component.
  * Handles authentication with SMS OTP.
  */
-const SmsOtpButton: FC<SmsOtpButtonProps & HTMLAttributes<HTMLButtonElement>> = ({isLoading, preferences, children, ...rest}) => {
+const SmsOtpButton: FC<SmsOtpButtonProps & HTMLAttributes<HTMLButtonElement>> = ({
+  isLoading,
+  preferences,
+  children,
+  ...rest
+}) => {
   const {t} = useTranslation(preferences?.i18n);
 
   return (
@@ -52,7 +57,7 @@ const SmsOtpButton: FC<SmsOtpButtonProps & HTMLAttributes<HTMLButtonElement>> = 
         </svg>
       }
     >
-      {children ?? t('elements.buttons.smsotp')}
+      {children ?? t('elements.buttons.smsotp.text')}
     </Button>
   );
 };
