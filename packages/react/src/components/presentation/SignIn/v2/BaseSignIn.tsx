@@ -316,7 +316,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
       const processComponents = (comps: EmbeddedFlowComponent[]) => {
         comps.forEach(component => {
           if (component.type === 'TEXT_INPUT' || component.type === 'PASSWORD_INPUT') {
-            const identifier: string = component.id;
+            const identifier: string = component.ref;
             fields.push({
               name: identifier,
               required: component.required || false,
@@ -390,6 +390,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
     setIsSubmitting(true);
     clearMessages();
+    console.log('Submitting component:', component, 'with data:', data);
 
     try {
       // Filter out empty or undefined input values
@@ -404,9 +405,10 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
       let payload: EmbeddedSignInFlowRequest = {};
 
-      // For V2, we always send inputs, not actionId
+      // For V2, we always send inputs and action
       payload = {
         ...payload,
+        ...(component.id && {action: component.id}),
         inputs: filteredInputs,
       };
 

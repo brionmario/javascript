@@ -442,6 +442,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
+        ...(component.id && {action: component.id}),
         inputs: filteredInputs,
       } as any;
 

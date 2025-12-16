@@ -37,7 +37,8 @@ export interface FieldConfig {
   /**
    * The field type.
    */
-  type: FieldType;
+  type: FieldType
+  ;
   /**
    * Display name for the field.
    */

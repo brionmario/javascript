@@ -133,6 +133,11 @@ export interface EmbeddedFlowComponent {
    * Unique identifier for the component
    */
   id: string;
+  
+  /**
+   * Reference identifier for the component (e.g., field name, action ref)
+   */
+  ref?: string;
 
   /**
    * Component type that determines rendering behavior

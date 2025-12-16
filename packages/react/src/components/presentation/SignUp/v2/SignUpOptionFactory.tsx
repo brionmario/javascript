@@ -92,7 +92,7 @@ const createSignUpComponentFromFlow = (
 
   switch (component.type) {
     case EmbeddedFlowComponentType.TextInput: {
-      const identifier: string = component.id;
+      const identifier: string = component.ref;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
@@ -115,7 +115,7 @@ const createSignUpComponentFromFlow = (
     }
 
     case EmbeddedFlowComponentType.PasswordInput: {
-      const identifier: string = component.id;
+      const identifier: string = component.ref;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
