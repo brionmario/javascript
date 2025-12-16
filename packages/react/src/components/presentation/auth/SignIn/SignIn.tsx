@@ -24,7 +24,7 @@ import {
 } from '@asgardeo/browser';
 import {FC, ReactElement} from 'react';
 import SignInV2, {SignInRenderProps} from './v2/SignIn';
-import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
 import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
 
 /**

@@ -20,7 +20,7 @@ import {Platform} from '@asgardeo/browser';
 import {FC} from 'react';
 import SignUpV1, {SignUpProps as SignUpV1Props} from './v1/SignUp';
 import SignUpV2, {SignUpProps as SignUpV2Props} from './v2/SignUp';
-import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
 
 /**
  * Props for the SignUp component.

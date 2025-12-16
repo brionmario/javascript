@@ -17,7 +17,7 @@
  */
 
 import {FC} from 'react';
-import {createSignUpComponent} from '../presentation/SignUp/v1/SignUpOptionFactory';
+import {createSignUpComponent} from '../presentation/auth/SignUp/v1/SignUpOptionFactory';
 import {AdapterProps} from '../../models/adapters';
 
 /**

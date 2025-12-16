@@ -27,17 +27,17 @@ import {
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
 import {renderSignUpComponents} from './SignUpOptionFactory';
-import FlowProvider from '../../../../contexts/Flow/FlowProvider';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import {useForm, FormField} from '../../../../hooks/useForm';
-import useTranslation from '../../../../hooks/useTranslation';
-import useTheme from '../../../../contexts/Theme/useTheme';
-import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
-import Alert from '../../../primitives/Alert/Alert';
-import Card, {CardProps} from '../../../primitives/Card/Card';
-import Logo from '../../../primitives/Logo/Logo';
-import Spinner from '../../../primitives/Spinner/Spinner';
-import Typography from '../../../primitives/Typography/Typography';
+import FlowProvider from '../../../../../contexts/Flow/FlowProvider';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import {useForm, FormField} from '../../../../../hooks/useForm';
+import useTranslation from '../../../../../hooks/useTranslation';
+import useTheme from '../../../../../contexts/Theme/useTheme';
+import useAsgardeo from '../../../../../contexts/Asgardeo/useAsgardeo';
+import Alert from '../../../../primitives/Alert/Alert';
+import Card, {CardProps} from '../../../../primitives/Card/Card';
+import Logo from '../../../../primitives/Logo/Logo';
+import Spinner from '../../../../primitives/Spinner/Spinner';
+import Typography from '../../../../primitives/Typography/Typography';
 import useStyles from '../BaseSignUp.styles';
 
 /**

@@ -23,20 +23,20 @@ import {
   EmbeddedSignInFlowRequestV2 as EmbeddedSignInFlowRequest,
   EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
 } from '@asgardeo/browser';
-import useTranslation from '../../../../hooks/useTranslation';
-import Card, {CardProps} from '../../../primitives/Card/Card';
-import Spinner from '../../../primitives/Spinner/Spinner';
-import Alert from '../../../primitives/Alert/Alert';
-import Logo from '../../../primitives/Logo/Logo';
-import Typography from '../../../primitives/Typography/Typography';
-import useTheme from '../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../hooks/useTranslation';
+import Card, {CardProps} from '../../../../primitives/Card/Card';
+import Spinner from '../../../../primitives/Spinner/Spinner';
+import Alert from '../../../../primitives/Alert/Alert';
+import Logo from '../../../../primitives/Logo/Logo';
+import Typography from '../../../../primitives/Typography/Typography';
+import useTheme from '../../../../../contexts/Theme/useTheme';
 import useStyles from '../BaseSignIn.styles';
-import useFlow from '../../../../contexts/Flow/useFlow';
-import FlowProvider from '../../../../contexts/Flow/FlowProvider';
-import {FormField, useForm} from '../../../../hooks/useForm';
+import useFlow from '../../../../../contexts/Flow/useFlow';
+import FlowProvider from '../../../../../contexts/Flow/FlowProvider';
+import {FormField, useForm} from '../../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
-import {extractErrorMessage} from '../../../../utils/v2/flowTransformer';
-import getAuthComponentHeadings from '../../../../utils/v2/getAuthComponentHeadings';
+import {extractErrorMessage} from '../../../../../utils/v2/flowTransformer';
+import getAuthComponentHeadings from '../../../../../utils/v2/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering

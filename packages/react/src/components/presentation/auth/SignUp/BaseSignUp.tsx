@@ -18,24 +18,24 @@
 
 import {Platform} from '@asgardeo/browser';
 import {FC} from 'react';
-import BaseSignInV1, {BaseSignInProps as BaseSignInV1Props} from './v1/BaseSignIn';
-import BaseSignInV2, {BaseSignInProps as BaseSignInV2Props} from './v2/BaseSignIn';
-import useAsgardeo from '../../../contexts/Asgardeo/useAsgardeo';
+import BaseSignUpV1, {BaseSignUpProps as BaseSignUpV1Props} from './v1/BaseSignUp';
+import BaseSignUpV2, {BaseSignUpProps as BaseSignUpV2Props} from './v2/BaseSignUp';
+import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
 
 /**
- * Props for the BaseSignIn component.
- * Extends BaseSignInV1Props & BaseSignInV2Props for full compatibility with both React BaseSignIn components.
+ * Props for the BaseSignUp component.
+ * Extends BaseSignUpV1Props & BaseSignUpV2Props for full compatibility with both React BaseSignUp components.
  */
-export type BaseSignInProps = BaseSignInV1Props | BaseSignInV2Props;
+export type BaseSignUpProps = BaseSignUpV1Props | BaseSignUpV2Props;
 
-const BaseSignIn: FC<BaseSignInProps> = (props: BaseSignInProps) => {
+const BaseSignUp: FC<BaseSignUpProps> = (props: BaseSignUpProps) => {
   const {platform} = useAsgardeo();
 
   if (platform === Platform.AsgardeoV2) {
-    return <BaseSignInV2 {...(props as BaseSignInV2Props)} />;
+    return <BaseSignUpV2 {...(props as BaseSignUpV2Props)} />;
   }
 
-  return <BaseSignInV1 {...(props as BaseSignInV1Props)} />;
+  return <BaseSignUpV1 {...(props as BaseSignUpV1Props)} />;
 };
 
-export default BaseSignIn;
+export default BaseSignUp;

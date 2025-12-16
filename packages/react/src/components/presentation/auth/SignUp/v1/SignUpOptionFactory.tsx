@@ -18,25 +18,25 @@
 
 import {EmbeddedFlowComponent, EmbeddedFlowComponentType, WithPreferences} from '@asgardeo/browser';
 import {ReactElement} from 'react';
-import CheckboxInput from '../../../adapters/CheckboxInput';
-import DateInput from '../../../adapters/DateInput';
-import DividerComponent from '../../../adapters/DividerComponent';
-import EmailInput from '../../../adapters/EmailInput';
-import FormContainer from '../../../adapters/FormContainer';
-import ImageComponent from '../../../adapters/ImageComponent';
-import NumberInput from '../../../adapters/NumberInput';
-import PasswordInput from '../../../adapters/PasswordInput';
-import ButtonComponent from '../../../adapters/SubmitButton';
-import TelephoneInput from '../../../adapters/TelephoneInput';
-import TextInput from '../../../adapters/TextInput';
-import SelectInput from '../../../adapters/SelectInput';
-import Typography from '../../../adapters/Typography';
-import GoogleButton from '../../../adapters/GoogleButton';
-import GitHubButton from '../../../adapters/GitHubButton';
-import MicrosoftButton from '../../../adapters/MicrosoftButton';
-import LinkedInButton from '../../../adapters/LinkedInButton';
-import FacebookButton from '../../../adapters/FacebookButton';
-import SignInWithEthereumButton from '../../../adapters/SignInWithEthereumButton';
+import CheckboxInput from '../../../../adapters/CheckboxInput';
+import DateInput from '../../../../adapters/DateInput';
+import DividerComponent from '../../../../adapters/DividerComponent';
+import EmailInput from '../../../../adapters/EmailInput';
+import FormContainer from '../../../../adapters/FormContainer';
+import ImageComponent from '../../../../adapters/ImageComponent';
+import NumberInput from '../../../../adapters/NumberInput';
+import PasswordInput from '../../../../adapters/PasswordInput';
+import ButtonComponent from '../../../../adapters/SubmitButton';
+import TelephoneInput from '../../../../adapters/TelephoneInput';
+import TextInput from '../../../../adapters/TextInput';
+import SelectInput from '../../../../adapters/SelectInput';
+import Typography from '../../../../adapters/Typography';
+import GoogleButton from '../../../../adapters/GoogleButton';
+import GitHubButton from '../../../../adapters/GitHubButton';
+import MicrosoftButton from '../../../../adapters/MicrosoftButton';
+import LinkedInButton from '../../../../adapters/LinkedInButton';
+import FacebookButton from '../../../../adapters/FacebookButton';
+import SignInWithEthereumButton from '../../../../adapters/SignInWithEthereumButton';
 import {AdapterProps} from 'packages/react/src/models/adapters';
 
 /**

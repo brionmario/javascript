@@ -22,18 +22,18 @@ import {
   FieldType,
   EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
   EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
-  EmbeddedFlowTextVariantV2 as EmbeddedFlowTextVariant,
 } from '@asgardeo/browser';
-import {createField} from '../../../factories/FieldFactory';
-import Button from '../../../primitives/Button/Button';
-import GoogleButton from '../../../adapters/GoogleButton';
-import GitHubButton from '../../../adapters/GitHubButton';
-import FacebookButton from '../../../adapters/FacebookButton';
-import Typography from '../../../primitives/Typography/Typography';
-import Divider from '../../../primitives/Divider/Divider';
-import SmsOtpButton from '../../../adapters/SmsOtpButton';
-import {TypographyVariant} from '../../../primitives/Typography/Typography.styles';
-
+import {createField} from '../../../../factories/FieldFactory';
+import Button from '../../../../primitives/Button/Button';
+import GoogleButton from '../../../../adapters/GoogleButton';
+import GitHubButton from '../../../../adapters/GitHubButton';
+import FacebookButton from '../../../../adapters/FacebookButton';
+import Typography from '../../../../primitives/Typography/Typography';
+import Divider from '../../../../primitives/Divider/Divider';
+import SmsOtpButton from '../../../../adapters/SmsOtpButton';
+import MicrosoftButton from '../../../../adapters/MicrosoftButton';
+import LinkedInButton from '../../../../adapters/LinkedInButton';
+import SignInWithEthereumButton from '../../../../adapters/SignInWithEthereumButton';
 /**
  * Get the appropriate FieldType for an input component.
  */
@@ -53,29 +53,24 @@ const getFieldType = (variant: string): FieldType => {
  * Get typography variant from component variant.
  */
 const getTypographyVariant = (variant: string) => {
-  const variantMap: Record<EmbeddedFlowTextVariant, TypographyVariant> = {
-    HEADING_1: 'h1',
-    HEADING_2: 'h2',
-    HEADING_3: 'h3',
-    HEADING_4: 'h4',
-    HEADING_5: 'h5',
-    HEADING_6: 'h6',
-    SUBTITLE_1: 'subtitle1',
-    SUBTITLE_2: 'subtitle2',
-    BODY_1: 'body1',
-    BODY_2: 'body2',
-    CAPTION: 'caption',
-    OVERLINE: 'overline',
-    BUTTON_TEXT: 'button',
+  const variantMap: Record<string, any> = {
+    H1: 'h1',
+    H2: 'h2',
+    H3: 'h3',
+    H4: 'h4',
+    H5: 'h5',
+    H6: 'h6',
   };
-
   return variantMap[variant] || 'h3';
 };
 
 /**
- * Create a sign-in component from flow component configuration.
+ * Create a sign-up component from flow component configuration.
  */
-const createSignInComponentFromFlow = (
+/**
+ * Create a sign-up component from flow component configuration.
+ */
+const createSignUpComponentFromFlow = (
   component: EmbeddedFlowComponent,
   formValues: Record<string, string>,
   touchedFields: Record<string, boolean>,
@@ -95,7 +90,6 @@ const createSignInComponentFromFlow = (
 ): ReactElement | null => {
   const key: string | number = options.key || component.id;
 
-  console.log('Creating sign-in component for:', component);
   switch (component.type) {
     case EmbeddedFlowComponentType.TextInput: {
       const identifier: string = component.ref;
@@ -159,15 +153,41 @@ const createSignInComponentFromFlow = (
       // Render branded social login buttons for known action IDs
       const actionId: string = component.id;
       const eventType: string = (component.eventType as string) || '';
+      const buttonText: string = component.label || '';
 
-      if (actionId === 'google_auth' || eventType === 'google_auth') {
+      if (actionId === 'google_auth' || eventType === 'google_auth' || buttonText.toLowerCase().includes('google')) {
         return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'github_auth' || eventType === 'github_auth') {
+      if (actionId === 'github_auth' || eventType === 'github_auth' || buttonText.toLowerCase().includes('github')) {
         return <GitHubButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (actionId === 'facebook_auth' || eventType === 'facebook_auth') {
+      if (
+        actionId === 'facebook_auth' ||
+        eventType === 'facebook_auth' ||
+        buttonText.toLowerCase().includes('facebook')
+      ) {
         return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (
+        actionId === 'microsoft_auth' ||
+        eventType === 'microsoft_auth' ||
+        buttonText.toLowerCase().includes('microsoft')
+      ) {
+        return <MicrosoftButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (
+        actionId === 'linkedin_auth' ||
+        eventType === 'linkedin_auth' ||
+        buttonText.toLowerCase().includes('linkedin')
+      ) {
+        return <LinkedInButton key={key} onClick={handleClick} className={options.buttonClassName} />;
+      }
+      if (
+        actionId === 'ethereum_auth' ||
+        eventType === 'ethereum_auth' ||
+        buttonText.toLowerCase().includes('ethereum')
+      ) {
+        return <SignInWithEthereumButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
       if (actionId === 'prompt_mobile' || eventType === 'prompt_mobile') {
         return <SmsOtpButton key={key} onClick={handleClick} className={options.buttonClassName} />;
@@ -184,13 +204,13 @@ const createSignInComponentFromFlow = (
           variant={component.variant?.toLowerCase() === 'primary' ? 'solid' : 'outline'}
           color={component.variant?.toLowerCase() === 'primary' ? 'primary' : 'secondary'}
         >
-          {component.label || 'Submit'}
+          {buttonText || 'Submit'}
         </Button>
       );
     }
 
     case EmbeddedFlowComponentType.Text: {
-      const variant = getTypographyVariant(component.variant);
+      const variant = getTypographyVariant(component.variant || 'H3');
       return (
         <Typography key={key} variant={variant}>
           {component.label || ''}
@@ -202,7 +222,7 @@ const createSignInComponentFromFlow = (
       if (component.components && component.components.length > 0) {
         const blockComponents = component.components
           .map((childComponent, index) =>
-            createSignInComponentFromFlow(
+            createSignUpComponentFromFlow(
               childComponent,
               formValues,
               touchedFields,
@@ -223,16 +243,12 @@ const createSignInComponentFromFlow = (
       return null;
     }
 
-    // case EmbeddedFlowComponentType.Divider: {
-    //   return <Divider key={key} />;
-    // }
-
     default:
       throw new AsgardeoRuntimeError(
         `Unsupported component type: ${component.type}`,
-        'SignIn-UnsupportedComponentType-001',
+        'SignUp-UnsupportedComponentType-001',
         'react',
-        'Something went wrong while rendering the sign-in component. Please try again later.',
+        'Something went wrong while rendering the sign-up component. Please try again later.',
       );
   }
 };
@@ -240,7 +256,7 @@ const createSignInComponentFromFlow = (
 /**
  * Processes an array of components and renders them as React elements.
  */
-export const renderSignInComponents = (
+export const renderSignUpComponents = (
   components: EmbeddedFlowComponent[],
   formValues: Record<string, string>,
   touchedFields: Record<string, boolean>,
@@ -259,7 +275,7 @@ export const renderSignInComponents = (
 ): ReactElement[] =>
   components
     .map((component, index) =>
-      createSignInComponentFromFlow(
+      createSignUpComponentFromFlow(
         component,
         formValues,
         touchedFields,

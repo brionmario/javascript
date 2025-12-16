@@ -18,7 +18,7 @@
 
 import {FC, useState, useEffect, useRef, ReactNode} from 'react';
 import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
-import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
+import useAsgardeo from '../../../../../contexts/Asgardeo/useAsgardeo';
 import {
   AsgardeoRuntimeError,
   EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
@@ -28,8 +28,8 @@ import {
   EmbeddedSignInFlowStatusV2,
   EmbeddedSignInFlowTypeV2,
 } from '@asgardeo/browser';
-import {normalizeFlowResponse} from '../../../../utils/v2/flowTransformer';
-import useTranslation from '../../../../hooks/useTranslation';
+import {normalizeFlowResponse} from '../../../../../utils/v2/flowTransformer';
+import useTranslation from '../../../../../hooks/useTranslation';
 
 /**
  * Render props function parameters

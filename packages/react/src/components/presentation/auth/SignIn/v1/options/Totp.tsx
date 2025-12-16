@@ -18,13 +18,13 @@
 
 import {EmbeddedSignInFlowAuthenticator, EmbeddedSignInFlowAuthenticatorParamType, FieldType} from '@asgardeo/browser';
 import {FC, useEffect} from 'react';
-import {createField} from '../../../../factories/FieldFactory';
-import Button from '../../../../primitives/Button/Button';
-import OtpField from '../../../../primitives/OtpField/OtpField';
+import {createField} from '../../../../../factories/FieldFactory';
+import Button from '../../../../../primitives/Button/Button';
+import OtpField from '../../../../../primitives/OtpField/OtpField';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
-import useFlow from '../../../../../contexts/Flow/useFlow';
-import useTheme from '../../../../../contexts/Theme/useTheme';
+import useTranslation from '../../../../../../hooks/useTranslation';
+import useFlow from '../../../../../../contexts/Flow/useFlow';
+import useTheme from '../../../../../../contexts/Theme/useTheme';
 
 /**
  * TOTP Sign-In Option Component.

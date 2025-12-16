@@ -17,9 +17,9 @@
  */
 
 import {FC, HTMLAttributes} from 'react';
-import Button from '../../../../primitives/Button/Button';
+import Button from '../../../../../primitives/Button/Button';
 import {BaseSignInOptionProps} from './SignInOptionFactory';
-import useTranslation from '../../../../../hooks/useTranslation';
+import useTranslation from '../../../../../../hooks/useTranslation';
 
 /**
  * Social Login Sign-In Option Component.

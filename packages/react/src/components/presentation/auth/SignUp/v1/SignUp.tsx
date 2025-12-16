@@ -24,7 +24,7 @@ import {
 } from '@asgardeo/browser';
 import {FC, ReactNode} from 'react';
 import BaseSignUp, {BaseSignUpProps, BaseSignUpRenderProps} from './BaseSignUp';
-import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
+import useAsgardeo from '../../../../../contexts/Asgardeo/useAsgardeo';
 
 /**
  * Render props function parameters (re-exported from BaseSignUp for convenience)
@@ -42,7 +42,7 @@ export type SignUpProps = BaseSignUpProps & {
 };
 
 /**
- * A styled SignUp component for AsgardeoV2 (AKA Thunder) platform that provides embedded sign-up flow with pre-built styling.
+ * A styled SignUp component for Asgardeo platform that provides embedded sign-up flow with pre-built styling.
  * This component handles the API calls for sign-up and delegates UI logic to BaseSignUp.
  */
 const SignUp: FC<SignUpProps> = ({
@@ -55,7 +55,7 @@ const SignUp: FC<SignUpProps> = ({
   children,
   ...rest
 }) => {
-  const {signUp, isInitialized, applicationId} = useAsgardeo();
+  const {signUp, isInitialized} = useAsgardeo();
 
   /**
    * Initialize the sign-up flow.
@@ -63,15 +63,9 @@ const SignUp: FC<SignUpProps> = ({
   const handleInitialize = async (
     payload?: EmbeddedFlowExecuteRequestPayload,
   ): Promise<EmbeddedFlowExecuteResponse> => {
-    const urlParams: URLSearchParams = new URL(window.location.href).searchParams;
-    const applicationIdFromUrl: string = urlParams.get('applicationId');
-
-    // Priority order: applicationId from context > applicationId from URL
-    const effectiveApplicationId = applicationId || applicationIdFromUrl;
-
+    // Uses simple initialization without applicationId
     const initialPayload = payload || {
       flowType: EmbeddedFlowType.Registration,
-      ...(effectiveApplicationId && {applicationId: effectiveApplicationId}),
     };
 
     return (await signUp(initialPayload)) as EmbeddedFlowExecuteResponse;
@@ -94,8 +88,7 @@ const SignUp: FC<SignUpProps> = ({
       window.location.href = afterSignUpUrl;
     }
 
-    // For redirection responses (social sign-up), they are handled by BaseSignUp's popup mechanism
-    // and we only redirect after the OAuth flow is complete if shouldRedirectAfterSignUp is true
+    // For redirection responses (social sign-up), handle direct redirect
     if (
       shouldRedirectAfterSignUp &&
       response?.type === EmbeddedFlowResponseType.Redirection &&
@@ -119,8 +112,8 @@ const SignUp: FC<SignUpProps> = ({
       isInitialized={isInitialized}
       children={children}
       showLogo={true}
-      showTitle={true}
-      showSubtitle={true}
+      showTitle={false}
+      showSubtitle={false}
       {...rest}
     />
   );
