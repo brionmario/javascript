@@ -27,6 +27,7 @@ export interface I18nTranslations {
   'elements.buttons.signin.text': string;
   'elements.buttons.signout.text': string;
   'elements.buttons.signup.text': string;
+  'elements.buttons.submit.text': string;
   'elements.buttons.facebook.text': string;
   'elements.buttons.google.text': string;
   'elements.buttons.github.text': string;
@@ -40,11 +41,20 @@ export interface I18nTranslations {
   /* Fields */
   'elements.fields.generic.placeholder': string;
   'elements.fields.username.label': string;
+  'elements.fields.username.placeholder': string;
   'elements.fields.password.label': string;
+  'elements.fields.password.placeholder': string;
+  'elements.fields.first_name.label': string;
+  'elements.fields.first_name.placeholder': string;
+  'elements.fields.last_name.label': string;
+  'elements.fields.last_name.placeholder': string;
+  'elements.fields.email.label': string;
+  'elements.fields.email.placeholder': string;
   'elements.fields.organization.name.label': string;
   'elements.fields.organization.handle.label': string;
   'elements.fields.organization.description.label': string;
   'elements.fields.organization.select.label': string;
+  'elements.fields.organization.select.placeholder': string;
 
   /* Validation */
   'validations.required.field.error': string;
@@ -64,25 +74,25 @@ export interface I18nTranslations {
   /* Email OTP */
   'email.otp.heading': string;
   'email.otp.subheading': string;
-  'email.otp.submit.button.text': string;
+  'email.otp.buttons.submit.text': string;
 
   /* Identifier First */
   'identifier.first.heading': string;
   'identifier.first.subheading': string;
-  'identifier.first.submit.button.text': string;
+  'identifier.first.buttons.submit.text': string;
 
   /* SMS OTP */
   'sms.otp.heading': string;
   'sms.otp.subheading': string;
-  'sms.otp.submit.button.text': string;
+  'sms.otp.buttons.submit.text': string;
 
   /* TOTP */
   'totp.heading': string;
   'totp.subheading': string;
-  'totp.submit.button.text': string;
+  'totp.buttons.submit.text': string;
 
   /* Username Password */
-  'username.password.submit.button.text': string;
+  'username.password.buttons.submit.text': string;
   'username.password.heading': string;
   'username.password.subheading': string;
 
@@ -103,14 +113,14 @@ export interface I18nTranslations {
   'organization.switcher.member': string;
   'organization.switcher.create.organization': string;
   'organization.switcher.manage.organizations': string;
-  'organization.switcher.manage.button.text': string;
+  'organization.switcher.buttons.manage.text': string;
   'organization.switcher.organizations.heading': string;
-  'organization.switcher.switch.button.text': string;
+  'organization.switcher.buttons.switch.text': string;
   'organization.switcher.no.access': string;
   'organization.switcher.status.label': string;
   'organization.switcher.showing.count': string;
-  'organization.switcher.refresh.button.text': string;
-  'organization.switcher.load_more.button.text': string;
+  'organization.switcher.buttons.refresh.text': string;
+  'organization.switcher.buttons.load_more.text': string;
   'organization.switcher.loading.more': string;
   'organization.switcher.no.organizations': string;
   'organization.switcher.error.prefix': string;
@@ -123,9 +133,9 @@ export interface I18nTranslations {
   /* |---------------------------------------------------------------| */
 
   'organization.create.heading': string;
-  'organization.create.button.text': string;
-  'organization.create.button.loading.text': string;
-  'organization.create.cancel.button.text': string;
+  'organization.create.buttons.create_organization.text': string;
+  'organization.create.buttons.create_organization.loading.text': string;
+  'organization.create.buttons.cancel.text': string;
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

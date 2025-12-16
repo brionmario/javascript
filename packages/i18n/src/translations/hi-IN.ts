@@ -29,6 +29,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'साइन इन',
   'elements.buttons.signout.text': 'साइन आउट',
   'elements.buttons.signup.text': 'साइन अप',
+  'elements.buttons.submit.text': 'जारी रखें',
   'elements.buttons.facebook.text': 'Facebook के साथ जारी रखें',
   'elements.buttons.google.text': 'Google के साथ जारी रखें',
   'elements.buttons.github.text': 'GitHub के साथ जारी रखें',
@@ -42,10 +43,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': '{field} दर्ज करें',
   'elements.fields.username.label': 'उपयोगकर्ता नाम',
+  'elements.fields.username.placeholder': 'अपना उपयोगकर्ता नाम दर्ज करें',
   'elements.fields.password.label': 'पासवर्ड',
+  'elements.fields.password.placeholder': 'अपना पासवर्ड दर्ज करें',
+  'elements.fields.first_name.label': 'पहला नाम',
+  'elements.fields.first_name.placeholder': 'अपना पहला नाम दर्ज करें',
+  'elements.fields.last_name.label': 'अंतिम नाम',
+  'elements.fields.last_name.placeholder': 'अपना अंतिम नाम दर्ज करें',
+  'elements.fields.email.label': 'ईमेल',
+  'elements.fields.email.placeholder': 'अपना ईमेल दर्ज करें',
   'elements.fields.organization.name.label': 'संगठन का नाम',
   'elements.fields.organization.handle.label': 'संगठन हैंडल',
   'elements.fields.organization.description.label': 'संगठन विवरण',
+  'elements.fields.organization.select.label': 'संगठन चुनें',
+  'elements.fields.organization.select.placeholder': 'एक संगठन चुनें',
 
   /* Validation */
   'validations.required.field.error': 'यह फील्ड आवश्यक है',
@@ -65,25 +76,25 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'OTP सत्यापन',
   'email.otp.subheading': 'अपनी ईमेल पर भेजा गया कोड दर्ज करें।',
-  'email.otp.submit.button.text': 'जारी रखें',
+  'email.otp.buttons.submit.text': 'जारी रखें',
 
   /* Identifier First */
   'identifier.first.heading': 'साइन इन',
   'identifier.first.subheading': 'अपना उपयोगकर्ता नाम या ईमेल दर्ज करें।',
-  'identifier.first.submit.button.text': 'जारी रखें',
+  'identifier.first.buttons.submit.text': 'जारी रखें',
 
   /* SMS OTP */
   'sms.otp.heading': 'OTP सत्यापन',
   'sms.otp.subheading': 'अपने फ़ोन नंबर पर भेजा गया कोड दर्ज करें।',
-  'sms.otp.submit.button.text': 'जारी रखें',
+  'sms.otp.buttons.submit.text': 'जारी रखें',
 
   /* TOTP */
   'totp.heading': 'अपनी पहचान सत्यापित करें',
   'totp.subheading': 'अपने ऑथेंटिकेटर ऐप से कोड दर्ज करें।',
-  'totp.submit.button.text': 'जारी रखें',
+  'totp.buttons.submit.text': 'जारी रखें',
 
   /* Username Password */
-  'username.password.submit.button.text': 'जारी रखें',
+  'username.password.buttons.submit.text': 'जारी रखें',
   'username.password.heading': 'साइन इन',
   'username.password.subheading': 'अपना उपयोगकर्ता नाम और पासवर्ड दर्ज करें।',
 
@@ -98,32 +109,32 @@ const translations: I18nTranslations = {
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'elements.fields.organization.select.label': 'संगठन चुनें',
   'organization.switcher.switch.organization': 'संगठन बदलें',
   'organization.switcher.loading.placeholder.organizations': 'संगठन लोड हो रहे हैं...',
   'organization.switcher.members': 'सदस्य',
   'organization.switcher.member': 'सदस्य',
   'organization.switcher.create.organization': 'संगठन बनाएं',
   'organization.switcher.manage.organizations': 'संगठनों का प्रबंधन करें',
-  'organization.switcher.manage.button.text': 'प्रबंधित करें',
+  'organization.switcher.buttons.manage.text': 'प्रबंधित करें',
   'organization.switcher.organizations.heading': 'संगठन',
-  'organization.switcher.switch.button.text': 'बदलें',
+  'organization.switcher.buttons.switch.text': 'बदलें',
   'organization.switcher.no.access': 'कोई पहुँच नहीं',
   'organization.switcher.status.label': 'स्थिति:',
   'organization.switcher.showing.count': '{total} में से {showing} संगठन दिखा रहे हैं',
-  'organization.switcher.refresh.button.text': 'रिफ्रेश',
-  'organization.switcher.load_more.button.text': 'और संगठन लोड करें',
+  'organization.switcher.buttons.refresh.text': 'रिफ्रेश',
+  'organization.switcher.buttons.load_more.text': 'और संगठन लोड करें',
   'organization.switcher.loading.more': 'लोड हो रहा है...',
   'organization.switcher.no.organizations': 'कोई संगठन नहीं मिला',
   'organization.switcher.error.prefix': 'त्रुटि:',
+
   'organization.profile.heading': 'संगठन प्रोफ़ाइल',
   'organization.profile.loading': 'संगठन लोड हो रहा है...',
   'organization.profile.error': 'संगठन लोड करने में विफल',
 
   'organization.create.heading': 'संगठन बनाएं',
-  'organization.create.button.text': 'संगठन बनाएं',
-  'organization.create.button.loading.text': 'बनाया जा रहा है...',
-  'organization.create.cancel.button.text': 'रद्द करें',
+  'organization.create.buttons.create_organization.text': 'संगठन बनाएं',
+  'organization.create.buttons.create_organization.loading.text': 'बनाया जा रहा है...',
+  'organization.create.buttons.cancel.text': 'रद्द करें',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

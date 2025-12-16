@@ -103,7 +103,7 @@ const SmsOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('sms.otp.submit.button.text')}
+        {t('sms.otp.buttons.submit.text')}
       </Button>
     </>
   );

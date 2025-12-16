@@ -30,6 +30,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'సైన్ ఇన్ చేయండి',
   'elements.buttons.signout.text': 'సైన్ అవుట్ చేయండి',
   'elements.buttons.signup.text': 'సైన్ అప్ చేయండి',
+  'elements.buttons.submit.text': 'కొనసాగించండి',
   'elements.buttons.facebook.text': 'Facebook తో కొనసాగించండి',
   'elements.buttons.google.text': 'Google తో కొనసాగించండి',
   'elements.buttons.github.text': 'GitHub తో కొనసాగించండి',
@@ -43,10 +44,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': 'మీ {field} ను నమోదు చేయండి',
   'elements.fields.username.label': 'వినియోగదారు పేరు',
+  'elements.fields.username.placeholder': 'వినియోగదారు పేరును నమోదు చేయండి',
   'elements.fields.password.label': 'పాస్వర్డ్',
+  'elements.fields.password.placeholder': 'పాస్వర్డ్ నమోదు చేయండి',
+  'elements.fields.first_name.label': 'మొదటి పేరు',
+  'elements.fields.first_name.placeholder': 'మీ మొదటి పేరును నమోదు చేయండి',
+  'elements.fields.last_name.label': 'చివరి పేరు',
+  'elements.fields.last_name.placeholder': 'మీ చివరి పేరును నమోదు చేయండి',
+  'elements.fields.email.label': 'ఇమెయిల్',
+  'elements.fields.email.placeholder': 'మీ ఇమెయిల్‌ను నమోదు చేయండి',
   'elements.fields.organization.name.label': 'సంస్థ పేరు',
   'elements.fields.organization.handle.label': 'సంస్థ హ్యాండిల్',
   'elements.fields.organization.description.label': 'సంస్థ వివరణ',
+  'elements.fields.organization.select.label': 'ఆర్గనైజేషన్‌ను ఎంచుకోండి',
+  'elements.fields.organization.select.placeholder': 'సంస్థను ఎంచుకోండి',
 
   /* Validation */
   'validations.required.field.error': 'ఈ ఫీల్డ్ అవసరం',
@@ -66,25 +77,25 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'OTP వెరిఫికేషన్',
   'email.otp.subheading': 'మీ ఇమెయిల్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
-  'email.otp.submit.button.text': 'కొనసాగించండి',
+  'email.otp.buttons.submit.text': 'కొనసాగించండి',
 
   /* Identifier First */
   'identifier.first.heading': 'సైన్ ఇన్ చేయండి',
   'identifier.first.subheading': 'మీ యూజర్ పేరు లేదా ఇమెయిల్ ఇవ్వండి.',
-  'identifier.first.submit.button.text': 'కొనసాగించండి',
+  'identifier.first.buttons.submit.text': 'కొనసాగించండి',
 
   /* SMS OTP */
   'sms.otp.heading': 'OTP వెరిఫికేషన్',
   'sms.otp.subheading': 'మీ ఫోన్ నంబర్‌కి పంపిన కోడ్‌ను నమోదు చేయండి.',
-  'sms.otp.submit.button.text': 'కొనసాగించండి',
+  'sms.otp.buttons.submit.text': 'కొనసాగించండి',
 
   /* TOTP */
   'totp.heading': 'మీ గుర్తింపును ధృవీకరించండి',
   'totp.subheading': 'మీ ఆథెంటికేటర్ యాప్‌లోని కోడ్‌ను నమోదు చేయండి.',
-  'totp.submit.button.text': 'కొనసాగించండి',
+  'totp.buttons.submit.text': 'కొనసాగించండి',
 
   /* Username Password */
-  'username.password.submit.button.text': 'కొనసాగించండి',
+  'username.password.buttons.submit.text': 'కొనసాగించండి',
   'username.password.heading': 'సైన్ ఇన్ చేయండి',
   'username.password.subheading': 'మీ యూజర్ పేరు మరియు పాస్‌వర్డ్ ఇవ్వండి.',
 
@@ -99,32 +110,32 @@ const translations: I18nTranslations = {
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'elements.fields.organization.select.label': 'ఆర్గనైజేషన్‌ను ఎంచుకోండి',
   'organization.switcher.switch.organization': 'ఆర్గనైజేషన్ మార్చండి',
   'organization.switcher.loading.placeholder.organizations': 'ఆర్గనైజేషన్‌లు లోడ్ అవుతున్నాయి...',
   'organization.switcher.members': 'సభ్యులు',
   'organization.switcher.member': 'సభ్యుడు',
   'organization.switcher.create.organization': 'ఆర్గనైజేషన్ సృష్టించండి',
   'organization.switcher.manage.organizations': 'ఆర్గనైజేషన్‌లను నిర్వహించండి',
-  'organization.switcher.manage.button.text': 'నిర్వహించండి',
+  'organization.switcher.buttons.manage.text': 'నిర్వహించండి',
   'organization.switcher.organizations.heading': 'ఆర్గనైజేషన్‌లు',
-  'organization.switcher.switch.button.text': 'మార్చండి',
+  'organization.switcher.buttons.switch.text': 'మార్చండి',
   'organization.switcher.no.access': 'యాక్సెస్ లేదు',
   'organization.switcher.status.label': 'స్టేటస్:',
   'organization.switcher.showing.count': '{total} లో {showing} ఆర్గనైజేషన్‌లు చూపుతున్నాయి',
-  'organization.switcher.refresh.button.text': 'రిఫ్రెష్ చేయండి',
-  'organization.switcher.load_more.button.text': 'మరిన్ని ఆర్గనైజేషన్‌లను లోడ్ చేయండి',
+  'organization.switcher.buttons.refresh.text': 'రిఫ్రెష్ చేయండి',
+  'organization.switcher.buttons.load_more.text': 'మరిన్ని ఆర్గనైజేషన్‌లను లోడ్ చేయండి',
   'organization.switcher.loading.more': 'లోడ్ అవుతోంది...',
   'organization.switcher.no.organizations': 'ఏ ఆర్గనైజేషన్‌లు లభించలేదు',
   'organization.switcher.error.prefix': 'లోపం:',
+
   'organization.profile.heading': 'ఆర్గనైజేషన్ ప్రొఫైల్',
   'organization.profile.loading': 'లోడ్ అవుతోంది...',
   'organization.profile.error': 'ఆర్గనైజేషన్‌ను లోడ్ చేయడం విఫలమైంది',
 
   'organization.create.heading': 'ఆర్గనైజేషన్ సృష్టించండి',
-  'organization.create.button.text': 'సృష్టించండి',
-  'organization.create.button.loading.text': 'సృష్టిస్తోంది...',
-  'organization.create.cancel.button.text': 'రద్దు చేయండి',
+  'organization.create.buttons.create_organization.text': 'సృష్టించండి',
+  'organization.create.buttons.create_organization.loading.text': 'సృష్టిస్తోంది...',
+  'organization.create.buttons.cancel.text': 'రద్దు చేయండి',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

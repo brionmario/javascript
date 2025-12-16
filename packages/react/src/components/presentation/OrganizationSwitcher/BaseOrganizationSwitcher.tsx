@@ -380,7 +380,7 @@ export const BaseOrganizationSwitcher: FC<BaseOrganizationSwitcherProps> = ({
                         </svg>
                       }
                     >
-                      {t('organization.switcher.manage.button.text')}
+                      {t('organization.switcher.buttons.manage.text')}
                     </Button>
                   )}
                 </div>

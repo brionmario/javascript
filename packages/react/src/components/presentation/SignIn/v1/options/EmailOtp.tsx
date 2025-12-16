@@ -104,7 +104,7 @@ const EmailOtp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('email.otp.submit.button.text')}
+        {t('email.otp.buttons.submit.text')}
       </Button>
     </>
   );

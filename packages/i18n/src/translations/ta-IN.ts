@@ -30,6 +30,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'உள்நுழை',
   'elements.buttons.signout.text': 'வெளியேறு',
   'elements.buttons.signup.text': 'பதிவு செய்',
+  'elements.buttons.submit.text': 'தொடரவும்',
   'elements.buttons.facebook.text': 'Facebook மூலம் தொடரவும்',
   'elements.buttons.google.text': 'Google மூலம் தொடரவும்',
   'elements.buttons.github.text': 'GitHub மூலம் தொடரவும்',
@@ -43,10 +44,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': '{field} உள்ளிடவும்',
   'elements.fields.username.label': 'பயனர்பெயர்',
-  'elements.fields.password.label': 'கடவுச்சொல்',
+  'elements.fields.username.placeholder': 'பயனர்பெயரை உள்ளிடவும்',
+  'elements.fields.password.label': 'கடவுச்சொல்',
+  'elements.fields.password.placeholder': 'கடவுச்சொலை உள்ளிடவும்',
+  'elements.fields.first_name.label': 'முதல் பெயர்',
+  'elements.fields.first_name.placeholder': 'உங்கள் முதல் பெயரை உள்ளிடவும்',
+  'elements.fields.last_name.label': 'கடைசி பெயர்',
+  'elements.fields.last_name.placeholder': 'உங்கள் கடைசி பெயரை உள்ளிடவும்',
+  'elements.fields.email.label': 'மின்னஞ்சல்',
+  'elements.fields.email.placeholder': 'உங்கள் மின்னஞ்சலை உள்ளிடவும்',
   'elements.fields.organization.name.label': 'அமைப்பின் பெயர்',
   'elements.fields.organization.handle.label': 'அமைப்பு கையாளுதல்',
   'elements.fields.organization.description.label': 'அமைப்பு விளக்கம்',
+  'elements.fields.organization.select.label': 'அமைப்பை தேர்ந்தெடு',
+  'elements.fields.organization.select.placeholder': 'அமைப்பை தெரிந்தெடுக்கவும்',
 
   /* Validation */
   'validations.required.field.error': 'இந்த புலம் தேவை',
@@ -66,25 +77,25 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'OTP சரிபார்ப்பு',
   'email.otp.subheading': 'உங்கள் மின்னஞ்சலுக்கு அனுப்பப்பட்ட குறியீட்டை உள்ளிடவும்.',
-  'email.otp.submit.button.text': 'தொடரவும்',
+  'email.otp.buttons.submit.text': 'தொடரவும்',
 
   /* Identifier First */
   'identifier.first.heading': 'உள்நுழை',
   'identifier.first.subheading': 'பயனர்பெயர் அல்லது மின்னஞ்சல் முகவரியை உள்ளிடவும்.',
-  'identifier.first.submit.button.text': 'தொடரவும்',
+  'identifier.first.buttons.submit.text': 'தொடரவும்',
 
   /* SMS OTP */
   'sms.otp.heading': 'OTP சரிபார்ப்பு',
   'sms.otp.subheading': 'உங்கள் தொலைபேசிக்கு அனுப்பப்பட்ட குறியீட்டை உள்ளிடவும்.',
-  'sms.otp.submit.button.text': 'தொடரவும்',
+  'sms.otp.buttons.submit.text': 'தொடரவும்',
 
   /* TOTP */
   'totp.heading': 'உங்கள் அடையாளத்தை சரிபார்க்கவும்',
   'totp.subheading': 'உங்கள் அங்கீகரிப்பு செயலியில் உள்ள குறியீட்டை உள்ளிடவும்.',
-  'totp.submit.button.text': 'தொடரவும்',
+  'totp.buttons.submit.text': 'தொடரவும்',
 
   /* Username Password */
-  'username.password.submit.button.text': 'தொடரவும்',
+  'username.password.buttons.submit.text': 'தொடரவும்',
   'username.password.heading': 'உள்நுழை',
   'username.password.subheading': 'தொடர உங்கள் பயனர்பெயர் மற்றும் கடவுச்சொல்லை உள்ளிடவும்.',
 
@@ -100,32 +111,32 @@ const translations: I18nTranslations = {
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'elements.fields.organization.select.label': 'அமைப்பை தேர்ந்தெடு',
   'organization.switcher.switch.organization': 'அமைப்பை மாற்று',
   'organization.switcher.loading.placeholder.organizations': 'அமைப்புகள் ஏற்றப்படுகின்றன...',
   'organization.switcher.members': 'உறுப்பினர்கள்',
   'organization.switcher.member': 'உறுப்பினர்',
   'organization.switcher.create.organization': 'அமைப்பை உருவாக்கு',
   'organization.switcher.manage.organizations': 'அமைப்புகளை நிர்வகிக்கவும்',
-  'organization.switcher.manage.button.text': 'நிர்வகி',
+  'organization.switcher.buttons.manage.text': 'நிர்வகி',
   'organization.switcher.organizations.heading': 'அமைப்புகள்',
-  'organization.switcher.switch.button.text': 'மாற்று',
+  'organization.switcher.buttons.switch.text': 'மாற்று',
   'organization.switcher.no.access': 'அணுகல் இல்லை',
   'organization.switcher.status.label': 'நிலை:',
   'organization.switcher.showing.count': 'மொத்த {total} அமைப்புகளில் {showing} காட்டப்படுகிறது',
-  'organization.switcher.refresh.button.text': 'புதுப்பி',
-  'organization.switcher.load_more.button.text': 'மேலும் அமைப்புகளை ஏற்று',
+  'organization.switcher.buttons.refresh.text': 'புதுப்பி',
+  'organization.switcher.buttons.load_more.text': 'மேலும் அமைப்புகளை ஏற்று',
   'organization.switcher.loading.more': 'ஏற்றப்படுகிறது...',
   'organization.switcher.no.organizations': 'எந்த அமைப்பும் கிடைக்கவில்லை',
   'organization.switcher.error.prefix': 'பிழை:',
+
   'organization.profile.heading': 'அமைப்பு சுயவிவரம்',
   'organization.profile.loading': 'அமைப்பை ஏற்றுகிறது...',
   'organization.profile.error': 'அமைப்பை ஏற்ற முடியவில்லை',
 
   'organization.create.heading': 'அமைப்பை உருவாக்கு',
-  'organization.create.button.text': 'அமைப்பை உருவாக்கு',
-  'organization.create.button.loading.text': 'உருவாக்கப்படுகிறது...',
-  'organization.create.cancel.button.text': 'ரத்து செய்',
+  'organization.create.buttons.create_organization.text': 'அமைப்பை உருவாக்கு',
+  'organization.create.buttons.create_organization.loading.text': 'உருவாக்கப்படுகிறது...',
+  'organization.create.buttons.cancel.text': 'ரத்து செய்',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

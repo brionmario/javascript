@@ -235,11 +235,13 @@ export const BaseCreateOrganization: FC<BaseCreateOrganizationProps> = ({
         <div className={cx(styles.actions)}>
           {onCancel && (
             <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
-              {t('organization.create.cancel.button.text')}
+              {t('organization.create.buttons.cancel.text')}
             </Button>
           )}
           <Button type="submit" variant="solid" color="primary" disabled={loading} form="create-organization-form">
-            {loading ? t('organization.create.button.loading.text') : t('organization.create.button.text')}
+            {loading
+              ? t('organization.create.buttons.create_organization.loading.text')
+              : t('organization.create.buttons.create_organization.text')}
           </Button>
         </div>
       </div>

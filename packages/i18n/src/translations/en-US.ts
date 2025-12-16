@@ -30,6 +30,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'Sign In',
   'elements.buttons.signout.text': 'Sign Out',
   'elements.buttons.signup.text': 'Sign Up',
+  'elements.buttons.submit.text': 'Continue',
   'elements.buttons.facebook.text': 'Continue with Facebook',
   'elements.buttons.google.text': 'Continue with Google',
   'elements.buttons.github.text': 'Continue with GitHub',
@@ -43,11 +44,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': 'Enter your {field}',
   'elements.fields.username.label': 'Username',
+  'elements.fields.username.placeholder': 'Enter your username',
   'elements.fields.password.label': 'Password',
+  'elements.fields.password.placeholder': 'Enter your password',
+  'elements.fields.first_name.label': 'First Name',
+  'elements.fields.first_name.placeholder': 'Enter your first name',
+  'elements.fields.last_name.label': 'Last Name',
+  'elements.fields.last_name.placeholder': 'Enter your last name',
+  'elements.fields.email.label': 'Email',
+  'elements.fields.email.placeholder': 'Enter your email',
   'elements.fields.organization.name.label': 'Organization Name',
   'elements.fields.organization.handle.label': 'Organization Handle',
   'elements.fields.organization.description.label': 'Organization Description',
   'elements.fields.organization.select.label': 'Select Organization',
+  'elements.fields.organization.select.placeholder': 'Choose an organization',
 
   /* Validation */
   'validations.required.field.error': 'This field is required',
@@ -67,27 +77,27 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'OTP Verification',
   'email.otp.subheading': 'Enter the code sent to your email address.',
-  'email.otp.submit.button.text': 'Continue',
+  'email.otp.buttons.submit.text': 'Continue',
 
   /* Identifier First */
   'identifier.first.heading': 'Sign In',
   'identifier.first.subheading': 'Enter your username or email address.',
-  'identifier.first.submit.button.text': 'Continue',
+  'identifier.first.buttons.submit.text': 'Continue',
 
   /* SMS OTP */
   'sms.otp.heading': 'OTP Verification',
   'sms.otp.subheading': 'Enter the code sent to your phone number.',
-  'sms.otp.submit.button.text': 'Continue',
+  'sms.otp.buttons.submit.text': 'Continue',
 
   /* TOTP */
   'totp.heading': 'Verify Your Identity',
   'totp.subheading': 'Enter the code from your authenticator app.',
-  'totp.submit.button.text': 'Continue',
+  'totp.buttons.submit.text': 'Continue',
 
   /* Username Password */
   'username.password.heading': 'Sign In',
   'username.password.subheading': 'Enter your username and password to continue.',
-  'username.password.submit.button.text': 'Continue',
+  'username.password.buttons.submit.text': 'Continue',
 
   /* |---------------------------------------------------------------| */
   /* |                          User Profile                         | */
@@ -106,14 +116,14 @@ const translations: I18nTranslations = {
   'organization.switcher.member': 'member',
   'organization.switcher.create.organization': 'Create Organization',
   'organization.switcher.manage.organizations': 'Manage Organizations',
-  'organization.switcher.manage.button.text': 'Manage',
+  'organization.switcher.buttons.manage.text': 'Manage',
   'organization.switcher.organizations.heading': 'Organizations',
-  'organization.switcher.switch.button.text': 'Switch',
+  'organization.switcher.buttons.switch.text': 'Switch',
   'organization.switcher.no.access': 'No Access',
   'organization.switcher.status.label': 'Status:',
   'organization.switcher.showing.count': 'Showing {showing} of {total} organizations',
-  'organization.switcher.refresh.button.text': 'Refresh',
-  'organization.switcher.load_more.button.text': 'Load More Organizations',
+  'organization.switcher.buttons.refresh.text': 'Refresh',
+  'organization.switcher.buttons.load_more.text': 'Load More Organizations',
   'organization.switcher.loading.more': 'Loading...',
   'organization.switcher.no.organizations': 'No organizations found',
   'organization.switcher.error.prefix': 'Error:',
@@ -123,9 +133,9 @@ const translations: I18nTranslations = {
   'organization.profile.error': 'Failed to load organization',
 
   'organization.create.heading': 'Create Organization',
-  'organization.create.button.text': 'Create Organization',
-  'organization.create.button.loading.text': 'Creating...',
-  'organization.create.cancel.button.text': 'Cancel',
+  'organization.create.buttons.create_organization.text': 'Create Organization',
+  'organization.create.buttons.create_organization.loading.text': 'Creating...',
+  'organization.create.buttons.cancel.text': 'Cancel',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

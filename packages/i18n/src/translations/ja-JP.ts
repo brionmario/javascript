@@ -30,6 +30,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'ログイン',
   'elements.buttons.signout.text': 'ログアウト',
   'elements.buttons.signup.text': 'サインアップ',
+  'elements.buttons.submit.text': '続行',
   'elements.buttons.facebook.text': 'Facebookで続行',
   'elements.buttons.google.text': 'Googleで続行',
   'elements.buttons.github.text': 'GitHubで続行',
@@ -43,10 +44,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': '{field}を入力してください',
   'elements.fields.username.label': 'ユーザー名',
+  'elements.fields.username.placeholder': 'ユーザー名を入力してください',
   'elements.fields.password.label': 'パスワード',
+  'elements.fields.password.placeholder': 'パスワードを入力してください',
+  'elements.fields.first_name.label': '名',
+  'elements.fields.first_name.placeholder': '名を入力してください',
+  'elements.fields.last_name.label': '姓',
+  'elements.fields.last_name.placeholder': '姓を入力してください',
+  'elements.fields.email.label': 'メールアドレス',
+  'elements.fields.email.placeholder': 'メールアドレスを入力してください',
   'elements.fields.organization.name.label': '組織名',
   'elements.fields.organization.handle.label': '組織ハンドル',
   'elements.fields.organization.description.label': '組織の説明',
+  'elements.fields.organization.select.label': '組織を選択',
+  'elements.fields.organization.select.placeholder': '組織を選択してください',
 
   /* Validation */
   'validations.required.field.error': 'この項目は必須です',
@@ -66,25 +77,25 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'OTP認証',
   'email.otp.subheading': 'メールに送信されたコードを入力してください。',
-  'email.otp.submit.button.text': '続行',
+  'email.otp.buttons.submit.text': '続行',
 
   /* Identifier First */
   'identifier.first.heading': 'ログイン',
   'identifier.first.subheading': 'ユーザー名またはメールアドレスを入力してください。',
-  'identifier.first.submit.button.text': '続行',
+  'identifier.first.buttons.submit.text': '続行',
 
   /* SMS OTP */
   'sms.otp.heading': 'OTP認証',
   'sms.otp.subheading': '電話番号に送信されたコードを入力してください。',
-  'sms.otp.submit.button.text': '続行',
+  'sms.otp.buttons.submit.text': '続行',
 
   /* TOTP */
   'totp.heading': '本人確認',
   'totp.subheading': '認証アプリのコードを入力してください。',
-  'totp.submit.button.text': '続行',
+  'totp.buttons.submit.text': '続行',
 
   /* Username Password */
-  'username.password.submit.button.text': '続行',
+  'username.password.buttons.submit.text': '続行',
   'username.password.heading': 'ログイン',
   'username.password.subheading': 'ユーザー名とパスワードを入力してください。',
 
@@ -99,32 +110,32 @@ const translations: I18nTranslations = {
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'elements.fields.organization.select.label': '組織を選択',
   'organization.switcher.switch.organization': '組織を切り替え',
   'organization.switcher.loading.placeholder.organizations': '組織を読み込み中…',
   'organization.switcher.members': 'メンバー',
   'organization.switcher.member': 'メンバー',
   'organization.switcher.create.organization': '組織を作成',
   'organization.switcher.manage.organizations': '組織を管理',
-  'organization.switcher.manage.button.text': '管理',
+  'organization.switcher.buttons.manage.text': '管理',
   'organization.switcher.organizations.heading': '組織',
-  'organization.switcher.switch.button.text': '切り替え',
+  'organization.switcher.buttons.switch.text': '切り替え',
   'organization.switcher.no.access': 'アクセス権がありません',
   'organization.switcher.status.label': 'ステータス:',
   'organization.switcher.showing.count': '全{total}件中{showing}件を表示',
-  'organization.switcher.refresh.button.text': '更新',
-  'organization.switcher.load_more.button.text': 'さらに読み込む',
+  'organization.switcher.buttons.refresh.text': '更新',
+  'organization.switcher.buttons.load_more.text': 'さらに読み込む',
   'organization.switcher.loading.more': '読み込み中…',
   'organization.switcher.no.organizations': '組織が見つかりません',
   'organization.switcher.error.prefix': 'エラー:',
+
   'organization.profile.heading': '組織プロファイル',
   'organization.profile.loading': '組織を読み込み中…',
   'organization.profile.error': '組織の読み込みに失敗しました',
 
   'organization.create.heading': '組織の作成',
-  'organization.create.button.text': '組織を作成',
-  'organization.create.button.loading.text': '作成中…',
-  'organization.create.cancel.button.text': 'キャンセル',
+  'organization.create.buttons.create_organization.text': '組織を作成',
+  'organization.create.buttons.create_organization.loading.text': '作成中…',
+  'organization.create.buttons.cancel.text': 'キャンセル',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */

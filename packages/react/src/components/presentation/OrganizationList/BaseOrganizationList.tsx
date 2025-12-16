@@ -168,7 +168,7 @@ const defaultRenderOrganization = (
             type="button"
             size="small"
           >
-            {t('organization.switcher.switch.button.text')}
+            {t('organization.switcher.buttons.switch.text')}
           </Button>
         </div>
       )}
@@ -216,7 +216,7 @@ const defaultRenderLoadMore = (
   styles: any,
 ): ReactNode => (
   <Button onClick={onLoadMore} disabled={isLoading} className={cx(styles.loadMoreButton)} type="button" fullWidth>
-    {isLoading ? t('organization.switcher.loading.more') : t('organization.switcher.load_more.button.text')}
+    {isLoading ? t('organization.switcher.loading.more') : t('organization.switcher.buttons.load_more.text')}
   </Button>
 );
 
@@ -377,7 +377,7 @@ export const BaseOrganizationList: FC<BaseOrganizationListProps> = ({
         </div>
         {onRefresh && (
           <Button onClick={onRefresh} className={cx(styles.refreshButton)} type="button" variant="outline" size="small">
-            {t('organization.switcher.refresh.button.text')}
+            {t('organization.switcher.buttons.refresh.text')}
           </Button>
         )}
       </div>

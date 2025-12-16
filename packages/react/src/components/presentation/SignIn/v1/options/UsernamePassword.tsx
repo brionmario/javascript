@@ -88,7 +88,7 @@ const UsernamePassword: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('username.password.submit.button.text')}
+        {t('username.password.buttons.submit.text')}
       </Button>
     </>
   );

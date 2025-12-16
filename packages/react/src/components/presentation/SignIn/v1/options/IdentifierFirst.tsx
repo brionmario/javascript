@@ -87,7 +87,7 @@ const IdentifierFirst: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('identifier.first.submit.button.text')}
+        {t('identifier.first.buttons.submit.text')}
       </Button>
     </>
   );

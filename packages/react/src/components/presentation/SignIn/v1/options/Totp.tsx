@@ -103,7 +103,7 @@ const Totp: FC<BaseSignInOptionProps> = ({
         className={buttonClassName}
         style={{marginBottom: `calc(${theme.vars.spacing.unit} * 2)`}}
       >
-        {t('totp.submit.button.text')}
+        {t('totp.buttons.submit.text')}
       </Button>
     </>
   );

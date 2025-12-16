@@ -30,6 +30,7 @@ const translations: I18nTranslations = {
   'elements.buttons.signin.text': 'Entrar',
   'elements.buttons.signout.text': 'Sair',
   'elements.buttons.signup.text': 'Cadastre-se',
+  'elements.buttons.submit.text': 'Continuar',
   'elements.buttons.facebook.text': 'Entrar com Facebook',
   'elements.buttons.google.text': 'Entrar com Google',
   'elements.buttons.github.text': 'Entrar com GitHub',
@@ -43,10 +44,20 @@ const translations: I18nTranslations = {
   /* Fields */
   'elements.fields.generic.placeholder': 'Digite seu {field}',
   'elements.fields.username.label': 'Nome de usuário',
+  'elements.fields.username.placeholder': 'Digite o nome de usuário',
   'elements.fields.password.label': 'Senha',
+  'elements.fields.password.placeholder': 'Digite sua senha',
+  'elements.fields.first_name.label': 'Primeiro nome',
+  'elements.fields.first_name.placeholder': 'Digite seu primeiro nome',
+  'elements.fields.last_name.label': 'Sobrenome',
+  'elements.fields.last_name.placeholder': 'Digite seu sobrenome',
+  'elements.fields.email.label': 'Email',
+  'elements.fields.email.placeholder': 'Digite seu email',
   'elements.fields.organization.name.label': 'Nome da Organização',
   'elements.fields.organization.handle.label': 'Identificador da Organização',
   'elements.fields.organization.description.label': 'Descrição da Organização',
+  'elements.fields.organization.select.label': 'Selecionar Organização',
+  'elements.fields.organization.select.placeholder': 'Selecione uma organização',
 
   /* Validation */
   'validations.required.field.error': 'Este campo é obrigatório',
@@ -66,25 +77,25 @@ const translations: I18nTranslations = {
   /* Email OTP */
   'email.otp.heading': 'Verificação OTP',
   'email.otp.subheading': 'Digite o código enviado para seu e-mail.',
-  'email.otp.submit.button.text': 'Continue',
+  'email.otp.buttons.submit.text': 'Continue',
 
   /* Identifier First */
   'identifier.first.heading': 'Entrar',
   'identifier.first.subheading': 'Digite seu usuário ou e-mail.',
-  'identifier.first.submit.button.text': 'Continue',
+  'identifier.first.buttons.submit.text': 'Continue',
 
   /* SMS OTP */
   'sms.otp.heading': 'Verificação OTP',
   'sms.otp.subheading': 'Digite o código enviado para seu telefone.',
-  'sms.otp.submit.button.text': 'Continue',
+  'sms.otp.buttons.submit.text': 'Continue',
 
   /* TOTP */
   'totp.heading': 'Verifique sua identidade',
   'totp.subheading': 'Digite o código do seu aplicativo autenticador.',
-  'totp.submit.button.text': 'Continue',
+  'totp.buttons.submit.text': 'Continue',
 
   /* Username Password */
-  'username.password.submit.button.text': 'Continue',
+  'username.password.buttons.submit.text': 'Continue',
   'username.password.heading': 'Entrar',
   'username.password.subheading': 'Digite seu usuário e senha para continuar.',
 
@@ -99,32 +110,32 @@ const translations: I18nTranslations = {
   /* |                     Organization Switcher                     | */
   /* |---------------------------------------------------------------| */
 
-  'elements.fields.organization.select.label': 'Escolher Organização',
   'organization.switcher.switch.organization': 'Trocar Organização',
   'organization.switcher.loading.placeholder.organizations': 'Carregando organizações...',
   'organization.switcher.members': 'membros',
   'organization.switcher.member': 'membro',
   'organization.switcher.create.organization': 'Criar Organização',
   'organization.switcher.manage.organizations': 'Gerenciar Organizações',
-  'organization.switcher.manage.button.text': 'Gerenciar',
+  'organization.switcher.buttons.manage.text': 'Gerenciar',
   'organization.switcher.organizations.heading': 'Organizações',
-  'organization.switcher.switch.button.text': 'Trocar',
+  'organization.switcher.buttons.switch.text': 'Trocar',
   'organization.switcher.no.access': 'Sem Acesso',
   'organization.switcher.status.label': 'Situação:',
   'organization.switcher.showing.count': 'Exibindo {showing} de {total} organizações',
-  'organization.switcher.refresh.button.text': 'Atualizar',
-  'organization.switcher.load_more.button.text': 'Carregar Mais Organizações',
+  'organization.switcher.buttons.refresh.text': 'Atualizar',
+  'organization.switcher.buttons.load_more.text': 'Carregar Mais Organizações',
   'organization.switcher.loading.more': 'Carregando...',
   'organization.switcher.no.organizations': 'Nenhuma organização encontrada',
   'organization.switcher.error.prefix': 'Erro:',
+
   'organization.profile.heading': 'Perfil da Organização',
   'organization.profile.loading': 'Carregando organização...',
   'organization.profile.error': 'Falha ao carregar organização',
 
   'organization.create.heading': 'Criar Organização',
-  'organization.create.button.text': 'Criar Organização',
-  'organization.create.button.loading.text': 'Criando...',
-  'organization.create.cancel.button.text': 'Cancelar',
+  'organization.create.buttons.create_organization.text': 'Criar Organização',
+  'organization.create.buttons.create_organization.loading.text': 'Criando...',
+  'organization.create.buttons.cancel.text': 'Cancelar',
 
   /* |---------------------------------------------------------------| */
   /* |                        Messages                               | */
