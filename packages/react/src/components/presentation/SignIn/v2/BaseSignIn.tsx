@@ -18,7 +18,11 @@
 
 import {FC, useState, useCallback, ReactElement, ReactNode} from 'react';
 import {cx} from '@emotion/css';
-import {EmbeddedFlowComponent, withVendorCSSClassPrefix, EmbeddedSignInFlowRequestV2} from '@asgardeo/browser';
+import {
+  withVendorCSSClassPrefix,
+  EmbeddedSignInFlowRequestV2 as EmbeddedSignInFlowRequest,
+  EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
+} from '@asgardeo/browser';
 import useTranslation from '../../../../hooks/useTranslation';
 import Card, {CardProps} from '../../../primitives/Card/Card';
 import Spinner from '../../../primitives/Spinner/Spinner';
@@ -31,7 +35,8 @@ import useFlow from '../../../../contexts/Flow/useFlow';
 import FlowProvider from '../../../../contexts/Flow/FlowProvider';
 import {FormField, useForm} from '../../../../hooks/useForm';
 import {renderSignInComponents} from './SignInOptionFactory';
-import { extractErrorMessage } from '../../SignUp/v2/transformer';
+import {extractErrorMessage} from '../../SignUp/v2/transformer';
+import getAuthComponentHeadings from '../../../../utils/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering
@@ -148,7 +153,7 @@ export interface BaseSignInProps {
    * @param payload - The form data to submit.
    * @param component - The component that triggered the submission.
    */
-  onSubmit?: (payload: EmbeddedSignInFlowRequestV2, component: EmbeddedFlowComponent) => Promise<void>;
+  onSubmit?: (payload: EmbeddedSignInFlowRequest, component: EmbeddedFlowComponent) => Promise<void>;
 
   /**
    * Callback function called when authentication is successful.
@@ -270,8 +275,8 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   variant = 'outlined',
   isLoading: externalIsLoading,
   children,
-  showTitle = false,
-  showSubtitle = false,
+  showTitle = true,
+  showSubtitle = true,
   showLogo = true,
 }) => {
   const {theme} = useTheme();
@@ -310,14 +315,14 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
       const processComponents = (comps: EmbeddedFlowComponent[]) => {
         comps.forEach(component => {
-          if (component.type === 'INPUT' && component.config) {
-            const identifier: string = (component.config['identifier'] as string) || component.id;
+          if (component.type === 'TEXT_INPUT' || component.type === 'PASSWORD_INPUT') {
+            const identifier: string = component.id;
             fields.push({
               name: identifier,
-              required: (component.config['required'] as unknown as boolean) || false,
+              required: component.required || false,
               initialValue: '',
               validator: (value: string) => {
-                if (component.config['required'] && (!value || value.trim() === '')) {
+                if (component.required && (!value || value.trim() === '')) {
                   return t('field.required');
                 }
                 return null;
@@ -397,19 +402,13 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         });
       }
 
-      let payload: EmbeddedSignInFlowRequestV2 = {};
+      let payload: EmbeddedSignInFlowRequest = {};
 
-      if (component.config['actionId']) {
-        payload = {
-          ...payload,
-          actionId: component.config['actionId'] as string,
-        };
-      } else {
-        payload = {
-          ...payload,
-          inputs: filteredInputs,
-        };
-      }
+      // For V2, we always send inputs, not actionId
+      payload = {
+        ...payload,
+        inputs: filteredInputs,
+      };
 
       await onSubmit?.(payload, component);
     } catch (err) {
@@ -534,18 +533,27 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     );
   }
 
+  // Extract heading and subheading components and filter them from the main components
+  const {title, subtitle, componentsWithoutHeadings} = getAuthComponentHeadings(
+    components as any,
+    flowTitle,
+    flowSubtitle,
+    t('signin.title'),
+    t('signin.subtitle'),
+  );
+
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
       {(showTitle || showSubtitle) && (
         <Card.Header className={styles.header}>
           {showTitle && (
             <Card.Title level={2} className={styles.title}>
-              {flowTitle || t('signin.title')}
+              {title}
             </Card.Title>
           )}
           {showSubtitle && (
             <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signin.subtitle')}
+              {subtitle}
             </Typography>
           )}
         </Card.Header>
@@ -564,7 +572,9 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
             ))}
           </div>
         )}
-        <div className={styles.contentContainer}>{components && renderComponents(components)}</div>
+        <div className={styles.contentContainer}>
+          {componentsWithoutHeadings && renderComponents(componentsWithoutHeadings)}
+        </div>
       </Card.Content>
     </Card>
   );

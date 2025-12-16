@@ -20,9 +20,9 @@ import {
   EmbeddedFlowExecuteRequestPayload,
   EmbeddedFlowExecuteResponse,
   EmbeddedFlowStatus,
-  EmbeddedFlowComponentType,
   EmbeddedFlowResponseType,
   withVendorCSSClassPrefix,
+  EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
 } from '@asgardeo/browser';
 import {cx} from '@emotion/css';
 import {FC, ReactElement, ReactNode, useEffect, useState, useCallback, useRef} from 'react';
@@ -40,6 +40,7 @@ import Logo from '../../../primitives/Logo/Logo';
 import Spinner from '../../../primitives/Spinner/Spinner';
 import Typography from '../../../primitives/Typography/Typography';
 import useStyles from '../BaseSignUp.styles';
+import getAuthComponentHeadings from '../../../../utils/getAuthComponentHeadings';
 
 /**
  * Render props for custom UI rendering
@@ -305,7 +306,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
             ...response,
             data: {
               ...response.data,
-              components: components,
+              components: components as any,
             },
           };
         } catch (error) {
@@ -329,22 +330,21 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
       const processComponents = (comps: any[]) => {
         comps.forEach(component => {
-          if (component.type === EmbeddedFlowComponentType.Input) {
-            const config = component.config || {};
+          if (component.type === EmbeddedFlowComponentType.TextInput) {
             fields.push({
-              name: config.name || component.id,
-              required: config.required || false,
-              initialValue: config.defaultValue || '',
+              name: component.id,
+              required: component.required || false,
+              initialValue: '',
               validator: (value: string) => {
-                if (config.required && (!value || value.trim() === '')) {
+                if (component.required && (!value || value.trim() === '')) {
                   return t('field.required');
                 }
                 // Add email validation if it's an email field
-                if (config.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                if (component.variant === 'EMAIL' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                   return t('field.email.invalid');
                 }
                 // Add password strength validation if it's a password field
-                if (config.type === 'password' && value && value.length < 8) {
+                if (component.type === 'PASSWORD_INPUT' && value && value.length < 8) {
                   return t('field.password.weak');
                 }
                 return null;
@@ -439,13 +439,10 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         });
       }
 
-      const actionId: string = component.config?.actionId;
-
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
         inputs: filteredInputs,
-        ...(actionId && {actionId: actionId as string}),
       } as any;
 
       const rawResponse = await onSubmit(payload);
@@ -812,18 +809,28 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     );
   }
 
+  // Extract heading and subheading components and filter them from the main components
+  const componentsToRender = currentFlow.data?.components || [];
+  const {title, subtitle, componentsWithoutHeadings} = getAuthComponentHeadings(
+    componentsToRender,
+    flowTitle,
+    flowSubtitle,
+    t('signup.title'),
+    t('signup.subtitle'),
+  );
+
   return (
     <Card className={cx(containerClasses, styles.card)} variant={variant}>
       {(showTitle || showSubtitle) && (
         <Card.Header className={styles.header}>
           {showTitle && (
             <Card.Title level={2} className={styles.title}>
-              {flowTitle || t('signup.title')}
+              {title}
             </Card.Title>
           )}
           {showSubtitle && (
             <Typography variant="body1" className={styles.subtitle}>
-              {flowSubtitle || t('signup.subtitle')}
+              {subtitle}
             </Typography>
           )}
         </Card.Header>
@@ -843,8 +850,8 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
           </div>
         )}
         <div className={styles.contentContainer}>
-          {currentFlow.data?.components && currentFlow.data.components.length > 0 ? (
-            renderComponents(currentFlow.data.components)
+          {componentsWithoutHeadings && componentsWithoutHeadings.length > 0 ? (
+            renderComponents(componentsWithoutHeadings)
           ) : (
             <Alert variant="warning">
               <Typography variant="body1">{t('errors.sign.up.components.not.available')}</Typography>

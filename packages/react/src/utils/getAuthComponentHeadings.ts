@@ -1,0 +1,161 @@
+/**
+ * Copyright (c) 2025, WSO2 LLC. (https://www.wso2.com).
+ *
+ * WSO2 LLC. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import {EmbeddedFlowComponent} from '../../../javascript/src/models/v2/embedded-flow-v2';
+
+/**
+ * Result of heading extraction from flow components
+ */
+export interface HeadingExtractionResult {
+  heading: EmbeddedFlowComponent | null;
+  subheading: EmbeddedFlowComponent | null;
+}
+
+/**
+ * Complete result of authentication component heading extraction
+ */
+export interface AuthComponentHeadingsResult {
+  title: string;
+  subtitle: string;
+  componentsWithoutHeadings: EmbeddedFlowComponent[];
+  headingComponents: HeadingExtractionResult;
+}
+
+/**
+ * Extracts heading and subheading components from authentication flow components
+ * and provides resolved title/subtitle text with fallback logic.
+ *
+ * This utility helps maintain consistent heading extraction across authentication
+ * components (SignIn, SignUp, etc.) by identifying heading components within the
+ * flow structure and providing clean fallback behavior.
+ *
+ * @param components - Array of flow components to search
+ * @param flowTitle - Title from flow context (highest priority)
+ * @param flowSubtitle - Subtitle from flow context (highest priority)
+ * @param defaultTitle - Default title fallback (lowest priority)
+ * @param defaultSubtitle - Default subtitle fallback (lowest priority)
+ * @returns Object with resolved title and subtitle text, plus filtered components
+ *
+ * @example
+ * ```typescript
+ * const result = getAuthComponentHeadings(
+ *   components,
+ *   flowTitle,
+ *   flowSubtitle,
+ *   t('signin.title'),
+ *   t('signin.subtitle')
+ * );
+ *
+ * // Use resolved titles
+ * <Card.Title>{result.title}</Card.Title>
+ * <Typography>{result.subtitle}</Typography>
+ *
+ * // Render filtered components (without headings)
+ * renderComponents(result.componentsWithoutHeadings);
+ * ```
+ */
+const getAuthComponentHeadings = (
+  components: EmbeddedFlowComponent[],
+  flowTitle?: string,
+  flowSubtitle?: string,
+  defaultTitle?: string,
+  defaultSubtitle?: string,
+): AuthComponentHeadingsResult => {
+  let heading: EmbeddedFlowComponent | null = null;
+  let subheading: EmbeddedFlowComponent | null = null;
+
+  /**
+   * Recursively search for heading components
+   */
+  const findHeadings = (comps: EmbeddedFlowComponent[]): void => {
+    for (const component of comps) {
+      if (component.type === 'TEXT' && component.variant && component.variant.startsWith('HEADING_')) {
+        if (!heading) {
+          heading = component;
+        } else if (!subheading) {
+          subheading = component;
+          break; // We found both, no need to continue
+        }
+      }
+      if (component.components && component.components.length > 0) {
+        findHeadings(component.components);
+        if (heading && subheading) break; // Early exit if both found
+      }
+    }
+  };
+
+  /**
+   * Filter out heading components from the flow
+   */
+  const filterComponents = (comps: EmbeddedFlowComponent[]): EmbeddedFlowComponent[] => {
+    let foundHeadings: number = 0;
+    const maxHeadings: number = 2;
+
+    const filter = (components: EmbeddedFlowComponent[]): EmbeddedFlowComponent[] => {
+      return components.reduce((acc: EmbeddedFlowComponent[], component) => {
+        if (
+          foundHeadings < maxHeadings &&
+          component.type === 'TEXT' &&
+          component.variant &&
+          component.variant.startsWith('HEADING_')
+        ) {
+          foundHeadings++;
+          return acc;
+        }
+
+        if (component.components && component.components.length > 0) {
+          const filteredNestedComponents = filter(component.components);
+          if (filteredNestedComponents.length > 0) {
+            acc.push({
+              ...component,
+              components: filteredNestedComponents,
+            });
+          }
+        } else {
+          acc.push(component);
+        }
+
+        return acc;
+      }, []);
+    };
+
+    return filter(comps);
+  };
+
+  /**
+   * Extract text content from a component
+   */
+  const getComponentText = (component: EmbeddedFlowComponent | null): string => {
+    if (!component) return '';
+    return component.label || '';
+  };
+
+  findHeadings(components);
+
+  const headingText: string = getComponentText(heading);
+  const subheadingText: string = getComponentText(subheading);
+
+  return {
+    title: flowTitle || headingText || defaultTitle || '',
+    subtitle: flowSubtitle || subheadingText || defaultSubtitle || '',
+    componentsWithoutHeadings: filterComponents(components),
+    headingComponents: { heading, subheading },
+  } satisfies AuthComponentHeadingsResult;
+};
+
+export default getAuthComponentHeadings;

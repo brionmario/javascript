@@ -17,8 +17,13 @@
  */
 
 import React, {ReactElement} from 'react';
-import {AsgardeoRuntimeError, EmbeddedFlowComponent, FieldType} from '@asgardeo/browser';
-import {EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType, EmbeddedFlowTextVariantV2} from '@asgardeo/browser';
+import {
+  AsgardeoRuntimeError,
+  FieldType,
+  EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
+  EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
+  EmbeddedFlowTextVariantV2 as EmbeddedFlowTextVariant,
+} from '@asgardeo/browser';
 import {createField} from '../../../factories/FieldFactory';
 import Button from '../../../primitives/Button/Button';
 import GoogleButton from '../../../adapters/GoogleButton';
@@ -48,7 +53,7 @@ const getFieldType = (variant: string): FieldType => {
  * Get typography variant from component variant.
  */
 const getTypographyVariant = (variant: string) => {
-  const variantMap: Record<EmbeddedFlowTextVariantV2, TypographyVariant> = {
+  const variantMap: Record<EmbeddedFlowTextVariant, TypographyVariant> = {
     HEADING_1: 'h1',
     HEADING_2: 'h2',
     HEADING_3: 'h3',
@@ -92,7 +97,7 @@ const createSignInComponentFromFlow = (
 
   switch (component.type) {
     case EmbeddedFlowComponentType.TextInput: {
-      const identifier: string = (component.config['identifier'] as string) || component.id;
+      const identifier: string = component.id;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
@@ -101,9 +106,9 @@ const createSignInComponentFromFlow = (
       const field = createField({
         type: fieldType as FieldType,
         name: identifier,
-        label: (component.config['label'] as string) || '',
-        placeholder: (component.config['placeholder'] as string) || '',
-        required: (component.config['required'] as unknown as boolean) || false,
+        label: component.label || '',
+        placeholder: component.placeholder || '',
+        required: component.required || false,
         value,
         error,
         onChange: (newValue: string) => onInputChange(identifier, newValue),
@@ -115,7 +120,7 @@ const createSignInComponentFromFlow = (
     }
 
     case EmbeddedFlowComponentType.PasswordInput: {
-      const identifier: string = (component.config['identifier'] as string) || component.id;
+      const identifier: string = component.id;
       const value: string = formValues[identifier] || '';
       const isTouched: boolean = touchedFields[identifier] || false;
       const error: string = isTouched ? formErrors[identifier] : undefined;
@@ -124,9 +129,9 @@ const createSignInComponentFromFlow = (
       const field = createField({
         type: fieldType as FieldType,
         name: identifier,
-        label: (component.config['label'] as string) || '',
-        placeholder: (component.config['placeholder'] as string) || '',
-        required: (component.config['required'] as unknown as boolean) || false,
+        label: component.label || '',
+        placeholder: component.placeholder || '',
+        required: component.required || false,
         value,
         error,
         onChange: (newValue: string) => onInputChange(identifier, newValue),
@@ -151,8 +156,8 @@ const createSignInComponentFromFlow = (
       };
 
       // Render branded social login buttons for known action IDs
-      const actionId: string = component.config['actionId'] as string;
-      const eventType: string = component.config['eventType'] as string;
+      const actionId: string = component.id;
+      const eventType: string = (component.eventType as string) || '';
 
       if (actionId === 'google_auth' || eventType === 'google_auth') {
         return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
@@ -178,7 +183,7 @@ const createSignInComponentFromFlow = (
           variant={component.variant?.toLowerCase() === 'primary' ? 'solid' : 'outline'}
           color={component.variant?.toLowerCase() === 'primary' ? 'primary' : 'secondary'}
         >
-          {(component.config['label'] as string) || (component.config['text'] as string) || 'Submit'}
+          {component.label || 'Submit'}
         </Button>
       );
     }
@@ -187,7 +192,7 @@ const createSignInComponentFromFlow = (
       const variant = getTypographyVariant(component.variant);
       return (
         <Typography key={key} variant={variant}>
-          {(component.config['label'] as string) || (component.config['text'] as string) || ''}
+          {component.label || ''}
         </Typography>
       );
     }

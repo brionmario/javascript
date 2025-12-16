@@ -21,7 +21,7 @@ import BaseSignIn, {BaseSignInProps} from './BaseSignIn';
 import useAsgardeo from '../../../../contexts/Asgardeo/useAsgardeo';
 import {
   AsgardeoRuntimeError,
-  EmbeddedFlowComponent,
+  EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
   EmbeddedFlowType,
   EmbeddedSignInFlowResponseV2,
   EmbeddedSignInFlowRequestV2,
@@ -277,11 +277,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     console.warn('[SignIn] OAuth error detected:', error);
     clearFlowState();
     const errorMessage = errorDescription || `OAuth error: ${error}`;
-    const err = new AsgardeoRuntimeError(
-      errorMessage,
-      'SIGN_IN_ERROR',
-      'react',
-    );
+    const err = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
     setError(err);
     cleanupOAuthUrlParams(true);
   };
@@ -354,7 +350,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       initializationAttemptedRef.current = true;
       initializeFlow();
     }
-
   }, [isInitialized, isLoading, isFlowInitialized, currentFlowId]);
 
   /**
@@ -387,21 +382,21 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       let response: EmbeddedSignInFlowResponseV2;
 
       if (urlParams.flowId) {
-        response = await signIn({
+        response = (await signIn({
           flowId: urlParams.flowId,
-        }) as EmbeddedSignInFlowResponseV2;
+        })) as EmbeddedSignInFlowResponseV2;
       } else {
-        response = await signIn({
+        response = (await signIn({
           applicationId: effectiveApplicationId,
           flowType: EmbeddedFlowType.Authentication,
-        }) as EmbeddedSignInFlowResponseV2;
+        })) as EmbeddedSignInFlowResponseV2;
       }
 
       if (handleRedirection(response)) {
         return;
       }
 
-      const { flowId, components } = normalizeFlowResponse(response, t);
+      const {flowId, components} = normalizeFlowResponse(response, t);
 
       if (flowId && components) {
         setFlowId(flowId);
@@ -418,11 +413,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       const errorMessage = err instanceof Error ? err.message : String(err);
 
       // Create error with backend message
-      const displayError = new AsgardeoRuntimeError(
-        errorMessage,
-        'SIGN_IN_ERROR',
-        'react',
-      );
+      const displayError = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
       setError(displayError);
       initializationAttemptedRef.current = false;
       return;
@@ -448,16 +439,16 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       setIsSubmitting(true);
       setFlowError(null);
 
-      const response: EmbeddedSignInFlowResponseV2 = await signIn({
+      const response: EmbeddedSignInFlowResponseV2 = (await signIn({
         flowId: effectiveFlowId,
         ...payload,
-      }) as EmbeddedSignInFlowResponseV2;
+      })) as EmbeddedSignInFlowResponseV2;
 
       if (handleRedirection(response)) {
         return;
       }
 
-      const { flowId, components } = normalizeFlowResponse(response, t);
+      const {flowId, components} = normalizeFlowResponse(response, t);
 
       // Handle Error flow status - flow has failed and is invalidated
       if (response.flowStatus === EmbeddedSignInFlowStatusV2.Error) {
@@ -466,11 +457,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         // Extract failureReason from response if available
         const failureReason = (response as any)?.failureReason;
         const errorMessage = failureReason || 'Authentication flow failed. Please try again.';
-        const err = new AsgardeoRuntimeError(
-          errorMessage,
-          'SIGN_IN_ERROR',
-          'react',
-        );
+        const err = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
         setError(err);
         cleanupFlowUrlParams();
         return;
@@ -524,11 +511,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       // Extract error message
       const errorMessage = err instanceof Error ? err.message : String(err);
 
-      const displayError = new AsgardeoRuntimeError(
-        errorMessage,
-        'SIGN_IN_ERROR',
-        'react',
-      );
+      const displayError = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
       setError(displayError);
       return;
     } finally {
@@ -562,12 +545,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       return;
     }
 
-    const flowIdToUse = resolveFlowId(
-      currentFlowId,
-      urlParams.state,
-      urlParams.flowId,
-      storedFlowId,
-    );
+    const flowIdToUse = resolveFlowId(currentFlowId, urlParams.state, urlParams.flowId, storedFlowId);
 
     if (!flowIdToUse || !signIn) {
       return;
@@ -582,11 +560,11 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       flowId: flowIdToUse,
       inputs: {
         code: urlParams.code,
-        ...(urlParams.nonce && { nonce: urlParams.nonce }),
+        ...(urlParams.nonce && {nonce: urlParams.nonce}),
       },
     };
 
-    handleSubmit(submitPayload).catch((error) => {
+    handleSubmit(submitPayload).catch(error => {
       console.error('[SignIn] OAuth callback submission failed:', error);
       cleanupOAuthUrlParams(true);
     });

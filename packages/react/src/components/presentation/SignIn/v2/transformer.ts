@@ -16,54 +16,21 @@
  * under the License.
  */
 
-import {EmbeddedFlowComponent} from '@asgardeo/browser';
+import {EmbeddedFlowComponentV2 as EmbeddedFlowComponent} from '@asgardeo/browser';
 import {UseTranslation} from '../../../../hooks/useTranslation';
 
 /**
- * Transform flow response using meta.components structure.
- * Converts the API component format to the legacy format expected by UI components.
+ * Extract components from flow response meta structure.
+ * Since the API already returns components in the correct EmbeddedFlowComponent format,
+ * we can use them directly without transformation.
  */
 export const transformToComponentDriven = (response: any): EmbeddedFlowComponent[] => {
   if (!response?.data?.meta?.components) {
     return [];
   }
 
-  return transformComponents(response.data.meta.components);
-};
-
-/**
- * Convert API component format to the format expected by UI components.
- */
-const transformComponents = (apiComponents: any[]): EmbeddedFlowComponent[] => {
-  return apiComponents.map(transformSingleComponent).filter(Boolean);
-};
-
-/**
- * Transform a single API component to the expected format
- */
-const transformSingleComponent = (apiComponent: any): EmbeddedFlowComponent | null => {
-  if (!apiComponent?.type) return null;
-
-  const baseComponent: EmbeddedFlowComponent = {
-    id: apiComponent.id,
-    type: apiComponent.type,
-    variant: apiComponent.variant,
-    config: {
-      label: apiComponent.label,
-      placeholder: apiComponent.placeholder,
-      required: apiComponent.required,
-      identifier: apiComponent.id,
-      eventType: apiComponent.eventType,
-    },
-    components: [],
-  };
-
-  // Handle nested components (for BLOCK type)
-  if (apiComponent.components && Array.isArray(apiComponent.components)) {
-    baseComponent.components = transformComponents(apiComponent.components);
-  }
-
-  return baseComponent;
+  // Components are already in the correct format, just return them
+  return response.data.meta.components as EmbeddedFlowComponent[];
 };
 
 /**
