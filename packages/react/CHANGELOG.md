@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.23
+
+### Patch Changes
+
+- [#298](https://github.com/asgardeo/javascript/pull/298)
+  [`c68d138`](https://github.com/asgardeo/javascript/commit/c68d138daada8224d3a4880a732ddf9f9086e758) Thanks
+  [@brionmario](https://github.com/brionmario)! - Stop resolving `i18n` for render props
+
 ## 0.6.22
 
 ### Patch Changes
