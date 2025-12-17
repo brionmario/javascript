@@ -1,5 +1,14 @@
 # @asgardeo/javascript
 
+## 0.2.12
+
+### Patch Changes
+
+- [#291](https://github.com/asgardeo/javascript/pull/291)
+  [`fad0f8f`](https://github.com/asgardeo/javascript/commit/fad0f8f36801ae9d4ac0c0d589c92a589af395b1) Thanks
+  [@brionmario](https://github.com/brionmario)! - Refactor exports in index.ts: add new embedded flow types and
+  responses from '@asgardeo/browser'.
+
 ## 0.2.11
 
 ### Patch Changes
