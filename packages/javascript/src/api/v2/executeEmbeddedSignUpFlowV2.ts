@@ -42,9 +42,30 @@ const executeEmbeddedSignUpFlowV2 = async ({
 
   let endpoint: string = url ?? `${baseUrl}/flow/execute`;
 
+  // Strip any user-provided 'verbose' parameter as it should only be used internally
+  const cleanPayload: typeof payload =
+    typeof payload === 'object' && payload !== null
+      ? Object.fromEntries(Object.entries(payload).filter(([key]) => key !== 'verbose'))
+      : payload;
+
   // `verbose: true` is required to get the `meta` field in the response that includes component details.
+  // Add verbose:true if:
+  // 1. payload contains only applicationId and flowType
+  // 2. payload contains only flowId
+  const hasOnlyAppIdAndFlowType: boolean =
+    typeof cleanPayload === 'object' &&
+    cleanPayload !== null &&
+    'applicationId' in cleanPayload &&
+    'flowType' in cleanPayload &&
+    Object.keys(cleanPayload).length === 2;
+  const hasOnlyFlowId: boolean =
+    typeof cleanPayload === 'object' &&
+    cleanPayload !== null &&
+    'flowId' in cleanPayload &&
+    Object.keys(cleanPayload).length === 1;
+
   const requestPayload: Record<string, unknown> =
-    typeof payload === 'object' && payload !== null && 'flowType' in payload ? {...payload, verbose: true} : payload;
+    hasOnlyAppIdAndFlowType || hasOnlyFlowId ? {...cleanPayload, verbose: true} : cleanPayload;
 
   const response: Response = await fetch(endpoint, {
     ...requestConfig,
