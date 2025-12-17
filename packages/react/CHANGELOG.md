@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.6.20
+
+### Patch Changes
+
+- [#292](https://github.com/asgardeo/javascript/pull/292)
+  [`824db16`](https://github.com/asgardeo/javascript/commit/824db16857f627b53dd8030ff3bf31fbe96fad9e) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix CI failure due to re-exports
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.37
+
 ## 0.6.19
 
 ### Patch Changes
