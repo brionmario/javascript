@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.13
+
+### Patch Changes
+
+- [#296](https://github.com/asgardeo/javascript/pull/296)
+  [`6f484a2`](https://github.com/asgardeo/javascript/commit/6f484a218d8593e30f376b5995d71a44e1d404cc) Thanks
+  [@brionmario](https://github.com/brionmario)! - Change `actionId` to `action`
+
 ## 0.2.12
 
 ### Patch Changes
