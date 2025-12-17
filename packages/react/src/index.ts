@@ -273,4 +273,33 @@ export {default as updateMeProfile, UpdateMeProfileConfig} from './api/updateMeP
 export {default as getMeProfile} from './api/getScim2Me';
 export * from './api/getScim2Me';
 
-export {AsgardeoRuntimeError, http, getActiveTheme, navigate} from '@asgardeo/browser';
+export {
+  AsgardeoRuntimeError,
+  http,
+  getActiveTheme,
+  navigate,
+  // Export `v2` models and types as first class citizens since they are
+  // going to be the primary way to interact with embedded flows moving forward.
+  EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
+  EmbeddedFlowActionVariantV2 as EmbeddedFlowActionVariant,
+  EmbeddedFlowTextVariantV2 as EmbeddedFlowTextVariant,
+  EmbeddedFlowEventTypeV2 as EmbeddedFlowEventType,
+  EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
+  EmbeddedFlowResponseDataV2 as EmbeddedFlowResponseData,
+  EmbeddedFlowExecuteRequestConfigV2 as EmbeddedFlowExecuteRequestConfig,
+  EmbeddedSignInFlowStatusV2 as EmbeddedSignInFlowStatus,
+  EmbeddedSignInFlowTypeV2 as EmbeddedSignInFlowType,
+  ExtendedEmbeddedSignInFlowResponseV2 as ExtendedEmbeddedSignInFlowResponse,
+  EmbeddedSignInFlowResponseV2 as EmbeddedSignInFlowResponse,
+  EmbeddedSignInFlowCompleteResponseV2 as EmbeddedSignInFlowCompleteResponse,
+  EmbeddedSignInFlowInitiateRequestV2 as EmbeddedSignInFlowInitiateRequest,
+  EmbeddedSignInFlowRequestV2 as EmbeddedSignInFlowRequest,
+  EmbeddedSignUpFlowStatusV2 as EmbeddedSignUpFlowStatus,
+  EmbeddedSignUpFlowTypeV2 as EmbeddedSignUpFlowType,
+  ExtendedEmbeddedSignUpFlowResponseV2 as ExtendedEmbeddedSignUpFlowResponse,
+  EmbeddedSignUpFlowResponseV2 as EmbeddedSignUpFlowResponse,
+  EmbeddedSignUpFlowCompleteResponseV2 as EmbeddedSignUpFlowCompleteResponse,
+  EmbeddedSignUpFlowInitiateRequestV2 as EmbeddedSignUpFlowInitiateRequest,
+  EmbeddedSignUpFlowRequestV2 as EmbeddedSignUpFlowRequest,
+  EmbeddedSignUpFlowErrorResponseV2 as EmbeddedSignUpFlowErrorResponse,
+} from '@asgardeo/browser';
