@@ -396,7 +396,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         return;
       }
 
-      const {flowId, components} = normalizeFlowResponse(response, t);
+      const {flowId, components} = normalizeFlowResponse(response, t, {
+        resolveTranslations: !children,
+      });
 
       if (flowId && components) {
         setFlowId(flowId);
@@ -448,7 +450,9 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         return;
       }
 
-      const {flowId, components} = normalizeFlowResponse(response, t);
+      const {flowId, components} = normalizeFlowResponse(response, t, {
+        resolveTranslations: !children,
+      });
 
       // Handle Error flow status - flow has failed and is invalidated
       if (response.flowStatus === EmbeddedSignInFlowStatusV2.Error) {

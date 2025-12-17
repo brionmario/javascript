@@ -302,6 +302,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         try {
           const {components} = normalizeFlowResponse(response, t, {
             defaultErrorKey: 'components.signUp.errors.generic',
+            resolveTranslations: !children,
           });
 
           return {
@@ -320,7 +321,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       // Return as-is if no transformation needed
       return response;
     },
-    [t],
+    [t, children],
   );
 
   /**

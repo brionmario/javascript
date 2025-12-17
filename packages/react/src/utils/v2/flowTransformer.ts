@@ -72,25 +72,35 @@ export interface FlowTransformOptions {
    * @default 'errors.flow.generic'
    */
   defaultErrorKey?: string;
+  /**
+   * Whether to resolve translation strings or keep them as i18n keys
+   * @default true
+   */
+  resolveTranslations?: boolean;
 }
 
 /**
  * Transform and resolve translations in components from flow response.
- * This function extracts components from the response meta structure and resolves
+ * This function extracts components from the response meta structure and optionally resolves
  * any translation strings within them.
  *
  * @param response - The flow response object containing components in meta structure
  * @param t - Translation function from useTranslation hook
- * @returns Array of flow components with resolved translations
+ * @param resolveTranslations - Whether to resolve translation strings or keep them as i18n keys (default: true)
+ * @returns Array of flow components with resolved or unresolved translations
  */
-export const transformComponents = (response: any, t: UseTranslation['t']): EmbeddedFlowComponent[] => {
+export const transformComponents = (
+  response: any,
+  t: UseTranslation['t'],
+  resolveTranslations: boolean = true,
+): EmbeddedFlowComponent[] => {
   if (!response?.data?.meta?.components) {
     return [];
   }
 
   const components: EmbeddedFlowComponent[] = response.data.meta.components;
 
-  return resolveTranslationsInArray(components, t);
+  return resolveTranslations ? resolveTranslationsInArray(components, t) : components;
 };
 
 /**
@@ -154,7 +164,7 @@ export const normalizeFlowResponse = (
   flowId: string;
   components: EmbeddedFlowComponent[];
 } => {
-  const {throwOnError = true, defaultErrorKey = 'errors.flow.generic'} = options;
+  const {throwOnError = true, defaultErrorKey = 'errors.flow.generic', resolveTranslations = true} = options;
 
   // Check if this is an error response
   const errorMessage: string | null = checkForErrorResponse(response, t, defaultErrorKey);
@@ -166,6 +176,6 @@ export const normalizeFlowResponse = (
 
   return {
     flowId: response.flowId,
-    components: transformComponents(response, t),
+    components: transformComponents(response, t, resolveTranslations),
   };
 };
