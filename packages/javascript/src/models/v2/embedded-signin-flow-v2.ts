@@ -321,7 +321,7 @@ export interface EmbeddedSignInFlowRequest extends Partial<EmbeddedSignInFlowIni
    * Identifier of the specific action being triggered.
    * Corresponds to action components in the UI (e.g., submit button, social login).
    */
-  actionId?: string;
+  action?: string;
 
   /**
    * User input data collected from the form components.
