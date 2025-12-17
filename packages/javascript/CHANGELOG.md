@@ -1,5 +1,14 @@
 # @asgardeo/javascript
 
+## 0.2.11
+
+### Patch Changes
+
+- [#289](https://github.com/asgardeo/javascript/pull/289)
+  [`149bf46`](https://github.com/asgardeo/javascript/commit/149bf46b99fd013e82d152cf7c796f70b1b65f01) Thanks
+  [@brionmario](https://github.com/brionmario)! - Refactor embedded sign-in and sign-up flows: clean payload by removing
+  'verbose' parameter and conditionally add 'verbose: true' based on payload structure.
+
 ## 0.2.10
 
 ### Patch Changes
