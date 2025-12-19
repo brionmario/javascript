@@ -1,5 +1,13 @@
 # @asgardeo/i18n
 
+## 0.3.9
+
+### Patch Changes
+
+- [#300](https://github.com/asgardeo/javascript/pull/300)
+  [`02f3343`](https://github.com/asgardeo/javascript/commit/02f33434daa2e8dc7aa73ca832a8ea698eb9f44d) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix social button rendering issue in v2
+
 ## 0.3.8
 
 ### Patch Changes
