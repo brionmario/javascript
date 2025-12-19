@@ -40,6 +40,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': '{connection} के साथ जारी रखें',
   'elements.buttons.social.text': '{connection} के साथ जारी रखें',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'या',
+
   /* Fields */
   'elements.fields.generic.placeholder': '{field} दर्ज करें',
   'elements.fields.username.label': 'उपयोगकर्ता नाम',

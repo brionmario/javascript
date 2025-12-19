@@ -23,6 +23,8 @@ import {
   EmbeddedFlowComponentV2 as EmbeddedFlowComponent,
   EmbeddedFlowComponentTypeV2 as EmbeddedFlowComponentType,
   EmbeddedFlowTextVariantV2 as EmbeddedFlowTextVariant,
+  EmbeddedFlowActionVariantV2 as EmbeddedFlowActionVariant,
+  EmbeddedFlowEventTypeV2 as EmbeddedFlowEventType,
 } from '@asgardeo/browser';
 import {createField} from '../../factories/FieldFactory';
 import Button from '../../primitives/Button/Button';
@@ -86,9 +88,15 @@ const matchesSocialProvider = (
   buttonText: string,
   provider: string,
   authType: AuthType,
+  componentVariant?: string,
 ): boolean => {
   const providerId = `${provider}_auth`;
   const providerMatches = actionId === providerId || eventType === providerId;
+
+  // For social variant, also check button text for provider name
+  if (componentVariant?.toUpperCase() === EmbeddedFlowActionVariant.Social) {
+    return buttonText.toLowerCase().includes(provider);
+  }
 
   // For signup, also check button text
   if (authType === 'signup') {
@@ -115,7 +123,7 @@ const createAuthComponentFromFlow = (
     inputClassName?: string;
     key?: string | number;
     onInputBlur?: (name: string) => void;
-    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
+    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>, skipValidation?: boolean) => void;
     size?: 'small' | 'medium' | 'large';
     variant?: any;
   } = {},
@@ -153,6 +161,14 @@ const createAuthComponentFromFlow = (
     }
 
     case EmbeddedFlowComponentType.Action: {
+      const actionId: string = component.id;
+      const eventType: string = (component.eventType as string) || '';
+      const buttonText: string = component.label || '';
+      const componentVariant: string = (component.variant as string) || '';
+
+      // Only validate on submit type events.
+      const shouldSkipValidation: boolean = eventType.toUpperCase() === EmbeddedFlowEventType.Trigger;
+
       const handleClick = () => {
         if (options.onSubmit) {
           const formData: Record<string, any> = {};
@@ -161,31 +177,28 @@ const createAuthComponentFromFlow = (
               formData[field] = formValues[field];
             }
           });
-          options.onSubmit(component, formData);
+          options.onSubmit(component, formData, shouldSkipValidation);
         }
       };
 
       // Render branded social login buttons for known action IDs
-      const actionId: string = component.id;
-      const eventType: string = (component.eventType as string) || '';
-      const buttonText: string = component.label || '';
 
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'google', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'google', authType, componentVariant)) {
         return <GoogleButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'github', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'github', authType, componentVariant)) {
         return <GitHubButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'facebook', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'facebook', authType, componentVariant)) {
         return <FacebookButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'microsoft', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'microsoft', authType, componentVariant)) {
         return <MicrosoftButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'linkedin', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'linkedin', authType, componentVariant)) {
         return <LinkedInButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
-      if (matchesSocialProvider(actionId, eventType, buttonText, 'ethereum', authType)) {
+      if (matchesSocialProvider(actionId, eventType, buttonText, 'ethereum', authType, componentVariant)) {
         return <SignInWithEthereumButton key={key} onClick={handleClick} className={options.buttonClassName} />;
       }
       if (actionId === 'prompt_mobile' || eventType === 'prompt_mobile') {
@@ -217,6 +230,10 @@ const createAuthComponentFromFlow = (
       );
     }
 
+    case EmbeddedFlowComponentType.Divider: {
+      return <Divider key={key}>{component.label || ''}</Divider>;
+    }
+
     case EmbeddedFlowComponentType.Block: {
       if (component.components && component.components.length > 0) {
         const blockComponents = component.components
@@ -238,7 +255,11 @@ const createAuthComponentFromFlow = (
           )
           .filter(Boolean);
 
-        return <div key={key}>{blockComponents}</div>;
+        return (
+          <form id={component.id} key={key}>
+            {blockComponents}
+          </form>
+        );
       }
       return null;
     }
@@ -268,7 +289,7 @@ export const renderSignInComponents = (
     buttonClassName?: string;
     inputClassName?: string;
     onInputBlur?: (name: string) => void;
-    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
+    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>, skipValidation?: boolean) => void;
     size?: 'small' | 'medium' | 'large';
     variant?: any;
   },
@@ -307,7 +328,7 @@ export const renderSignUpComponents = (
     buttonClassName?: string;
     inputClassName?: string;
     onInputBlur?: (name: string) => void;
-    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>) => void;
+    onSubmit?: (component: EmbeddedFlowComponent, data?: Record<string, any>, skipValidation?: boolean) => void;
     size?: 'small' | 'medium' | 'large';
     variant?: any;
   },

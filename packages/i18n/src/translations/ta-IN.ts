@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': '{connection} மூலம் தொடரவும்',
   'elements.buttons.social.text': '{connection} மூலம் தொடரவும்',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'அல்லது',
+
   /* Fields */
   'elements.fields.generic.placeholder': '{field} உள்ளிடவும்',
   'elements.fields.username.label': 'பயனர்பெயர்',

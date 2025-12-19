@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': '{connection}で続行',
   'elements.buttons.social.text': '{connection}で続行',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'または',
+
   /* Fields */
   'elements.fields.generic.placeholder': '{field}を入力してください',
   'elements.fields.username.label': 'ユーザー名',

@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': 'Entrar com {connection}',
   'elements.buttons.social.text': 'Entrar com {connection}',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'OU',
+
   /* Fields */
   'elements.fields.generic.placeholder': 'Digite seu {field}',
   'elements.fields.username.label': 'Nome de usuário',

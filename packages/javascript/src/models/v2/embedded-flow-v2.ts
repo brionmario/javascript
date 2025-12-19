@@ -44,9 +44,7 @@ export enum EmbeddedFlowComponentType {
   /** Password input field with masking for sensitive data */
   PasswordInput = 'PASSWORD_INPUT',
 
-  /**
-   * Email input field with validation for email addresses.
-   */
+  /** Email input field with validation for email addresses. */
   EmailInput = 'EMAIL_INPUT',
 
   /** Text display component for labels, headings, and messages */
@@ -57,6 +55,9 @@ export enum EmbeddedFlowComponentType {
 
   /** Container block component that groups other components */
   Block = 'BLOCK',
+
+  /** Divider component for visual separation of content */
+  Divider = 'DIVIDER',
 }
 
 /**
@@ -65,14 +66,32 @@ export enum EmbeddedFlowComponentType {
  * @experimental This API may change in future versions
  */
 export enum EmbeddedFlowActionVariant {
+  /** Primary action button with highest visual emphasis */
   Primary = 'PRIMARY',
+
+  /** Secondary action button with moderate visual emphasis */
   Secondary = 'SECONDARY',
+
+  /** Tertiary action button with minimal visual emphasis */
   Tertiary = 'TERTIARY',
+
+  /** Danger action button for destructive operations */
   Danger = 'DANGER',
+
+  /** Success action button for positive confirmations */
   Success = 'SUCCESS',
+
+  /** Info action button for informational purposes */
   Info = 'INFO',
+
+  /** Warning action button for cautionary actions */
   Warning = 'WARNING',
+
+  /** Link-styled action button */
   Link = 'LINK',
+
+  /** Social media action button (e.g., Google, Facebook) */
+  Social = 'SOCIAL',
 }
 
 /**
@@ -81,18 +100,43 @@ export enum EmbeddedFlowActionVariant {
  * @experimental This API may change in future versions
  */
 export enum EmbeddedFlowTextVariant {
+  /** Largest heading level for main titles */
   Heading1 = 'HEADING_1',
+
+  /** Second level heading for major sections */
   Heading2 = 'HEADING_2',
+
+  /** Third level heading for subsections */
   Heading3 = 'HEADING_3',
+
+  /** Fourth level heading for minor sections */
   Heading4 = 'HEADING_4',
+
+  /** Fifth level heading for detailed sections */
   Heading5 = 'HEADING_5',
+
+  /** Smallest heading level for fine-grained sections */
   Heading6 = 'HEADING_6',
+
+  /** Primary subtitle text with larger emphasis */
   Subtitle1 = 'SUBTITLE_1',
+
+  /** Secondary subtitle text with moderate emphasis */
   Subtitle2 = 'SUBTITLE_2',
+
+  /** Primary body text for main content */
   Body1 = 'BODY_1',
+
+  /** Secondary body text for supplementary content */
   Body2 = 'BODY_2',
+
+  /** Small caption text for annotations and descriptions */
   Caption = 'CAPTION',
+
+  /** Overline text for labels and categories */
   Overline = 'OVERLINE',
+
+  /** Text styled for button labels */
   ButtonText = 'BUTTON_TEXT',
 }
 
@@ -102,11 +146,22 @@ export enum EmbeddedFlowTextVariant {
  * @experimental This API may change in future versions
  */
 export enum EmbeddedFlowEventType {
+  /** Trigger an action or event */
   Trigger = 'TRIGGER',
+
+  /** Submit form data to the server */
   Submit = 'SUBMIT',
+
+  /** Navigate to a different flow step or page */
   Navigate = 'NAVIGATE',
+
+  /** Cancel the current operation */
   Cancel = 'CANCEL',
+
+  /** Reset form fields to initial state */
   Reset = 'RESET',
+
+  /** Navigate back to the previous step */
   Back = 'BACK',
 }
 

@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': 'Continue with {connection}',
   'elements.buttons.social.text': 'Continue with {connection}',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'OR',
+
   /* Fields */
   'elements.fields.generic.placeholder': 'Enter your {field}',
   'elements.fields.username.label': 'Username',

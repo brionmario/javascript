@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': '{connection} తో కొనసాగించండి',
   'elements.buttons.social.text': '{connection} తో కొనసాగించండి',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'లేదా',
+
   /* Fields */
   'elements.fields.generic.placeholder': 'మీ {field} ను నమోదు చేయండి',
   'elements.fields.username.label': 'వినియోగదారు పేరు',
