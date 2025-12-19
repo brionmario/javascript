@@ -379,13 +379,21 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   /**
    * Handle component submission (for buttons and actions).
    */
-  const handleSubmit = async (component: EmbeddedFlowComponent, data?: Record<string, any>): Promise<void> => {
-    // Mark all fields as touched before validation
-    touchAllFields();
+  const handleSubmit = async (
+    component: EmbeddedFlowComponent,
+    data?: Record<string, any>,
+    skipValidation?: boolean,
+  ): Promise<void> => {
+    // Only validate for form submit actions, skip for social/trigger actions
+    if (!skipValidation) {
+      // Mark all fields as touched before validation
+      touchAllFields();
 
-    const validation = validateForm();
-    if (!validation.isValid) {
-      return;
+      const validation: ReturnType<typeof validateForm> = validateForm();
+
+      if (!validation.isValid) {
+        return;
+      }
     }
 
     setIsSubmitting(true);

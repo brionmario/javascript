@@ -423,9 +423,21 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   /**
    * Handle component submission (for buttons outside forms).
    */
-  const handleSubmit = async (component: any, data?: Record<string, any>) => {
+  const handleSubmit = async (component: any, data?: Record<string, any>, skipValidation?: boolean) => {
     if (!currentFlow) {
       return;
+    }
+
+    // Only validate for form submit actions, skip for social/trigger actions
+    if (!skipValidation) {
+      // Mark all fields as touched before validation
+      touchAllFields();
+
+      const validation: ReturnType<typeof validateForm> = validateForm();
+
+      if (!validation.isValid) {
+        return;
+      }
     }
 
     setIsLoading(true);

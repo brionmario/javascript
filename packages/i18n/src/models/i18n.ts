@@ -38,6 +38,9 @@ export interface I18nTranslations {
   'elements.buttons.multi.option.text': string;
   'elements.buttons.social.text': string;
 
+  /* Display */
+  'elements.display.divider.or_separator': string;
+
   /* Fields */
   'elements.fields.generic.placeholder': string;
   'elements.fields.username.label': string;

@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': 'Iniciar Sessão com {connection}',
   'elements.buttons.social.text': 'Iniciar Sessão com {connection}',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'OU',
+
   /* Fields */
   'elements.fields.generic.placeholder': 'Introduza o seu {field}',
   'elements.fields.username.label': 'Nome de utilizador',

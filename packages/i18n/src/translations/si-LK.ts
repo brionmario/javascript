@@ -41,6 +41,9 @@ const translations: I18nTranslations = {
   'elements.buttons.multi.option.text': '{connection} සමග ඉදිරියට යන්න',
   'elements.buttons.social.text': '{connection} සමග ඉදිරියට යන්න',
 
+  /* Display */
+  'elements.display.divider.or_separator': 'හෝ',
+
   /* Fields */
   'elements.fields.generic.placeholder': 'ඔබේ {field} ඇතුලත් කරන්න',
   'elements.fields.username.label': 'පරිශීලක නාමය',
