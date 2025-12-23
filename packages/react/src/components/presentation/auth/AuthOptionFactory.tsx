@@ -265,12 +265,9 @@ const createAuthComponentFromFlow = (
     }
 
     default:
-      throw new AsgardeoRuntimeError(
-        `Unsupported component type: ${component.type}`,
-        `${authType === 'signin' ? 'SignIn' : 'SignUp'}-UnsupportedComponentType-001`,
-        'react',
-        `Something went wrong while rendering the ${authType} component. Please try again later.`,
-      );
+      // Gracefully handle unsupported component types by returning null
+      console.warn(`Unsupported component type: ${component.type}. Skipping render.`);
+      return null;
   }
 };
 
