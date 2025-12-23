@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.16
+
+### Patch Changes
+
+- [#307](https://github.com/asgardeo/javascript/pull/307)
+  [`ca71b3b`](https://github.com/asgardeo/javascript/commit/ca71b3b783ece9ff46ea8d1519e1a69547bfe210) Thanks
+  [@brionmario](https://github.com/brionmario)! - Align error handling
+
 ## 0.2.15
 
 ### Patch Changes

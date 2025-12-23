@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.6.27
+
+### Patch Changes
+
+- [#307](https://github.com/asgardeo/javascript/pull/307)
+  [`ca71b3b`](https://github.com/asgardeo/javascript/commit/ca71b3b783ece9ff46ea8d1519e1a69547bfe210) Thanks
+  [@brionmario](https://github.com/brionmario)! - Align error handling
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.41
+
 ## 0.6.26
 
 ### Patch Changes
