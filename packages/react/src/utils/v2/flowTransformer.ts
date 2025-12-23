@@ -80,9 +80,96 @@ export interface FlowTransformOptions {
 }
 
 /**
+ * Create a mapping from ref to identifier based on data.inputs array.
+ * This handles cases where meta.components use 'ref' to reference inputs,
+ * and data.inputs contain the actual 'identifier' field.
+ *
+ * @param response - The flow response object
+ * @returns Map of ref to identifier
+ */
+const createInputRefMapping = (response: any): Map<string, string> => {
+  const mapping = new Map<string, string>();
+
+  if (response?.data?.inputs && Array.isArray(response.data.inputs)) {
+    response.data.inputs.forEach((input: any) => {
+      if (input.ref && input.identifier) {
+        mapping.set(input.ref, input.identifier);
+      }
+    });
+  }
+
+  return mapping;
+};
+
+/**
+ * Create a mapping from action ref to nextNode based on data.actions array.
+ * This handles cases where meta.components reference actions by ref,
+ * and data.actions contain the actual nextNode field for routing.
+ *
+ * @param response - The flow response object
+ * @returns Map of action ref to nextNode
+ */
+const createActionRefMapping = (response: any): Map<string, string> => {
+  const mapping = new Map<string, string>();
+
+  if (response?.data?.actions && Array.isArray(response.data.actions)) {
+    response.data.actions.forEach((action: any) => {
+      if (action.ref && action.nextNode) {
+        mapping.set(action.ref, action.nextNode);
+      }
+    });
+  }
+
+  return mapping;
+};
+
+/**
+ * Apply input ref mapping to components recursively.
+ * This ensures that component.ref values are mapped to the correct identifier
+ * from data.inputs, enabling proper form submission.
+ *
+ * @param components - Array of components to transform
+ * @param refMapping - Map of ref to identifier
+ * @param actionMapping - Map of action ref to nextNode
+ * @returns Transformed components with correct identifiers and action references
+ */
+const applyInputRefMapping = (
+  components: EmbeddedFlowComponent[],
+  refMapping: Map<string, string>,
+  actionMapping: Map<string, string>,
+): EmbeddedFlowComponent[] => {
+  return components.map(component => {
+    const transformedComponent = {...component} as EmbeddedFlowComponent & {actionRef?: string};
+
+    // If this component has a ref that maps to an identifier, update it
+    if (transformedComponent.ref && refMapping.has(transformedComponent.ref)) {
+      transformedComponent.ref = refMapping.get(transformedComponent.ref);
+    }
+
+    // If this is an action component, map its id to the nextNode
+    // Store the nextNode reference as actionRef property for later use
+    if (transformedComponent.type === 'ACTION' && transformedComponent.id && actionMapping.has(transformedComponent.id)) {
+      transformedComponent.actionRef = actionMapping.get(transformedComponent.id);
+    }
+
+    // Recursively apply to nested components
+    if (transformedComponent.components && Array.isArray(transformedComponent.components)) {
+      transformedComponent.components = applyInputRefMapping(
+        transformedComponent.components,
+        refMapping,
+        actionMapping,
+      );
+    }
+
+    return transformedComponent;
+  });
+};
+
+/**
  * Transform and resolve translations in components from flow response.
  * This function extracts components from the response meta structure and optionally resolves
- * any translation strings within them.
+ * any translation strings within them. It also handles mapping of input refs to identifiers
+ * and action refs to nextNode values.
  *
  * @param response - The flow response object containing components in meta structure
  * @param t - Translation function from useTranslation hook
@@ -98,7 +185,18 @@ export const transformComponents = (
     return [];
   }
 
-  const components: EmbeddedFlowComponent[] = response.data.meta.components;
+  let components: EmbeddedFlowComponent[] = response.data.meta.components;
+
+  // Create mapping from ref to identifier based on data.inputs
+  const refMapping = createInputRefMapping(response);
+
+  // Create mapping from action ref to nextNode based on data.actions
+  const actionMapping = createActionRefMapping(response);
+
+  // Apply ref and action mapping if there are any mappings
+  if (refMapping.size > 0 || actionMapping.size > 0) {
+    components = applyInputRefMapping(components, refMapping, actionMapping);
+  }
 
   return resolveTranslations ? resolveTranslationsInArray(components, t) : components;
 };
