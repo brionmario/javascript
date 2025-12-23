@@ -1,5 +1,16 @@
 # @asgardeo/react
 
+## 0.6.25
+
+### Patch Changes
+
+- [#303](https://github.com/asgardeo/javascript/pull/303)
+  [`d89a096`](https://github.com/asgardeo/javascript/commit/d89a096446bda73661798d40d318ea90f4d7c9af) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix component type issues
+
+- Updated dependencies []:
+  - @asgardeo/browser@0.1.40
+
 ## 0.6.24
 
 ### Patch Changes
