@@ -204,7 +204,7 @@ export type EmbeddedSignUpFlowInitiateRequest = {
  */
 export interface EmbeddedSignUpFlowRequest extends Partial<EmbeddedSignUpFlowInitiateRequest> {
   flowId?: string;
-  actionId?: string;
+  action?: string;
   inputs?: Record<string, any>;
 }
 

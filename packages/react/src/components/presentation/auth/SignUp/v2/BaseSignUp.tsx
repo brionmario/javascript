@@ -461,7 +461,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
-        ...(component.id && {actionId: component.id}),
+        ...(component.id && {action: component.id}),
         inputs: filteredInputs,
       } as any;
 
@@ -493,7 +493,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   /**
    * Check if the response contains a redirection URL and perform the redirect if necessary.
    * @param response - The sign-up response
-   * @param component - The component that triggered the submission (needed for actionId)
+   * @param component - The component that triggered the submission (needed for action)
    * @returns true if a redirect was performed, false otherwise
    */
   const handleRedirectionIfNeeded = (response: EmbeddedFlowExecuteResponse, component: any): boolean => {
@@ -538,7 +538,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
               code,
               state,
             },
-            actionId: '',
+            action: '',
           } as any;
 
           try {
@@ -617,7 +617,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
                     code,
                     state,
                   },
-                  actionId: '',
+                  action: '',
                 } as any;
 
                 try {
