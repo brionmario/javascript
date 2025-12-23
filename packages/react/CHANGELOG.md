@@ -1,5 +1,13 @@
 # @asgardeo/react
 
+## 0.6.26
+
+### Patch Changes
+
+- [#305](https://github.com/asgardeo/javascript/pull/305)
+  [`300abb9`](https://github.com/asgardeo/javascript/commit/300abb958dd294e6c8ecf702fb8bfcfabcceac2e) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix Sign up
+
 ## 0.6.25
 
 ### Patch Changes
