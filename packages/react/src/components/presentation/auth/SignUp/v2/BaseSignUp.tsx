@@ -52,9 +52,14 @@ export interface BaseSignUpRenderProps {
   values: Record<string, string>;
 
   /**
-   * Form errors
+   * Field validation errors
    */
-  errors: Record<string, string>;
+  fieldErrors: Record<string, string>;
+
+  /**
+   * API error (if any)
+   */
+  error?: Error | null;
 
   /**
    * Touched fields
@@ -89,7 +94,7 @@ export interface BaseSignUpRenderProps {
   /**
    * Function to validate the form
    */
-  validateForm: () => {isValid: boolean; errors: Record<string, string>};
+  validateForm: () => {isValid: boolean; fieldErrors: Record<string, string>};
 
   /**
    * Flow title
@@ -130,6 +135,11 @@ export interface BaseSignUpProps {
    * Custom CSS class name for error messages.
    */
   errorClassName?: string;
+
+  /**
+   * Error object to display
+   */
+  error?: Error | null;
 
   /**
    * Custom CSS class name for form inputs.
@@ -243,6 +253,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   onError,
   onFlowChange,
   onComplete,
+  error: externalError,
   className = '',
   inputClassName = '',
   buttonClassName = '',
@@ -267,7 +278,11 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
    */
   const handleError = useCallback(
     (error: any) => {
-      const errorMessage: string = extractErrorMessage(error, t);
+      // Extract error message from response failureReason or use extractErrorMessage
+      const errorMessage: string = error?.failureReason || extractErrorMessage(error, t);
+
+      // Set the API error state
+      setApiError(error instanceof Error ? error : new Error(errorMessage));
 
       // Clear existing messages and add the error message
       clearMessages();
@@ -282,7 +297,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isFlowInitialized, setIsFlowInitialized] = useState(false);
   const [currentFlow, setCurrentFlow] = useState<EmbeddedFlowExecuteResponse | null>(null);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [apiError, setApiError] = useState<Error | null>(null);
 
   const initializationAttemptedRef = useRef(false);
 
@@ -333,7 +348,11 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
       const processComponents = (comps: any[]) => {
         comps.forEach(component => {
-          if (component.type === EmbeddedFlowComponentType.TextInput) {
+          if (
+            component.type === EmbeddedFlowComponentType.TextInput ||
+            component.type === EmbeddedFlowComponentType.PasswordInput ||
+            component.type === EmbeddedFlowComponentType.EmailInput
+          ) {
             // Use component.ref (mapped identifier) as the field name instead of component.id
             // This ensures form field names match what the input components use
             const fieldName = component.ref || component.id;
@@ -347,13 +366,14 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
                   return t('validations.required.field.error');
                 }
                 // Add email validation if it's an email field
-                if (component.variant === 'EMAIL' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                if (
+                  (component.type === EmbeddedFlowComponentType.EmailInput || component.variant === 'EMAIL') &&
+                  value &&
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+                ) {
                   return t('field.email.invalid');
                 }
-                // Add password strength validation if it's a password field
-                if (component.type === 'PASSWORD_INPUT' && value && value.length < 8) {
-                  return t('field.password.weak');
-                }
+
                 return null;
               },
             });
@@ -377,7 +397,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     initialValues: {},
     fields: formFields,
     validateOnBlur: true,
-    validateOnChange: true,
+    validateOnChange: false,
     requiredMessage: t('validations.required.field.error'),
   });
 
@@ -418,9 +438,18 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
   /**
    * Handle input value changes.
+   * Only updates the value without marking as touched.
+   * Touched state is set on blur to avoid premature validation.
    */
   const handleInputChange = (name: string, value: string) => {
     setFormValue(name, value);
+  };
+
+  /**
+   * Handle input blur event.
+   * Marks the field as touched, which triggers validation.
+   */
+  const handleInputBlur = (name: string) => {
     setFormTouched(name, true);
   };
 
@@ -445,6 +474,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
     }
 
     setIsLoading(true);
+    setApiError(null);
     clearMessages();
 
     try {
@@ -701,6 +731,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         {
           buttonClassName: buttonClasses,
           inputClassName: inputClasses,
+          onInputBlur: handleInputBlur,
           onSubmit: handleSubmit,
           size,
           variant,
@@ -717,6 +748,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       inputClasses,
       buttonClasses,
       handleSubmit,
+      handleInputBlur,
     ],
   );
 
@@ -745,6 +777,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
 
       (async () => {
         setIsLoading(true);
+        setApiError(null);
         clearMessages();
 
         try {
@@ -788,14 +821,18 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
   if (children) {
     const renderProps: BaseSignUpRenderProps = {
       values: formValues,
-      errors: formErrors,
+      fieldErrors: formErrors,
+      error: apiError,
       touched: touchedFields,
       isValid: isFormValid,
       isLoading,
       components: currentFlow?.data?.components || [],
       handleInputChange,
       handleSubmit,
-      validateForm,
+      validateForm: () => {
+        const result = validateForm();
+        return {isValid: result.isValid, fieldErrors: result.errors};
+      },
       title: flowTitle || t('signup.heading'),
       subtitle: flowSubtitle || t('signup.subheading'),
       messages: flowMessages || [],
@@ -856,6 +893,13 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
         </Card.Header>
       )}
       <Card.Content>
+        {externalError && (
+          <div className={styles.flowMessagesContainer}>
+            <Alert variant="error" className={cx(styles.flowMessageItem, messageClasses)}>
+              <Alert.Description>{externalError.message}</Alert.Description>
+            </Alert>
+          </div>
+        )}
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message: any, index: number) => (
