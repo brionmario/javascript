@@ -208,6 +208,7 @@ export const transformComponents = (
 /**
  * Extract error message from flow error response.
  * Supports any flow error response that follows the standard structure.
+ * Prioritizes failureReason if present, otherwise falls back to translated generic message.
  *
  * @param error - The error response object
  * @param t - Translation function for fallback messages
@@ -219,8 +220,14 @@ export const extractErrorMessage = (
   t: UseTranslation['t'],
   defaultErrorKey: string = 'errors.flow.generic',
 ): string => {
+  // Check for failureReason in the error object
   if (error && typeof error === 'object' && error.failureReason) {
     return error.failureReason;
+  }
+
+  // Check if error is a standard Error object with a message
+  if (error instanceof Error && error.message) {
+    return error.message;
   }
 
   // Fallback to a generic error message

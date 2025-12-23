@@ -48,9 +48,14 @@ export interface BaseSignInRenderProps {
   values: Record<string, string>;
 
   /**
-   * Form errors
+   * Field validation errors
    */
-  errors: Record<string, string>;
+  fieldErrors: Record<string, string>;
+
+  /**
+   * API error (if any)
+   */
+  error?: Error | null;
 
   /**
    * Touched fields
@@ -85,7 +90,7 @@ export interface BaseSignInRenderProps {
   /**
    * Function to validate the form
    */
-  validateForm: () => {isValid: boolean; errors: Record<string, string>};
+  validateForm: () => {isValid: boolean; fieldErrors: Record<string, string>};
 
   /**
    * Flow title
@@ -126,6 +131,11 @@ export interface BaseSignInProps {
    * Custom CSS class name for error messages.
    */
   errorClassName?: string;
+
+  /**
+   * Error object to display
+   */
+  error?: Error | null;
 
   /**
    * Flag to determine if the component is ready to be rendered.
@@ -266,6 +276,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   components = [],
   onSubmit,
   onError,
+  error: externalError,
   className = '',
   inputClassName = '',
   buttonClassName = '',
@@ -285,6 +296,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   const styles = useStyles(theme, theme.vars.colors.text.primary);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<Error | null>(null);
 
   const isLoading: boolean = externalIsLoading || isSubmitting;
 
@@ -294,7 +306,11 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
    */
   const handleError = useCallback(
     (error: any) => {
-      const errorMessage: string = extractErrorMessage(error, t);
+      // Extract error message from response failureReason or use extractErrorMessage
+      const errorMessage: string = error?.failureReason || extractErrorMessage(error, t);
+
+      // Set the API error state
+      setApiError(error instanceof Error ? error : new Error(errorMessage));
 
       // Clear existing messages and add the error message
       clearMessages();
@@ -315,7 +331,11 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
       const processComponents = (comps: EmbeddedFlowComponent[]) => {
         comps.forEach(component => {
-          if (component.type === 'TEXT_INPUT' || component.type === 'PASSWORD_INPUT') {
+          if (
+            component.type === 'TEXT_INPUT' ||
+            component.type === 'PASSWORD_INPUT' ||
+            component.type === 'EMAIL_INPUT'
+          ) {
             const identifier: string = component.ref;
             fields.push({
               name: identifier,
@@ -325,6 +345,15 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
                 if (component.required && (!value || value.trim() === '')) {
                   return t('validations.required.field.error');
                 }
+                // Add email validation if it's an email field
+                if (
+                  (component.type === 'EMAIL_INPUT' || component.variant === 'EMAIL') &&
+                  value &&
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+                ) {
+                  return t('field.email.invalid');
+                }
+
                 return null;
               },
             });
@@ -364,13 +393,16 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
 
   /**
    * Handle input value changes.
+   * Only updates the value without marking as touched.
+   * Touched state is set on blur to avoid premature validation.
    */
   const handleInputChange = (name: string, value: string): void => {
     setFormValue(name, value);
   };
 
   /**
-   * Handle input blur events (when field loses focus).
+   * Handle input blur event.
+   * Marks the field as touched, which triggers validation.
    */
   const handleInputBlur = (name: string): void => {
     setFormTouched(name, true);
@@ -397,6 +429,7 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
     }
 
     setIsSubmitting(true);
+    setApiError(null);
     clearMessages();
     console.log('Submitting component:', component, 'with data:', data);
 
@@ -502,14 +535,18 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
   if (children) {
     const renderProps: BaseSignInRenderProps = {
       values: formValues,
-      errors: formErrors,
+      fieldErrors: formErrors,
+      error: apiError,
       touched: touchedFields,
       isValid: isFormValid,
       isLoading,
       components,
       handleInputChange,
       handleSubmit,
-      validateForm,
+      validateForm: () => {
+        const result = validateForm();
+        return {isValid: result.isValid, fieldErrors: result.errors};
+      },
       title: flowTitle || t('signin.heading'),
       subtitle: flowSubtitle || t('signin.subheading'),
       messages: flowMessages || [],
@@ -569,6 +606,13 @@ const BaseSignInContent: FC<BaseSignInProps> = ({
         </Card.Header>
       )}
       <Card.Content>
+        {externalError && (
+          <div className={styles.flowMessagesContainer}>
+            <Alert variant="error" className={cx(styles.flowMessageItem, messageClasses)}>
+              <Alert.Description>{externalError.message}</Alert.Description>
+            </Alert>
+          </div>
+        )}
         {flowMessages && flowMessages.length > 0 && (
           <div className={styles.flowMessagesContainer}>
             {flowMessages.map((message, index) => (

@@ -274,7 +274,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
    * Clears flow state, creates error, and cleans up URL.
    */
   const handleOAuthError = (error: string, errorDescription: string | null): void => {
-    console.warn('[SignIn] OAuth error detected:', error);
     clearFlowState();
     const errorMessage = errorDescription || `OAuth error: ${error}`;
     const err = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
@@ -408,15 +407,14 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         cleanupFlowUrlParams();
       }
     } catch (error) {
-      const err = error as Error;
+      const err = error as any;
       clearFlowState();
 
-      // Extract error message
-      const errorMessage = err instanceof Error ? err.message : String(err);
+      // Extract error message from response or error object
+      const errorMessage = err?.failureReason || (err instanceof Error ? err.message : String(err));
 
-      // Create error with backend message
-      const displayError = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
-      setError(displayError);
+      // Set error with the extracted message
+      setError(new Error(errorMessage));
       initializationAttemptedRef.current = false;
       return;
     }
@@ -430,10 +428,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     const effectiveFlowId = payload.flowId || currentFlowId;
 
     if (!effectiveFlowId) {
-      console.error('[SignIn] handleSubmit - ERROR: No flowId available', {
-        payloadFlowId: payload.flowId,
-        currentFlowId,
-      });
       throw new Error('No active flow ID');
     }
 
@@ -450,21 +444,21 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         return;
       }
 
-      const {flowId, components} = normalizeFlowResponse(response, t, {
+      const {flowId, components, ...rest} = normalizeFlowResponse(response, t, {
         resolveTranslations: !children,
       });
 
       // Handle Error flow status - flow has failed and is invalidated
       if (response.flowStatus === EmbeddedSignInFlowStatusV2.Error) {
-        console.error('[SignIn] Flow returned Error status, clearing flow state');
         clearFlowState();
         // Extract failureReason from response if available
         const failureReason = (response as any)?.failureReason;
         const errorMessage = failureReason || 'Authentication flow failed. Please try again.';
-        const err = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
+        const err = new Error(errorMessage);
         setError(err);
         cleanupFlowUrlParams();
-        return;
+        // Throw the error so it's caught by the catch block and propagated to BaseSignIn
+        throw err;
       }
 
       if (response.flowStatus === EmbeddedSignInFlowStatusV2.Complete) {
@@ -492,8 +486,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
 
         if (finalRedirectUrl && window?.location) {
           window.location.href = finalRedirectUrl;
-        } else {
-          console.warn('[SignIn] Flow completed but no redirect URL available');
         }
 
         return;
@@ -509,14 +501,13 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
         cleanupFlowUrlParams();
       }
     } catch (error) {
-      const err = error as Error;
+      const err = error as any;
       clearFlowState();
 
-      // Extract error message
-      const errorMessage = err instanceof Error ? err.message : String(err);
+      // Extract error message from response or error object
+      const errorMessage = err?.failureReason || (err instanceof Error ? err.message : String(err));
 
-      const displayError = new AsgardeoRuntimeError(errorMessage, 'SIGN_IN_ERROR', 'react');
-      setError(displayError);
+      setError(new Error(errorMessage));
       return;
     } finally {
       setIsSubmitting(false);
@@ -527,7 +518,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
    * Handle authentication errors.
    */
   const handleError = (error: Error): void => {
-    console.error('Authentication error:', error);
     setError(error);
   };
 
@@ -569,7 +559,6 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
     };
 
     handleSubmit(submitPayload).catch(error => {
-      console.error('[SignIn] OAuth callback submission failed:', error);
       cleanupOAuthUrlParams(true);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -594,6 +583,7 @@ const SignIn: FC<SignInProps> = ({className, size = 'medium', onSuccess, onError
       isLoading={isLoading || !isInitialized || !isFlowInitialized}
       onSubmit={handleSubmit}
       onError={handleError}
+      error={flowError}
       className={className}
       size={size}
       variant={variant}

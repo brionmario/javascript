@@ -147,6 +147,12 @@ export interface EmbeddedSignUpFlowResponse extends ExtendedEmbeddedSignUpFlowRe
   flowId: string;
 
   /**
+   * Optional reason for flow failure in case of an error.
+   * Provides additional context when flowStatus is set to ERROR.
+   */
+  failureReason?: string;
+
+  /**
    * Current status of the sign-up flow.
    * Determines whether more input is needed or the flow is complete.
    */
@@ -204,7 +210,7 @@ export type EmbeddedSignUpFlowInitiateRequest = {
  */
 export interface EmbeddedSignUpFlowRequest extends Partial<EmbeddedSignUpFlowInitiateRequest> {
   flowId?: string;
-  actionId?: string;
+  action?: string;
   inputs?: Record<string, any>;
 }
 

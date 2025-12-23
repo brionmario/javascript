@@ -173,6 +173,12 @@ export interface EmbeddedSignInFlowResponse extends ExtendedEmbeddedSignInFlowRe
   flowId: string;
 
   /**
+   * Optional reason for flow failure in case of an error.
+   * Provides additional context when flowStatus is set to ERROR.
+   */
+  failureReason?: string;
+
+  /**
    * Current status of the sign-in flow.
    * Determines the next action required by the client application.
    */
@@ -294,7 +300,7 @@ export type EmbeddedSignInFlowInitiateRequest = {
  * // Continue existing flow with user input
  * const stepRequest: EmbeddedSignInFlowRequest = {
  *   flowId: "flow_12345",
- *   actionId: "action_001",
+ *   action: "action_001",
  *   inputs: {
  *     username: "user@example.com",
  *     password: "securePassword123"
