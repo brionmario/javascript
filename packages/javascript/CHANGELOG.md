@@ -1,5 +1,13 @@
 # @asgardeo/javascript
 
+## 0.2.15
+
+### Patch Changes
+
+- [#303](https://github.com/asgardeo/javascript/pull/303)
+  [`d89a096`](https://github.com/asgardeo/javascript/commit/d89a096446bda73661798d40d318ea90f4d7c9af) Thanks
+  [@brionmario](https://github.com/brionmario)! - Fix component type issues
+
 ## 0.2.14
 
 ### Patch Changes
