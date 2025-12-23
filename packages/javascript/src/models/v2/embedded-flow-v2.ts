@@ -47,6 +47,12 @@ export enum EmbeddedFlowComponentType {
   /** Email input field with validation for email addresses. */
   EmailInput = 'EMAIL_INPUT',
 
+  /** One-time password input field for multi-factor authentication */
+  OtpInput = 'OTP_INPUT',
+
+  /** Phone number input field with country code support */
+  PhoneInput = 'PHONE_INPUT',
+
   /** Text display component for labels, headings, and messages */
   Text = 'TEXT',
 
