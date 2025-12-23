@@ -130,10 +130,6 @@ const createAuthComponentFromFlow = (
 ): ReactElement | null => {
   const key: string | number = options.key || component.id;
 
-  if (authType === 'signin') {
-    console.log('Creating sign-in component for:', component);
-  }
-
   switch (component.type) {
     case EmbeddedFlowComponentType.TextInput:
     case EmbeddedFlowComponentType.PasswordInput:
@@ -173,9 +169,8 @@ const createAuthComponentFromFlow = (
         if (options.onSubmit) {
           const formData: Record<string, any> = {};
           Object.keys(formValues).forEach(field => {
-            if (formValues[field]) {
-              formData[field] = formValues[field];
-            }
+            // Include all values, even empty strings, to ensure proper submission
+            formData[field] = formValues[field];
           });
           options.onSubmit(component, formData, shouldSkipValidation);
         }

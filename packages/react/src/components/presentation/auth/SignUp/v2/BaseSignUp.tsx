@@ -334,8 +334,12 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       const processComponents = (comps: any[]) => {
         comps.forEach(component => {
           if (component.type === EmbeddedFlowComponentType.TextInput) {
+            // Use component.ref (mapped identifier) as the field name instead of component.id
+            // This ensures form field names match what the input components use
+            const fieldName = component.ref || component.id;
+
             fields.push({
-              name: component.id,
+              name: fieldName,
               required: component.required || false,
               initialValue: '',
               validator: (value: string) => {
@@ -457,7 +461,7 @@ const BaseSignUpContent: FC<BaseSignUpProps> = ({
       const payload: EmbeddedFlowExecuteRequestPayload = {
         ...(currentFlow.flowId && {flowId: currentFlow.flowId}),
         flowType: (currentFlow as any).flowType || 'REGISTRATION',
-        ...(component.id && {action: component.id}),
+        ...(component.id && {actionId: component.id}),
         inputs: filteredInputs,
       } as any;
 
