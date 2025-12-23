@@ -148,7 +148,11 @@ const applyInputRefMapping = (
 
     // If this is an action component, map its id to the nextNode
     // Store the nextNode reference as actionRef property for later use
-    if (transformedComponent.type === 'ACTION' && transformedComponent.id && actionMapping.has(transformedComponent.id)) {
+    if (
+      transformedComponent.type === 'ACTION' &&
+      transformedComponent.id &&
+      actionMapping.has(transformedComponent.id)
+    ) {
       transformedComponent.actionRef = actionMapping.get(transformedComponent.id);
     }
 
