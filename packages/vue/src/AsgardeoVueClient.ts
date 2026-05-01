@@ -409,7 +409,16 @@ class AsgardeoVueClient<T extends AsgardeoVueConfig = AsgardeoVueConfig> extends
         });
       }
 
-      return (await this.asgardeo.signIn(arg1 as any)) as unknown as Promise<User>;
+      const {tokenRequestOptions, ...signInConfig} = (arg1 as SignInOptions) ?? {};
+
+      return (await this.asgardeo.signIn(
+        signInConfig as any,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        tokenRequestOptions,
+      )) as unknown as Promise<User>;
     });
   }
 

@@ -30,8 +30,17 @@ import {ThemeConfig, ThemeMode} from '../theme/types';
  *
  * @example
  * signInOptions: { prompt: "login", fidp: "OrganizationSSO" }
+ * @example
+ * signInOptions: { tokenRequestOptions: { params: { custom_param: "value" } } }
  */
-export type SignInOptions = Record<string, any>;
+export type SignInOptions = {
+  /**
+   * Optional additional parameters to be appended to the token request body.
+   * These are sent during the authorization code exchange, not the initial authorize request.
+   */
+  tokenRequestOptions?: {params: Record<string, unknown>};
+  [key: string]: any;
+};
 
 /**
  * Interface representing the additional parameters to be sent in the sign-out request.
